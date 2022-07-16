@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="Bazaar.Text">
+        <item name="android:fontFamily">@font/regular</item>
+    </style>
+
+    <style name="Bazaar.Text.Medium">
+        <item name="android:fontFamily">@font/medium</item>
+    </style>
+
+    <!--================-->
+    <!--      Titles    -->
+    <!--================-->
+    <style name="Bazaar.Text.Title.Large" parent="Bazaar.Text.Medium">
+        <item name="android:textSize">@dimen/title_large</item>
+    </style>
+
+    <style name="Bazaar.Text.Title.Medium" parent="Bazaar.Text">
+        <item name="android:textSize">@dimen/title_medium</item>
+    </style>
+
+    <style name="Bazaar.Text.Title.Small" parent="Bazaar.Text">
+        <item name="android:textSize">@dimen/title_small</item>
+    </style>
+
+    <!--================-->
+    <!--     HeadLines  -->
+    <!--================-->
+    <style name="Bazaar.Text.Headline1" parent="Bazaar.Text.Medium">
+        <item name="android:textSize">@dimen/headline1</item>
+    </style>
+
+    <style name="Bazaar.Text.Headline2" parent="Bazaar.Text.Medium">
+        <item name="android:textSize">@dimen/headline2</item>
+    </style>
+
+    <!--================-->
+    <!--     Subtitle   -->
+    <!--================-->
+    <style name="Bazaar.Text.Subtitle1" parent="Bazaar.Text.Medium">
+        <item name="android:textSize">@dimen/subtitle1</item>
+    </style>
+
+    <style name="Bazaar.Text.Subtitle2" parent="Bazaar.Text.Medium">
+        <item name="android:textSize">@dimen/subtitle2</item>
+    </style>
+
+    <!--================-->
+    <!--      Body      -->
+    <!--================-->
+    <style name="Bazaar.Text.Body1" parent="Bazaar.Text">
+        <item name="android:textSize">@dimen/body1</item>
+    </style>
+
+    <style name="Bazaar.Text.Body2" parent="Bazaar.Text">
+        <item name="android:textSize">@dimen/body2</item>
+    </style>
+
+    <!--================-->
+    <!--      Caption   -->
+    <!--================-->
+    <style name="Bazaar.Text.Caption" parent="Bazaar.Text">
+        <item name="android:textSize">@dimen/caption</item>
+    </style>
+
+    <!--================-->
+    <!--      Overline   -->
+    <!--================-->
+    <style name="Bazaar.Text.Overline" parent="Bazaar.Text">
+        <item name="android:textSize">@dimen/overline</item>
+    </style>
+
+</resources>

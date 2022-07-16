@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:gravity="center"
+    tools:orientation="vertical"
+    tools:parentTag="android.widget.LinearLayout">
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/icon"
+        android:layout_width="@dimen/central_image_size"
+        android:layout_height="@dimen/central_image_size"
+        app:srcCompat="@drawable/ic_error_outline_icon_primary_24dp_old" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/textView"
+        style="@style/Bazaar.Text.Body1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/default_margin_triple"
+        android:text="@string/error_server_connection_failure"
+        android:textColor="@color/text_primary" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/retryButton"
+        style="@style/Bazaar.Button.Flat.Primary.SmallText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/default_margin_triple"
+        android:text="@string/try_again" />
+
+</merge>

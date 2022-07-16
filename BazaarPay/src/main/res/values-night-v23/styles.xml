@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Theme.V23.Bazaar.Primary" parent="Theme.Bazaar">
+        <item name="android:windowLightStatusBar">false</item>
+        <item name="android:colorPrimaryDark">@color/grey_20</item>
+    </style>
+
+    <style name="Theme.Bazaar.Primary" parent="Theme.V23.Bazaar.Primary" />
+
+    <style name="Theme.Bazaar.Dialog">
+        <item name="android:windowLightStatusBar">false</item>
+    </style>
+</resources>

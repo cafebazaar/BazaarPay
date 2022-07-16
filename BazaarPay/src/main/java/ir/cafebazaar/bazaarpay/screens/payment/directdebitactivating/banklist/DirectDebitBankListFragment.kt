@@ -1,0 +1,177 @@
+package ir.cafebazaar.bazaarpay.screens.payment.directdebitactivating.banklist
+
+import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.view.animation.AnimationUtils
+import androidx.core.view.isVisible
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.SimpleItemAnimator
+import com.google.android.material.snackbar.Snackbar
+import ir.cafebazaar.bazaarpay.R
+import ir.cafebazaar.bazaarpay.data.bazaar.models.ErrorModel
+import ir.cafebazaar.bazaarpay.databinding.FragmentDirectDebitBankListBinding
+import ir.cafebazaar.bazaarpay.extensions.*
+import ir.cafebazaar.bazaarpay.models.Resource
+import ir.cafebazaar.bazaarpay.models.ResourceState
+import ir.cafebazaar.bazaarpay.utils.getErrorViewBasedOnErrorModel
+
+internal class DirectDebitBankListFragment : Fragment() {
+
+    private lateinit var adapter: BankListAdapter
+    private lateinit var layoutManager: LinearLayoutManager
+
+    private var _binding: FragmentDirectDebitBankListBinding? = null
+    private val binding: FragmentDirectDebitBankListBinding
+        get() = requireNotNull(_binding)
+
+    private val viewModel: DirectDebitBankListViewModel by viewModels()
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        _binding = FragmentDirectDebitBankListBinding.inflate(inflater)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        _binding = FragmentDirectDebitBankListBinding.bind(view)
+        super.onViewCreated(view, savedInstanceState)
+        with(binding) {
+            titleTextView.text = getString(R.string.direct_debit_bank_list)
+            backButton.setSafeOnClickListener {
+                findNavController().popBackStack()
+            }
+            actionButton.apply {
+                isEnabled = false
+                setOnClickListener {
+                    viewModel.onRegisterClicked(
+                        DirectDebitBankListFragmentArgs.fromBundle(requireArguments()).nationalId
+                    )
+                }
+            }
+        }
+        viewModel.loadData()
+        observeViewModel()
+        initRecycler()
+    }
+
+    private fun initRecycler() {
+
+        layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+
+        adapter = BankListAdapter()
+
+        with(binding.recyclerView) {
+            setHasFixedSize(false)
+            adapter = this@DirectDebitBankListFragment.adapter
+            itemAnimator?.changeDuration = 0
+            (itemAnimator as? SimpleItemAnimator)?.supportsChangeAnimations = false
+
+            layoutAnimation = AnimationUtils.loadLayoutAnimation(
+                requireContext(),
+                R.anim.recycler_view_fall_down
+            )
+
+            layoutManager = this@DirectDebitBankListFragment.layoutManager
+        }
+    }
+
+    private fun observeViewModel() {
+        with(viewModel) {
+            enableActionButtonStateLiveData.observe(viewLifecycleOwner) { isEnabled ->
+                binding.actionButton.isEnabled = isEnabled
+            }
+            registerDirectDebitLiveData.observe(viewLifecycleOwner) { resource ->
+                binding.actionButton.isLoading = resource.isLoading
+                when (resource.resourceState) {
+                    ResourceState.Error -> {
+                        showReadableErrorMessage(resource.failure)
+                    }
+                    ResourceState.Success -> {
+                        openUrlWithResourceData(resource.data)
+                    }
+                }
+            }
+            dataLiveData.observe(viewLifecycleOwner, ::handleData)
+            notifyLiveData.observe(viewLifecycleOwner, ::handleNotify)
+        }
+    }
+
+    private fun showReadableErrorMessage(errorModel: ErrorModel?) {
+        if (isAdded) {
+            val message = requireContext().getReadableErrorMessage(errorModel)
+            binding.root.let {
+                Snackbar.make(it, message, Snackbar.LENGTH_LONG).run { show() }
+            }
+        }
+    }
+
+    private fun openUrlWithResourceData(url: String?) {
+        url?.let { requireContext().openUrl(it) }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+
+    private fun handleNotify(index: Int) {
+        adapter.notifyItemChanged(index)
+    }
+
+    private fun handleData(resource: Resource<List<BankList>>) {
+        if (resource.isError) {
+            showErrorView(resource.failure!!)
+        } else {
+            hideErrorView()
+        }
+
+        with(binding) {
+            emptyView.isVisible = resource.isEmpty
+            loading.isVisible = resource.isLoading
+            recyclerView.isVisible = resource.isSuccess
+        }
+
+        if (resource.isSuccess) {
+            adapter.setItems(resource.data)
+        }
+    }
+
+    private fun showErrorView(errorModel: ErrorModel) {
+        binding.errorView.apply {
+            removeAllViews()
+            addView(
+                getErrorViewBasedOnErrorModel(
+                    requireContext(),
+                    errorModel,
+                    ::onRetryClicked,
+                    ::onLoginClicked
+                )
+            )
+            visible()
+        }
+        binding.actionButton.isVisible = false
+    }
+
+    private fun onRetryClicked() {
+        viewModel.loadData()
+    }
+
+    private fun onLoginClicked() {
+        findNavController().navigate(
+            R.id.open_signin
+        )
+    }
+
+    private fun hideErrorView() {
+        binding.errorView.gone()
+        binding.actionButton.isVisible = true
+    }
+}

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:gravity="center_vertical"
+    tools:orientation="horizontal"
+    tools:parentTag="android.widget.LinearLayout">
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/ic_wallet_outline" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        style="@style/Bazaar.Text.Body2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/default_margin"
+        android:text="@string/title_current_balance"
+        android:textAlignment="viewStart"
+        android:textColor="@color/text_primary" />
+
+    <ir.cafebazaar.bazaarpay.widget.LocalAwareTextView
+        android:id="@+id/balanceTextView"
+        style="@style/Bazaar.Text.Body2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/default_margin_half"
+        android:textAlignment="viewStart"
+        android:textColor="@color/text_primary"
+        tools:text="۱۳ هزار تومن" />
+
+</merge>

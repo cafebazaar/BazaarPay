@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="BazaarPay/src/main/res/drawable-night/ic_on_boarding.xml" value="0.1" />
+        <entry key="BazaarPay/src/main/res/drawable-v21/selector_button_flat_light.xml" value="0.1255" />
+        <entry key="BazaarPay/src/main/res/drawable-v21/shape_button_flat_secondary_ripple.xml" value="0.1255" />
+        <entry key="BazaarPay/src/main/res/drawable/background_green_10_radius_8.xml" value="0.172" />
+        <entry key="BazaarPay/src/main/res/drawable/background_grey_10_radius_8.xml" value="0.172" />
+        <entry key="BazaarPay/src/main/res/drawable/bg_sample_app.xml" value="0.197" />
+        <entry key="BazaarPay/src/main/res/drawable/border_round_green.xml" value="0.2015" />
+        <entry key="BazaarPay/src/main/res/drawable/border_round_top_only_green.xml" value="0.2015" />
+        <entry key="BazaarPay/src/main/res/drawable/ic_info.xml" value="0.2015" />
+        <entry key="BazaarPay/src/main/res/drawable/ic_on_boarding.xml" value="0.1" />
+        <entry key="BazaarPay/src/main/res/drawable/ic_plus_phone_old.xml" value="0.197" />
+        <entry key="BazaarPay/src/main/res/drawable/ic_report_icon_secondary_64dp_old.xml" value="0.2015" />
+        <entry key="BazaarPay/src/main/res/drawable/ic_success.xml" value="0.2015" />
+        <entry key="BazaarPay/src/main/res/drawable/ic_user_account_icon_secondary_24dp_old.xml" value="0.2015" />
+        <entry key="BazaarPay/src/main/res/drawable/ic_wallet_outline.xml" value="0.2015" />
+        <entry key="BazaarPay/src/main/res/drawable/layer_list_appbar_lifted_background.xml" value="0.112" />
+        <entry key="BazaarPay/src/main/res/drawable/layer_list_button_flat_secondary_pressed.xml" value="0.112" />
+        <entry key="BazaarPay/src/main/res/drawable/selector_appbar_background.xml" value="0.112" />
+        <entry key="BazaarPay/src/main/res/drawable/selector_button_borderless.xml" value="0.112" />
+        <entry key="BazaarPay/src/main/res/drawable/selector_button_fab.xml" value="0.112" />
+        <entry key="BazaarPay/src/main/res/drawable/selector_button_flat_fullsize.xml" value="0.112" />
+        <entry key="BazaarPay/src/main/res/drawable/selector_button_flat_light.xml" value="0.1255" />
+        <entry key="BazaarPay/src/main/res/drawable/selector_button_flat_login.xml" value="0.112" />
+        <entry key="BazaarPay/src/main/res/drawable/selector_button_flat_primary.xml" value="0.112" />
+        <entry key="BazaarPay/src/main/res/drawable/selector_button_flat_secondary.xml" value="0.112" />
+        <entry key="BazaarPay/src/main/res/drawable/shape_badge_tag.xml" value="0.112" />
+        <entry key="BazaarPay/src/main/res/drawable/shape_button_fab.xml" value="0.112" />
+        <entry key="BazaarPay/src/main/res/drawable/shape_button_flat.xml" value="0.112" />
+        <entry key="BazaarPay/src/main/res/drawable/shape_button_flat_fullsize.xml" value="0.112" />
+        <entry key="BazaarPay/src/main/res/drawable/shape_button_flat_light_selected.xml" value="0.1255" />
+        <entry key="BazaarPay/src/main/res/drawable/shape_button_flat_login.xml" value="0.112" />
+        <entry key="BazaarPay/src/main/res/drawable/shape_button_flat_primary.xml" value="0.112" />
+        <entry key="BazaarPay/src/main/res/drawable/shape_button_flat_secondary.xml" value="0.112" />
+        <entry key="BazaarPay/src/main/res/drawable/shape_gray_round_radius.xml" value="0.2015" />
+        <entry key="BazaarPay/src/main/res/drawable/shape_round_bottom_only.xml" value="0.2015" />
+        <entry key="BazaarPay/src/main/res/drawable/shape_round_gray.xml" value="0.2015" />
+        <entry key="BazaarPay/src/main/res/drawable/shape_round_top_only.xml" value="0.112" />
+        <entry key="BazaarPay/src/main/res/font/medium.xml" value="0.2640625" />
+        <entry key="BazaarPay/src/main/res/layout-land/fragment_direct_debit_on_boarding.xml" value="0.19797178130511464" />
+        <entry key="BazaarPay/src/main/res/layout-land/fragment_payment_dynamic_credit.xml" value="0.2" />
+        <entry key="BazaarPay/src/main/res/layout-land/fragment_payment_options.xml" value="0.24756606397774686" />
+        <entry key="BazaarPay/src/main/res/layout-land/item_direct_debit_onboarding.xml" value="0.19797178130511464" />
+        <entry key="BazaarPay/src/main/res/layout-land/item_payment_option.xml" value="0.375" />
+        <entry key="BazaarPay/src/main/res/layout/activity_bazaar_pay.xml" value="0.23385416666666667" />
+        <entry key="BazaarPay/src/main/res/layout/content_bazaar_pay.xml" value="0.23385416666666667" />
+        <entry key="BazaarPay/src/main/res/layout/fragment_direct_debit_bank_list.xml" value="0.375" />
+        <entry key="BazaarPay/src/main/res/layout/fragment_direct_debit_on_boarding.xml" value="0.2359375" />
+        <entry key="BazaarPay/src/main/res/layout/fragment_national_id.xml" value="0.23385416666666667" />
+        <entry key="BazaarPay/src/main/res/layout/fragment_payment_dynamic_credit.xml" value="0.23385416666666667" />
+        <entry key="BazaarPay/src/main/res/layout/fragment_payment_options.xml" value="0.375" />
+        <entry key="BazaarPay/src/main/res/layout/fragment_postpaid_terms.xml" value="0.1" />
+        <entry key="BazaarPay/src/main/res/layout/fragment_register.xml" value="0.55" />
+        <entry key="BazaarPay/src/main/res/layout/fragment_thank_you_page.xml" value="0.5" />
+        <entry key="BazaarPay/src/main/res/layout/fragment_verify_otp.xml" value="0.335" />
+        <entry key="BazaarPay/src/main/res/layout/item_bank_list.xml" value="0.1" />
+        <entry key="BazaarPay/src/main/res/layout/item_bank_list_header.xml" value="0.23385416666666667" />
+        <entry key="BazaarPay/src/main/res/layout/item_direct_debit_onboarding.xml" value="0.2359375" />
+        <entry key="BazaarPay/src/main/res/layout/item_payment_dynamic_credit.xml" value="0.23385416666666667" />
+        <entry key="BazaarPay/src/main/res/layout/item_payment_option.xml" value="0.375" />
+        <entry key="BazaarPay/src/main/res/layout/layout_verify_header.xml" value="0.23385416666666667" />
+        <entry key="BazaarPay/src/main/res/layout/view_current_balance.xml" value="0.23489583333333333" />
+        <entry key="BazaarPay/src/main/res/layout/view_dialog_buttons.xml" value="0.23385416666666667" />
+        <entry key="BazaarPay/src/main/res/layout/view_error_general.xml" value="0.23489583333333333" />
+        <entry key="BazaarPay/src/main/res/layout/view_error_network.xml" value="0.23489583333333333" />
+        <entry key="BazaarPay/src/main/res/layout/view_error_not_found.xml" value="0.23489583333333333" />
+        <entry key="BazaarPay/src/main/res/layout/view_merchant_info.xml" value="0.23489583333333333" />
+        <entry key="BazaarPay/src/main/res/layout/view_not_login.xml" value="0.23489583333333333" />
+        <entry key="BazaarPay/src/main/res/layout/view_payment_info.xml" value="0.23489583333333333" />
+        <entry key="BazaarPay/src/main/res/layout/view_point_description.xml" value="0.23489583333333333" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.23385416666666667" />
+      </map>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/build/classes" />
+  </component>
+  <component name="ProjectType">
+    <option name="id" value="Android" />
+  </component>
+</project>

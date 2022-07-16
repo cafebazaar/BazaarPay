@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item android:drawable="@drawable/layer_list_appbar_lifted_background" app:state_lifted="true" />
+    <item android:drawable="@color/surface_color_0" />
+</selector>

@@ -1,0 +1,138 @@
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:background="@color/black_hint"
+    android:layout_gravity="bottom">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/contentContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:animateLayoutChanges="true"
+        android:background="@drawable/shape_round_top_only"
+        android:minHeight="256dp"
+        android:visibility="gone"
+        tools:visibility="visible">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/paymentOptionTitle"
+            style="@style/Bazaar.Text.Subtitle1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:padding="@dimen/default_margin_double"
+            android:text="@string/payment_option_title"
+            android:textColor="@color/text_primary"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/paymentOptionClose"
+            style="@style/Bazaar.Image.Toolbar"
+            android:layout_marginEnd="@dimen/default_margin_double"
+            app:layout_constraintBottom_toTopOf="@id/paymentOptionTitleDivider"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_close_icon_secondary_24dp" />
+
+        <View
+            android:id="@+id/paymentOptionTitleDivider"
+            style="@style/Bazaar.HorizontalDivider"
+            android:layout_width="0dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/paymentOptionTitle" />
+
+        <ir.cafebazaar.bazaarpay.widget.MerchantInfoView
+            android:id="@+id/viewMerchantInfo"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="@dimen/default_margin_double"
+            android:paddingVertical="@dimen/default_margin"
+            app:layout_constraintBottom_toTopOf="@id/selectOptionTitle"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/paymentOptionTitle" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/selectOptionTitle"
+            style="@style/Bazaar.Text.Subtitle2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/default_margin_double"
+            android:layout_marginTop="@dimen/default_margin"
+            android:text="@string/select_payment_option"
+            android:textColor="@color/text_primary"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/viewMerchantInfo" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/paymentGatewaysRecyclerView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/default_margin_double"
+            android:layout_marginTop="@dimen/default_margin_half"
+            android:orientation="vertical"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constrainedHeight="true"
+            app:layout_constraintBottom_toTopOf="@id/payButton"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.515"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/selectOptionTitle"
+            tools:itemCount="3"
+            tools:listitem="@layout/item_payment_option" />
+
+        <ir.cafebazaar.bazaarpay.widget.button.BazaarButton
+            android:id="@+id/payButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_margin="@dimen/default_margin_double"
+            android:minHeight="48dp"
+            app:buttonTheme="contained"
+            app:buttonType="app"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/paymentGatewaysRecyclerView"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:sizeMode="large"
+            app:text="@string/pay"
+            tools:ignore="SpUsage"
+            tools:visibility="visible" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <FrameLayout
+        android:id="@+id/loadingContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:background="@drawable/shape_round_top_only"
+        android:minHeight="256dp"
+        android:visibility="visible"
+        tools:visibility="gone">
+
+        <ir.cafebazaar.bazaarpay.widget.loading.SpinKitView
+            android:layout_width="@dimen/loading_size"
+            android:layout_height="@dimen/loading_size"
+            android:layout_gravity="center"
+            android:layout_margin="@dimen/default_margin_quintuple" />
+
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/errorView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:background="@drawable/shape_round_top_only"
+        android:paddingVertical="@dimen/payment_error_view_padding"
+        android:visibility="gone" />
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

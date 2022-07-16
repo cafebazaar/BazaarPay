@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/Bazaar.BottomSheet.Round"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:layout_gravity="bottom">
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/topImageView"
+        style="@style/Bazaar.Text.Subtitle1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/enter_bazaar_pay"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:srcCompat="@drawable/ic_plus_phone_old" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/close"
+        style="@style/Bazaar.Image.Toolbar"
+        android:layout_marginEnd="@dimen/default_margin_double"
+        app:layout_constraintBottom_toBottomOf="@id/topImageView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/topImageView"
+        app:srcCompat="@drawable/ic_close_icon_secondary_24dp" />
+
+    <View
+        android:id="@+id/logoDivider"
+        style="@style/Bazaar.HorizontalDivider"
+        android:layout_width="0dp"
+        android:layout_margin="@dimen/default_margin_double_half"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/topImageView" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/messageTextView"
+        style="@style/Bazaar.Text.Body1.Regular"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/default_margin_double_half"
+        android:textColor="@color/text_primary"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/logoDivider"
+        tools:visibility="gone" />
+
+    <ir.cafebazaar.bazaarpay.widget.LocalAwareTextView
+        android:id="@+id/titleTextView"
+        style="@style/Bazaar.Text.Subtitle1"
+        android:layout_width="@dimen/match_constraint"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/default_margin_double_half"
+        android:layout_marginTop="@dimen/default_margin_double_half"
+        android:layout_marginEnd="@dimen/default_margin_double_half"
+        android:layout_marginBottom="@dimen/default_margin_double_half"
+        android:gravity="start"
+        android:text="@string/enter_phone_number"
+        android:textColor="@color/text_hint"
+        android:visibility="visible"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/logoDivider"
+        tools:visibility="visible" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/phoneInputLayout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/default_margin_double_half"
+        android:layout_marginTop="@dimen/default_margin_double"
+        android:layout_marginEnd="@dimen/default_margin_double_half"
+        android:layout_marginBottom="@dimen/default_margin_double_half"
+        android:hint="@string/user_phone_number_hint"
+        android:theme="@style/Bazaar.TextInput"
+        app:hintTextAppearance="@style/Bazaar.Text.Caption"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/titleTextView">
+
+        <androidx.appcompat.widget.AppCompatAutoCompleteTextView
+            android:id="@+id/phoneEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:imeOptions="actionNext"
+            android:importantForAutofill="no"
+            android:inputType="number"
+            android:maxLength="14"
+            android:paddingStart="@dimen/default_margin"
+            android:paddingTop="@dimen/default_margin_double"
+            android:paddingEnd="@dimen/default_margin"
+            android:paddingBottom="@dimen/default_margin_double"
+            android:singleLine="true">
+
+            <requestFocus />
+        </androidx.appcompat.widget.AppCompatAutoCompleteTextView>
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/privacyAndTerms"
+        style="@style/Bazaar.Text.Caption"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/default_margin_double"
+        android:layout_marginTop="@dimen/default_margin_double_half"
+        android:layout_marginEnd="@dimen/default_margin_double"
+        android:gravity="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/phoneInputLayout"
+        tools:text="@string/privacy_and_terms_login" />
+
+    <ir.cafebazaar.bazaarpay.widget.button.BazaarButton
+        android:id="@+id/proceedBtn"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/default_margin_double_half"
+        android:layout_marginTop="@dimen/default_margin_double"
+        android:layout_marginBottom="@dimen/default_margin_double_half"
+        android:textColor="@color/tc_primary_button"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/privacyAndTerms"
+        app:sizeMode="large"
+        app:text="@string/proceed" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

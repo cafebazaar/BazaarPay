@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="@layout/fragment_verify_otp">
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/bazaarLogo"
+        style="@style/Bazaar.Text.Subtitle1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/default_margin_double"
+        android:text="@string/enter_bazaar_pay"
+        app:layout_constraintBottom_toTopOf="@id/logoDivider"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"/>
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/close"
+        style="@style/Bazaar.Image.Toolbar"
+        android:layout_marginEnd="@dimen/default_margin_double"
+        app:layout_constraintBottom_toBottomOf="@id/bazaarLogo"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/bazaarLogo"
+        app:srcCompat="@drawable/ic_close_icon_secondary_24dp" />
+
+    <View
+        android:id="@+id/logoDivider"
+        style="@style/Bazaar.HorizontalDivider"
+        android:layout_width="0dp"
+        android:layout_margin="@dimen/default_margin_double_half"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        app:layout_constraintBottom_toBottomOf="@id/verificationMessageTextView"
+        app:layout_constraintBottom_toTopOf="@id/verificationMessageTextView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/verificationMessageTextView"
+        style="@style/Bazaar.Text.Subtitle1"
+        android:layout_width="@dimen/match_constraint"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/default_margin_quintuple"
+        android:layout_marginEnd="@dimen/default_margin_quintuple"
+        android:layout_marginBottom="@dimen/default_margin_double_half"
+        android:gravity="center"
+        android:textColor="@color/text_hint"
+        app:layout_constraintBottom_toTopOf="@id/verificationCodeInput"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:text="@string/waiting_for_verification_sms" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/verificationCodeInput"
+        android:layout_width="@dimen/match_constraint"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/default_margin_quintuple"
+        android:layout_marginEnd="@dimen/default_margin_quintuple"
+        android:hint="@string/verification_code_hint"
+        android:theme="@style/Bazaar.TextInput"
+        app:layout_constraintBottom_toTopOf="@+id/proceedBtn"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/verificationCodeEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:imeOptions="actionDone"
+            android:inputType="number"
+            android:singleLine="true">
+
+            <requestFocus />
+        </androidx.appcompat.widget.AppCompatEditText>
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <ir.cafebazaar.bazaarpay.widget.button.BazaarButton
+        android:id="@+id/proceedBtn"
+        android:layout_width="@dimen/match_constraint"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/default_margin_quintuple"
+        android:layout_marginTop="@dimen/default_margin_double"
+        android:textColor="@color/tc_primary_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/verificationCodeInput"
+        app:sizeMode="large"
+        app:text="@string/proceed" />
+</merge>

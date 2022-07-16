@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="color_primary">@color/black_primary</color>
+    <color name="color_hint">@color/black_hint</color>
+    <color name="color_divider">@color/black_divider</color>
+    <color name="color_disable">#0A000000</color>
+
+    <color name="surface_color_0">@color/white_primary</color>
+    <color name="surface_color_2">@color/grey_100</color>
+
+    <color name="divider_0">@color/grey_200</color>
+    <color name="divider_1">@color/grey_300</color>
+
+    <color name="surface_color_0_transparent">@color/white_primary_transparent</color>
+
+    <color name="text_hint_color">@color/black_hint</color>
+    <color name="text_light_color">@color/white_primary</color>
+    <color name="text_secondary_light_color">@color/grey_700</color>
+
+    <color name="icon_primary_color">@color/black_primary</color>
+    <color name="icon_secondary_color">@color/black_secondary</color>
+    <color name="icon_hint_color">@color/black_hint</color>
+    <color name="icon_default_color">@color/grayish_blue_light</color>
+    <color name="icon_light_color">@color/white_primary</color>
+
+    <color name="viewpager_indicator_selected_color">@color/icon_primary_color</color>
+    <color name="viewpager_indicator_unselected_color">@color/icon_default_color</color>
+
+    <color name="white_primary">#FFFFFF</color>
+    <color name="white_secondary">#B3FFFFFF</color>
+    <color name="white_hint">#80FFFFFF</color>
+    <color name="white_divider">#1FFFFFFF</color>
+
+    <color name="white_primary_transparent">#00FFFFFF</color>
+
+    <color name="black_primary">#DE000000</color>
+    <color name="black_secondary">#8F000000</color>
+    <color name="black_hint">#52000000</color>
+    <color name="black_divider">#1F000000</color>
+
+    <color name="app_brand_primary">#0EA960</color>
+    <color name="app_brand_secondary">#8F0EA960</color>
+    <color name="app_brand_hint">#520EA960</color>
+    <color name="app_brand_divider">#1F0EA960</color>
+    <color name="app_brand_light">#ECFCF4</color>
+
+    <color name="video_brand_primary">#DF2648</color>
+    <color name="video_brand_secondary">#8FDF2648</color>
+    <color name="video_brand_dark">#EC607B</color>
+    <color name="video_brand_light">#FBE5E9</color>
+
+    <color name="loyalty_club_primary">#F5B734</color>
+
+    <color name="ad_primary">#4DD0E1</color>
+    <color name="ad_background">#1F4DD0E1</color>
+    <color name="ad_badge_color">#F9A825</color>
+
+    <color name="tag_color">#717485</color>
+
+    <color name="error_primary">#DF2648</color>
+    <color name="error_dark">#D0021B</color>
+    <color name="error_light">#FFEAEE</color>
+
+    <color name="warning_primary">#FF7102</color>
+
+    <color name="info_primary">#ECEFF1</color>
+    <color name="info_secondary">#CFD8DC</color>
+    <color name="info_hint">@color/grayish_blue_light</color>
+
+    <color name="grayish_blue_light">#90A4AE</color>
+
+    <color name="grey_100">#F5F5F5</color>
+    <color name="grey_200">#EEEEEE</color>
+    <color name="grey_300">#E0E0E0</color>
+    <color name="grey_400">#BDBDBD</color>
+    <color name="grey_500">#9E9E9E</color>
+    <color name="grey_600">#757575</color>
+    <color name="grey_700">#616161</color>
+    <color name="grey_800">#424242</color>
+    <color name="grey_850">#303030</color>
+    <color name="grey_900">#212121</color>
+
+    <color name="grey_900_transparent">#00212121</color>
+
+    <color name="transparent">#00000000</color>
+    <color name="ripple_color">#39000000</color>
+
+    <!-- detail  -->
+    <color name="black_opacity_60">#99000000</color>
+
+    <!--  expandable view gradient  -->
+    <color name="expandable_view_gradient_end_color">#00FFFFFF</color>
+
+    <!--  status badge state colors  -->
+    <color name="badge_status_normal">#0EA960</color>
+    <color name="badge_status_warning">#FF7102</color>
+    <color name="badge_status_error">#DF2648</color>
+
+    <!-- detail header gradient  -->
+    <color name="detail_header_gradient_end_color">#00000000</color>
+    <color name="detail_header_gradient_center_color">#03000000</color>
+    <color name="detail_header_gradient_start_color">@color/surface_color_0</color>
+
+    <!-- overlay colors -->
+    <color name="surface_color_0_overlay">#99FFFFFF</color>
+
+    <!--  reply review  -->
+    <color name="reply_divider_color">#F9FAFD</color>
+
+    <!-- flip timer  -->
+    <color name="flip_timer_top_background">#F9FAFD</color>
+    <color name="flip_timer_bottom_background">#E5E7F0</color>
+
+    <!-- new colors -->
+
+    <!-- brand -->
+    <color name="brand_bazaar">#0EA960</color>
+    <color name="brand_bazaar_background">#ECFCF4</color>
+    <color name="brand_bazaar_video">#DF2648</color>
+    <color name="brand_bazaar_video_background">#FFEAEE</color>
+    <color name="brand_ads">#F9A825</color>
+
+    <!-- notifications -->
+    <color name="notification_success">#0EA960</color>
+    <color name="notification_error">#D0021B</color>
+    <color name="notification_warning">#FF7102</color>
+
+    <!-- static -->
+    <color name="static_white">#D1D4DD</color>
+    <color name="static_black">#20222A</color>
+
+    <!-- greys -->
+    <color name="grey_10">#FFFFFF</color>
+    <color name="grey_20">#F9FAFD</color>
+    <color name="grey_30">#F1F2F9</color>
+    <color name="grey_40">#E5E7F0</color>
+    <color name="grey_50">#D1D4DD</color>
+    <color name="grey_60">#9DA0AF</color>
+    <color name="grey_70">#717485</color>
+    <color name="grey_80">#3E4151</color>
+    <color name="grey_90">#20222A</color>
+    <color name="grey_surface">#20222A8F</color>
+
+    <!-- text -->
+    <color name="text_primary">@color/grey_90</color>
+    <color name="text_secondary">@color/grey_70</color>
+    <color name="text_hint">@color/grey_80</color>
+
+</resources>

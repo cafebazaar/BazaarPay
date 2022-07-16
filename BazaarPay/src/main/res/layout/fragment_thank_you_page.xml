@@ -1,0 +1,133 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="bottom"
+    android:animateLayoutChanges="true"
+    android:minHeight="256dp"
+    tools:context=".BazaarPayActivity"
+    tools:elevation="24dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/contentContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:background="@drawable/shape_round_top_only"
+        android:visibility="gone"
+        tools:visibility="visible">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/paymentTitle"
+            style="@style/Bazaar.Text.Headline2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:padding="@dimen/default_margin_double"
+            android:text="@string/payment_option_title"
+            android:textColor="@color/text_primary"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <View
+            android:id="@+id/titleDivider"
+            style="@style/Bazaar.HorizontalDivider"
+            android:layout_width="0dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/paymentTitle" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/statusIconImageView"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:layout_marginStart="@dimen/default_margin_double"
+            app:layout_constraintBottom_toBottomOf="@id/messageTextView"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/messageTextView"
+            app:srcCompat="@drawable/ic_success" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/messageTextView"
+            style="@style/Bazaar.Text.Subtitle2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/default_margin_double"
+            android:gravity="center_vertical"
+            android:padding="@dimen/default_margin_double"
+            android:textColor="@color/text_hint"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/statusIconImageView"
+            app:layout_constraintTop_toBottomOf="@id/titleDivider"
+            tools:text="@string/payment_done_message" />
+
+        <androidx.constraintlayout.widget.Barrier
+            android:id="@+id/contentBarrier"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:barrierDirection="bottom"
+            app:constraint_referenced_ids="messageTextView" />
+
+        <ir.cafebazaar.bazaarpay.widget.button.BazaarButton
+            android:id="@+id/successButton"
+            app:buttonTheme="contained"
+            app:buttonType="app"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/default_margin_double"
+            app:text="@string/commit"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/contentBarrier"
+            tools:visibility="visible" />
+
+        <ir.cafebazaar.bazaarpay.widget.button.BazaarButton
+            android:id="@+id/tryAgainButton"
+            app:buttonTheme="contained"
+            app:buttonType="app"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/default_margin_double"
+            android:layout_marginTop="@dimen/default_margin_double"
+            android:layout_marginRight="@dimen/default_margin"
+            android:layout_marginBottom="@dimen/default_margin_double"
+            android:minHeight="@dimen/default_button_height"
+            app:text="@string/try_again"
+            android:textColor="@color/tc_primary_button_white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@+id/cancelButton"
+            app:layout_constraintTop_toBottomOf="@id/messageTextView"
+            tools:ignore="RtlHardcoded" />
+
+        <ir.cafebazaar.bazaarpay.widget.button.BazaarButton
+            android:id="@+id/cancelButton"
+            app:buttonType="app"
+            app:buttonTheme="outline"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/default_margin"
+            android:layout_marginTop="@dimen/default_margin_double"
+            android:layout_marginRight="@dimen/default_margin_double"
+            android:layout_marginBottom="@dimen/default_margin_double"
+            android:minHeight="@dimen/default_button_height"
+            app:text="@string/cancel"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toRightOf="@+id/tryAgainButton"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/messageTextView"
+            tools:ignore="RtlHardcoded" />
+
+        <androidx.constraintlayout.widget.Group
+            android:id="@+id/failureButtonsGroup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:constraint_referenced_ids="cancelButton,tryAgainButton"
+            tools:visibility="gone" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</FrameLayout>

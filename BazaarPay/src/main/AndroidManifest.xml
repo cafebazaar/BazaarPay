@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="ir.cafebazaar.bazaarpay">
+
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <application>
+        <activity
+            android:name=".BazaarPayActivity"
+            android:exported="true"
+            android:launchMode="singleTask"
+            android:theme="@style/Theme.Bazaar.Primary.Transparent"
+            android:label="@string/title_activity_bazaar_pay"
+            android:windowSoftInputMode="adjustResize" >
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.BROWSABLE" />
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <data
+                    android:host="${applicationId}"
+                    android:path="/increase_balance"
+                    tools:ignore="AppLinkUrlError" />
+
+                <data
+                    android:host="${applicationId}"
+                    android:path="/direct_debit_activation"
+                    tools:ignore="AppLinkUrlError" />
+
+                <data android:scheme="bazaar" />
+            </intent-filter>
+        </activity>
+    </application>
+
+</manifest>

@@ -1,0 +1,355 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+    <style name="Theme.Bazaar" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/surface_color_0</item>
+        <item name="colorPrimaryDark">@color/grey_20</item>
+        <item name="colorAccent">@color/app_brand_primary</item>
+        <item name="android:fontFamily">@font/regular</item>
+        <item name="textInputStyle">@style/Bazaar.TextInput</item>
+        <item name="android:windowBackground">@color/surface_color_0</item>
+        <item name="android:windowEnableSplitTouch">false</item>
+        <item name="android:splitMotionEvents">false</item>
+        <item name="android:windowAnimationStyle">@style/WindowAnimationTransition</item>
+    </style>
+
+    <style name="Theme.Bazaar.Primary" parent="Theme.Bazaar">
+        <item name="android:colorPrimaryDark">@color/black_primary</item>
+    </style>
+
+    <style name="Theme.Bazaar.VideoActivity" parent="Theme.Bazaar" />
+
+    <style name="Theme.Bazaar.Primary.Transparent">
+        <item name="colorPrimaryDark">@color/black_primary</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+    </style>
+
+    <style name="Theme.Bazaar.Dialog" />
+
+    <style name="Theme.Bazaar.DialogSlideAnimation">
+        <item name="android:windowEnterAnimation">@anim/slide_up</item>
+        <item name="android:windowExitAnimation">@anim/slide_down</item>
+    </style>
+
+    <style name="Bazaar" />
+
+    <!--================-->
+    <!--    TextInput   -->
+    <!--================-->
+
+    <!--
+        OutlinedBox uses primary color for cursor/bar items, because our primary color is white
+        Bazaar.TextInput overrides colorPrimary to our default colorAccent,
+        So If you want to use this style don't forget to apply it on the `theme` attribute
+
+        android:theme="@style/Bazaar.TextInput"
+    -->
+
+    <style name="Bazaar.TextInput" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="boxStrokeColor">@color/color_hint</item>
+        <item name="boxStrokeWidth">1dp</item>
+        <item name="android:textColorHint">@color/text_hint_color</item>
+        <item name="colorError">@color/error_primary</item>
+        <item name="colorPrimary">@color/app_brand_primary</item>
+    </style>
+    <!--================-->
+    <!--    Login       -->
+    <!--================-->
+
+    <style name="Bazaar.BottomSheet.Round" parent="Bazaar">
+        <item name="android:background">@drawable/shape_round_top_only</item>
+        <item name="android:paddingTop">20dp</item>
+    </style>
+
+    <style name="Bazaar.BottomSheet.EnterExitAnimation" parent="Bazaar">
+        <item name="android:windowEnterAnimation">@anim/slide_up_login</item>
+        <item name="android:windowExitAnimation">@anim/slide_down_login</item>
+    </style>
+
+    <!--================-->
+    <!--   comment      -->
+    <!--================-->
+
+    <!--================-->
+    <!--    Buttons     -->
+    <!--================-->
+
+    <style name="Bazaar.RoundRippleEffect">
+        <item name="android:background">?android:attr/selectableItemBackgroundBorderless</item>
+    </style>
+
+    <style name="Bazaar.ForegroundContainerRipple">
+        <item name="android:foreground">?android:attr/selectableItemBackground</item>
+    </style>
+
+    <style name="Bazaar.Button">
+        <item name="android:background">@color/app_brand_primary</item>
+        <item name="android:fontFamily">@font/medium</item>
+        <item name="android:includeFontPadding">false</item>
+        <item name="android:paddingTop">0dp</item>
+        <item name="android:paddingBottom">0dp</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:gravity">center</item>
+        <item name="android:minHeight">36dp</item>
+        <item name="android:paddingStart">8dp</item>
+        <item name="android:paddingEnd">8dp</item>
+    </style>
+
+    <style name="Bazaar.Button.Borderless">
+        <item name="android:background">@drawable/selector_button_borderless</item>
+    </style>
+
+    <style name="Bazaar.Button.Borderless.Colored">
+        <item name="android:background">@drawable/selector_button_borderless</item>
+    </style>
+
+    <style name="Bazaar.Button.White">
+        <item name="android:background">@color/white_primary</item>
+    </style>
+
+    <style name="Bazaar.Button.Fab">
+        <item name="android:minHeight">48dp</item>
+        <item name="android:textSize">@dimen/title2_font_size</item>
+        <item name="android:background">@drawable/selector_button_fab</item>
+    </style>
+
+    <style name="Bazaar.Button.Flat">
+        <item name="android:minWidth">@dimen/button_video_play_min_width</item>
+        <item name="android:textSize">@dimen/subtitle1</item>
+        <item name="android:background">@drawable/shape_button_flat</item>
+    </style>
+
+    <style name="Bazaar.Button.Flat.Primary">
+        <item name="android:background">@drawable/selector_button_flat_primary</item>
+    </style>
+
+    <style name="Bazaar.Button.Flat.Primary.SmallText">
+        <item name="android:textSize">@dimen/subtitle2</item>
+        <item name="android:paddingLeft">@dimen/default_margin_double</item>
+        <item name="android:paddingRight">@dimen/default_margin_double</item>
+    </style>
+
+    <!--================-->
+    <!--    ImageViews     -->
+    <!--================-->
+    <style name="Bazaar.Image" parent="Bazaar">
+        <item name="android:layout_width">24dp</item>
+        <item name="android:layout_height">24dp</item>
+    </style>
+
+    <style name="Bazaar.Image.ShieldIcon">
+        <item name="android:layout_width">80dp</item>
+        <item name="android:layout_height">80dp</item>
+    </style>
+
+    <style name="Bazaar.Image.ShieldIcon.Small">
+        <item name="android:layout_width">36dp</item>
+        <item name="android:layout_height">36dp</item>
+    </style>
+
+    <style name="Bazaar.Image.Toolbar">
+        <item name="android:background">?android:attr/selectableItemBackgroundBorderless</item>
+        <item name="android:layout_width">36dp</item>
+        <item name="android:layout_height">36dp</item>
+        <item name="android:padding">@dimen/default_margin_half</item>
+    </style>
+
+    <style name="Bazaar.Image.Toolbar.ClearTint">
+        <item name="android:tint">@null</item>
+    </style>
+
+    <style name="Bazaar.Image.Toolbar.ClearTint.Icon">
+        <item name="android:layout_width">48dp</item>
+        <item name="android:layout_height">48dp</item>
+    </style>
+
+    <style name="Bazaar.Image.Toolbar.Icon">
+        <item name="android:layout_width">40dp</item>
+        <item name="android:layout_height">40dp</item>
+        <item name="android:padding">@dimen/default_margin</item>
+    </style>
+
+    <style name="Bazaar.Image.Icon" parent="Bazaar.Image">
+        <item name="android:layout_width">24dp</item>
+        <item name="android:layout_height">24dp</item>
+    </style>
+
+    <style name="Bazaar.Image.Icon.WithBoundary" parent="Bazaar.RoundRippleEffect">
+        <item name="android:layout_width">40dp</item>
+        <item name="android:layout_height">40dp</item>
+        <item name="android:padding">@dimen/default_margin</item>
+    </style>
+
+    <style name="Bazaar.Image.Icon.Bazaar" parent="Bazaar.Image">
+        <item name="android:layout_width">55dp</item>
+        <item name="android:layout_height">36dp</item>
+    </style>
+
+    <style name="Bazaar.Image.Icon.Rate">
+        <item name="android:layout_width">14dp</item>
+        <item name="android:layout_height">14dp</item>
+    </style>
+
+    <style name="Bazaar.Image.Icon.Review">
+        <item name="android:layout_width">40dp</item>
+        <item name="android:layout_height">40dp</item>
+    </style>
+
+    <style name="Bazaar.Image.Avatar">
+        <item name="android:layout_width">72dp</item>
+        <item name="android:layout_height">72dp</item>
+    </style>
+
+    <style name="Bazaar.Image.Avatar.AppDetail">
+        <item name="android:layout_width">76dp</item>
+        <item name="android:layout_height">76dp</item>
+        <item name="android:src">@drawable/bg_sample_app</item>
+    </style>
+
+    <!-- {@deprecated Use @style/Bazaar.Image.Avatar.AppDetail instead.} -->
+    <style name="Bazaar.Image.Avatar.AppDetail.Legacy">
+        <item name="android:layout_width">88dp</item>
+        <item name="android:layout_height">88dp</item>
+    </style>
+
+    <style name="Bazaar.Image.Avatar.Payment">
+        <item name="android:layout_width">48dp</item>
+        <item name="android:layout_height">48dp</item>
+        <item name="android:src">@drawable/bg_sample_app</item>
+    </style>
+
+    <style name="Bazaar.Image.PromoAppIcon">
+        <item name="android:layout_width">48dp</item>
+        <item name="android:layout_height">48dp</item>
+    </style>
+
+    <!--================-->
+    <!--      Texts     -->
+    <!--================-->
+    <style name="Bazaar.Text.Medium.Colored">
+        <item name="android:textSize">@dimen/small_font_size</item>
+    </style>
+
+
+    <style name="Bazaar.Text.Subtitle2.Green">
+        <item name="android:textColor">@color/app_brand_primary</item>
+    </style>
+
+    <style name="Bazaar.Text.Subtitle2.Green.Small">
+        <item name="android:textSize">@dimen/small_font_size</item>
+    </style>
+
+    <style name="Bazaar.Text.Body1.Regular">
+        <item name="android:fontFamily">@font/regular</item>
+    </style>
+
+    <style name="Bazaar.Text.Body2.Rate">
+        <item name="android:textSize">@dimen/small_font_size</item>
+    </style>
+
+    <style name="Bazaar.Text.Caption.Info">
+        <item name="android:maxLines">1</item>
+        <item name="android:minLines">1</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:lineSpacingExtra">0dp</item>
+    </style>
+
+    <style name="Bazaar.Text.Caption.PrimaryVitrin" parent="Bazaar.Text.Body2">
+        <item name="android:maxLines">2</item>
+        <item name="android:minLines">2</item>
+        <item name="android:lineSpacingExtra">4dp</item>
+        <item name="android:ellipsize">end</item>
+    </style>
+
+    <style name="Bazaar.Text.Caption.Name">
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:minLines">1</item>
+    </style>
+
+    <style name="Bazaar.Text.Experimental" />
+
+    <style name="Bazaar.HorizontalDivider">
+        <item name="android:layout_height">1dp</item>
+        <item name="android:background">@color/color_divider</item>
+    </style>
+
+    <style name="Bazaar.HorizontalDivider.White">
+        <item name="android:background">@color/white_divider</item>
+    </style>
+
+    <style name="Bazaar.VerticalDivider">
+        <item name="android:layout_width">1dp</item>
+        <item name="android:background">@color/color_divider</item>
+    </style>
+
+    <style name="Bazaar.VerticalDivider.White">
+        <item name="android:background">@color/white_divider</item>
+    </style>
+
+    <style name="Theme.Bazaar.BottomNavigationText">
+        <item name="android:ellipsize">end</item>
+        <item name="itemTextAppearanceActive">@style/Bazaar.Text.Overline</item>
+        <item name="itemTextAppearanceInactive">@style/Bazaar.Text.Overline</item>
+    </style>
+
+    <style name="Bazaar.InstallProgress">
+        <item name="indicatorColor">@color/app_brand_primary</item>
+        <item name="trackColor">@color/color_divider</item>
+    </style>
+
+    <style name="Bazaar.InstallProgress.List">
+        <item name="trackThickness">8dp</item>
+        <item name="trackCornerRadius">3dp</item>
+    </style>
+
+    <style name="Bazaar.InstallProgress.AppDetails">
+        <item name="trackThickness">12dp</item>
+        <item name="trackCornerRadius">6dp</item>
+    </style>
+
+    <style name="TabLayoutStyle">
+        <item name="android:ellipsize">end</item>
+        <item name="android:gravity">center</item>
+        <item name="android:maxLines">2</item>
+    </style>
+
+    <style name="ChipLayoutStyle">
+        <item name="android:ellipsize">end</item>
+        <item name="android:gravity">center</item>
+        <item name="android:maxLines">1</item>
+    </style>
+
+    <style name="WindowAnimationTransition">
+        <item name="android:windowEnterAnimation">@android:anim/fade_in</item>
+        <item name="android:windowExitAnimation">@android:anim/fade_out</item>
+    </style>
+
+    <style name="DialogInline" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="android:typeface">sans</item>
+    </style>
+
+    <style name="pickerTheme">
+        <item name="colorControlNormal">@color/color_divider</item>
+    </style>
+
+    <!--  detail text  -->
+
+    <style name="Bazaar.Text.Medium.Heading1">
+        <item name="android:textSize">@dimen/title2_font_size</item>
+    </style>
+
+    <style name="Bazaar.Text.Medium.Subtitle">
+        <item name="android:textSize">@dimen/small_font_size</item>
+    </style>
+
+    <style name="Bazaar.Text.Body">
+        <item name="android:textSize">@dimen/small_font_size</item>
+    </style>
+
+    <style name="VideoControllerActiveStyle" parent="Theme.Bazaar">
+        <item name="colorControlActivated">@color/video_brand_dark</item>
+    </style>
+</resources>

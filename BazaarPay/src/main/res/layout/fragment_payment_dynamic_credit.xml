@@ -1,0 +1,209 @@
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:background="@color/black_hint">
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/creditScrollView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:background="@drawable/shape_round_top_only"
+        android:minHeight="256dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/contentContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/dynamicCreditTitle"
+                style="@style/Bazaar.Text.Subtitle1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:padding="@dimen/default_margin_double"
+                android:text="@string/increase_balance"
+                android:textColor="@color/text_primary"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ir.cafebazaar.bazaarpay.widget.RTLImageView
+                android:id="@+id/dynamicCreditBack"
+                style="@style/Bazaar.Image.Toolbar"
+                android:layout_marginStart="@dimen/default_margin_double"
+                app:layout_constraintBottom_toTopOf="@id/dynamicCreditTitleDivider"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_round_arrow_back_icon_secondary_24dp_old" />
+
+            <View
+                android:id="@+id/dynamicCreditTitleDivider"
+                style="@style/Bazaar.HorizontalDivider"
+                android:layout_width="0dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/dynamicCreditTitle" />
+
+            <ir.cafebazaar.bazaarpay.widget.MerchantInfoView
+                android:id="@+id/merchantInfo"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:paddingHorizontal="@dimen/default_margin_double"
+                android:paddingVertical="@dimen/default_margin"
+                app:layout_constraintBottom_toTopOf="@id/dynamicCreditBalance"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/dynamicCreditTitleDivider" />
+
+            <ir.cafebazaar.bazaarpay.widget.CurrentBalanceView
+                android:id="@+id/dynamicCreditBalance"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/default_margin_double"
+                android:layout_marginTop="@dimen/default_margin_double"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/merchantInfo" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/dynamicCreditSubTitle"
+                style="@style/Bazaar.Text.Caption"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/default_margin_double"
+                android:layout_marginTop="@dimen/default_margin_double"
+                android:background="@drawable/shape_round_gray"
+                android:drawablePadding="@dimen/default_margin_half"
+                android:gravity="center_vertical"
+                android:paddingHorizontal="@dimen/default_margin"
+                android:paddingVertical="@dimen/default_margin_half_quarter"
+                android:textColor="@color/text_hint"
+                app:drawableStartCompat="@drawable/ic_info"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/dynamicCreditBalance"
+                tools:text="لازم است موجودی خود را حداقل به میزان بدهی اعتبار امانی افزایش دهید" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/dynamicCreditPayOrEnterTitle"
+                style="@style/Bazaar.Text.Subtitle2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/default_margin_double"
+                android:layout_marginTop="@dimen/default_margin"
+                android:text="@string/select_enter_dynamic_credit_title"
+                android:textColor="@color/text_primary"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/dynamicCreditSubTitle" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/dynamicCreditRecyclerView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/default_margin"
+                android:clipToPadding="false"
+                android:paddingStart="@dimen/default_margin_one_half"
+                android:paddingEnd="@dimen/default_margin_one_half"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/dynamicCreditPayOrEnterTitle"
+                tools:itemCount="1"
+                tools:listitem="@layout/item_payment_dynamic_credit" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/priceInputLayout"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/default_margin_double"
+                android:layout_marginTop="@dimen/default_margin_double"
+                android:layout_marginEnd="@dimen/default_margin_double"
+                android:hint="@string/dynamic_text_price_placeholder"
+                android:theme="@style/Bazaar.TextInput"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/dynamicCreditRecyclerView">
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/priceEditText"
+                    style="@style/Bazaar.Text.Body1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:imeOptions="actionNext"
+                    android:importantForAutofill="no"
+                    android:inputType="number"
+                    android:longClickable="false"
+                    android:maxLength="25"
+                    android:paddingStart="@dimen/default_margin"
+                    android:paddingTop="@dimen/default_margin_double"
+                    android:paddingEnd="@dimen/default_margin"
+                    android:paddingBottom="@dimen/default_margin_double"
+                    android:singleLine="true"
+                    android:textColor="@color/text_primary"
+                    tools:text="۳۰۰۰ تومان" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/dynamicCreditWarning"
+                style="@style/Bazaar.Text.Caption"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/default_margin_double"
+                android:layout_marginTop="@dimen/default_margin_double"
+                android:layout_marginEnd="@dimen/default_margin_double"
+                android:textColor="@color/text_hint"
+                app:layout_constraintBottom_toTopOf="@id/payButton"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/priceInputLayout"
+                tools:text="سالانه به مقدار ۵۰۰۰ تومان از موجودی شما کاسته خواهد شد." />
+
+            <ir.cafebazaar.bazaarpay.widget.button.BazaarButton
+                android:id="@+id/payButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/default_margin_double"
+                app:buttonTheme="contained"
+                app:buttonType="app"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/dynamicCreditWarning"
+                app:sizeMode="large"
+                app:text="@string/pay"
+                tools:visibility="visible" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
+
+    <FrameLayout
+        android:id="@+id/loadingContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:background="@drawable/shape_round_top_only"
+        android:minHeight="256dp"
+        android:visibility="gone">
+
+        <ir.cafebazaar.bazaarpay.widget.loading.SpinKitView
+            android:layout_width="@dimen/loading_size"
+            android:layout_height="@dimen/loading_size"
+            android:layout_gravity="center"
+            android:layout_margin="@dimen/default_margin_quintuple" />
+
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/errorView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:background="@drawable/shape_round_top_only"
+        android:paddingVertical="@dimen/payment_error_view_padding"
+        android:visibility="gone" />
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

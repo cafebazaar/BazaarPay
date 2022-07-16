@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:gravity="center_vertical"
+    tools:orientation="horizontal"
+    tools:parentTag="android.widget.LinearLayout">
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:layout_width="16dp"
+        android:layout_height="16dp"
+        app:srcCompat="@drawable/ic_point_16dp" />
+
+    <ir.cafebazaar.bazaarpay.widget.LocalAwareTextView
+        android:id="@+id/pointDescriptionTextView"
+        style="@style/Bazaar.Text.Caption"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/default_margin_half"
+        android:layout_weight="1"
+        android:textAlignment="viewStart"
+        android:textColor="@color/text_secondary"
+        tools:text="امتیاز دریافتی از این خرید" />
+
+</merge>
