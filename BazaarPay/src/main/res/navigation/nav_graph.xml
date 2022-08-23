@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/startPaymentFragment">
+
+    <action android:id="@+id/open_signin"
+        app:destination="@id/registerFragment"/>
+
+    <action
+        android:id="@+id/open_paymentThankYouPageFragment"
+        app:destination="@id/paymentThankYouPageFragment" />
+
+    <action
+        android:id="@+id/open_payment_methods"
+        app:destination="@id/paymentMethodsFragment" />
+
+    <fragment
+        android:id="@+id/startPaymentFragment"
+        android:name="ir.cafebazaar.bazaarpay.StartPaymentFragment"
+        android:label="StartPaymentFragment">
+        <action
+            android:id="@+id/action_startPaymentFragment_to_registerFragment"
+            app:destination="@id/registerFragment" />
+        <action
+            android:id="@+id/action_startPaymentFragment_to_paymentMethodsFragment"
+            app:destination="@id/paymentMethodsFragment" />
+        <action
+            android:id="@+id/action_startPaymentFragment_to_directDebitOnBoardingFragment"
+            app:destination="@id/directDebitOnBoardingFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/registerFragment"
+        android:name="ir.cafebazaar.bazaarpay.screens.login.register.RegisterFragment"
+        android:label="RegisterFragment">
+        <action
+            android:id="@+id/action_registerFragment_to_verifyOtpFragment"
+            app:destination="@id/verifyOtpFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/verifyOtpFragment"
+        android:name="ir.cafebazaar.bazaarpay.screens.login.verify.VerifyOtpFragment"
+        android:label="VerifyOtpFragment">
+
+        <argument
+            android:name="phoneNumber"
+            app:argType="string" />
+        <argument
+            android:name="waitingTimeWithEnableCall"
+            app:argType="ir.cafebazaar.bazaarpay.data.bazaar.account.models.getotptoken.WaitingTimeWithEnableCall" />
+        <action
+            android:id="@+id/action_verifyOtpFragment_to_paymentMethodsFragment"
+            app:destination="@id/paymentMethodsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/paymentMethodsFragment"
+        android:name="ir.cafebazaar.bazaarpay.screens.payment.paymentmethods.PaymentMethodsFragment"
+        android:label="PaymentMethodsFragment">
+        <action
+            android:id="@+id/action_paymentMethodsFragment_to_directDebitOnBoardingFragment"
+            app:destination="@id/directDebitOnBoardingFragment" />
+        <action
+            android:id="@+id/action_paymentMethodsFragment_to_postpaidTermsFragment"
+            app:destination="@id/postpaidTermsFragment" />
+        <action
+            android:id="@+id/action_paymentMethodsFragment_to_paymentDynamicCreditFragment"
+            app:destination="@id/paymentDynamicCreditFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/directDebitOnBoardingFragment"
+        android:name="ir.cafebazaar.bazaarpay.screens.payment.directdebitonboarding.DirectDebitOnBoardingFragment"
+        android:label="DirectDebitOnBoardingFragment" >
+        <action
+            android:id="@+id/action_directDebitOnBoardingFragment_to_nationalIdFragment"
+            app:destination="@id/directDebitNationalIdFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/directDebitNationalIdFragment"
+        android:name="ir.cafebazaar.bazaarpay.screens.payment.directdebitactivating.nationalid.DirectDebitNationalIdFragment"
+        android:label="NationalIdFragment" >
+        <action
+            android:id="@+id/action_nationalIdFragment_to_directDebitBankListFragment"
+            app:destination="@id/directDebitBankListFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/paymentThankYouPageFragment"
+        android:name="ir.cafebazaar.bazaarpay.screens.payment.thanks.PaymentThankYouPageFragment"
+        android:label="PaymentThankYouPageFragment">
+
+
+        <argument
+            android:name="isSuccess"
+            app:argType="boolean" />
+
+        <argument
+            android:name="errorModel"
+            android:defaultValue="@null"
+            app:argType="ir.cafebazaar.bazaarpay.data.bazaar.models.ErrorModel"
+            app:nullable="true" />
+
+        <argument
+            android:name="message"
+            app:argType="string"
+            android:defaultValue="@null"
+            app:nullable="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/directDebitBankListFragment"
+        android:name="ir.cafebazaar.bazaarpay.screens.payment.directdebitactivating.banklist.DirectDebitBankListFragment"
+        android:label="DirectDebitBankListFragment">
+
+        <argument
+            android:name="nationalId"
+            app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/postpaidTermsFragment"
+        android:name="ir.cafebazaar.bazaarpay.screens.payment.postpaidactivation.PostpaidTermsFragment"
+        android:label="PostpaidTermsFragment" />
+    <fragment
+        android:id="@+id/paymentDynamicCreditFragment"
+        android:name="ir.cafebazaar.bazaarpay.screens.payment.increasecredit.PaymentDynamicCreditFragment"
+        android:label="PaymentDynamicCreditFragment">
+
+        <argument
+            android:name="creditOptions"
+            app:argType="ir.cafebazaar.bazaarpay.data.payment.models.getpaymentmethods.DynamicCreditOption" />
+
+        <argument
+            android:name="dealer"
+            app:argType="ir.cafebazaar.bazaarpay.screens.payment.increasecredit.DynamicCreditOptionDealerArg" />
+    </fragment>
+</navigation>

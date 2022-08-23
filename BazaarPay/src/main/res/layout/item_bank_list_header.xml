@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/root"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="@dimen/default_margin_double"
+    android:layout_marginTop="@dimen/default_margin"
+    android:orientation="vertical">
+
+    <androidx.appcompat.widget.AppCompatTextView
+        style="@style/Bazaar.Text.Caption"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/bank_list_header_1"
+        android:textColor="@color/text_hint" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        style="@style/Bazaar.Text.Caption"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/default_margin_half"
+        android:text="@string/bank_list_header_2"
+        android:textColor="@color/text_hint" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        style="@style/Bazaar.Text.Subtitle2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/default_margin"
+        android:text="@string/header_select_bank_title"
+        android:textColor="@color/text_hint" />
+</LinearLayout>

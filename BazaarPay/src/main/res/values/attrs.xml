@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="SpinKitView">
+        <attr name="loadingColor" format="reference" />
+    </declare-styleable>
+
+    <attr name="textColor" format="reference" />
+
+    <attr name="text" format="string" />
+
+    <declare-styleable name="LoadingButton">
+        <attr name="text" />
+        <attr name="textColor"/>
+        <attr name="showLoading" format="boolean" />
+        <attr name="loadingButtonTint" format="reference" />
+        <attr name="loadingSize" format="dimension" />
+        <attr name="progressType" format="enum">
+            <enum name="NORMAL_PROGRESS" value="0" />
+            <enum name="SPRITE_PROGRESS" value="1" />
+        </attr>
+    </declare-styleable>
+
+    <attr name="buttonTheme" format="enum">
+        <enum name="outline" value="0" />
+        <enum name="contained" value="1" />
+        <enum name="contained_grey" value="2" />
+        <enum name="transparent" value="3" />
+    </attr>
+
+    <attr name="buttonType" format="enum">
+        <enum name="app" value="0" />
+        <enum name="video" value="1" />
+        <enum name="neutral" value="2" />
+        <enum name="disabled" value="3" />
+    </attr>
+
+    <attr name="sizeMode" format="enum">
+        <enum name="medium" value="0" />
+        <enum name="large" value="1" />
+        <enum name="small" value="2" />
+    </attr>
+
+    <declare-styleable name="BazaarButton">
+        <!-- STATES -->
+        <attr name="showLoading" />
+        <!-- ATTRIBUTES -->
+        <attr name="text" />
+        <attr name="buttonTheme" />
+        <attr name="buttonType" />
+        <attr name="sizeMode" />
+        <attr name="rightIcon" format="integer" />
+    </declare-styleable>
+
+    <declare-styleable name="LocalAwareTextView">
+        <attr name="gravity" format="enum">
+            <enum name="START" value="0" />
+            <enum name="END" value="1" />
+        </attr>
+    </declare-styleable>
+</resources>

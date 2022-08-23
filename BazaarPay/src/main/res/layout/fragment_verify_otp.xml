@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/Bazaar.BottomSheet.Round"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="bottom">
+
+    <include layout="@layout/layout_verify_header" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/resendCodeButton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/default_margin"
+        android:layout_marginBottom="@dimen/default_margin_triple"
+        android:gravity="center"
+        android:padding="@dimen/default_margin"
+        android:text="@string/resend_verification_sms"
+        android:textColor="@color/app_brand_primary"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/callButton"
+        app:layout_constraintTop_toBottomOf="@id/proceedBtn"
+        app:layout_constraintWidth_percent="0.5"
+        tools:visibility="invisible" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/callButton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/default_margin"
+        android:layout_marginBottom="@dimen/default_margin_triple"
+        android:gravity="center"
+        android:padding="@dimen/default_margin"
+        android:text="@string/send_code_by_call"
+        android:textColor="@color/app_brand_primary"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/resendCodeButton"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/proceedBtn"
+        app:layout_constraintWidth_percent="0.5"
+        tools:visibility="invisible" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/resendText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/default_margin"
+        android:layout_marginBottom="@dimen/default_margin_triple"
+        android:gravity="center"
+        android:padding="@dimen/default_margin"
+        android:textColor="@color/text_secondary"
+        android:text="@string/resend_after"
+        android:textAppearance="@style/Bazaar.Text.Body2"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/proceedBtn" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

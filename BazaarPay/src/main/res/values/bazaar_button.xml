@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="bazaar_button_large_height">44dp</dimen>
+    <dimen name="bazaar_button_medium_height">40dp</dimen>
+    <dimen name="bazaar_button_small_height">36dp</dimen>
+    <dimen name="bazaar_button_corner_radius">4dp</dimen>
+    <dimen name="bazaar_button_stroke_width">1dp</dimen>
+    <dimen name="bazaar_button_loading_size">48dp</dimen>
+    <dimen name="bazaar_button_icon_size">24dp</dimen>
+    <dimen name="bazaar_button_margin">8dp</dimen>
+</resources>

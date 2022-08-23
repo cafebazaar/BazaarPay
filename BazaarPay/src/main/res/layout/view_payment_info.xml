@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:paddingHorizontal="@dimen/default_margin_double"
+    tools:paddingVertical="@dimen/default_margin"
+    tools:parentTag="androidx.constraintlayout.widget.ConstraintLayout">
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/dealerIconImageView"
+        style="@style/Bazaar.Image.Avatar.Payment"
+        app:layout_constraintBottom_toBottomOf="@id/dealerInfoTextView"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/productNameTextView" />
+
+    <ir.cafebazaar.bazaarpay.widget.LocalAwareTextView
+        android:id="@+id/productNameTextView"
+        style="@style/Bazaar.Text.Subtitle1"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/default_margin_double"
+        android:ellipsize="end"
+        android:lines="1"
+        android:textColor="@color/text_primary"
+        app:gravity="START"
+        app:layout_constraintBottom_toTopOf="@id/dealerInfoTextView"
+        app:layout_constraintEnd_toStartOf="@id/paymentPriceView"
+        app:layout_constraintStart_toEndOf="@id/dealerIconImageView"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_chainStyle="packed"
+        tools:text="انتقام کرگدن" />
+
+    <ir.cafebazaar.bazaarpay.widget.LocalAwareTextView
+        android:id="@+id/dealerInfoTextView"
+        style="@style/Bazaar.Text.Caption"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/default_margin_double"
+        android:ellipsize="end"
+        android:maxLines="2"
+        android:textColor="@color/text_secondary"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/paymentPriceView"
+        app:layout_constraintStart_toEndOf="@id/dealerIconImageView"
+        app:layout_constraintTop_toBottomOf="@id/productNameTextView"
+        app:layout_constraintVertical_chainStyle="packed"
+        tools:text="شرکت صبا ایده" />
+
+    <ir.cafebazaar.bazaarpay.widget.NoDiscountTextView
+        android:id="@+id/priceBeforeDiscountView"
+        style="@style/Bazaar.Text.Body2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:lines="1"
+        android:maxLines="1"
+        android:singleLine="true"
+        android:textColor="@color/text_secondary"
+        app:layout_constraintBottom_toTopOf="@id/paymentPriceView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/paymentPriceView"
+        app:layout_constraintTop_toTopOf="@id/dealerIconImageView"
+        tools:text="۲۵۰۰ تومان" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/paymentPriceView"
+        style="@style/Bazaar.Text.Headline2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/text_primary"
+        app:layout_constraintBottom_toBottomOf="@id/dealerIconImageView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/priceBeforeDiscountView"
+        tools:text="۱۰۰۰ تومان" />
+
+</merge>
