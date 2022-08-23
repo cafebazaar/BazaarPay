@@ -8,7 +8,7 @@ plugins {
 }
 
 final GROUP_ID = "ir.cafebazaar"
-final VERSION_NAME = "alpha"
+final VERSION_NAME = "1.0.0-alpha01"
 final VERSION_CODE = 1
 
 android {
