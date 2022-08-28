@@ -167,7 +167,7 @@ class BazaarPayActivity : AppCompatActivity(), FinishCallbacks {
     private fun initServiceLocator() {
         if (ServiceLocator.isConfigInitiated()) {
             ServiceLocator.initializeDependencies(
-                activity = this
+                context = applicationContext
             )
         }
     }

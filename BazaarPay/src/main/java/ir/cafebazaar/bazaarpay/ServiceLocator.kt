@@ -42,9 +42,9 @@ internal object ServiceLocator {
     }
 
     fun initializeDependencies(
-        activity: Activity
+        context: Context
     ) {
-        servicesMap[getKeyOfClass<Context>()] = activity
+        servicesMap[getKeyOfClass<Context>()] = context
         initGlobalDispatchers()
         initAccountClient()
         initAccountSharedDataSource()
