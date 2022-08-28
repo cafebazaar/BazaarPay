@@ -20,7 +20,7 @@ class BazaarPayActivity : AppCompatActivity(), FinishCallbacks {
     private lateinit var currentUiMode: Number
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        initNighMode()
+        initNightMode()
         super.onCreate(savedInstanceState)
         binding = ActivityBazaarPayBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -159,7 +159,7 @@ class BazaarPayActivity : AppCompatActivity(), FinishCallbacks {
         return ServiceLocator.getOrNull<Boolean>(ServiceLocator.IS_DARK)?:false
     }
 
-    private fun initNighMode() {
+    private fun initNightMode() {
         if (isDarkMode()) {
             AppCompatDelegate.MODE_NIGHT_YES
         } else {
