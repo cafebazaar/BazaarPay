@@ -12,7 +12,7 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.navigation.findNavController
 import androidx.navigation.navOptions
 import ir.cafebazaar.bazaarpay.databinding.ActivityBazaarPayBinding
-import java.util.*
+import java.util.Locale
 
 class BazaarPayActivity : AppCompatActivity(), FinishCallbacks {
 
