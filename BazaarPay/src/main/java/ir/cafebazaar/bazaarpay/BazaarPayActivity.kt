@@ -17,7 +17,7 @@ import java.util.Locale
 class BazaarPayActivity : AppCompatActivity(), FinishCallbacks {
 
     private lateinit var binding: ActivityBazaarPayBinding
-    private lateinit var currentUiMode: Number
+    private var currentUiMode: Number? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         initNightMode()
@@ -144,7 +144,7 @@ class BazaarPayActivity : AppCompatActivity(), FinishCallbacks {
         }
 
         val overrideConfiguration = Configuration(contextResource.configuration).apply {
-            this.uiMode = currentUiMode.toInt()
+            this.uiMode = currentUiMode?.toInt() ?: Configuration.UI_MODE_NIGHT_NO
         }
         return context.createConfigurationContext(overrideConfiguration)
     }
