@@ -7,16 +7,18 @@ plugins {
     id 'maven-publish'
 }
 
+apply from: "$rootDir/configs/versions.gradle"
+
 final GROUP_ID = "ir.cafebazaar"
 final VERSION_NAME = "1.0.0-alpha01"
 final VERSION_CODE = 1
 
 android {
-    compileSdk 31
+    compileSdk build.compileSdk
 
     defaultConfig {
-        minSdk 17
-        targetSdk 31
+        minSdk build.minSdk
+        targetSdk build.targetSdk
         versionCode VERSION_CODE
         versionName VERSION_NAME
         multiDexEnabled true
@@ -48,25 +50,24 @@ android {
 
 dependencies {
 
-    implementation 'androidx.core:core-ktx:1.8.0'
-    implementation 'androidx.appcompat:appcompat:1.4.2'
-    implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.5.0'
-    implementation 'com.google.android.material:material:1.6.1'
-    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
-    implementation 'androidx.navigation:navigation-fragment-ktx:2.5.0'
-    implementation 'androidx.navigation:navigation-ui-ktx:2.5.0'
-    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.0'
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.2'
-    implementation 'com.google.android.gms:play-services-base:18.1.0'
-    implementation 'com.google.android.gms:play-services-auth-api-phone:18.0.1'
-    implementation 'com.google.android.gms:play-services-auth:20.2.0'
-    implementation 'com.google.android.gms:play-services-auth-api-phone:18.0.1'
-    implementation 'com.github.hbazargan:DynamicRestClient:1.0.1-alpha'
-    implementation 'androidx.multidex:multidex:2.0.1'
-    implementation 'com.github.bumptech.glide:glide:4.13.1'
-    implementation 'androidx.recyclerview:recyclerview:1.2.1'
-    implementation 'com.tbuonomo:dotsindicator:4.2'
-    kapt 'com.github.bumptech.glide:compiler:4.13.1'
+    implementation "androidx.core:core-ktx:$library.core"
+    implementation "androidx.appcompat:appcompat:$library.appcompat"
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:$library.lifecycle"
+    implementation "com.google.android.material:material:$library.material"
+    implementation "androidx.constraintlayout:constraintlayout:$library.constraintlayout"
+    implementation "androidx.navigation:navigation-fragment-ktx:$library.navigation"
+    implementation "androidx.navigation:navigation-ui-ktx:$library.navigation"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$library.lifecycle"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$library.kotlinx"
+    implementation "com.google.android.gms:play-services-base:$library.playServicesBase"
+    implementation "com.google.android.gms:play-services-auth-api-phone:$library.playServicesAuthApiPhone"
+    implementation "com.google.android.gms:play-services-auth:$library.playServicesAuth"
+    implementation "com.github.hbazargan:DynamicRestClient:$library.dynamicRestClient"
+    implementation "androidx.multidex:multidex:$library.multidex"
+    implementation "com.github.bumptech.glide:glide:$library.glide"
+    implementation "androidx.recyclerview:recyclerview:$library.recyclerview"
+    implementation "com.tbuonomo:dotsindicator:$library.dotsindicator"
+    kapt "com.github.bumptech.glide:compiler:$library.glide"
 }
 
 publishing {
