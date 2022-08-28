@@ -71,18 +71,12 @@ class BazaarPayActivity : AppCompatActivity(), FinishCallbacks {
             finishActivity()
         }
         when {
-            intent?.dataString?.lowercase()?.contains("increase_balance")?.and(
-                intent.dataString?.lowercase()?.contains("done") == true
-            ) == true -> {
+            isIncreaseBalanceDoneIntent(intent) -> {
                 findNavController(R.id.nav_host_fragment_bazaar_pay).navigate(
                     R.id.open_paymentThankYouPageFragment
                 )
             }
-            intent?.dataString?.lowercase()?.contains("direct_debit_activation")?.and(
-                (intent.dataString?.lowercase()?.contains("active") == true).or(
-                    intent.dataString?.lowercase()?.contains("in_progress") == true
-                )
-            ) == true -> {
+            isDirectDebitActivationIntent(intent) -> {
                 findNavController(R.id.nav_host_fragment_bazaar_pay).navigate(
                     resId = R.id.open_payment_methods,
                     args = null,
@@ -190,5 +184,19 @@ class BazaarPayActivity : AppCompatActivity(), FinishCallbacks {
     private fun finishActivity() {
         ServiceLocator.clear()
         finish()
+    }
+
+    private fun isIncreaseBalanceDoneIntent(intent: Intent?): Boolean {
+        return intent?.dataString?.lowercase()?.contains("increase_balance")?.and(
+            intent.dataString?.lowercase()?.contains("done") == true
+        ) == true
+    }
+
+    private fun isDirectDebitActivationIntent(intent: Intent?): Boolean {
+        return intent?.dataString?.lowercase()?.contains("direct_debit_activation")?.and(
+            (intent.dataString?.lowercase()?.contains("active") == true).or(
+                intent.dataString?.lowercase()?.contains("in_progress") == true
+            )
+        ) == true
     }
 }
