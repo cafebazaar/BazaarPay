@@ -35,7 +35,10 @@ class BazaarPayLauncher(
     private val activityResultCaller: ActivityResultCaller
         get() {
             return if ((context is ActivityResultCaller).not()) {
-                throw Exception("")
+                throw Exception(
+                    "Context is not a type of ActivityResultCaller in" +
+                            "BazaarPayLauncher class"
+                )
             } else {
                 context as ActivityResultCaller
             }
