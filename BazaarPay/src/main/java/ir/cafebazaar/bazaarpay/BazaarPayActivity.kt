@@ -43,7 +43,7 @@ class BazaarPayActivity : AppCompatActivity(), FinishCallbacks {
     }
 
     override fun attachBaseContext(newBase: Context) {
-        if(ServiceLocator.isConfigInitiated()){
+        if (ServiceLocator.isConfigInitiated()) {
             setLocale(newBase)
         } else {
             newBase
@@ -151,7 +151,7 @@ class BazaarPayActivity : AppCompatActivity(), FinishCallbacks {
     }
 
     private fun isDarkMode(): Boolean {
-        return ServiceLocator.getOrNull<Boolean>(ServiceLocator.IS_DARK)?:false
+        return ServiceLocator.getOrNull(ServiceLocator.IS_DARK) ?: false
     }
 
     private fun initNightMode() {
@@ -165,7 +165,7 @@ class BazaarPayActivity : AppCompatActivity(), FinishCallbacks {
     }
 
     private fun initServiceLocator() {
-        if(ServiceLocator.isConfigInitiated()) {
+        if (ServiceLocator.isConfigInitiated()) {
             ServiceLocator.initializeDependencies(
                 activity = this
             )
