@@ -69,6 +69,7 @@ class BazaarPayActivity : AppCompatActivity(), FinishCallbacks {
     private fun handleIntent(intent: Intent?) {
         if (ServiceLocator.getOrNull<String>(ServiceLocator.CHECKOUT_TOKEN).isNullOrEmpty()) {
             finishActivity()
+            return
         }
         when {
             isIncreaseBalanceDoneIntent(intent) -> {
