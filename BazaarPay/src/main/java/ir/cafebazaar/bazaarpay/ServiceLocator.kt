@@ -46,19 +46,13 @@ internal object ServiceLocator {
     ) {
         servicesMap[getKeyOfClass<Context>()] = context
         initGlobalDispatchers()
-        initAccountClient()
-        initAccountSharedDataSource()
-        initAccountLocalDataSource()
-        initAccountRemoteDataSource()
-        initAccountRepository()
         initAuthenticator()
         initTokenInterceptor()
         initPaymentClient()
-        initPaymentRemoteDataSource()
-        initPaymentRepository()
         initBazaarClient()
-        initBazaarRemoteDataSource()
-        initBazaarRepository()
+        initAccountClient()
+        initDataSources()
+        initRepositories()
     }
 
     fun clear() {
@@ -89,23 +83,6 @@ internal object ServiceLocator {
         return hashMapOf(USER_AGENT_HEADER_TITLE to getUserAgentHeaderValue())
     }
 
-    private fun initAccountSharedDataSource() {
-        servicesMap[getKeyOfClass<SharedDataSource>(ACCOUNT)] =
-            AccountSharedDataSource()
-    }
-
-    private fun initAccountLocalDataSource() {
-        servicesMap[getKeyOfClass<AccountLocalDataSource>()] = AccountLocalDataSource()
-    }
-
-    private fun initAccountRemoteDataSource() {
-        servicesMap[getKeyOfClass<AccountRemoteDataSource>()] = AccountRemoteDataSource()
-    }
-
-    private fun initAccountRepository() {
-        servicesMap[getKeyOfClass<AccountRepository>()] = AccountRepository()
-    }
-
     private fun initAuthenticator() {
         servicesMap[getKeyOfClass<Authenticator>(AUTHENTICATOR)] = AuthenticatorInterceptor()
     }
@@ -128,14 +105,6 @@ internal object ServiceLocator {
             )
     }
 
-    private fun initPaymentRemoteDataSource() {
-        servicesMap[getKeyOfClass<PaymentRemoteDataSource>()] = PaymentRemoteDataSource()
-    }
-
-    private fun initPaymentRepository() {
-        servicesMap[getKeyOfClass<PaymentRepository>()] = PaymentRepository()
-    }
-
     private fun initBazaarClient() {
         servicesMap[getKeyOfClass<Base>(BAZAAR)] = Client
             .builder()
@@ -150,12 +119,23 @@ internal object ServiceLocator {
             )
     }
 
-    private fun initBazaarRemoteDataSource() {
-        servicesMap[getKeyOfClass<BazaarRemoteDataSource>()] = BazaarRemoteDataSource()
+    private fun initClients() {
+
     }
 
-    private fun initBazaarRepository() {
+    private fun initRepositories() {
         servicesMap[getKeyOfClass<BazaarRepository>()] = BazaarRepository()
+        servicesMap[getKeyOfClass<PaymentRepository>()] = PaymentRepository()
+        servicesMap[getKeyOfClass<AccountRepository>()] = AccountRepository()
+    }
+
+    private fun initDataSources() {
+        servicesMap[getKeyOfClass<BazaarRemoteDataSource>()] = BazaarRemoteDataSource()
+        servicesMap[getKeyOfClass<PaymentRemoteDataSource>()] = PaymentRemoteDataSource()
+        servicesMap[getKeyOfClass<AccountRemoteDataSource>()] = AccountRemoteDataSource()
+        servicesMap[getKeyOfClass<AccountLocalDataSource>()] = AccountLocalDataSource()
+        servicesMap[getKeyOfClass<SharedDataSource>(ACCOUNT)] =
+            AccountSharedDataSource()
     }
 
     inline fun <reified T> get(named: String = ""): T {
