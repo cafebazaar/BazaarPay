@@ -7,6 +7,8 @@ import android.content.Intent
 import androidx.activity.result.ActivityResultCaller
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import ir.cafebazaar.bazaarpay.utils.getLanguage
+import ir.cafebazaar.bazaarpay.utils.getLanguageNumber
 import java.lang.Exception
 
 class BazaarPayLauncher(
@@ -53,20 +55,4 @@ class BazaarPayLauncher(
                 RESULT_CANCELED -> onCancel()
             }
         }
-
-    private fun getLanguage(isEnglish: Boolean): String {
-        return if (isEnglish) {
-            "en"
-        } else {
-            "fa"
-        }
-    }
-
-    private fun getLanguageNumber(isEnglish: Boolean): Int {
-        return if (isEnglish) {
-            1
-        } else {
-            2
-        }
-    }
 }
