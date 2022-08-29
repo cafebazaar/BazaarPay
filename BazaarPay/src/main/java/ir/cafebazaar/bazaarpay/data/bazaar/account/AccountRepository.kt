@@ -12,7 +12,7 @@ import kotlinx.coroutines.flow.SharedFlow
 
 internal class AccountRepository {
 
-    private val onSmsPermission: MutableSharedFlow<Intent> = MutableSharedFlow()
+    private val onSmsPermissionSharedFlow: MutableSharedFlow<Intent> = MutableSharedFlow()
     private val accountLocalDataSource: AccountLocalDataSource = ServiceLocator.get()
     private val accountRemoteDataSource: AccountRemoteDataSource = ServiceLocator.get()
 
@@ -42,11 +42,11 @@ internal class AccountRepository {
     }
 
     fun getSmsPermissionObservable(): SharedFlow<Intent> {
-        return onSmsPermission
+        return onSmsPermissionSharedFlow
     }
 
     suspend fun setSmsPermissionObservable(intent: Intent) {
-        onSmsPermission.emit(intent)
+        onSmsPermissionSharedFlow.emit(intent)
     }
 
     fun saveRefreshToken(refreshToken: String) {
