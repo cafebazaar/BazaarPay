@@ -212,9 +212,15 @@ internal class VerifyOtpFragment : Fragment() {
     private fun handleResendSmsAndCallState(resource: Resource<Long>) {
 
         when (resource.resourceState) {
-            ResourceState.Success -> onCountDownStarted(resource.data!!)
+            ResourceState.Success -> {
+                resource.data?.let { data ->
+                    onCountDownStarted(data)
+                }
+            }
             ResourceState.Error -> {
-                onCountDownStarted(resource.data!!)
+                resource.data?.let { data ->
+                    onCountDownStarted(data)
+                }
                 showError(requireContext().getReadableErrorMessage(resource.failure))
             }
             ResourceState.Loading -> {
@@ -224,7 +230,9 @@ internal class VerifyOtpFragment : Fragment() {
                 hideKeyboardInLandscape()
             }
             VerificationState.Tick -> {
-                onTick(resource.data!!)
+                resource.data?.let { data ->
+                    onTick(data)
+                }
             }
             VerificationState.FinishCountDown -> {
                 onCountDownFinished()

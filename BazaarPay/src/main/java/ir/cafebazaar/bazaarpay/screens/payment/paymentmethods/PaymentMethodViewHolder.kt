@@ -47,16 +47,18 @@ internal class PaymentMethodViewHolder(
     }
 
     private fun animateDescription(isDescriptionVisible: Boolean) {
-        ValueAnimator.ofInt(
-            binding.optionDescription!!.measuredHeight,
-            getFinalHeight(isDescriptionVisible)
-        ).apply {
-            addUpdateListener { valueAnimator ->
-                val height = valueAnimator.animatedValue as Int
-                setOptionDescriptionHeight(height)
+        binding.optionDescription?.let { optionDescription ->
+            ValueAnimator.ofInt(
+                optionDescription.measuredHeight,
+                getFinalHeight(isDescriptionVisible)
+            ).apply {
+                addUpdateListener { valueAnimator ->
+                    val height = valueAnimator.animatedValue as Int
+                    setOptionDescriptionHeight(height)
+                }
+                duration = ANIMATION_DURATION
+                start()
             }
-            duration = ANIMATION_DURATION
-            start()
         }
     }
 

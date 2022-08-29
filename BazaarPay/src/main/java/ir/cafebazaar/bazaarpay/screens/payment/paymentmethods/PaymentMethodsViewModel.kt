@@ -170,18 +170,31 @@ internal class PaymentMethodsViewModel : ViewModel() {
     }
 
     private fun openIncreaseBalancePage() {
-        _navigationLiveData.value =
-            PaymentMethodsFragmentDirections.actionPaymentMethodsFragmentToPaymentDynamicCreditFragment(
-                paymentMethodsStateData.value?.data?.dynamicCreditOption!!,
-                DynamicCreditOptionDealerArg(
-                    iconUrl = merchantInfoStateData.value?.data?.logoUrl!!,
-                    name = paymentMethodsStateData.value?.data?.destinationTitle!!,
-                    info = merchantInfoStateData.value?.data?.accountName!!,
-                    priceString = paymentMethodsStateData.value?.data?.paymentMethods?.first {
-                        it.methodType == PaymentMethodsType.INCREASE_BALANCE
-                    }?.priceString!!
-                )
-            )
+        paymentMethodsStateData.value?.data?.let { paymentMethodsStateData ->
+            _navigationLiveData.value =
+                paymentMethodsStateData.paymentMethods.first {
+                    it.methodType == PaymentMethodsType.INCREASE_BALANCE
+                }.priceString?.let { priceString ->
+                    merchantInfoStateData.value?.data?.logoUrl?.let { logoUrl ->
+                        merchantInfoStateData.value?.data?.accountName?.let { accountName ->
+                            DynamicCreditOptionDealerArg(
+                                iconUrl = logoUrl,
+                                name = paymentMethodsStateData.destinationTitle,
+                                info = accountName,
+                                priceString = priceString
+                            )
+                        }
+                    }
+                }?.let { dynamicCreditOptionDealerArg ->
+                    paymentMethodsStateData.dynamicCreditOption?.let { dynamicCreditOption ->
+                        PaymentMethodsFragmentDirections
+                            .actionPaymentMethodsFragmentToPaymentDynamicCreditFragment(
+                                dynamicCreditOption,
+                                dynamicCreditOptionDealerArg
+                            )
+                    }
+                }
+        }
     }
 
     private fun openPostpaidTermsPage() {

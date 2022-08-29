@@ -156,7 +156,11 @@ internal class RegisterFragment : Fragment() {
     ) {
         resource?.let {
             when (it.resourceState) {
-                ResourceState.Success -> handleSuccess(resource.data!!)
+                ResourceState.Success -> {
+                    resource.data?.let {
+                        handleSuccess(resource.data)
+                    }
+                }
                 ResourceState.Error -> {
                     val message = if (resource.failure is InvalidPhoneNumberException) {
                         getString(R.string.wrong_phone_number)

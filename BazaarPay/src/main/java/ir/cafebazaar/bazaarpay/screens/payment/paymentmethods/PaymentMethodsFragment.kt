@@ -229,7 +229,9 @@ internal class PaymentMethodsFragment : Fragment(), PaymentMethodsClickListener 
                     handlePaymentMethods((resource.data as PaymentMethodsInfo).paymentMethods)
                 }
                 ResourceState.Error -> {
-                    handleErrorState(it.failure!!)
+                    it.failure?.let { failure ->
+                        handleErrorState(failure)
+                    }
                 }
             }
         }

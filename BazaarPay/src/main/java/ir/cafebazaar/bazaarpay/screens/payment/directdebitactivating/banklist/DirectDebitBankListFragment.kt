@@ -128,7 +128,9 @@ internal class DirectDebitBankListFragment : Fragment() {
 
     private fun handleData(resource: Resource<List<BankList>>) {
         if (resource.isError) {
-            showErrorView(resource.failure!!)
+            resource.failure?.let { failure ->
+                showErrorView(failure)
+            }
         } else {
             hideErrorView()
         }
