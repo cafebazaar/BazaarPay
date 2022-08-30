@@ -15,7 +15,14 @@ ext {
             multidex                : '2.0.1',
             glide                   : '4.13.1',
             recyclerview            : '1.2.1',
-            dotsindicator           : '4.2'
+            dotsindicator           : '4.2',
+            retrofit                : '2.9.0',
+            gson                    : '2.8.9',
+            okhttpParent            : 'parent-4.9.1',
+            okhttp                  : '4.9.3',
+            loggingInterceptor      : '3.1.0',
+
+
     ]
 
     build = [

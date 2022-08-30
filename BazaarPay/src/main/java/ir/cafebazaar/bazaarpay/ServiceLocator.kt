@@ -1,6 +1,5 @@
 package ir.cafebazaar.bazaarpay
 
-import android.app.Activity
 import android.content.Context
 import ir.cafebazaar.bazaarpay.data.SharedDataSource
 import ir.cafebazaar.bazaarpay.data.bazaar.account.AccountSharedDataSource
@@ -14,12 +13,14 @@ import ir.cafebazaar.bazaarpay.data.payment.PaymentRepository
 import ir.cafebazaar.bazaarpay.data.payment.TokenInterceptor
 import ir.cafebazaar.bazaarpay.data.bazaar.payment.BazaarRemoteDataSource
 import ir.cafebazaar.bazaarpay.data.bazaar.payment.BazaarRepository
-import ir.hamidbazargan.dynamicrestclient.base.Base
-import ir.hamidbazargan.dynamicrestclient.client.Client
-import ir.hamidbazargan.dynamicrestclient.getDefaultCache
+import ir.cafebazaar.bazaarpay.network.dynamicrestclient.base.Base
+import ir.cafebazaar.bazaarpay.network.dynamicrestclient.client.Client
+import ir.cafebazaar.bazaarpay.network.dynamicrestclient.getDefaultCache
+import ir.cafebazaar.bazaarpay.network.gsonConverterFactory
 import kotlinx.coroutines.Dispatchers
 import okhttp3.Authenticator
 import okhttp3.Interceptor
+import retrofit2.Converter
 
 internal object ServiceLocator {
 
@@ -46,6 +47,7 @@ internal object ServiceLocator {
     ) {
         servicesMap[getKeyOfClass<Context>()] = context
         initGlobalDispatchers()
+        initJsonConvertorFactory()
         initAccountClient()
         initAccountSharedDataSource()
         initAccountLocalDataSource()
@@ -73,9 +75,14 @@ internal object ServiceLocator {
         )
     }
 
+    private fun initJsonConvertorFactory() {
+        servicesMap[getKeyOfClass<Converter.Factory>()] = gsonConverterFactory()
+    }
+
     private fun initAccountClient() {
         servicesMap[getKeyOfClass<Base>(ACCOUNT)] = Client
             .builder()
+            .withConverterFactory(get())
             .withDebugMode(true)
             .withCache(get<Context>().getDefaultCache())
             .build()
@@ -139,6 +146,7 @@ internal object ServiceLocator {
     private fun initBazaarClient() {
         servicesMap[getKeyOfClass<Base>(BAZAAR)] = Client
             .builder()
+            .withConverterFactory(get())
             .withDebugMode(true)
             .withCache(get<Context>().getDefaultCache())
             .withAuthenticator(get(AUTHENTICATOR))

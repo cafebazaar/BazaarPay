@@ -1,6 +1,6 @@
 package ir.cafebazaar.bazaarpay.data.bazaar.models
 
-import ir.hamidbazargan.dynamicrestclient.response.GeneralResponseModel
+import ir.cafebazaar.bazaarpay.network.dynamicrestclient.response.GeneralResponseModel
 
 internal open class BazaarBaseResponse(
     val properties: ResponseProperties? = null

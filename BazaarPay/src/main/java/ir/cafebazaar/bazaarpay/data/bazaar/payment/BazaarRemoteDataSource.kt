@@ -16,7 +16,7 @@ import ir.cafebazaar.bazaarpay.data.bazaar.payment.models.directdebit.onboarding
 import ir.cafebazaar.bazaarpay.data.bazaar.payment.models.directdebit.onboarding.request.GetDirectDebitOnBoardingSingleRequest
 import ir.cafebazaar.bazaarpay.data.bazaar.payment.models.directdebit.onboarding.response.DirectDebitOnBoardingSingleReply
 import ir.cafebazaar.bazaarpay.utils.Either
-import ir.hamidbazargan.dynamicrestclient.base.Base
+import ir.cafebazaar.bazaarpay.network.dynamicrestclient.base.Base
 
 internal class BazaarRemoteDataSource {
 

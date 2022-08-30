@@ -15,7 +15,7 @@ import ir.cafebazaar.bazaarpay.data.bazaar.account.models.verifyotptoken.LoginRe
 import ir.cafebazaar.bazaarpay.data.bazaar.account.models.verifyotptoken.request.VerifyOtpTokenSingleRequest
 import ir.cafebazaar.bazaarpay.data.bazaar.account.models.verifyotptoken.response.VerifyOtpTokenSingleReply
 import ir.cafebazaar.bazaarpay.utils.Either
-import ir.hamidbazargan.dynamicrestclient.base.Base
+import ir.cafebazaar.bazaarpay.network.dynamicrestclient.base.Base
 
 internal class AccountRemoteDataSource {
 

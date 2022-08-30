@@ -233,6 +233,7 @@ internal class PaymentMethodsFragment : Fragment(), PaymentMethodsClickListener 
                         handleErrorState(failure)
                     }
                 }
+                else -> {}
             }
         }
     }

@@ -14,7 +14,7 @@ import ir.cafebazaar.bazaarpay.data.payment.models.pay.request.PayRequest
 import ir.cafebazaar.bazaarpay.data.payment.models.pay.response.PayResponse
 import ir.cafebazaar.bazaarpay.screens.payment.paymentmethods.PaymentMethodsType
 import ir.cafebazaar.bazaarpay.utils.Either
-import ir.hamidbazargan.dynamicrestclient.base.Base
+import ir.cafebazaar.bazaarpay.network.dynamicrestclient.base.Base
 
 internal class PaymentRemoteDataSource {
 

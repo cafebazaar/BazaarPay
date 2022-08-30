@@ -5,8 +5,8 @@ import ir.cafebazaar.bazaarpay.data.bazaar.models.ResponseException
 import ir.cafebazaar.bazaarpay.data.bazaar.models.ResponseProperties
 import ir.cafebazaar.bazaarpay.data.payment.models.PaymentBaseResponse
 import ir.cafebazaar.bazaarpay.utils.Either
-import ir.hamidbazargan.dynamicrestclient.response.GeneralResponseModel
-import ir.hamidbazargan.dynamicrestclient.response.ResponseModel
+import ir.cafebazaar.bazaarpay.network.dynamicrestclient.response.GeneralResponseModel
+import ir.cafebazaar.bazaarpay.network.dynamicrestclient.response.ResponseModel
 
 fun <E: GeneralResponseModel> ResponseModel<E>.isSuccessful() =
     this.httpCode in 200 .. 299
