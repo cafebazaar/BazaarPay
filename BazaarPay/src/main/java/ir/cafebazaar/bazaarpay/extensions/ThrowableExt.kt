@@ -8,20 +8,20 @@ import java.io.IOException
 private const val MESSAGE_SERVER_ERROR = "Server Error"
 private const val MESSAGE_INTERNAL_SERVER_ERROR = "Internal Server Error"
 
-fun Throwable.asNetworkException(): ErrorModel {
-    return when (this) {
+fun asNetworkException(throwable: Throwable): ErrorModel {
+    return when (throwable) {
         is IOException -> {
-            ErrorModel.NetworkConnection("No Network Connection", this)
+            ErrorModel.NetworkConnection("No Network Connection", throwable)
         }
         is ResponseException -> {
-            createHttpError(this)
+            createHttpError(throwable)
         }
-        is ErrorModel -> this
-        else -> ErrorModel.Server(MESSAGE_SERVER_ERROR, this)
+        is ErrorModel -> throwable
+        else -> ErrorModel.Server(MESSAGE_SERVER_ERROR, throwable)
     }
 }
 
-private fun createHttpError(throwable: ResponseException): ErrorModel {
+private fun createHttpError(throwable: ResponseException?): ErrorModel {
     return if (throwable == null) {
         ErrorModel.Server(
             MESSAGE_SERVER_ERROR,

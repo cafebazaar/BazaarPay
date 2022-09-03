@@ -10,15 +10,15 @@ internal class BazaarRepository {
 
     private val bazaarRemoteDataSource: BazaarRemoteDataSource = ServiceLocator.get()
 
-    fun getDirectDebitOnBoarding(): Either<DirectDebitOnBoardingDetails> {
+    suspend fun getDirectDebitOnBoarding(): Either<DirectDebitOnBoardingDetails> {
         return bazaarRemoteDataSource.getDirectDebitOnBoarding()
     }
 
-    fun getAvailableBanks(): Either<AvailableBanks> {
+    suspend fun getAvailableBanks(): Either<AvailableBanks> {
         return bazaarRemoteDataSource.getAvailableBanks()
     }
 
-    fun getDirectDebitContractCreationUrl(
+    suspend fun getDirectDebitContractCreationUrl(
         bankCode: String,
         nationalId: String
     ): Either<ContractCreation> {
@@ -28,7 +28,7 @@ internal class BazaarRepository {
         )
     }
 
-    fun activatePostPaidCredit(): Either<Unit> {
+    suspend fun activatePostPaidCredit(): Either<Unit> {
         return bazaarRemoteDataSource.activatePostPaid()
     }
 }

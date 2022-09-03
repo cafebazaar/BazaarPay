@@ -2,7 +2,6 @@ package ir.cafebazaar.bazaarpay.data.bazaar.account
 
 import ir.cafebazaar.bazaarpay.ServiceLocator
 import ir.cafebazaar.bazaarpay.extensions.asNetworkException
-import ir.cafebazaar.bazaarpay.extensions.getEitherFromResponse
 import ir.cafebazaar.bazaarpay.data.bazaar.account.models.getotptoken.WaitingTimeWithEnableCall
 import ir.cafebazaar.bazaarpay.data.bazaar.account.models.getotptokenbycall.WaitingTime
 import ir.cafebazaar.bazaarpay.data.bazaar.account.models.getotptoken.response.GetOtpTokenSingleReply
@@ -14,111 +13,72 @@ import ir.cafebazaar.bazaarpay.data.bazaar.account.models.refreshaccesstoken.res
 import ir.cafebazaar.bazaarpay.data.bazaar.account.models.verifyotptoken.LoginResponse
 import ir.cafebazaar.bazaarpay.data.bazaar.account.models.verifyotptoken.request.VerifyOtpTokenSingleRequest
 import ir.cafebazaar.bazaarpay.data.bazaar.account.models.verifyotptoken.response.VerifyOtpTokenSingleReply
+import ir.cafebazaar.bazaarpay.data.bazaar.models.ErrorModel
+import ir.cafebazaar.bazaarpay.extensions.safeApiCall
+import ir.cafebazaar.bazaarpay.models.GlobalDispatchers
 import ir.cafebazaar.bazaarpay.utils.Either
-import ir.cafebazaar.bazaarpay.network.dynamicrestclient.base.Base
+import kotlinx.coroutines.withContext
+import java.net.HttpURLConnection
 
 internal class AccountRemoteDataSource {
 
-    private val accountBase: Base = ServiceLocator.get(ServiceLocator.ACCOUNT)
+    private val accountService: AccountService by lazy {
+        ServiceLocator.get()
+    }
 
-    fun getOtpToken(phoneNumber: String): Either<WaitingTimeWithEnableCall> {
-        try {
-            accountBase.postMethod(
-                GetOtpTokenSingleReply::class.java,
-                GET_TOP_TOKEN_ENDPOINT
-            ).apply {
-                setPostBody(GetOtpTokenSingleRequest(phoneNumber))
-                getResponse().also { response ->
-                    return response.getEitherFromResponse {
-                        response
-                            .data
-                            .singleReply
-                            .getOtpTokenReply
-                            .toWaitingTimeWithEnableCall()
-                    }
-                }
+    private val globalDispatchers: GlobalDispatchers by lazy {
+        ServiceLocator.get()
+    }
+
+    suspend fun getOtpToken(phoneNumber: String): Either<WaitingTimeWithEnableCall> {
+        return withContext(globalDispatchers.iO) {
+            return@withContext safeApiCall {
+                accountService.getOtpToken(
+                    GetOtpTokenSingleRequest(phoneNumber)
+                ).singleReply.getOtpTokenReply.toWaitingTimeWithEnableCall()
             }
-        } catch (throwable: Throwable) {
-            return Either.Failure(
-                (throwable.cause ?: throwable).asNetworkException()
-            )
         }
     }
 
-    fun getOtpTokenByCall(phoneNumber: String): Either<WaitingTime> {
-        try {
-            accountBase.postMethod(
-                GetOtpTokenByCallSingleReply::class.java,
-                GET_OTP_TOKEN_BY_CALL_ENDPOINT
-            ).apply {
-                setPostBody(GetOtpTokenByCallSingleRequest(phoneNumber))
-                getResponse().also { response ->
-                    return response.getEitherFromResponse {
-                        response
-                            .data
-                            .singleReply
-                            .getOtpTokenReply.toWaitingTime()
-                    }
-                }
+    suspend fun getOtpTokenByCall(phoneNumber: String): Either<WaitingTime> {
+        return withContext(globalDispatchers.iO) {
+            return@withContext safeApiCall {
+                accountService.getOtpTokenByCall(
+                    GetOtpTokenByCallSingleRequest(phoneNumber)
+                ).singleReply.getOtpTokenReply.toWaitingTime()
             }
-        } catch (throwable: Throwable) {
-            return Either.Failure(
-                (throwable.cause ?: throwable).asNetworkException()
-            )
         }
     }
 
-    fun verifyOtpToken(phoneNumber: String, code: String): Either<LoginResponse> {
-        try {
-            accountBase.postMethod(
-                VerifyOtpTokenSingleReply::class.java,
-                VERIFY_TOP_TOKEN_ENDPOINT
-            ).apply {
-                setPostBody(VerifyOtpTokenSingleRequest(phoneNumber, code))
-                getResponse().also { response ->
-                    return response.getEitherFromResponse {
-                        response
-                            .data
-                            .singleReply
-                            .verifyOtpTokenReply.toLoginResponse()
-                    }
-                }
+    suspend fun verifyOtpToken(phoneNumber: String, code: String): Either<LoginResponse> {
+        return withContext(globalDispatchers.iO) {
+            return@withContext safeApiCall {
+                accountService.verifyOtpToken(
+                    VerifyOtpTokenSingleRequest(phoneNumber, code)
+                ).singleReply.verifyOtpTokenReply.toLoginResponse()
             }
-        } catch (throwable: Throwable) {
-            return Either.Failure(
-                (throwable.cause ?: throwable).asNetworkException()
-            )
         }
     }
 
     fun getAccessToken(refreshToken: String): Either<String> {
-        try {
-            accountBase.postMethod(
-                GetAccessTokenSingleReply::class.java,
-                GET_ACCESS_TOKEN_ENDPOINT
-            ).apply {
-                setPostBody(GetAccessTokenSingleRequest(refreshToken))
-                getResponse().also { response ->
-                    return response.getEitherFromResponse {
-                        response
-                            .data
-                            .singleReply
-                            .getAccessTokenReply
-                            .accessToken
-                    }
+        val authenticationRequestDto = GetAccessTokenSingleRequest(refreshToken)
+        val response = accountService.getAccessToken(authenticationRequestDto).execute()
+
+        return when {
+            response.isSuccessful -> {
+                val token = response.body()?.singleReply?.getAccessTokenReply?.getToken()
+                if (token != null) {
+                    Either.Success(token)
+                } else {
+                    Either.Failure(ErrorModel.Error("token is empty"))
                 }
             }
-        } catch (throwable: Throwable) {
-            return Either.Failure(
-                (throwable.cause ?: throwable).asNetworkException()
-            )
+            response.code() == HttpURLConnection.HTTP_UNAUTHORIZED -> {
+                Either.Failure(ErrorModel.AuthenticationError)
+            }
+            else -> {
+                Either.Failure(ErrorModel.Error(response.message()))
+            }
         }
-    }
-
-    private companion object {
-        const val GET_TOP_TOKEN_ENDPOINT = "rest-v1/process/GetOtpTokenRequest"
-        const val GET_OTP_TOKEN_BY_CALL_ENDPOINT = "rest-v1/process/GetOtpTokenByCallRequest"
-        const val VERIFY_TOP_TOKEN_ENDPOINT = "rest-v1/process/VerifyOtpTokenRequest"
-        const val GET_ACCESS_TOKEN_ENDPOINT = "rest-v1/process/getAccessTokenRequest"
     }
 }

@@ -108,10 +108,12 @@ internal open class DirectDebitBankListViewModel : ViewModel() {
         selectedItem: BankList.BankListRowItem,
         nationalId: String
     ) {
-        bazaarRepository.getDirectDebitContractCreationUrl(
-            bankCode = selectedItem.model.code,
-            nationalId
-        ).fold(::registerSucceed, ::registerFailed)
+        viewModelScope.launch {
+            bazaarRepository.getDirectDebitContractCreationUrl(
+                bankCode = selectedItem.model.code,
+                nationalId
+            ).fold(::registerSucceed, ::registerFailed)
+        }
     }
 
     private fun registerSucceed(url: ContractCreation) {

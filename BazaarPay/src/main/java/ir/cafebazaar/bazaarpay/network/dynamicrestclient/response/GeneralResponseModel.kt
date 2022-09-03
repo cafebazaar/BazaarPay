@@ -1,3 +1,0 @@
-package ir.cafebazaar.bazaarpay.network.dynamicrestclient.response
-
-abstract class GeneralResponseModel

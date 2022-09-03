@@ -28,16 +28,16 @@ internal class AccountRepository {
         return accountLocalDataSource.putAutoFillPhones(phone)
     }
 
-    fun getOtpToken(phoneNumber: String):
+    suspend fun getOtpToken(phoneNumber: String):
             Either<WaitingTimeWithEnableCall> {
         return accountRemoteDataSource.getOtpToken(phoneNumber)
     }
 
-    fun getOtpTokenByCall(phoneNumber: String): Either<WaitingTime> {
+    suspend fun getOtpTokenByCall(phoneNumber: String): Either<WaitingTime> {
         return accountRemoteDataSource.getOtpTokenByCall(phoneNumber)
     }
 
-    fun verifyOtpToken(phoneNumber: String, code: String): Either<LoginResponse> {
+    suspend fun verifyOtpToken(phoneNumber: String, code: String): Either<LoginResponse> {
         return accountRemoteDataSource.verifyOtpToken(phoneNumber, code)
     }
 

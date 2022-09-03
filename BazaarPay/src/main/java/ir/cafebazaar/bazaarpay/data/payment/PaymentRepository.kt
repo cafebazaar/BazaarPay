@@ -11,15 +11,15 @@ internal class PaymentRepository {
 
     private val paymentRemoteDataSource: PaymentRemoteDataSource = ServiceLocator.get()
 
-    fun getPaymentMethods(): Either<PaymentMethodsInfo> {
+    suspend fun getPaymentMethods(): Either<PaymentMethodsInfo> {
         return paymentRemoteDataSource.getPaymentMethods()
     }
 
-    fun getMerchantInfo(): Either<MerchantInfo> {
+    suspend fun getMerchantInfo(): Either<MerchantInfo> {
         return paymentRemoteDataSource.getMerchantInfo()
     }
 
-    fun pay(
+    suspend fun pay(
         paymentMethod: PaymentMethodsType,
         amount: Long? = null
     ): Either<PayResult> {
