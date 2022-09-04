@@ -19,7 +19,15 @@ import ir.cafebazaar.bazaarpay.FinishCallbacks
 import ir.cafebazaar.bazaarpay.R
 import ir.cafebazaar.bazaarpay.databinding.FragmentVerifyOtpBinding
 import ir.cafebazaar.bazaarpay.databinding.LayoutVerifyHeaderBinding
-import ir.cafebazaar.bazaarpay.extensions.*
+import ir.cafebazaar.bazaarpay.extensions.getReadableErrorMessage
+import ir.cafebazaar.bazaarpay.extensions.gone
+import ir.cafebazaar.bazaarpay.extensions.hideKeyboard
+import ir.cafebazaar.bazaarpay.extensions.invisible
+import ir.cafebazaar.bazaarpay.extensions.isLandscape
+import ir.cafebazaar.bazaarpay.extensions.localizeNumber
+import ir.cafebazaar.bazaarpay.extensions.observe
+import ir.cafebazaar.bazaarpay.extensions.secondsToStringTime
+import ir.cafebazaar.bazaarpay.extensions.visible
 import ir.cafebazaar.bazaarpay.models.Resource
 import ir.cafebazaar.bazaarpay.models.ResourceState
 import ir.cafebazaar.bazaarpay.models.VerificationState

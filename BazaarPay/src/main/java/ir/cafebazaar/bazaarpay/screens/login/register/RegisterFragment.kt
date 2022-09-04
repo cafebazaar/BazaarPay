@@ -19,9 +19,15 @@ import ir.cafebazaar.bazaarpay.R
 import ir.cafebazaar.bazaarpay.models.Resource
 import ir.cafebazaar.bazaarpay.models.ResourceState
 import ir.cafebazaar.bazaarpay.databinding.FragmentRegisterBinding
-import ir.cafebazaar.bazaarpay.extensions.*
 import ir.cafebazaar.bazaarpay.data.bazaar.account.models.getotptoken.WaitingTimeWithEnableCall
 import ir.cafebazaar.bazaarpay.data.bazaar.models.InvalidPhoneNumberException
+import ir.cafebazaar.bazaarpay.extensions.fromHtml
+import ir.cafebazaar.bazaarpay.extensions.getReadableErrorMessage
+import ir.cafebazaar.bazaarpay.extensions.gone
+import ir.cafebazaar.bazaarpay.extensions.hideKeyboard
+import ir.cafebazaar.bazaarpay.extensions.isLandscape
+import ir.cafebazaar.bazaarpay.extensions.isValidPhoneNumber
+import ir.cafebazaar.bazaarpay.extensions.navigateSafe
 
 internal class RegisterFragment : Fragment() {
 

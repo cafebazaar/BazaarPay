@@ -2,7 +2,10 @@ package ir.cafebazaar.bazaarpay.extensions
 
 import android.accounts.NetworkErrorException
 import com.google.gson.JsonSyntaxException
-import ir.cafebazaar.bazaarpay.data.bazaar.models.*
+import ir.cafebazaar.bazaarpay.data.bazaar.models.ErrorCode
+import ir.cafebazaar.bazaarpay.data.bazaar.models.ErrorModel
+import ir.cafebazaar.bazaarpay.data.bazaar.models.ResponseException
+import ir.cafebazaar.bazaarpay.data.bazaar.models.ResponseProperties
 import java.io.IOException
 
 private const val MESSAGE_SERVER_ERROR = "Server Error"

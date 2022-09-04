@@ -14,7 +14,8 @@ import ir.cafebazaar.bazaarpay.data.bazaar.models.InvalidPhoneNumberException
 import ir.cafebazaar.bazaarpay.models.Resource
 import ir.cafebazaar.bazaarpay.data.bazaar.models.ErrorModel
 import ir.cafebazaar.bazaarpay.utils.SingleLiveEvent
-import kotlinx.coroutines.*
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 internal class RegisterViewModel : ViewModel() {
 

@@ -6,7 +6,10 @@ import android.content.IntentFilter
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.text.format.DateUtils.SECOND_IN_MILLIS
-import androidx.lifecycle.*
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.google.android.gms.auth.api.phone.SmsRetriever
 import ir.cafebazaar.bazaarpay.ServiceLocator
 import ir.cafebazaar.bazaarpay.data.bazaar.models.ErrorModel
@@ -17,11 +20,17 @@ import ir.cafebazaar.bazaarpay.extensions.isGooglePlayServicesAvailable
 import ir.cafebazaar.bazaarpay.data.bazaar.account.AccountRepository
 import ir.cafebazaar.bazaarpay.data.bazaar.account.models.getotptoken.WaitingTimeWithEnableCall
 import ir.cafebazaar.bazaarpay.data.bazaar.account.models.verifyotptoken.LoginResponse
-import ir.cafebazaar.bazaarpay.models.*
+import ir.cafebazaar.bazaarpay.models.GlobalDispatchers
+import ir.cafebazaar.bazaarpay.models.Resource
+import ir.cafebazaar.bazaarpay.models.ResourceState
+import ir.cafebazaar.bazaarpay.models.VerificationState
 import ir.cafebazaar.bazaarpay.receiver.SmsPermissionReceiver
 import ir.cafebazaar.bazaarpay.utils.Either
 import ir.cafebazaar.bazaarpay.utils.SingleLiveEvent
-import kotlinx.coroutines.*
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.FlowPreview
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import kotlin.math.max
 import kotlin.properties.Delegates
 
