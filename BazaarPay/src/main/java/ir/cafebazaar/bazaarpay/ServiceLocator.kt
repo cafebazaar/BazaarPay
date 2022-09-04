@@ -153,15 +153,11 @@ internal object ServiceLocator {
         authenticator: Authenticator?= null
     ): OkHttpClient {
         val builder = OkHttpClient.Builder()
-//        if (BuildConfig.DEBUG) {
-//
-//            val loggingInterceptor = get<HttpLoggingInterceptor?>()
-//            if (loggingInterceptor != null) {
-//                builder.addInterceptor(loggingInterceptor)
-//            }
-//        }
-        val loggingInterceptor = HttpLoggingInterceptor().apply {
-            level = HttpLoggingInterceptor.Level.BODY
+        if (BuildConfig.DEBUG) {
+            val loggingInterceptor = get<HttpLoggingInterceptor?>()
+            if (loggingInterceptor != null) {
+                builder.addInterceptor(loggingInterceptor)
+            }
         }
         authenticator?.let {
             builder.authenticator(it)
@@ -171,7 +167,6 @@ internal object ServiceLocator {
         interceptors.forEach {
             builder.addInterceptor(it)
         }
-        builder.addInterceptor(loggingInterceptor)
 
         return builder
             .connectTimeout(REQUEST_TIME_OUT, TimeUnit.SECONDS)
