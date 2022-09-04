@@ -31,6 +31,7 @@ import ir.cafebazaar.bazaarpay.extensions.visible
 import ir.cafebazaar.bazaarpay.models.Resource
 import ir.cafebazaar.bazaarpay.models.ResourceState
 import ir.cafebazaar.bazaarpay.models.VerificationState
+import ir.cafebazaar.bazaarpay.screens.login.LoginConstants.ACTION_BROADCAST_LOGIN
 import ir.cafebazaar.bazaarpay.utils.secondsToStringTime
 
 internal class VerifyOtpFragment : Fragment() {
@@ -286,10 +287,10 @@ internal class VerifyOtpFragment : Fragment() {
     }
 
     override fun onDestroyView() {
-        super.onDestroyView()
         headerBinding.verificationCodeEditText.removeTextChangedListener(
             verificationCodeWatcher
         )
+        super.onDestroyView()
         _binding = null
         _headerBinding = null
     }
@@ -312,7 +313,6 @@ internal class VerifyOtpFragment : Fragment() {
 
     private companion object {
 
-        const val ACTION_BROADCAST_LOGIN = "loginHappened"
         const val SMS_CONSENT_REQUEST = 2
         const val OTP_TOKEN_START_POSITION = 10
         const val OTP_TOKEN_END_POSITION = 14
