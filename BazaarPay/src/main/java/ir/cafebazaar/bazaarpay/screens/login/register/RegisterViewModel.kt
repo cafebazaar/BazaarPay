@@ -22,24 +22,23 @@ internal class RegisterViewModel : ViewModel() {
     private val accountRepository: AccountRepository = ServiceLocator.get()
     private val globalDispatchers: GlobalDispatchers = ServiceLocator.get()
 
-    private val data = SingleLiveEvent<Resource<WaitingTimeWithEnableCall>>()
-    private val savedPhones = MutableLiveData<List<String>>()
+    private val _data = SingleLiveEvent<Resource<WaitingTimeWithEnableCall>>()
+    val data: LiveData<Resource<WaitingTimeWithEnableCall>> = _data
 
-    fun getData(): LiveData<Resource<WaitingTimeWithEnableCall>> = data
-
-    fun getSavedPhones(): LiveData<List<String>> = savedPhones
+    private val _savedPhones = MutableLiveData<List<String>>()
+    val savedPhones: LiveData<List<String>> = _savedPhones
 
     fun loadSavedPhones() {
         viewModelScope.launch {
             withContext(globalDispatchers.iO) {
-                savedPhones.postValue(accountRepository.getAutoFillPhones())
+                _savedPhones.postValue(accountRepository.getAutoFillPhones())
             }
         }
     }
 
     fun register(phoneNumber: String) {
         if (phoneNumber.isValidPhoneNumber()) {
-            data.postValue(Resource.loading())
+            _data.postValue(Resource.loading())
             viewModelScope.launch {
                 withContext(globalDispatchers.iO) {
                     accountRepository.getOtpToken(phoneNumber).fold(::success,::error)
@@ -51,12 +50,12 @@ internal class RegisterViewModel : ViewModel() {
     }
 
     private fun error(throwable: ErrorModel) {
-        data.postValue(Resource.failed(failure = throwable))
+        _data.postValue(Resource.failed(failure = throwable))
     }
 
     private fun success(
         response: WaitingTimeWithEnableCall
     ) {
-        data.postValue(Resource.loaded(response))
+        _data.postValue(Resource.loaded(response))
     }
 }

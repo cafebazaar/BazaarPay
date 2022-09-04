@@ -71,8 +71,8 @@ internal class RegisterFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         with(viewModel) {
-            getData().observe(viewLifecycleOwner, ::handleResourceState)
-            getSavedPhones().observe(viewLifecycleOwner, ::populateAutoFillPhoneNumbers)
+            data.observe(viewLifecycleOwner, ::handleResourceState)
+            savedPhones.observe(viewLifecycleOwner, ::populateAutoFillPhoneNumbers)
             loadSavedPhones()
         }
 
@@ -108,9 +108,9 @@ internal class RegisterFragment : Fragment() {
     }
 
     override fun onDestroyView() {
-        super.onDestroyView()
         binding.phoneEditText.setAdapter(null)
         binding.phoneEditText.removeTextChangedListener(phoneEditTextWatcher)
+        super.onDestroyView()
         _binding = null
     }
 
@@ -169,11 +169,7 @@ internal class RegisterFragment : Fragment() {
                     }
                 }
                 ResourceState.Error -> {
-                    val message = if (resource.failure is InvalidPhoneNumberException) {
-                        getString(R.string.wrong_phone_number)
-                    } else {
-                        requireContext().getReadableErrorMessage(resource.failure)
-                    }
+                    val message = requireContext().getReadableErrorMessage(resource.failure)
                     showError(message)
                 }
                 ResourceState.Loading -> handleLoading()
@@ -204,9 +200,11 @@ internal class RegisterFragment : Fragment() {
     }
 
     private fun showError(message: String) {
-        binding.proceedBtn.isLoading = false
-        binding.phoneInputLayout.isErrorEnabled = true
-        binding.phoneInputLayout.error = message
+        with(binding) {
+            proceedBtn.isLoading = false
+            phoneInputLayout.isErrorEnabled = true
+            phoneInputLayout.error = message
+        }
         hideKeyboardInLandscape()
     }
 
