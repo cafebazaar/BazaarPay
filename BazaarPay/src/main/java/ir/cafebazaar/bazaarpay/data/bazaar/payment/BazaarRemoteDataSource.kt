@@ -30,7 +30,7 @@ internal class BazaarRemoteDataSource {
             return@withContext safeApiCall {
                 bazaarService.getDirectDebitOnBoarding(
                     GetDirectDebitOnBoardingSingleRequest()
-                ).singleReply.getDirectDebitOnBoardingReply.toDirectDebitOnBoardingDetails()
+                ).toDirectDebitOnBoardingDetails()
             }
         }
     }
@@ -47,7 +47,7 @@ internal class BazaarRemoteDataSource {
                         nationalId = nationalId,
                         redirectUrl = DIRECT_DEBIT_ACTIVATION_REDIRECT_URL
                     )
-                ).singleReply.getDirectDebitContractCreationUrlReply.toContractCreation()
+                ).toContractCreation()
             }
         }
     }
@@ -57,7 +57,7 @@ internal class BazaarRemoteDataSource {
             return@withContext safeApiCall {
                 bazaarService.getAvailableBanks(
                     GetAvailableBanksSingleRequest()
-                ).singleReply.getAvailableBanksReply.toAvailableBanks()
+                ).toAvailableBanks()
             }
         }
     }
