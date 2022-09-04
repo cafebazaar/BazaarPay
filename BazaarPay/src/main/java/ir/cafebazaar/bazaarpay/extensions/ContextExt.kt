@@ -26,7 +26,7 @@ fun Context.getConnectivityManager() =
     getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
 
 val Context.layoutInflater: LayoutInflater
-    get() = getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+    get() = LayoutInflater.from(this)
 
 val Context.isLandscape: Boolean
     get() = resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE
