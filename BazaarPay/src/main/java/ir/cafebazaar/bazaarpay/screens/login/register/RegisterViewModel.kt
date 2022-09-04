@@ -30,9 +30,7 @@ internal class RegisterViewModel : ViewModel() {
 
     fun loadSavedPhones() {
         viewModelScope.launch {
-            withContext(globalDispatchers.iO) {
-                _savedPhones.postValue(accountRepository.getAutoFillPhones())
-            }
+            _savedPhones.value = accountRepository.getAutoFillPhones()
         }
     }
 
@@ -40,9 +38,7 @@ internal class RegisterViewModel : ViewModel() {
         if (phoneNumber.isValidPhoneNumber()) {
             _data.postValue(Resource.loading())
             viewModelScope.launch {
-                withContext(globalDispatchers.iO) {
-                    accountRepository.getOtpToken(phoneNumber).fold(::success,::error)
-                }
+                accountRepository.getOtpToken(phoneNumber).fold(::success,::error)
             }
         } else {
             error(InvalidPhoneNumberException())
@@ -50,7 +46,7 @@ internal class RegisterViewModel : ViewModel() {
     }
 
     private fun error(throwable: ErrorModel) {
-        _data.postValue(Resource.failed(failure = throwable))
+        _data.value = Resource.failed(failure = throwable)
     }
 
     private fun success(

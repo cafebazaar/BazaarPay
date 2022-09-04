@@ -6,11 +6,17 @@ import ir.cafebazaar.bazaarpay.extensions.fold
 import ir.cafebazaar.bazaarpay.data.bazaar.account.models.getotptoken.WaitingTimeWithEnableCall
 import ir.cafebazaar.bazaarpay.data.bazaar.account.models.getotptokenbycall.WaitingTime
 import ir.cafebazaar.bazaarpay.data.bazaar.account.models.verifyotptoken.LoginResponse
+import ir.cafebazaar.bazaarpay.models.GlobalDispatchers
 import ir.cafebazaar.bazaarpay.utils.Either
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.withContext
 
 internal class AccountRepository {
+
+    private val globalDispatchers: GlobalDispatchers by lazy {
+        ServiceLocator.get()
+    }
 
     private val onSmsPermissionSharedFlow: MutableSharedFlow<Intent> = MutableSharedFlow()
     private val accountLocalDataSource: AccountLocalDataSource = ServiceLocator.get()
@@ -20,8 +26,10 @@ internal class AccountRepository {
         return accountLocalDataSource.accessToken.isNotEmpty()
     }
 
-    fun getAutoFillPhones(): List<String> {
-        return accountLocalDataSource.getAutoFillPhones()
+    suspend fun getAutoFillPhones(): List<String> {
+        return withContext(globalDispatchers.iO) {
+            return@withContext accountLocalDataSource.getAutoFillPhones()
+        }
     }
 
     fun savePhone(phone: String) {
