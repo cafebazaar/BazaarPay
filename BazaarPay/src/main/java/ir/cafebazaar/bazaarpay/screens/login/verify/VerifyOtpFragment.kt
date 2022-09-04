@@ -31,6 +31,7 @@ import ir.cafebazaar.bazaarpay.extensions.visible
 import ir.cafebazaar.bazaarpay.models.Resource
 import ir.cafebazaar.bazaarpay.models.ResourceState
 import ir.cafebazaar.bazaarpay.models.VerificationState
+import ir.cafebazaar.bazaarpay.utils.secondsToStringTime
 
 internal class VerifyOtpFragment : Fragment() {
 
@@ -256,7 +257,7 @@ internal class VerifyOtpFragment : Fragment() {
     }
 
     private fun onTick(waitingTime: Long) {
-        val untilFinishTimeText = requireContext().secondsToStringTime(waitingTime)
+        val untilFinishTimeText = secondsToStringTime(waitingTime)
         binding.resendText.text = getString(R.string.resend_after, untilFinishTimeText)
     }
 
