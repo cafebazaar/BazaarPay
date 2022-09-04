@@ -26,6 +26,7 @@ import ir.cafebazaar.bazaarpay.extensions.gone
 import ir.cafebazaar.bazaarpay.extensions.hideKeyboard
 import ir.cafebazaar.bazaarpay.extensions.moveCursorToEnd
 import ir.cafebazaar.bazaarpay.extensions.openUrl
+import ir.cafebazaar.bazaarpay.extensions.setSafeOnClickListener
 import ir.cafebazaar.bazaarpay.extensions.setValueIfNotNullOrEmpty
 import ir.cafebazaar.bazaarpay.extensions.toastMessage
 import ir.cafebazaar.bazaarpay.extensions.visible
@@ -223,11 +224,11 @@ internal class PaymentDynamicCreditFragment : Fragment() {
     private fun setViewListeners() {
         with(binding) {
 
-            dynamicCreditBack.setOnClickListener {
+            dynamicCreditBack.setSafeOnClickListener {
                 handleBackPress()
             }
 
-            payButton.setOnClickListener {
+            payButton.setSafeOnClickListener {
                 dynamicCreditViewModel.onPayButtonClicked(binding.priceEditText.text.toString())
             }
             textWatcher = priceEditText.doOnTextChanged { text, _, _, _ ->

@@ -28,6 +28,7 @@ import ir.cafebazaar.bazaarpay.extensions.hideKeyboard
 import ir.cafebazaar.bazaarpay.extensions.isLandscape
 import ir.cafebazaar.bazaarpay.extensions.isValidPhoneNumber
 import ir.cafebazaar.bazaarpay.extensions.navigateSafe
+import ir.cafebazaar.bazaarpay.extensions.setSafeOnClickListener
 
 internal class RegisterFragment : Fragment() {
 
@@ -84,13 +85,13 @@ internal class RegisterFragment : Fragment() {
             finishCallBacks?.onCanceled()
         }
 
-        binding.close.setOnClickListener {
+        binding.close.setSafeOnClickListener {
             finishCallBacks?.onCanceled()
         }
 
         disableProceedButtonWhenEditTextIsEmpty()
 
-        binding.proceedBtn.setOnClickListener { register() }
+        binding.proceedBtn.setSafeOnClickListener { register() }
 
         setLoginInfo()
     }

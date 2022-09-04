@@ -54,7 +54,7 @@ internal class DirectDebitBankListFragment : Fragment() {
             }
             actionButton.apply {
                 isEnabled = false
-                setOnClickListener {
+                setSafeOnClickListener {
                     viewModel.onRegisterClicked(
                         DirectDebitBankListFragmentArgs.fromBundle(requireArguments()).nationalId
                     )

@@ -15,6 +15,7 @@ import ir.cafebazaar.bazaarpay.data.bazaar.models.ErrorModel
 import ir.cafebazaar.bazaarpay.databinding.FragmentThankYouPageBinding
 import ir.cafebazaar.bazaarpay.extensions.getReadableErrorMessage
 import ir.cafebazaar.bazaarpay.extensions.gone
+import ir.cafebazaar.bazaarpay.extensions.setSafeOnClickListener
 import ir.cafebazaar.bazaarpay.extensions.visible
 import ir.cafebazaar.bazaarpay.models.Resource
 import ir.cafebazaar.bazaarpay.models.ResourceState
@@ -92,7 +93,7 @@ internal class PaymentThankYouPageFragment : Fragment() {
             messageTextView.text = model.message
             successButton.text = model.successButtonText
 
-            successButton.setOnClickListener {
+            successButton.setSafeOnClickListener {
                 finishCallbacks?.onSuccess()
             }
         }
@@ -105,10 +106,10 @@ internal class PaymentThankYouPageFragment : Fragment() {
 
             failureButtonsGroup.visible()
 
-            tryAgainButton.setOnClickListener {
+            tryAgainButton.setSafeOnClickListener {
                 findNavController().navigateUp()
             }
-            cancelButton.setOnClickListener {
+            cancelButton.setSafeOnClickListener {
                 finishCallbacks?.onCanceled()
             }
 

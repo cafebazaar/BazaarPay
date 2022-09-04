@@ -5,6 +5,7 @@ import androidx.recyclerview.widget.RecyclerView
 import ir.cafebazaar.bazaarpay.R
 import ir.cafebazaar.bazaarpay.databinding.ItemPaymentDynamicCreditBinding
 import ir.cafebazaar.bazaarpay.data.payment.models.getpaymentmethods.Option
+import ir.cafebazaar.bazaarpay.extensions.setSafeOnClickListener
 
 internal class DynamicCreditOptionViewHolder(
     private val binding: ItemPaymentDynamicCreditBinding,
@@ -12,7 +13,7 @@ internal class DynamicCreditOptionViewHolder(
 ) : RecyclerView.ViewHolder(binding.root) {
 
     init {
-        binding.root.setOnClickListener {
+        binding.root.setSafeOnClickListener {
             onItemClicked(adapterPosition)
         }
     }

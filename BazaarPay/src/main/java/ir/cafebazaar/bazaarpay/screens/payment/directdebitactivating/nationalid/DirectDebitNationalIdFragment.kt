@@ -14,6 +14,7 @@ import ir.cafebazaar.bazaarpay.R
 import ir.cafebazaar.bazaarpay.databinding.FragmentNationalIdBinding
 import ir.cafebazaar.bazaarpay.extensions.NATIONAL_ID_LENGTH
 import ir.cafebazaar.bazaarpay.extensions.hideKeyboard
+import ir.cafebazaar.bazaarpay.extensions.setSafeOnClickListener
 
 internal class DirectDebitNationalIdFragment : Fragment() {
 
@@ -52,12 +53,12 @@ internal class DirectDebitNationalIdFragment : Fragment() {
                 hideError()
                 acceptButton.isEnabled = it?.length == NATIONAL_ID_LENGTH
             }
-            acceptButton.setOnClickListener {
+            acceptButton.setSafeOnClickListener {
                 directDebitNationalIdViewModel.onAcceptClicked(
                     nationalIdEditText.text.toString()
                 )
             }
-            toolbarBack.setOnClickListener {
+            toolbarBack.setSafeOnClickListener {
                 hideKeyboard(nationalIdEditText.windowToken)
                 findNavController().popBackStack()
             }

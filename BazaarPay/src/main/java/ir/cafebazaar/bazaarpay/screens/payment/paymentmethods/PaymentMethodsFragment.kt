@@ -32,6 +32,7 @@ import ir.cafebazaar.bazaarpay.data.payment.models.getpaymentmethods.PaymentMeth
 import ir.cafebazaar.bazaarpay.data.payment.models.getpaymentmethods.PaymentMethodsInfo
 import ir.cafebazaar.bazaarpay.data.payment.models.merchantinfo.MerchantInfo
 import ir.cafebazaar.bazaarpay.data.payment.models.pay.PayResult
+import ir.cafebazaar.bazaarpay.extensions.setSafeOnClickListener
 import ir.cafebazaar.bazaarpay.utils.getErrorViewBasedOnErrorModel
 
 internal class PaymentMethodsFragment : Fragment(), PaymentMethodsClickListener {
@@ -97,7 +98,7 @@ internal class PaymentMethodsFragment : Fragment(), PaymentMethodsClickListener 
 
     private fun initUI() {
         with(binding) {
-            paymentOptionClose.setOnClickListener {
+            paymentOptionClose.setSafeOnClickListener {
                 handleBackPress()
             }
 
@@ -125,7 +126,7 @@ internal class PaymentMethodsFragment : Fragment(), PaymentMethodsClickListener 
     }
 
     private fun populatePaymentOptions(paymentMethods: PaymentMethodItems) {
-        binding.payButton.setOnClickListener { onPayButtonClicked() }
+        binding.payButton.setSafeOnClickListener { onPayButtonClicked() }
         notifyPaymentOptionAdapter(paymentMethods)
         setPaymentOptionRecyclerViewScrollPosition()
     }

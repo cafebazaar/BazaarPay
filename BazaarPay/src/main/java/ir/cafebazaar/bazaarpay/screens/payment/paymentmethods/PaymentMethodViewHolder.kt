@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import ir.cafebazaar.bazaarpay.R
 import ir.cafebazaar.bazaarpay.databinding.ItemPaymentOptionBinding
 import ir.cafebazaar.bazaarpay.data.payment.models.getpaymentmethods.PaymentMethod
+import ir.cafebazaar.bazaarpay.extensions.setSafeOnClickListener
 import ir.cafebazaar.bazaarpay.utils.imageloader.ImageLoader
 
 internal class PaymentMethodViewHolder(
@@ -17,7 +18,7 @@ internal class PaymentMethodViewHolder(
 ) : RecyclerView.ViewHolder(binding.root) {
 
     fun bind(item: PaymentMethod, selectedPosition: Int) {
-        itemView.setOnClickListener { clickListener.onItemClick(adapterPosition) }
+        itemView.setSafeOnClickListener { clickListener.onItemClick(adapterPosition) }
         with(binding) {
             item.iconUrl?.let {
                 ImageLoader.loadImage(

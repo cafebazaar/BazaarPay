@@ -26,7 +26,7 @@ import ir.cafebazaar.bazaarpay.extensions.invisible
 import ir.cafebazaar.bazaarpay.extensions.isLandscape
 import ir.cafebazaar.bazaarpay.extensions.localizeNumber
 import ir.cafebazaar.bazaarpay.extensions.observe
-import ir.cafebazaar.bazaarpay.extensions.secondsToStringTime
+import ir.cafebazaar.bazaarpay.extensions.setSafeOnClickListener
 import ir.cafebazaar.bazaarpay.extensions.visible
 import ir.cafebazaar.bazaarpay.models.Resource
 import ir.cafebazaar.bazaarpay.models.ResourceState
@@ -88,7 +88,7 @@ internal class VerifyOtpFragment : Fragment() {
             findNavController().popBackStack()
         }
 
-        headerBinding.close.setOnClickListener {
+        headerBinding.close.setSafeOnClickListener {
             findNavController().popBackStack()
         }
 
@@ -97,11 +97,11 @@ internal class VerifyOtpFragment : Fragment() {
             phoneNumber.localizeNumber(requireContext())
         )
 
-        binding.resendCodeButton.setOnClickListener { handleResendSmsClick() }
-        binding.callButton.setOnClickListener {
+        binding.resendCodeButton.setSafeOnClickListener { handleResendSmsClick() }
+        binding.callButton.setSafeOnClickListener {
             viewModel.onCallButtonClicked(phoneNumber)
         }
-        headerBinding.proceedBtn.setOnClickListener { handleProceedClick(false) }
+        headerBinding.proceedBtn.setSafeOnClickListener { handleProceedClick(false) }
         // disable when initialized, because there is no text in the input.
         headerBinding.proceedBtn.isEnabled = false
         headerBinding.verificationCodeEditText.setOnEditorActionListener { _, actionId, _ ->
