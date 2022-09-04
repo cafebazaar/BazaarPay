@@ -99,15 +99,6 @@ fun Context.openUrl(
     }
 }
 
-@ColorInt
-fun Context.getBalanceTextColor(balance: Long): Int {
-    return if (balance < 0) {
-        ContextCompat.getColor(this, R.color.error_primary)
-    } else {
-        ContextCompat.getColor(this, R.color.text_secondary)
-    }
-}
-
 fun Context.isHighPerformingDevice(): Boolean {
     val activityManager = (this.getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager)
     return !ActivityManagerCompat.isLowRamDevice(activityManager) &&

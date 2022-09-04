@@ -189,13 +189,11 @@ internal class PaymentDynamicCreditFragment : Fragment() {
     }
 
     private fun setDealerInfo() {
-        binding.merchantInfo.let { merchantInfoView ->
-            with(merchantInfoView) {
-                setMerchantName(dealerArgs.name)
-                setPrice(dealerArgs.priceString)
-                setMerchantInfo(dealerArgs.info)
-                setMerchantIcon(dealerArgs.iconUrl)
-            }
+        with(binding.merchantInfo) {
+            setMerchantName(dealerArgs.name)
+            setPrice(dealerArgs.priceString)
+            setMerchantInfo(dealerArgs.info)
+            setMerchantIcon(dealerArgs.iconUrl)
         }
     }
 
