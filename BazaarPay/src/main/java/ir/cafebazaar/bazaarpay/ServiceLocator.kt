@@ -188,7 +188,7 @@ internal object ServiceLocator {
             .baseUrl(baseUrl)
             .addConverterFactory(
                 if (needUnWrapper) {
-                    get<Converter.Factory>()
+                    gsonConverterFactory()
                 } else {
                     GsonConverterFactory.create(GsonBuilder().create())
                 }
@@ -201,7 +201,7 @@ internal object ServiceLocator {
         val accountHttpClient = provideOkHttpClient()
         val accountRetrofit = provideRetrofit(
             okHttp = accountHttpClient,
-            needUnWrapper = false
+            needUnWrapper = true
         )
         servicesMap[getKeyOfClass<AccountService>()] =
             accountRetrofit.create(AccountService::class.java)
@@ -228,7 +228,7 @@ internal object ServiceLocator {
         val bazaarRetrofit = provideRetrofit(
             okHttp = bazaarHttpClient,
             baseUrl = DEFAULT_BASE_URL,
-            needUnWrapper = false
+            needUnWrapper = true
         )
         servicesMap[getKeyOfClass<BazaarPaymentService>()] =
             bazaarRetrofit.create(BazaarPaymentService::class.java)

@@ -1,7 +1,7 @@
 package ir.cafebazaar.bazaarpay.data.bazaar.account
 
 import ir.cafebazaar.bazaarpay.data.bazaar.account.models.getotptoken.request.GetOtpTokenSingleRequest
-import ir.cafebazaar.bazaarpay.data.bazaar.account.models.getotptoken.response.GetOtpTokenSingleReply
+import ir.cafebazaar.bazaarpay.data.bazaar.account.models.getotptoken.response.GetOtpTokenDto
 import ir.cafebazaar.bazaarpay.data.bazaar.account.models.getotptokenbycall.request.GetOtpTokenByCallSingleRequest
 import ir.cafebazaar.bazaarpay.data.bazaar.account.models.getotptokenbycall.response.GetOtpTokenByCallSingleReply
 import ir.cafebazaar.bazaarpay.data.bazaar.account.models.refreshaccesstoken.request.GetAccessTokenSingleRequest
@@ -17,7 +17,7 @@ internal interface AccountService {
     @POST("GetOtpTokenRequest")
     suspend fun getOtpToken(
         @Body getOtpTokenSingleRequest: GetOtpTokenSingleRequest
-    ): GetOtpTokenSingleReply
+    ): GetOtpTokenDto
 
     @POST("GetOtpTokenByCallRequest")
     suspend fun getOtpTokenByCall(
