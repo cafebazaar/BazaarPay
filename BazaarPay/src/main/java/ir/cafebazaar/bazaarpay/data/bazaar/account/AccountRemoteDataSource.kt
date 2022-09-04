@@ -40,7 +40,7 @@ internal class AccountRemoteDataSource {
             return@withContext safeApiCall {
                 accountService.getOtpTokenByCall(
                     GetOtpTokenByCallSingleRequest(phoneNumber)
-                ).singleReply.getOtpTokenReply.toWaitingTime()
+                ).toWaitingTime()
             }
         }
     }
@@ -50,7 +50,7 @@ internal class AccountRemoteDataSource {
             return@withContext safeApiCall {
                 accountService.verifyOtpToken(
                     VerifyOtpTokenSingleRequest(phoneNumber, code)
-                ).singleReply.verifyOtpTokenReply.toLoginResponse()
+                ).toLoginResponse()
             }
         }
     }
@@ -61,7 +61,7 @@ internal class AccountRemoteDataSource {
 
         return when {
             response.isSuccessful -> {
-                val token = response.body()?.singleReply?.getAccessTokenReply?.getToken()
+                val token = response.body()?.getToken()
                 if (token != null) {
                     Either.Success(token)
                 } else {
