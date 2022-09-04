@@ -1,5 +1,9 @@
 package ir.cafebazaar.bazaarpay.data.bazaar.models
 
+import android.content.Context
+import ir.cafebazaar.bazaarpay.R
+import ir.cafebazaar.bazaarpay.extensions.isNetworkAvailable
+
 sealed class ErrorModel(override val message: String) : Throwable(message) {
     data class NetworkConnection(
         override val message: String,
@@ -21,6 +25,19 @@ sealed class ErrorModel(override val message: String) : Throwable(message) {
     object AuthenticationError : ErrorModel("Authentication")
 
     abstract class Feature(message: String) : ErrorModel(message)
+
+    fun getErrorIcon(context: Context): Int = when (this) {
+        is NetworkConnection -> {
+            if (context.isNetworkAvailable().not()) {
+                R.drawable.ic_signal_wifi_off_icon_primary_24dp_old
+            } else {
+                R.drawable.ic_error_outline_icon_primary_24dp_old
+            }
+        }
+        else -> {
+            R.drawable.ic_error_outline_icon_primary_24dp_old
+        }
+    }
 }
 
 enum class ErrorCode(val value: Int) {

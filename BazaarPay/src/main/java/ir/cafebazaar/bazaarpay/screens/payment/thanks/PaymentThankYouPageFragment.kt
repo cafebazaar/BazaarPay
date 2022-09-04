@@ -13,7 +13,6 @@ import ir.cafebazaar.bazaarpay.FinishCallbacks
 import ir.cafebazaar.bazaarpay.R
 import ir.cafebazaar.bazaarpay.data.bazaar.models.ErrorModel
 import ir.cafebazaar.bazaarpay.databinding.FragmentThankYouPageBinding
-import ir.cafebazaar.bazaarpay.extensions.getErrorIcon
 import ir.cafebazaar.bazaarpay.extensions.getReadableErrorMessage
 import ir.cafebazaar.bazaarpay.extensions.gone
 import ir.cafebazaar.bazaarpay.extensions.visible
@@ -113,7 +112,9 @@ internal class PaymentThankYouPageFragment : Fragment() {
                 finishCallbacks?.onCanceled()
             }
 
-            statusIconImageView.setImageResource(requireContext().getErrorIcon(error))
+            statusIconImageView.setImageResource(
+                error?.getErrorIcon(requireContext()) ?: R.drawable.ic_error_outline_icon_primary_24dp_old
+            )
             messageTextView.text = requireContext().getReadableErrorMessage(error)
         }
     }

@@ -76,13 +76,6 @@ fun Context.isRTL(): Boolean {
     return resources.configuration.layoutDirection == View.LAYOUT_DIRECTION_RTL
 }
 
-fun Context.getErrorIcon(errorModel: ErrorModel?): Int = when (errorModel) {
-    is ErrorModel.NetworkConnection ->
-        if (isNetworkAvailable().not()) R.drawable.ic_signal_wifi_off_icon_primary_24dp_old
-        else R.drawable.ic_error_outline_icon_primary_24dp_old
-    else -> R.drawable.ic_error_outline_icon_primary_24dp_old
-}
-
 fun Context.openUrl(
     url: String
 ) {
