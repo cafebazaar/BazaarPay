@@ -4,11 +4,9 @@ import android.app.ActivityManager
 import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.content.res.Configuration
 import android.net.ConnectivityManager
 import android.net.Uri
-import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import androidx.annotation.ColorInt
@@ -18,9 +16,11 @@ import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.GoogleApiAvailability
 import ir.cafebazaar.bazaarpay.R
 import ir.cafebazaar.bazaarpay.ServiceLocator
-import ir.cafebazaar.bazaarpay.data.bazaar.models.*
+import ir.cafebazaar.bazaarpay.data.bazaar.models.ErrorModel
+import ir.cafebazaar.bazaarpay.data.bazaar.models.InvalidPhoneNumberException
 import ir.cafebazaar.bazaarpay.utils.imageloader.BazaarGlideModule
-import java.util.*
+import java.util.Locale
+import java.util.Formatter
 
 fun Context.getConnectivityManager() =
     getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
