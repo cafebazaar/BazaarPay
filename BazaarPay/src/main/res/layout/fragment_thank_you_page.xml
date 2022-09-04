@@ -70,7 +70,7 @@
             app:barrierDirection="bottom"
             app:constraint_referenced_ids="messageTextView" />
 
-        <ir.cafebazaar.bazaarpay.widget.button.BazaarButton
+        <ir.cafebazaar.bazaarpay.widget.button.BazaarPayButton
             android:id="@+id/successButton"
             app:buttonTheme="contained"
             app:buttonType="app"
@@ -84,7 +84,7 @@
             app:layout_constraintTop_toBottomOf="@+id/contentBarrier"
             tools:visibility="visible" />
 
-        <ir.cafebazaar.bazaarpay.widget.button.BazaarButton
+        <ir.cafebazaar.bazaarpay.widget.button.BazaarPayButton
             android:id="@+id/tryAgainButton"
             app:buttonTheme="contained"
             app:buttonType="app"
@@ -96,14 +96,14 @@
             android:layout_marginBottom="@dimen/default_margin_double"
             android:minHeight="@dimen/default_button_height"
             app:text="@string/try_again"
-            android:textColor="@color/tc_primary_button_white"
+            android:textColor="@color/selector_primary_button_white"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toLeftOf="@+id/cancelButton"
             app:layout_constraintTop_toBottomOf="@id/messageTextView"
             tools:ignore="RtlHardcoded" />
 
-        <ir.cafebazaar.bazaarpay.widget.button.BazaarButton
+        <ir.cafebazaar.bazaarpay.widget.button.BazaarPayButton
             android:id="@+id/cancelButton"
             app:buttonType="app"
             app:buttonTheme="outline"

@@ -18,12 +18,12 @@ internal class PaymentMethodViewHolder(
 ) : RecyclerView.ViewHolder(binding.root) {
 
     fun bind(item: PaymentMethod, selectedPosition: Int) {
-        itemView.setSafeOnClickListener { clickListener.onItemClick(adapterPosition) }
+        itemView.setSafeOnClickListener { clickListener.onItemClick(absoluteAdapterPosition) }
         with(binding) {
             item.iconUrl?.let {
                 ImageLoader.loadImage(
                     imageView = icon,
-                    imageURI = item.iconUrl,
+                    imageURI = it,
                     placeHolderId = R.drawable.ic_default_payment_old
                 )
             }
@@ -34,14 +34,14 @@ internal class PaymentMethodViewHolder(
                 optionRoot.post {
                     animateDescription(
                         item.subDescription?.isNotEmpty()?.and(
-                            selectedPosition == adapterPosition
+                            selectedPosition == absoluteAdapterPosition
                         ) == true
                     )
                 }
             }
             optionRoot.background = getBackgroundDrawable(
                 binding.root.context,
-                selectedPosition == adapterPosition,
+                selectedPosition == absoluteAdapterPosition,
                 item.subDescription?.isNotEmpty() == true
             )
         }
@@ -49,6 +49,7 @@ internal class PaymentMethodViewHolder(
 
     private fun animateDescription(isDescriptionVisible: Boolean) {
         binding.optionDescription?.let { optionDescription ->
+            optionDescription.clearAnimation()
             ValueAnimator.ofInt(
                 optionDescription.measuredHeight,
                 getFinalHeight(isDescriptionVisible)

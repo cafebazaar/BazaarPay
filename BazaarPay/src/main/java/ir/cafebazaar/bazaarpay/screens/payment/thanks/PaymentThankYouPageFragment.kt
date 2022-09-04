@@ -90,8 +90,14 @@ internal class PaymentThankYouPageFragment : Fragment() {
 
             statusIconImageView.setImageResource(R.drawable.ic_success)
 
-            messageTextView.text = model.message
-            successButton.text = model.successButtonText
+            messageTextView.text =
+                model.messageTextModel.argMessage ?: getString(
+                    model.messageTextModel.defaultMessageId
+                )
+            successButton.text = getString(
+                model.successButtonTextModel.successButtonTextId,
+                model.successButtonTextModel.successMessageCountDown
+            )
 
             successButton.setSafeOnClickListener {
                 finishCallbacks?.onSuccess()

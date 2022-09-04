@@ -2,7 +2,6 @@ package ir.cafebazaar.bazaarpay.data.bazaar.account.models.getotptokenbycall.res
 
 import com.google.gson.annotations.SerializedName
 import ir.cafebazaar.bazaarpay.data.bazaar.account.models.getotptokenbycall.WaitingTime
-import ir.cafebazaar.bazaarpay.data.bazaar.models.BazaarBaseResponse
 
 internal data class GetOtpTokenByCallResponseDto(
     @SerializedName("waitingSeconds") val waitingSeconds: Long

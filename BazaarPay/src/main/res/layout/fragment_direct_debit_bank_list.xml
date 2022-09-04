@@ -63,7 +63,7 @@
         tools:itemCount="20"
         tools:listitem="@layout/item_bank_list" />
 
-    <ir.cafebazaar.bazaarpay.widget.button.BazaarButton
+    <ir.cafebazaar.bazaarpay.widget.button.BazaarPayButton
         android:id="@+id/actionButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -76,7 +76,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_dodgeInsetEdges="bottom"
-        app:textColor="@color/tc_primary_button"
+        app:textColor="@color/selector_primary_button"
         app:sizeMode="large"
         app:text="@string/enter_bank_page" />
 

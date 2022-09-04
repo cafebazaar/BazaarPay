@@ -36,7 +36,7 @@ internal open class DirectDebitBankListViewModel : ViewModel() {
     val dataLiveData: LiveData<Resource<List<BankList>>> = _dataLiveData
 
     fun loadData() {
-        viewModelScope.launch(globalDispatchers.iO) {
+        viewModelScope.launch {
             bazaarPaymentRepository.getAvailableBanks()
                 .fold(::handleSuccessBankList, ::error)
         }
@@ -47,17 +47,11 @@ internal open class DirectDebitBankListViewModel : ViewModel() {
             response.banks
         )
         data.addAll(items)
-        _dataLiveData.postValue(
-            Resource.loaded(
-                data
-            )
-        )
+        _dataLiveData.value = Resource.loaded(data)
     }
 
     private fun error(error: ErrorModel) {
-        _dataLiveData.postValue(
-            Resource.failed(failure = error)
-        )
+        _dataLiveData.value = Resource.failed(failure = error)
     }
 
     private fun prepareRowItems(banks: List<Bank>): List<BankList> {
@@ -75,7 +69,7 @@ internal open class DirectDebitBankListViewModel : ViewModel() {
 
     private fun onBankRowSelected(item: BankList.BankListRowItem) {
         if (item.isSelected.not()) {
-            _enableActionButtonStateLiveData.postValue(true)
+            _enableActionButtonStateLiveData.value = true
 
             data.forEachIndexed { index, bankData ->
                 if (bankData is BankList.BankListRowItem) {
@@ -95,12 +89,10 @@ internal open class DirectDebitBankListViewModel : ViewModel() {
         }
     }
 
-    fun onRegisterClicked(
-        nationalId: String
-    ) {
+    fun onRegisterClicked(nationalId: String) {
         getSelectedBankItem()?.let { selectedItem ->
-            viewModelScope.launch(globalDispatchers.iO) {
-                _registerDirectDebitLiveData.postValue(Resource.loading())
+            viewModelScope.launch {
+                _registerDirectDebitLiveData.value = Resource.loading()
                 startRegistering(selectedItem, nationalId)
             }
         }
@@ -120,11 +112,7 @@ internal open class DirectDebitBankListViewModel : ViewModel() {
 
     private fun registerSucceed(url: ContractCreation) {
         clearSelectedBankItem()
-        _registerDirectDebitLiveData.postValue(
-            Resource.loaded(
-                data = url.url
-            )
-        )
+        _registerDirectDebitLiveData.value = Resource.loaded(data = url.url)
     }
 
     private fun clearSelectedBankItem() {
@@ -132,19 +120,15 @@ internal open class DirectDebitBankListViewModel : ViewModel() {
             if (data is BankList.BankListRowItem) {
                 if (data.isSelected) {
                     data.isSelected = false
-                    _notifyLiveData.postValue(index)
+                    _notifyLiveData.value = index
                 }
             }
         }
-        _enableActionButtonStateLiveData.postValue(false)
+        _enableActionButtonStateLiveData.value = false
     }
 
     private fun registerFailed(errorModel: ErrorModel) {
-        _registerDirectDebitLiveData.postValue(
-            Resource.failed(
-                failure = errorModel
-            )
-        )
+        _registerDirectDebitLiveData.value = Resource.failed(failure = errorModel)
     }
 
     private fun getSelectedBankItem(): BankList.BankListRowItem? {

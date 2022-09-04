@@ -8,12 +8,9 @@ import androidx.lifecycle.ViewModel
 import ir.cafebazaar.bazaarpay.R
 import ir.cafebazaar.bazaarpay.ServiceLocator
 import ir.cafebazaar.bazaarpay.models.Resource
-import ir.cafebazaar.bazaarpay.models.ResourceState
 import ir.cafebazaar.bazaarpay.utils.SingleLiveEvent
 
 internal class PaymentThankYouPageViewModel : ViewModel() {
-
-    private val context: Context = ServiceLocator.get()
 
     private val _viewStateLiveData = SingleLiveEvent<Resource<PaymentThankYouPageSuccessModel>>()
     val viewStateLiveData: LiveData<Resource<PaymentThankYouPageSuccessModel>> = _viewStateLiveData
@@ -42,15 +39,17 @@ internal class PaymentThankYouPageViewModel : ViewModel() {
         ) {
             override fun onTick(millisUntilFinished: Long) {
                 val successMessageText = (millisUntilFinished / SECOND_IN_MILLIS).plus(1)
-                val successButtonText = context.getString(
-                    R.string.commit_with_countdown,
-                    successMessageText
-                )
 
                 _viewStateLiveData.value = Resource.loaded(
                     data = PaymentThankYouPageSuccessModel(
-                        successButtonText,
-                        args.message ?: context.getString(R.string.payment_done_message)
+                        successButtonTextModel = SuccessButtonTextModel(
+                            successButtonTextId = R.string.commit_with_countdown,
+                            successMessageCountDown = successMessageText
+                        ),
+                        messageTextModel = PaymentThankYouPageSuccessMessageModel(
+                            argMessage = args.message,
+                            defaultMessageId = R.string.payment_done_message
+                        )
                     )
                 )
             }

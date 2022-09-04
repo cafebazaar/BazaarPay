@@ -21,6 +21,7 @@ import ir.cafebazaar.bazaarpay.models.Resource
 import ir.cafebazaar.bazaarpay.models.ResourceState
 import ir.cafebazaar.bazaarpay.data.bazaar.payment.models.directdebit.onboarding.DirectDebitOnBoardingDetails
 import ir.cafebazaar.bazaarpay.data.bazaar.payment.models.directdebit.onboarding.OnBoardingItem
+import ir.cafebazaar.bazaarpay.extensions.navigateSafe
 import ir.cafebazaar.bazaarpay.extensions.setSafeOnClickListener
 import ir.cafebazaar.bazaarpay.utils.getErrorViewBasedOnErrorModel
 
@@ -162,7 +163,7 @@ internal class DirectDebitOnBoardingFragment : Fragment() {
     }
 
     private fun onLoginClicked() {
-        findNavController().navigate(
+        findNavController().navigateSafe(
             R.id.open_signin
         )
     }

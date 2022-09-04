@@ -14,7 +14,7 @@ internal class DynamicCreditOptionViewHolder(
 
     init {
         binding.root.setSafeOnClickListener {
-            onItemClicked(adapterPosition)
+            onItemClicked(absoluteAdapterPosition)
         }
     }
 

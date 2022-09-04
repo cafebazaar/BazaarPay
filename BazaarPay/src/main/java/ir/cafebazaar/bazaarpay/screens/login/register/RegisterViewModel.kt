@@ -36,7 +36,7 @@ internal class RegisterViewModel : ViewModel() {
 
     fun register(phoneNumber: String) {
         if (phoneNumber.isValidPhoneNumber()) {
-            _data.postValue(Resource.loading())
+            _data.value = Resource.loading()
             viewModelScope.launch {
                 accountRepository.getOtpToken(phoneNumber).fold(::success,::error)
             }
@@ -52,6 +52,6 @@ internal class RegisterViewModel : ViewModel() {
     private fun success(
         response: WaitingTimeWithEnableCall
     ) {
-        _data.postValue(Resource.loaded(response))
+        _data.value = Resource.loaded(response)
     }
 }

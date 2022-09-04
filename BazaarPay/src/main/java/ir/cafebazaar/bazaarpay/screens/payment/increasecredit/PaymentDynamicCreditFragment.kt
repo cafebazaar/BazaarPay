@@ -25,6 +25,7 @@ import ir.cafebazaar.bazaarpay.extensions.getReadableErrorMessage
 import ir.cafebazaar.bazaarpay.extensions.gone
 import ir.cafebazaar.bazaarpay.extensions.hideKeyboard
 import ir.cafebazaar.bazaarpay.extensions.moveCursorToEnd
+import ir.cafebazaar.bazaarpay.extensions.navigateSafe
 import ir.cafebazaar.bazaarpay.extensions.openUrl
 import ir.cafebazaar.bazaarpay.extensions.setSafeOnClickListener
 import ir.cafebazaar.bazaarpay.extensions.setValueIfNotNullOrEmpty
@@ -286,7 +287,7 @@ internal class PaymentDynamicCreditFragment : Fragment() {
     }
 
     private fun onLoginClicked() {
-        findNavController().navigate(
+        findNavController().navigateSafe(
             R.id.open_signin
         )
     }

@@ -21,19 +21,13 @@ internal class PostpaidTermsViewModel : ViewModel() {
 
     fun acceptButtonClicked() {
         _activationLiveData.value = Resource.loading()
-        viewModelScope.launch(globalDispatchers.iO) {
+        viewModelScope.launch {
             bazaarPaymentRepository.activatePostPaidCredit().fold(
                 {
-                    _activationLiveData.postValue(
-                        Resource.loaded()
-                    )
+                    _activationLiveData.value = Resource.loaded()
                 },
                 { error ->
-                    _activationLiveData.postValue(
-                        Resource.failed(
-                            failure = error
-                        )
-                    )
+                    _activationLiveData.value = Resource.failed(failure = error)
                 }
             )
         }

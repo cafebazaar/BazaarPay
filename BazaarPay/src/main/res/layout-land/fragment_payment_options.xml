@@ -107,7 +107,7 @@
             android:orientation="vertical"
             app:layout_constraintGuide_percent="0.5" />
 
-        <ir.cafebazaar.bazaarpay.widget.button.BazaarButton
+        <ir.cafebazaar.bazaarpay.widget.button.BazaarPayButton
             android:id="@+id/payButton"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
