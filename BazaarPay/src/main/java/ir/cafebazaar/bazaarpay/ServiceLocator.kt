@@ -13,8 +13,8 @@ import ir.cafebazaar.bazaarpay.data.payment.AuthenticatorInterceptor
 import ir.cafebazaar.bazaarpay.data.payment.PaymentRemoteDataSource
 import ir.cafebazaar.bazaarpay.data.payment.PaymentRepository
 import ir.cafebazaar.bazaarpay.data.payment.TokenInterceptor
-import ir.cafebazaar.bazaarpay.data.bazaar.payment.BazaarRemoteDataSource
-import ir.cafebazaar.bazaarpay.data.bazaar.payment.BazaarRepository
+import ir.cafebazaar.bazaarpay.data.bazaar.payment.BazaarPaymentRemoteDataSource
+import ir.cafebazaar.bazaarpay.data.bazaar.payment.BazaarPaymentRepository
 import ir.cafebazaar.bazaarpay.data.bazaar.payment.api.BazaarPaymentService
 import ir.cafebazaar.bazaarpay.data.payment.api.PaymentService
 import ir.cafebazaar.bazaarpay.network.gsonConverterFactory
@@ -128,11 +128,11 @@ internal object ServiceLocator {
     }
 
     private fun initBazaarRemoteDataSource() {
-        servicesMap[getKeyOfClass<BazaarRemoteDataSource>()] = BazaarRemoteDataSource()
+        servicesMap[getKeyOfClass<BazaarPaymentRemoteDataSource>()] = BazaarPaymentRemoteDataSource()
     }
 
     private fun initBazaarRepository() {
-        servicesMap[getKeyOfClass<BazaarRepository>()] = BazaarRepository()
+        servicesMap[getKeyOfClass<BazaarPaymentRepository>()] = BazaarPaymentRepository()
     }
 
     inline fun <reified T> get(named: String = ""): T {

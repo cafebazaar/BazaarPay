@@ -15,7 +15,7 @@ import ir.cafebazaar.bazaarpay.models.GlobalDispatchers
 import ir.cafebazaar.bazaarpay.utils.Either
 import kotlinx.coroutines.withContext
 
-internal class BazaarRemoteDataSource {
+internal class BazaarPaymentRemoteDataSource {
 
     private val bazaarService: BazaarPaymentService by lazy {
         ServiceLocator.get()

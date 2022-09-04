@@ -6,29 +6,29 @@ import ir.cafebazaar.bazaarpay.data.bazaar.payment.models.directdebit.contractcr
 import ir.cafebazaar.bazaarpay.data.bazaar.payment.models.directdebit.onboarding.DirectDebitOnBoardingDetails
 import ir.cafebazaar.bazaarpay.utils.Either
 
-internal class BazaarRepository {
+internal class BazaarPaymentRepository {
 
-    private val bazaarRemoteDataSource: BazaarRemoteDataSource = ServiceLocator.get()
+    private val bazaarPaymentRemoteDataSource: BazaarPaymentRemoteDataSource = ServiceLocator.get()
 
     suspend fun getDirectDebitOnBoarding(): Either<DirectDebitOnBoardingDetails> {
-        return bazaarRemoteDataSource.getDirectDebitOnBoarding()
+        return bazaarPaymentRemoteDataSource.getDirectDebitOnBoarding()
     }
 
     suspend fun getAvailableBanks(): Either<AvailableBanks> {
-        return bazaarRemoteDataSource.getAvailableBanks()
+        return bazaarPaymentRemoteDataSource.getAvailableBanks()
     }
 
     suspend fun getDirectDebitContractCreationUrl(
         bankCode: String,
         nationalId: String
     ): Either<ContractCreation> {
-        return bazaarRemoteDataSource.getCreateContractUrl(
+        return bazaarPaymentRemoteDataSource.getCreateContractUrl(
             bankCode,
             nationalId
         )
     }
 
     suspend fun activatePostPaidCredit(): Either<Unit> {
-        return bazaarRemoteDataSource.activatePostPaid()
+        return bazaarPaymentRemoteDataSource.activatePostPaid()
     }
 }

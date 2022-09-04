@@ -8,8 +8,7 @@ import ir.cafebazaar.bazaarpay.extensions.fold
 import ir.cafebazaar.bazaarpay.models.GlobalDispatchers
 import ir.cafebazaar.bazaarpay.models.PaymentFlowState
 import ir.cafebazaar.bazaarpay.models.Resource
-import ir.cafebazaar.bazaarpay.models.ResourceState
-import ir.cafebazaar.bazaarpay.data.bazaar.payment.BazaarRepository
+import ir.cafebazaar.bazaarpay.data.bazaar.payment.BazaarPaymentRepository
 import ir.cafebazaar.bazaarpay.data.bazaar.payment.models.directdebit.onboarding.DirectDebitOnBoardingDetails
 import ir.cafebazaar.bazaarpay.utils.SingleLiveEvent
 import kotlinx.coroutines.launch
@@ -17,7 +16,7 @@ import kotlinx.coroutines.withContext
 
 internal class DirectDebitOnBoardingViewModel : ViewModel() {
 
-    private val bazaarRepository: BazaarRepository = ServiceLocator.get()
+    private val bazaarPaymentRepository: BazaarPaymentRepository = ServiceLocator.get()
     private val globalDispatchers: GlobalDispatchers = ServiceLocator.get()
 
     private val _onBoardingItemsLiveData = MutableLiveData<Resource<DirectDebitOnBoardingDetails>>()
@@ -31,7 +30,7 @@ internal class DirectDebitOnBoardingViewModel : ViewModel() {
         _onBoardingItemsLiveData.value = Resource.loading()
         viewModelScope.launch {
             withContext(globalDispatchers.iO) {
-                bazaarRepository.getDirectDebitOnBoarding()
+                bazaarPaymentRepository.getDirectDebitOnBoarding()
                     .fold(::success, ::error)
             }
         }

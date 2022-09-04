@@ -7,15 +7,14 @@ import ir.cafebazaar.bazaarpay.ServiceLocator
 import ir.cafebazaar.bazaarpay.extensions.fold
 import ir.cafebazaar.bazaarpay.models.GlobalDispatchers
 import ir.cafebazaar.bazaarpay.models.Resource
-import ir.cafebazaar.bazaarpay.models.ResourceState
-import ir.cafebazaar.bazaarpay.data.bazaar.payment.BazaarRepository
+import ir.cafebazaar.bazaarpay.data.bazaar.payment.BazaarPaymentRepository
 import ir.cafebazaar.bazaarpay.utils.SingleLiveEvent
 import kotlinx.coroutines.launch
 
 internal class PostpaidTermsViewModel : ViewModel() {
 
     private val globalDispatchers: GlobalDispatchers = ServiceLocator.get()
-    private val bazaarRepository: BazaarRepository = ServiceLocator.get()
+    private val bazaarPaymentRepository: BazaarPaymentRepository = ServiceLocator.get()
 
     private val _activationLiveData = SingleLiveEvent<Resource<Unit>>()
     val activationLiveData: LiveData<Resource<Unit>> = _activationLiveData
@@ -23,7 +22,7 @@ internal class PostpaidTermsViewModel : ViewModel() {
     fun acceptButtonClicked() {
         _activationLiveData.value = Resource.loading()
         viewModelScope.launch(globalDispatchers.iO) {
-            bazaarRepository.activatePostPaidCredit().fold(
+            bazaarPaymentRepository.activatePostPaidCredit().fold(
                 {
                     _activationLiveData.postValue(
                         Resource.loaded()

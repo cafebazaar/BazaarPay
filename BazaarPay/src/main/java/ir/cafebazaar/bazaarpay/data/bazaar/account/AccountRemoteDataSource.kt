@@ -61,7 +61,7 @@ internal class AccountRemoteDataSource {
 
         return when {
             response.isSuccessful -> {
-                val token = response.body()?.getToken()
+                val token = response.body()?.accessToken
                 if (token != null) {
                     Either.Success(token)
                 } else {

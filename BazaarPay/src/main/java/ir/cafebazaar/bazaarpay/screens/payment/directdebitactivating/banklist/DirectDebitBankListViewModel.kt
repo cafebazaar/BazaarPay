@@ -6,8 +6,7 @@ import ir.cafebazaar.bazaarpay.data.bazaar.models.ErrorModel
 import ir.cafebazaar.bazaarpay.extensions.fold
 import ir.cafebazaar.bazaarpay.models.GlobalDispatchers
 import ir.cafebazaar.bazaarpay.models.Resource
-import ir.cafebazaar.bazaarpay.models.ResourceState
-import ir.cafebazaar.bazaarpay.data.bazaar.payment.BazaarRepository
+import ir.cafebazaar.bazaarpay.data.bazaar.payment.BazaarPaymentRepository
 import ir.cafebazaar.bazaarpay.data.bazaar.payment.models.directdebit.banklist.AvailableBanks
 import ir.cafebazaar.bazaarpay.data.bazaar.payment.models.directdebit.banklist.Bank
 import ir.cafebazaar.bazaarpay.data.bazaar.payment.models.directdebit.contractcreation.ContractCreation
@@ -18,7 +17,7 @@ internal open class DirectDebitBankListViewModel : ViewModel() {
 
 
     private val data: MutableList<BankList> = mutableListOf()
-    private val bazaarRepository: BazaarRepository = ServiceLocator.get()
+    private val bazaarPaymentRepository: BazaarPaymentRepository = ServiceLocator.get()
     private val globalDispatchers: GlobalDispatchers = ServiceLocator.get()
 
     private val _enableActionButtonStateLiveData = SingleLiveEvent<Boolean>()
@@ -35,7 +34,7 @@ internal open class DirectDebitBankListViewModel : ViewModel() {
 
     fun loadData() {
         viewModelScope.launch(globalDispatchers.iO) {
-            bazaarRepository.getAvailableBanks()
+            bazaarPaymentRepository.getAvailableBanks()
                 .fold(::handleSuccessBankList, ::error)
         }
     }
@@ -109,7 +108,7 @@ internal open class DirectDebitBankListViewModel : ViewModel() {
         nationalId: String
     ) {
         viewModelScope.launch {
-            bazaarRepository.getDirectDebitContractCreationUrl(
+            bazaarPaymentRepository.getDirectDebitContractCreationUrl(
                 bankCode = selectedItem.model.code,
                 nationalId
             ).fold(::registerSucceed, ::registerFailed)

@@ -4,9 +4,4 @@ import com.google.gson.annotations.SerializedName
 
 internal data class GetAccessTokenResponseDto(
     @SerializedName("accessToken") val accessToken: String
-) {
-
-    fun getToken(): String {
-        return accessToken
-    }
-}
+)
