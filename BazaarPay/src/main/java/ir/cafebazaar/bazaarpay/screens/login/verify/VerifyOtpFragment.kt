@@ -3,6 +3,7 @@ package ir.cafebazaar.bazaarpay.screens.login.verify
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
 import android.os.Bundle
 import android.text.TextWatcher
 import android.view.LayoutInflater
@@ -23,6 +24,7 @@ import ir.cafebazaar.bazaarpay.extensions.getReadableErrorMessage
 import ir.cafebazaar.bazaarpay.extensions.gone
 import ir.cafebazaar.bazaarpay.extensions.hideKeyboard
 import ir.cafebazaar.bazaarpay.extensions.invisible
+import ir.cafebazaar.bazaarpay.extensions.isGooglePlayServicesAvailable
 import ir.cafebazaar.bazaarpay.extensions.isLandscape
 import ir.cafebazaar.bazaarpay.extensions.localizeNumber
 import ir.cafebazaar.bazaarpay.extensions.observe
@@ -31,7 +33,9 @@ import ir.cafebazaar.bazaarpay.extensions.visible
 import ir.cafebazaar.bazaarpay.models.Resource
 import ir.cafebazaar.bazaarpay.models.ResourceState
 import ir.cafebazaar.bazaarpay.models.VerificationState
+import ir.cafebazaar.bazaarpay.receiver.SmsPermissionReceiver
 import ir.cafebazaar.bazaarpay.screens.login.LoginConstants.ACTION_BROADCAST_LOGIN
+import ir.cafebazaar.bazaarpay.screens.login.LoginConstants.SMS_NUMBER
 import ir.cafebazaar.bazaarpay.utils.secondsToStringTime
 
 internal class VerifyOtpFragment : Fragment() {
@@ -142,7 +146,19 @@ internal class VerifyOtpFragment : Fragment() {
 
             onStartSmsPermissionLiveData.observe(viewLifecycleOwner, ::onSmsPermission)
             verificationCodeLiveData.observe(viewLifecycleOwner, ::onSmsReceived)
-            onActivityCreated(requireActivity())
+            onActivityCreated()
+            startListeningSms()
+        }
+    }
+
+    private fun startListeningSms() {
+        if (requireActivity().isGooglePlayServicesAvailable()) {
+            SmsRetriever
+                .getClient(requireActivity())
+                .startSmsUserConsent(SMS_NUMBER)
+            IntentFilter(SmsRetriever.SMS_RETRIEVED_ACTION).also { intentFilter ->
+                requireActivity().registerReceiver(SmsPermissionReceiver(), intentFilter)
+            }
         }
     }
 
