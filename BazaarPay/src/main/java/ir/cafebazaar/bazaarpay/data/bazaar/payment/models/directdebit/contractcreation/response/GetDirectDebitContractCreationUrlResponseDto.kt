@@ -3,7 +3,7 @@ package ir.cafebazaar.bazaarpay.data.bazaar.payment.models.directdebit.contractc
 import com.google.gson.annotations.SerializedName
 import ir.cafebazaar.bazaarpay.data.bazaar.payment.models.directdebit.contractcreation.ContractCreation
 
-internal data class GetDirectDebitContractCreationUrlResponseDto(
+internal class GetDirectDebitContractCreationUrlResponseDto(
     @SerializedName("url") val url: String
 ) {
 

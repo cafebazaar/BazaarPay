@@ -7,7 +7,7 @@ import ir.cafebazaar.bazaarpay.data.bazaar.payment.models.directdebit.onboarding
 import ir.cafebazaar.bazaarpay.extensions.persianDigitsIfPersian
 import java.util.Locale
 
-internal data class GetAvailableBanksResponseDto(
+internal class GetAvailableBanksResponseDto(
     @SerializedName("banks") val banks: List<BankDto>
 ) {
 

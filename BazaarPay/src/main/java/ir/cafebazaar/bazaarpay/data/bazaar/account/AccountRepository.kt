@@ -18,7 +18,8 @@ internal class AccountRepository {
         ServiceLocator.get()
     }
 
-    private val onSmsPermissionSharedFlow: MutableSharedFlow<Intent> = MutableSharedFlow()
+    private val _onSmsPermissionSharedFlow: MutableSharedFlow<Intent> = MutableSharedFlow()
+    val onSmsPermissionSharedFlow: SharedFlow<Intent> =  _onSmsPermissionSharedFlow
     private val accountLocalDataSource: AccountLocalDataSource = ServiceLocator.get()
     private val accountRemoteDataSource: AccountRemoteDataSource = ServiceLocator.get()
 
@@ -49,12 +50,8 @@ internal class AccountRepository {
         return accountRemoteDataSource.verifyOtpToken(phoneNumber, code)
     }
 
-    fun getSmsPermissionObservable(): SharedFlow<Intent> {
-        return onSmsPermissionSharedFlow
-    }
-
     suspend fun setSmsPermissionObservable(intent: Intent) {
-        onSmsPermissionSharedFlow.emit(intent)
+        _onSmsPermissionSharedFlow.emit(intent)
     }
 
     fun saveRefreshToken(refreshToken: String) {
