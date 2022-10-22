@@ -239,14 +239,10 @@ internal class VerifyOtpFragment : Fragment() {
 
         when (resource.resourceState) {
             ResourceState.Success -> {
-                resource.data?.let { data ->
-                    onCountDownStarted(data)
-                }
+                resource.data?.let(::onCountDownStarted)
             }
             ResourceState.Error -> {
-                resource.data?.let { data ->
-                    onCountDownStarted(data)
-                }
+                resource.data?.let(::onCountDownStarted)
                 showError(requireContext().getReadableErrorMessage(resource.failure))
             }
             ResourceState.Loading -> {
@@ -256,9 +252,7 @@ internal class VerifyOtpFragment : Fragment() {
                 hideKeyboardInLandscape()
             }
             VerificationState.Tick -> {
-                resource.data?.let { data ->
-                    onTick(data)
-                }
+                resource.data?.let(::onTick)
             }
             VerificationState.FinishCountDown -> {
                 onCountDownFinished()
