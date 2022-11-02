@@ -12,15 +12,15 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.navigation.findNavController
 import androidx.navigation.navOptions
 import ir.cafebazaar.bazaarpay.databinding.ActivityBazaarPayBinding
-import java.util.*
+import java.util.Locale
 
 class BazaarPayActivity : AppCompatActivity(), FinishCallbacks {
 
     private lateinit var binding: ActivityBazaarPayBinding
-    private lateinit var currentUiMode: Number
+    private var currentUiMode: Number? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        initNighMode()
+        initNightMode()
         super.onCreate(savedInstanceState)
         binding = ActivityBazaarPayBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -43,7 +43,7 @@ class BazaarPayActivity : AppCompatActivity(), FinishCallbacks {
     }
 
     override fun attachBaseContext(newBase: Context) {
-        if(ServiceLocator.isConfigInitiated()){
+        if (ServiceLocator.isConfigInitiated()) {
             setLocale(newBase)
         } else {
             newBase
@@ -69,20 +69,15 @@ class BazaarPayActivity : AppCompatActivity(), FinishCallbacks {
     private fun handleIntent(intent: Intent?) {
         if (ServiceLocator.getOrNull<String>(ServiceLocator.CHECKOUT_TOKEN).isNullOrEmpty()) {
             finishActivity()
+            return
         }
         when {
-            intent?.dataString?.lowercase()?.contains("increase_balance")?.and(
-                intent.dataString?.lowercase()?.contains("done") == true
-            ) == true -> {
+            isIncreaseBalanceDoneIntent(intent) -> {
                 findNavController(R.id.nav_host_fragment_bazaar_pay).navigate(
                     R.id.open_paymentThankYouPageFragment
                 )
             }
-            intent?.dataString?.lowercase()?.contains("direct_debit_activation")?.and(
-                (intent.dataString?.lowercase()?.contains("active") == true).or(
-                    intent.dataString?.lowercase()?.contains("in_progress") == true
-                )
-            ) == true -> {
+            isDirectDebitActivationIntent(intent) -> {
                 findNavController(R.id.nav_host_fragment_bazaar_pay).navigate(
                     resId = R.id.open_payment_methods,
                     args = null,
@@ -150,16 +145,16 @@ class BazaarPayActivity : AppCompatActivity(), FinishCallbacks {
         }
 
         val overrideConfiguration = Configuration(contextResource.configuration).apply {
-            this.uiMode = currentUiMode.toInt()
+            this.uiMode = currentUiMode?.toInt() ?: Configuration.UI_MODE_NIGHT_NO
         }
         return context.createConfigurationContext(overrideConfiguration)
     }
 
     private fun isDarkMode(): Boolean {
-        return ServiceLocator.getOrNull<Boolean>(ServiceLocator.IS_DARK)?:false
+        return ServiceLocator.getOrNull(ServiceLocator.IS_DARK) ?: false
     }
 
-    private fun initNighMode() {
+    private fun initNightMode() {
         if (isDarkMode()) {
             AppCompatDelegate.MODE_NIGHT_YES
         } else {
@@ -170,9 +165,9 @@ class BazaarPayActivity : AppCompatActivity(), FinishCallbacks {
     }
 
     private fun initServiceLocator() {
-        if(ServiceLocator.isConfigInitiated()) {
+        if (ServiceLocator.isConfigInitiated()) {
             ServiceLocator.initializeDependencies(
-                activity = this
+                context = applicationContext
             )
         }
     }
@@ -190,5 +185,19 @@ class BazaarPayActivity : AppCompatActivity(), FinishCallbacks {
     private fun finishActivity() {
         ServiceLocator.clear()
         finish()
+    }
+
+    private fun isIncreaseBalanceDoneIntent(intent: Intent?): Boolean {
+        return intent?.dataString?.lowercase()?.contains("increase_balance")?.and(
+            intent.dataString?.lowercase()?.contains("done") == true
+        ) == true
+    }
+
+    private fun isDirectDebitActivationIntent(intent: Intent?): Boolean {
+        return intent?.dataString?.lowercase()?.contains("direct_debit_activation")?.and(
+            (intent.dataString?.lowercase()?.contains("active") == true).or(
+                intent.dataString?.lowercase()?.contains("in_progress") == true
+            )
+        ) == true
     }
 }

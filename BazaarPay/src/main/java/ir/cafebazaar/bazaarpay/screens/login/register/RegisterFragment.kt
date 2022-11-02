@@ -19,9 +19,16 @@ import ir.cafebazaar.bazaarpay.R
 import ir.cafebazaar.bazaarpay.models.Resource
 import ir.cafebazaar.bazaarpay.models.ResourceState
 import ir.cafebazaar.bazaarpay.databinding.FragmentRegisterBinding
-import ir.cafebazaar.bazaarpay.extensions.*
 import ir.cafebazaar.bazaarpay.data.bazaar.account.models.getotptoken.WaitingTimeWithEnableCall
 import ir.cafebazaar.bazaarpay.data.bazaar.models.InvalidPhoneNumberException
+import ir.cafebazaar.bazaarpay.extensions.fromHtml
+import ir.cafebazaar.bazaarpay.extensions.getReadableErrorMessage
+import ir.cafebazaar.bazaarpay.extensions.gone
+import ir.cafebazaar.bazaarpay.extensions.hideKeyboard
+import ir.cafebazaar.bazaarpay.extensions.isLandscape
+import ir.cafebazaar.bazaarpay.extensions.isValidPhoneNumber
+import ir.cafebazaar.bazaarpay.extensions.navigateSafe
+import ir.cafebazaar.bazaarpay.extensions.setSafeOnClickListener
 
 internal class RegisterFragment : Fragment() {
 
@@ -64,8 +71,8 @@ internal class RegisterFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         with(viewModel) {
-            getData().observe(viewLifecycleOwner, ::handleResourceState)
-            getSavedPhones().observe(viewLifecycleOwner, ::populateAutoFillPhoneNumbers)
+            data.observe(viewLifecycleOwner, ::handleResourceState)
+            savedPhones.observe(viewLifecycleOwner, ::populateAutoFillPhoneNumbers)
             loadSavedPhones()
         }
 
@@ -78,13 +85,13 @@ internal class RegisterFragment : Fragment() {
             finishCallBacks?.onCanceled()
         }
 
-        binding.close.setOnClickListener {
+        binding.close.setSafeOnClickListener {
             finishCallBacks?.onCanceled()
         }
 
         disableProceedButtonWhenEditTextIsEmpty()
 
-        binding.proceedBtn.setOnClickListener { register() }
+        binding.proceedBtn.setSafeOnClickListener { register() }
 
         setLoginInfo()
     }
@@ -101,9 +108,9 @@ internal class RegisterFragment : Fragment() {
     }
 
     override fun onDestroyView() {
-        super.onDestroyView()
         binding.phoneEditText.setAdapter(null)
         binding.phoneEditText.removeTextChangedListener(phoneEditTextWatcher)
+        super.onDestroyView()
         _binding = null
     }
 
@@ -156,13 +163,13 @@ internal class RegisterFragment : Fragment() {
     ) {
         resource?.let {
             when (it.resourceState) {
-                ResourceState.Success -> handleSuccess(resource.data!!)
-                ResourceState.Error -> {
-                    val message = if (resource.failure is InvalidPhoneNumberException) {
-                        getString(R.string.wrong_phone_number)
-                    } else {
-                        requireContext().getReadableErrorMessage(resource.failure)
+                ResourceState.Success -> {
+                    resource.data?.let {
+                        handleSuccess(resource.data)
                     }
+                }
+                ResourceState.Error -> {
+                    val message = requireContext().getReadableErrorMessage(resource.failure)
                     showError(message)
                 }
                 ResourceState.Loading -> handleLoading()
@@ -193,9 +200,11 @@ internal class RegisterFragment : Fragment() {
     }
 
     private fun showError(message: String) {
-        binding.proceedBtn.isLoading = false
-        binding.phoneInputLayout.isErrorEnabled = true
-        binding.phoneInputLayout.error = message
+        with(binding) {
+            proceedBtn.isLoading = false
+            phoneInputLayout.isErrorEnabled = true
+            phoneInputLayout.error = message
+        }
         hideKeyboardInLandscape()
     }
 

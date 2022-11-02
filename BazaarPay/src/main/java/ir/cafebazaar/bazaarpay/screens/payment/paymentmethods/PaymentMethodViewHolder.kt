@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import ir.cafebazaar.bazaarpay.R
 import ir.cafebazaar.bazaarpay.databinding.ItemPaymentOptionBinding
 import ir.cafebazaar.bazaarpay.data.payment.models.getpaymentmethods.PaymentMethod
+import ir.cafebazaar.bazaarpay.extensions.setSafeOnClickListener
 import ir.cafebazaar.bazaarpay.utils.imageloader.ImageLoader
 
 internal class PaymentMethodViewHolder(
@@ -17,12 +18,12 @@ internal class PaymentMethodViewHolder(
 ) : RecyclerView.ViewHolder(binding.root) {
 
     fun bind(item: PaymentMethod, selectedPosition: Int) {
-        itemView.setOnClickListener { clickListener.onItemClick(adapterPosition) }
+        itemView.setSafeOnClickListener { clickListener.onItemClick(absoluteAdapterPosition) }
         with(binding) {
             item.iconUrl?.let {
                 ImageLoader.loadImage(
                     imageView = icon,
-                    imageURI = item.iconUrl,
+                    imageURI = it,
                     placeHolderId = R.drawable.ic_default_payment_old
                 )
             }
@@ -33,30 +34,33 @@ internal class PaymentMethodViewHolder(
                 optionRoot.post {
                     animateDescription(
                         item.subDescription?.isNotEmpty()?.and(
-                            selectedPosition == adapterPosition
+                            selectedPosition == absoluteAdapterPosition
                         ) == true
                     )
                 }
             }
             optionRoot.background = getBackgroundDrawable(
                 binding.root.context,
-                selectedPosition == adapterPosition,
+                selectedPosition == absoluteAdapterPosition,
                 item.subDescription?.isNotEmpty() == true
             )
         }
     }
 
     private fun animateDescription(isDescriptionVisible: Boolean) {
-        ValueAnimator.ofInt(
-            binding.optionDescription!!.measuredHeight,
-            getFinalHeight(isDescriptionVisible)
-        ).apply {
-            addUpdateListener { valueAnimator ->
-                val height = valueAnimator.animatedValue as Int
-                setOptionDescriptionHeight(height)
+        binding.optionDescription?.let { optionDescription ->
+            optionDescription.clearAnimation()
+            ValueAnimator.ofInt(
+                optionDescription.measuredHeight,
+                getFinalHeight(isDescriptionVisible)
+            ).apply {
+                addUpdateListener { valueAnimator ->
+                    val height = valueAnimator.animatedValue as Int
+                    setOptionDescriptionHeight(height)
+                }
+                duration = ANIMATION_DURATION
+                start()
             }
-            duration = ANIMATION_DURATION
-            start()
         }
     }
 

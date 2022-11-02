@@ -75,13 +75,13 @@
         </androidx.appcompat.widget.AppCompatEditText>
     </com.google.android.material.textfield.TextInputLayout>
 
-    <ir.cafebazaar.bazaarpay.widget.button.BazaarButton
+    <ir.cafebazaar.bazaarpay.widget.button.BazaarPayButton
         android:id="@+id/proceedBtn"
         android:layout_width="@dimen/match_constraint"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/default_margin_quintuple"
         android:layout_marginTop="@dimen/default_margin_double"
-        android:textColor="@color/tc_primary_button"
+        android:textColor="@color/selector_primary_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/verificationCodeInput"

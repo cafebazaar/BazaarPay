@@ -17,11 +17,20 @@ import androidx.recyclerview.widget.RecyclerView
 import ir.cafebazaar.bazaarpay.R
 import ir.cafebazaar.bazaarpay.data.bazaar.models.ErrorModel
 import ir.cafebazaar.bazaarpay.databinding.FragmentPaymentDynamicCreditBinding
-import ir.cafebazaar.bazaarpay.extensions.*
 import ir.cafebazaar.bazaarpay.models.Resource
 import ir.cafebazaar.bazaarpay.models.ResourceState
 import ir.cafebazaar.bazaarpay.data.payment.models.getpaymentmethods.DynamicCreditOption
 import ir.cafebazaar.bazaarpay.data.payment.models.getpaymentmethods.Option
+import ir.cafebazaar.bazaarpay.extensions.getReadableErrorMessage
+import ir.cafebazaar.bazaarpay.extensions.gone
+import ir.cafebazaar.bazaarpay.extensions.hideKeyboard
+import ir.cafebazaar.bazaarpay.extensions.moveCursorToEnd
+import ir.cafebazaar.bazaarpay.extensions.navigateSafe
+import ir.cafebazaar.bazaarpay.extensions.openUrl
+import ir.cafebazaar.bazaarpay.extensions.setSafeOnClickListener
+import ir.cafebazaar.bazaarpay.extensions.setValueIfNotNullOrEmpty
+import ir.cafebazaar.bazaarpay.extensions.toastMessage
+import ir.cafebazaar.bazaarpay.extensions.visible
 import ir.cafebazaar.bazaarpay.utils.getErrorViewBasedOnErrorModel
 
 internal class PaymentDynamicCreditFragment : Fragment() {
@@ -182,13 +191,11 @@ internal class PaymentDynamicCreditFragment : Fragment() {
     }
 
     private fun setDealerInfo() {
-        binding.merchantInfo.let { merchantInfoView ->
-            with(merchantInfoView) {
-                setMerchantName(dealerArgs.name)
-                setPrice(dealerArgs.priceString)
-                setMerchantInfo(dealerArgs.info)
-                setMerchantIcon(dealerArgs.iconUrl)
-            }
+        with(binding.merchantInfo) {
+            setMerchantName(dealerArgs.name)
+            setPrice(dealerArgs.priceString)
+            setMerchantInfo(dealerArgs.info)
+            setMerchantIcon(dealerArgs.iconUrl)
         }
     }
 
@@ -218,11 +225,11 @@ internal class PaymentDynamicCreditFragment : Fragment() {
     private fun setViewListeners() {
         with(binding) {
 
-            dynamicCreditBack.setOnClickListener {
+            dynamicCreditBack.setSafeOnClickListener {
                 handleBackPress()
             }
 
-            payButton.setOnClickListener {
+            payButton.setSafeOnClickListener {
                 dynamicCreditViewModel.onPayButtonClicked(binding.priceEditText.text.toString())
             }
             textWatcher = priceEditText.doOnTextChanged { text, _, _, _ ->
@@ -280,7 +287,7 @@ internal class PaymentDynamicCreditFragment : Fragment() {
     }
 
     private fun onLoginClicked() {
-        findNavController().navigate(
+        findNavController().navigateSafe(
             R.id.open_signin
         )
     }

@@ -75,7 +75,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/scrollView" />
 
-        <ir.cafebazaar.bazaarpay.widget.button.BazaarButton
+        <ir.cafebazaar.bazaarpay.widget.button.BazaarPayButton
             android:id="@+id/acceptButton"
             app:buttonTheme="contained"
             app:buttonType="app"

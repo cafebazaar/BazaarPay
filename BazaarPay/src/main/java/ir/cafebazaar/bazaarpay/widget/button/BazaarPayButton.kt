@@ -33,7 +33,7 @@ import ir.cafebazaar.bazaarpay.utils.setFont
 import ir.cafebazaar.bazaarpay.widget.loading.SpinKitView
 import java.util.Arrays
 
-internal class BazaarButton : LinearLayout {
+internal class BazaarPayButton : LinearLayout {
 
     private val buttonCornerRadius = resources.getDimension(
         R.dimen.bazaar_button_corner_radius

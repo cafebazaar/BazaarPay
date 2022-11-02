@@ -1,27 +1,31 @@
 package ir.cafebazaar.bazaarpay.screens.login.verify
 
-import android.app.Activity
 import android.content.Intent
-import android.content.IntentFilter
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.text.format.DateUtils.SECOND_IN_MILLIS
-import androidx.lifecycle.*
-import com.google.android.gms.auth.api.phone.SmsRetriever
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import ir.cafebazaar.bazaarpay.ServiceLocator
 import ir.cafebazaar.bazaarpay.data.bazaar.models.ErrorModel
 import ir.cafebazaar.bazaarpay.extensions.fold
 import ir.cafebazaar.bazaarpay.extensions.getFailureOrNull
 import ir.cafebazaar.bazaarpay.extensions.getOrNull
-import ir.cafebazaar.bazaarpay.extensions.isGooglePlayServicesAvailable
 import ir.cafebazaar.bazaarpay.data.bazaar.account.AccountRepository
 import ir.cafebazaar.bazaarpay.data.bazaar.account.models.getotptoken.WaitingTimeWithEnableCall
 import ir.cafebazaar.bazaarpay.data.bazaar.account.models.verifyotptoken.LoginResponse
-import ir.cafebazaar.bazaarpay.models.*
+import ir.cafebazaar.bazaarpay.models.GlobalDispatchers
+import ir.cafebazaar.bazaarpay.models.Resource
+import ir.cafebazaar.bazaarpay.models.ResourceState
+import ir.cafebazaar.bazaarpay.models.VerificationState
 import ir.cafebazaar.bazaarpay.receiver.SmsPermissionReceiver
 import ir.cafebazaar.bazaarpay.utils.Either
 import ir.cafebazaar.bazaarpay.utils.SingleLiveEvent
-import kotlinx.coroutines.*
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.FlowPreview
+import kotlinx.coroutines.launch
 import kotlin.math.max
 import kotlin.properties.Delegates
 
@@ -42,10 +46,10 @@ internal class VerifyOtpViewModel : ViewModel() {
     private val _verificationCodeLiveData = SingleLiveEvent<String>()
     val verificationCodeLiveData: LiveData<String> = _verificationCodeLiveData
 
-    private val _resendSmsAndCallLiveData = MutableLiveData<Resource<Long>>()
+    private val _resendSmsAndCallLiveData = SingleLiveEvent<Resource<Long>>()
     val resendSmsAndCallLiveData: LiveData<Resource<Long>> = _resendSmsAndCallLiveData
 
-    private val _showCallButtonLiveData = MutableLiveData<Boolean>()
+    private val _showCallButtonLiveData = SingleLiveEvent<Boolean>()
     val showCallButtonLiveData: LiveData<Boolean> = _showCallButtonLiveData
 
     private val _onStartSmsPermissionLiveData = SingleLiveEvent<Intent>()
@@ -102,16 +106,14 @@ internal class VerifyOtpViewModel : ViewModel() {
     fun verifyCode(phoneNumber: String, code: String) {
         _verifyCodeStateLiveData.value = Resource.loading()
         viewModelScope.launch {
-            withContext((globalDispatchers.iO)) {
-                accountRepository.verifyOtpToken(
-                    phoneNumber,
-                    code
-                ).let { response ->
-                    handleVerifyCodeResponse(
-                        response,
-                        phoneNumber
-                    )
-                }
+            accountRepository.verifyOtpToken(
+                phoneNumber,
+                code
+            ).let { response ->
+                handleVerifyCodeResponse(
+                    response,
+                    phoneNumber
+                )
             }
         }
     }
@@ -124,9 +126,7 @@ internal class VerifyOtpViewModel : ViewModel() {
             accountRepository.saveRefreshToken(token.refreshToken)
             accountRepository.saveAccessToken(token.accessToken)
             accountRepository.savePhone(phoneNumber)
-            withContext(globalDispatchers.main) {
-                _verifyCodeStateLiveData.value = Resource.loaded()
-            }
+            _verifyCodeStateLiveData.value = Resource.loaded()
         } ?: run {
             verifyCodeError(
                 response.getFailureOrNull() ?: ErrorModel.UnExpected
@@ -134,26 +134,22 @@ internal class VerifyOtpViewModel : ViewModel() {
         }
     }
 
-    private suspend fun verifyCodeError(throwable: ErrorModel) {
-        withContext(globalDispatchers.main) {
-            _verifyCodeStateLiveData.value = Resource.failed(failure = throwable)
-        }
+    private fun verifyCodeError(throwable: ErrorModel) {
+        _verifyCodeStateLiveData.value = Resource.failed(failure = throwable)
     }
 
     fun onResendSmsClicked(phoneNumber: String) {
         viewModelScope.launch {
             _resendSmsAndCallLiveData.value = Resource.loading()
-
-            withContext(globalDispatchers.iO) {
-                accountRepository.getOtpToken(phoneNumber)
-            }.fold(
-                {
-                    startCountDown(it.seconds)
-                },
-                { throwable ->
-                    startCountDown(MINIMUM_WAITING_TIME, ResourceState.Error, throwable)
-                }
-            )
+            accountRepository.getOtpToken(phoneNumber)
+                .fold(
+                    ifSuccess = {
+                        startCountDown(it.seconds)
+                    },
+                    ifFailure = { throwable ->
+                        startCountDown(MINIMUM_WAITING_TIME, ResourceState.Error, throwable)
+                    }
+                )
         }
     }
 
@@ -161,18 +157,16 @@ internal class VerifyOtpViewModel : ViewModel() {
         viewModelScope.launch {
 
             _resendSmsAndCallLiveData.value = Resource.loading()
-
-            withContext(globalDispatchers.iO) {
-                accountRepository.getOtpTokenByCall(phoneNumber)
-            }.fold(
-                {
-                    showCall = false
-                    startCountDown(it.value)
-                },
-                { throwable ->
-                    startCountDown(MINIMUM_WAITING_TIME, ResourceState.Error, throwable)
-                }
-            )
+            accountRepository.getOtpTokenByCall(phoneNumber)
+                .fold(
+                    ifSuccess = {
+                        showCall = false
+                        startCountDown(it.value)
+                    },
+                    ifFailure = { throwable ->
+                        startCountDown(MINIMUM_WAITING_TIME, ResourceState.Error, throwable)
+                    }
+                )
         }
     }
 
@@ -188,22 +182,16 @@ internal class VerifyOtpViewModel : ViewModel() {
     }
 
     @FlowPreview
-    fun onActivityCreated(activity: Activity) {
-        startReceiveSms(activity)
+    fun onActivityCreated() {
+        startReceiveSms()
     }
 
     @OptIn(ExperimentalCoroutinesApi::class)
     @FlowPreview
-    private fun startReceiveSms(activity: Activity) {
+    private fun startReceiveSms() {
         viewModelScope.launch {
-            accountRepository.getSmsPermissionObservable().collect {
+            accountRepository.onSmsPermissionSharedFlow.collect {
                 _onStartSmsPermissionLiveData.value = it
-            }
-        }
-        if (activity.isGooglePlayServicesAvailable()) {
-            SmsRetriever.getClient(activity).startSmsUserConsent(SMS_NUMBER)
-            IntentFilter(SmsRetriever.SMS_RETRIEVED_ACTION).also { intentFilter ->
-                activity.registerReceiver(SmsPermissionReceiver(), intentFilter)
             }
         }
     }
@@ -217,6 +205,5 @@ internal class VerifyOtpViewModel : ViewModel() {
         private const val ARG_REMAINING_WAITING_TIME = "remainingWaitingTime"
         private const val MINIMUM_WAITING_TIME = 5L
         private const val ONE_SEC_IN_MILLI_SECOND = 1000
-        private const val SMS_NUMBER = "982000160"
     }
 }

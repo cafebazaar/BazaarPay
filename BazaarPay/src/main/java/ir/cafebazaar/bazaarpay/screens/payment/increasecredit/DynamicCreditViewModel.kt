@@ -8,12 +8,14 @@ import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavDirections
 import ir.cafebazaar.bazaarpay.R
 import ir.cafebazaar.bazaarpay.ServiceLocator
-import ir.cafebazaar.bazaarpay.extensions.*
 import ir.cafebazaar.bazaarpay.models.GlobalDispatchers
 import ir.cafebazaar.bazaarpay.models.Resource
-import ir.cafebazaar.bazaarpay.models.ResourceState
 import ir.cafebazaar.bazaarpay.data.payment.PaymentRepository
 import ir.cafebazaar.bazaarpay.data.payment.models.getpaymentmethods.DynamicCreditOption
+import ir.cafebazaar.bazaarpay.extensions.digits
+import ir.cafebazaar.bazaarpay.extensions.fold
+import ir.cafebazaar.bazaarpay.extensions.toPriceFormat
+import ir.cafebazaar.bazaarpay.extensions.toToman
 import ir.cafebazaar.bazaarpay.screens.payment.paymentmethods.PaymentMethodsType
 import ir.cafebazaar.bazaarpay.utils.SingleLiveEvent
 import kotlinx.coroutines.launch
@@ -203,22 +205,16 @@ internal class DynamicCreditViewModel : ViewModel() {
         }
 
         _actionLiveData.value = Resource.loading()
-        viewModelScope.launch(globalDispatchers.iO) {
+        viewModelScope.launch {
             paymentRepository.pay(
                 PaymentMethodsType.INCREASE_BALANCE,
                 (priceString.digits() * TOMAN_TO_RIAL_FACTOR)
             ).fold(
                 {
-                    _actionLiveData.postValue(
-                        Resource.loaded(it.redirectUrl)
-                    )
+                    _actionLiveData.value = Resource.loaded(it.redirectUrl)
                 },
                 {
-                    _actionLiveData.postValue(
-                        Resource.failed(
-                            failure = it
-                        )
-                    )
+                    _actionLiveData.value = Resource.failed(failure = it)
                 }
             )
         }

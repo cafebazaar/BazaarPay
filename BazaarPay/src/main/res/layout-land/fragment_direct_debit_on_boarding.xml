@@ -54,7 +54,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:selectedDotColor="@color/app_brand_primary" />
 
-    <ir.cafebazaar.bazaarpay.widget.button.BazaarButton
+    <ir.cafebazaar.bazaarpay.widget.button.BazaarPayButton
         android:id="@+id/skipButton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -68,7 +68,7 @@
         app:sizeMode="large"
         app:text="@string/skip" />
 
-    <ir.cafebazaar.bazaarpay.widget.button.BazaarButton
+    <ir.cafebazaar.bazaarpay.widget.button.BazaarPayButton
         android:id="@+id/nextButton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"

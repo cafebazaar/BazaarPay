@@ -9,24 +9,20 @@ import ir.cafebazaar.bazaarpay.R
 import ir.cafebazaar.bazaarpay.ServiceLocator
 import ir.cafebazaar.bazaarpay.data.bazaar.models.ErrorModel
 import ir.cafebazaar.bazaarpay.extensions.fold
-import ir.cafebazaar.bazaarpay.models.*
 import ir.cafebazaar.bazaarpay.data.payment.PaymentRepository
 import ir.cafebazaar.bazaarpay.data.payment.models.getpaymentmethods.PaymentMethodsInfo
 import ir.cafebazaar.bazaarpay.data.payment.models.merchantinfo.MerchantInfo
 import ir.cafebazaar.bazaarpay.data.payment.models.pay.PayResult
+import ir.cafebazaar.bazaarpay.models.PaymentFlowState
+import ir.cafebazaar.bazaarpay.models.Resource
 import ir.cafebazaar.bazaarpay.screens.payment.increasecredit.DynamicCreditOptionDealerArg
 import ir.cafebazaar.bazaarpay.utils.SingleLiveEvent
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 internal class PaymentMethodsViewModel : ViewModel() {
 
     private val context: Context = ServiceLocator.get()
     private val paymentRepository: PaymentRepository = ServiceLocator.get()
-
-    private val globalDispatchers: GlobalDispatchers = ServiceLocator.get()
-
-
     private val paymentMethodsStateData = SingleLiveEvent<Resource<PaymentMethodsInfo>>()
     private val payStateData = SingleLiveEvent<Resource<PayResult>>()
     private val merchantInfoStateData = SingleLiveEvent<Resource<MerchantInfo>>()
@@ -46,88 +42,81 @@ internal class PaymentMethodsViewModel : ViewModel() {
     fun getMerchantInfoStateData(): LiveData<Resource<MerchantInfo>> = merchantInfoStateData
 
     fun loadData() {
-        paymentMethodsStateData.postValue(Resource.loading())
+        paymentMethodsStateData.value = Resource.loading()
         getMerchantInfo()
         getPaymentMethods()
     }
 
     private fun getPaymentMethods() {
         viewModelScope.launch {
-            withContext(globalDispatchers.iO) {
-                paymentRepository.getPaymentMethods().fold(
-                    ::handlePaymentMethodsSuccess,
-                    ::handlePaymentMethodsFailure
-                )
-            }
+            paymentRepository.getPaymentMethods().fold(
+                ::handlePaymentMethodsSuccess,
+                ::handlePaymentMethodsFailure
+            )
         }
     }
 
     private fun getMerchantInfo() {
         viewModelScope.launch {
-            withContext(globalDispatchers.iO) {
-                paymentRepository.getMerchantInfo().fold(
-                    ::handleMerchantInfoSuccess,
-                    { }
-                )
-            }
+            paymentRepository.getMerchantInfo().fold(
+                ::handleMerchantInfoSuccess,
+                { }
+            )
         }
     }
 
     private fun handleMerchantInfoSuccess(merchantInfo: MerchantInfo) {
-        merchantInfoStateData.postValue(
+        merchantInfoStateData.value =
             Resource(PaymentFlowState.MerchantInfo, merchantInfo)
-        )
     }
 
     private fun handlePaymentMethodsSuccess(paymentMethods: PaymentMethodsInfo) {
-        paymentMethodsStateData.postValue(
+        paymentMethodsStateData.value =
             Resource(PaymentFlowState.PaymentMethodsInfo, paymentMethods)
-        )
     }
 
     private fun handlePaymentMethodsFailure(errorModel: ErrorModel) {
-        paymentMethodsStateData.postValue(Resource.failed(failure = errorModel))
+        paymentMethodsStateData.value = Resource.failed(failure = errorModel)
     }
 
     private fun handlePaySuccess(payResult: PayResult) {
-        _navigationLiveData.postValue(
+        _navigationLiveData.value =
             PaymentMethodsFragmentDirections
                 .openPaymentThankYouPageFragment(
                     isSuccess = true
                 )
-        )
     }
 
     private fun handlePayFailure(errorModel: ErrorModel) {
-        payStateData.postValue(Resource.failed(failure = errorModel))
+        payStateData.value = Resource.failed(failure = errorModel)
     }
 
     fun onPaymentOptionClicked(selectedOptionPos: Int) {
         getPaymentInfo()?.paymentMethods?.getOrNull(selectedOptionPos)?.let { selectedMethod ->
             _paymentOptionViewLoaderLiveData.value = PaymentMethodViewLoader(
                 price = selectedMethod.priceString,
-                payButton = getPayButtonText(selectedMethod.methodType),
+                payButton = getPayButtonTextId(selectedMethod.methodType),
                 subDescription = selectedMethod.subDescription
             )
         }
     }
 
-    private fun getPayButtonText(type: PaymentMethodsType): String {
+    private fun getPayButtonTextId(type: PaymentMethodsType): Int {
         return when (type) {
             PaymentMethodsType.INCREASE_BALANCE -> {
-                context.getString(R.string.increase_balance)
+                R.string.increase_balance
             }
             PaymentMethodsType.DIRECT_DEBIT_ACTIVATION -> {
-                context.getString(R.string.directdebit_signup)
+                R.string.directdebit_signup
             }
             PaymentMethodsType.POSTPAID_CREDIT_ACTIVATION -> {
-                context.getString(R.string.postpaid_activation)
+                R.string.postpaid_activation
             }
             PaymentMethodsType.POSTPAID_CREDIT -> {
-                context.getString(R.string.credit_pay)
+                R.string.credit_pay
             }
             else -> {
-                context.getString(R.string.pay)
+                R.string.pay
             }
         }
     }
@@ -160,28 +149,39 @@ internal class PaymentMethodsViewModel : ViewModel() {
     private fun pay(methodType: PaymentMethodsType) {
         payStateData.value = Resource.loading()
         viewModelScope.launch {
-            withContext(globalDispatchers.iO) {
-                paymentRepository.pay(methodType).fold(
-                    ::handlePaySuccess,
-                    ::handlePayFailure
-                )
-            }
+            paymentRepository.pay(methodType).fold(
+                ::handlePaySuccess,
+                ::handlePayFailure
+            )
         }
     }
 
     private fun openIncreaseBalancePage() {
-        _navigationLiveData.value =
-            PaymentMethodsFragmentDirections.actionPaymentMethodsFragmentToPaymentDynamicCreditFragment(
-                paymentMethodsStateData.value?.data?.dynamicCreditOption!!,
-                DynamicCreditOptionDealerArg(
-                    iconUrl = merchantInfoStateData.value?.data?.logoUrl!!,
-                    name = paymentMethodsStateData.value?.data?.destinationTitle!!,
-                    info = merchantInfoStateData.value?.data?.accountName!!,
-                    priceString = paymentMethodsStateData.value?.data?.paymentMethods?.first {
-                        it.methodType == PaymentMethodsType.INCREASE_BALANCE
-                    }?.priceString!!
-                )
-            )
+        paymentMethodsStateData.value?.data?.let { paymentMethodsStateData ->
+            _navigationLiveData.value =
+                paymentMethodsStateData.paymentMethods.first {
+                    it.methodType == PaymentMethodsType.INCREASE_BALANCE
+                }.priceString?.let { priceString ->
+                    merchantInfoStateData.value?.data?.logoUrl?.let { logoUrl ->
+                        merchantInfoStateData.value?.data?.accountName?.let { accountName ->
+                            DynamicCreditOptionDealerArg(
+                                iconUrl = logoUrl,
+                                name = paymentMethodsStateData.destinationTitle,
+                                info = accountName,
+                                priceString = priceString
+                            )
+                        }
+                    }
+                }?.let { dynamicCreditOptionDealerArg ->
+                    paymentMethodsStateData.dynamicCreditOption?.let { dynamicCreditOption ->
+                        PaymentMethodsFragmentDirections
+                            .actionPaymentMethodsFragmentToPaymentDynamicCreditFragment(
+                                dynamicCreditOption,
+                                dynamicCreditOptionDealerArg
+                            )
+                    }
+                }
+        }
     }
 
     private fun openPostpaidTermsPage() {

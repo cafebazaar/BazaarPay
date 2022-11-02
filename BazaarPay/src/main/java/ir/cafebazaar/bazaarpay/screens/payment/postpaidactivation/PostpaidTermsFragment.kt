@@ -10,6 +10,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import ir.cafebazaar.bazaarpay.databinding.FragmentPostpaidTermsBinding
 import ir.cafebazaar.bazaarpay.extensions.getReadableErrorMessage
+import ir.cafebazaar.bazaarpay.extensions.setSafeOnClickListener
 import ir.cafebazaar.bazaarpay.extensions.toastMessage
 
 internal class PostpaidTermsFragment : Fragment() {
@@ -36,11 +37,11 @@ internal class PostpaidTermsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         with(binding) {
-            backButton.setOnClickListener {
+            backButton.setSafeOnClickListener {
                 onBackPressedClicked()
             }
 
-            acceptButton.setOnClickListener {
+            acceptButton.setSafeOnClickListener {
                 postpaidTermsViewModel.acceptButtonClicked()
             }
         }

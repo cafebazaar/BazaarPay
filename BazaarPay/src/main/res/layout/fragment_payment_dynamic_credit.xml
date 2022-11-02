@@ -162,7 +162,7 @@
                 app:layout_constraintTop_toBottomOf="@id/priceInputLayout"
                 tools:text="سالانه به مقدار ۵۰۰۰ تومان از موجودی شما کاسته خواهد شد." />
 
-            <ir.cafebazaar.bazaarpay.widget.button.BazaarButton
+            <ir.cafebazaar.bazaarpay.widget.button.BazaarPayButton
                 android:id="@+id/payButton"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
