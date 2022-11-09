@@ -9,15 +9,12 @@ import androidx.activity.addCallback
 import androidx.core.view.children
 import androidx.fragment.app.Fragment
 import ir.cafebazaar.bazaarpay.FinishCallbacks
-//import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.NavDirections
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.SimpleItemAnimator
 import ir.cafebazaar.bazaarpay.R
 import ir.cafebazaar.bazaarpay.data.bazaar.models.ErrorModel
-//import androidx.recyclerview.widget.SimpleItemAnimator
-//import ir.cafebazaar.bazaarpay.R
 import ir.cafebazaar.bazaarpay.databinding.FragmentPaymentOptionsBinding
 import ir.cafebazaar.bazaarpay.extensions.getReadableErrorMessage
 import ir.cafebazaar.bazaarpay.extensions.gone
@@ -32,6 +29,8 @@ import ir.cafebazaar.bazaarpay.data.payment.models.getpaymentmethods.PaymentMeth
 import ir.cafebazaar.bazaarpay.data.payment.models.getpaymentmethods.PaymentMethodsInfo
 import ir.cafebazaar.bazaarpay.data.payment.models.merchantinfo.MerchantInfo
 import ir.cafebazaar.bazaarpay.data.payment.models.pay.PayResult
+import ir.cafebazaar.bazaarpay.extensions.navigateSafe
+import ir.cafebazaar.bazaarpay.extensions.setSafeOnClickListener
 import ir.cafebazaar.bazaarpay.utils.getErrorViewBasedOnErrorModel
 
 internal class PaymentMethodsFragment : Fragment(), PaymentMethodsClickListener {
@@ -97,7 +96,7 @@ internal class PaymentMethodsFragment : Fragment(), PaymentMethodsClickListener 
 
     private fun initUI() {
         with(binding) {
-            paymentOptionClose.setOnClickListener {
+            paymentOptionClose.setSafeOnClickListener {
                 handleBackPress()
             }
 
@@ -125,7 +124,7 @@ internal class PaymentMethodsFragment : Fragment(), PaymentMethodsClickListener 
     }
 
     private fun populatePaymentOptions(paymentMethods: PaymentMethodItems) {
-        binding.payButton.setOnClickListener { onPayButtonClicked() }
+        binding.payButton.setSafeOnClickListener { onPayButtonClicked() }
         notifyPaymentOptionAdapter(paymentMethods)
         setPaymentOptionRecyclerViewScrollPosition()
     }
@@ -185,7 +184,7 @@ internal class PaymentMethodsFragment : Fragment(), PaymentMethodsClickListener 
                 viewLoader.price
             )
 
-            payButton.text = viewLoader.payButton
+            payButton.text = getString(viewLoader.payButton)
 
             if (viewLoader.subDescription.isNullOrEmpty()) {
                 paymentOptionInfo?.gone()
@@ -229,8 +228,11 @@ internal class PaymentMethodsFragment : Fragment(), PaymentMethodsClickListener 
                     handlePaymentMethods((resource.data as PaymentMethodsInfo).paymentMethods)
                 }
                 ResourceState.Error -> {
-                    handleErrorState(it.failure!!)
+                    it.failure?.let { failure ->
+                        handleErrorState(failure)
+                    }
                 }
+                else -> {}
             }
         }
     }
@@ -324,7 +326,7 @@ internal class PaymentMethodsFragment : Fragment(), PaymentMethodsClickListener 
     }
 
     private fun onLoginClicked() {
-        findNavController().navigate(
+        findNavController().navigateSafe(
             R.id.open_signin
         )
     }

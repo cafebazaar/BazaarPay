@@ -6,7 +6,7 @@ import android.text.Html
 import android.text.Spanned
 import ir.cafebazaar.bazaarpay.R
 import java.math.BigDecimal
-import java.util.*
+import java.util.Locale
 import java.util.regex.Pattern
 
 fun String.isValidPhoneNumber() = isNotEmpty() && matches(PHONE.toRegex())

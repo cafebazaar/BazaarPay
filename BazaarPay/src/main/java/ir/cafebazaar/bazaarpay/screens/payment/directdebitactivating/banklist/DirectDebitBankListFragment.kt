@@ -15,15 +15,19 @@ import com.google.android.material.snackbar.Snackbar
 import ir.cafebazaar.bazaarpay.R
 import ir.cafebazaar.bazaarpay.data.bazaar.models.ErrorModel
 import ir.cafebazaar.bazaarpay.databinding.FragmentDirectDebitBankListBinding
-import ir.cafebazaar.bazaarpay.extensions.*
+import ir.cafebazaar.bazaarpay.extensions.getReadableErrorMessage
+import ir.cafebazaar.bazaarpay.extensions.gone
+import ir.cafebazaar.bazaarpay.extensions.navigateSafe
+import ir.cafebazaar.bazaarpay.extensions.openUrl
+import ir.cafebazaar.bazaarpay.extensions.setSafeOnClickListener
+import ir.cafebazaar.bazaarpay.extensions.visible
 import ir.cafebazaar.bazaarpay.models.Resource
 import ir.cafebazaar.bazaarpay.models.ResourceState
 import ir.cafebazaar.bazaarpay.utils.getErrorViewBasedOnErrorModel
 
 internal class DirectDebitBankListFragment : Fragment() {
 
-    private lateinit var adapter: BankListAdapter
-    private lateinit var layoutManager: LinearLayoutManager
+    private var adapter: BankListAdapter? = null
 
     private var _binding: FragmentDirectDebitBankListBinding? = null
     private val binding: FragmentDirectDebitBankListBinding
@@ -50,7 +54,7 @@ internal class DirectDebitBankListFragment : Fragment() {
             }
             actionButton.apply {
                 isEnabled = false
-                setOnClickListener {
+                setSafeOnClickListener {
                     viewModel.onRegisterClicked(
                         DirectDebitBankListFragmentArgs.fromBundle(requireArguments()).nationalId
                     )
@@ -64,12 +68,10 @@ internal class DirectDebitBankListFragment : Fragment() {
 
     private fun initRecycler() {
 
-        layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-
         adapter = BankListAdapter()
 
         with(binding.recyclerView) {
-            setHasFixedSize(false)
+            layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
             adapter = this@DirectDebitBankListFragment.adapter
             itemAnimator?.changeDuration = 0
             (itemAnimator as? SimpleItemAnimator)?.supportsChangeAnimations = false
@@ -78,8 +80,6 @@ internal class DirectDebitBankListFragment : Fragment() {
                 requireContext(),
                 R.anim.recycler_view_fall_down
             )
-
-            layoutManager = this@DirectDebitBankListFragment.layoutManager
         }
     }
 
@@ -119,16 +119,19 @@ internal class DirectDebitBankListFragment : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
+        adapter = null
         _binding = null
     }
 
     private fun handleNotify(index: Int) {
-        adapter.notifyItemChanged(index)
+        adapter?.notifyItemChanged(index)
     }
 
     private fun handleData(resource: Resource<List<BankList>>) {
         if (resource.isError) {
-            showErrorView(resource.failure!!)
+            resource.failure?.let { failure ->
+                showErrorView(failure)
+            }
         } else {
             hideErrorView()
         }
@@ -139,8 +142,8 @@ internal class DirectDebitBankListFragment : Fragment() {
             recyclerView.isVisible = resource.isSuccess
         }
 
-        if (resource.isSuccess) {
-            adapter.setItems(resource.data)
+        if (resource.isSuccess && resource.data != null) {
+            adapter?.setItems(resource.data)
         }
     }
 
@@ -165,7 +168,7 @@ internal class DirectDebitBankListFragment : Fragment() {
     }
 
     private fun onLoginClicked() {
-        findNavController().navigate(
+        findNavController().navigateSafe(
             R.id.open_signin
         )
     }

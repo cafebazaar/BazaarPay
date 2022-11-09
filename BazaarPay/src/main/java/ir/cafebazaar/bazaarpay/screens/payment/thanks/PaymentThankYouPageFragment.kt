@@ -13,9 +13,9 @@ import ir.cafebazaar.bazaarpay.FinishCallbacks
 import ir.cafebazaar.bazaarpay.R
 import ir.cafebazaar.bazaarpay.data.bazaar.models.ErrorModel
 import ir.cafebazaar.bazaarpay.databinding.FragmentThankYouPageBinding
-import ir.cafebazaar.bazaarpay.extensions.getErrorIcon
 import ir.cafebazaar.bazaarpay.extensions.getReadableErrorMessage
 import ir.cafebazaar.bazaarpay.extensions.gone
+import ir.cafebazaar.bazaarpay.extensions.setSafeOnClickListener
 import ir.cafebazaar.bazaarpay.extensions.visible
 import ir.cafebazaar.bazaarpay.models.Resource
 import ir.cafebazaar.bazaarpay.models.ResourceState
@@ -90,10 +90,16 @@ internal class PaymentThankYouPageFragment : Fragment() {
 
             statusIconImageView.setImageResource(R.drawable.ic_success)
 
-            messageTextView.text = model.message
-            successButton.text = model.successButtonText
+            messageTextView.text =
+                model.messageTextModel.argMessage ?: getString(
+                    model.messageTextModel.defaultMessageId
+                )
+            successButton.text = getString(
+                model.successButtonTextModel.successButtonTextId,
+                model.successButtonTextModel.successMessageCountDown
+            )
 
-            successButton.setOnClickListener {
+            successButton.setSafeOnClickListener {
                 finishCallbacks?.onSuccess()
             }
         }
@@ -106,14 +112,16 @@ internal class PaymentThankYouPageFragment : Fragment() {
 
             failureButtonsGroup.visible()
 
-            tryAgainButton.setOnClickListener {
+            tryAgainButton.setSafeOnClickListener {
                 findNavController().navigateUp()
             }
-            cancelButton.setOnClickListener {
+            cancelButton.setSafeOnClickListener {
                 finishCallbacks?.onCanceled()
             }
 
-            statusIconImageView.setImageResource(requireContext().getErrorIcon(error))
+            statusIconImageView.setImageResource(
+                error?.getErrorIcon(requireContext()) ?: R.drawable.ic_error_outline_icon_primary_24dp_old
+            )
             messageTextView.text = requireContext().getReadableErrorMessage(error)
         }
     }

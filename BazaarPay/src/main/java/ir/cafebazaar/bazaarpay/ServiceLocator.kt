@@ -1,25 +1,33 @@
 package ir.cafebazaar.bazaarpay
 
-import android.app.Activity
 import android.content.Context
+import com.google.gson.GsonBuilder
 import ir.cafebazaar.bazaarpay.data.SharedDataSource
 import ir.cafebazaar.bazaarpay.data.bazaar.account.AccountSharedDataSource
 import ir.cafebazaar.bazaarpay.data.bazaar.account.AccountRepository
 import ir.cafebazaar.bazaarpay.data.bazaar.account.AccountLocalDataSource
 import ir.cafebazaar.bazaarpay.data.bazaar.account.AccountRemoteDataSource
+import ir.cafebazaar.bazaarpay.data.bazaar.account.AccountService
 import ir.cafebazaar.bazaarpay.models.GlobalDispatchers
 import ir.cafebazaar.bazaarpay.data.payment.AuthenticatorInterceptor
 import ir.cafebazaar.bazaarpay.data.payment.PaymentRemoteDataSource
 import ir.cafebazaar.bazaarpay.data.payment.PaymentRepository
 import ir.cafebazaar.bazaarpay.data.payment.TokenInterceptor
-import ir.cafebazaar.bazaarpay.data.bazaar.payment.BazaarRemoteDataSource
-import ir.cafebazaar.bazaarpay.data.bazaar.payment.BazaarRepository
-import ir.hamidbazargan.dynamicrestclient.base.Base
-import ir.hamidbazargan.dynamicrestclient.client.Client
-import ir.hamidbazargan.dynamicrestclient.getDefaultCache
+import ir.cafebazaar.bazaarpay.data.bazaar.payment.BazaarPaymentRemoteDataSource
+import ir.cafebazaar.bazaarpay.data.bazaar.payment.BazaarPaymentRepository
+import ir.cafebazaar.bazaarpay.data.bazaar.payment.api.BazaarPaymentService
+import ir.cafebazaar.bazaarpay.data.payment.api.PaymentService
+import ir.cafebazaar.bazaarpay.network.gsonConverterFactory
+import ir.cafebazaar.bazaarpay.network.interceptor.AgentInterceptor
 import kotlinx.coroutines.Dispatchers
 import okhttp3.Authenticator
 import okhttp3.Interceptor
+import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
+import retrofit2.Converter
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
+import java.util.concurrent.TimeUnit
 
 internal object ServiceLocator {
 
@@ -44,21 +52,30 @@ internal object ServiceLocator {
     }
 
     fun initializeDependencies(
-        activity: Activity
+        context: Context
     ) {
-        servicesMap[getKeyOfClass<Context>()] = activity
+        servicesMap[getKeyOfClass<Context>()] = context
         initGlobalDispatchers()
-        initAccountClient()
+        initJsonConvertorFactory()
+
+        // Account
+        initAccountService()
         initAccountSharedDataSource()
         initAccountLocalDataSource()
         initAccountRemoteDataSource()
         initAccountRepository()
+
+        // Auth
         initAuthenticator()
         initTokenInterceptor()
-        initPaymentClient()
+
+        // Payment
+        initPaymentService()
         initPaymentRemoteDataSource()
         initPaymentRepository()
-        initBazaarClient()
+
+        // Bazaar
+        initBazaarService()
         initBazaarRemoteDataSource()
         initBazaarRepository()
     }
@@ -75,20 +92,8 @@ internal object ServiceLocator {
         )
     }
 
-    private fun initAccountClient() {
-        servicesMap[getKeyOfClass<Base>(ACCOUNT)] = Client
-            .builder()
-            .withDebugMode(true)
-            .withCache(get<Context>().getDefaultCache())
-            .build()
-            .buildBase(
-                DEFAULT_BASE_URL,
-                getUserAgentHeader()
-            )
-    }
-
-    private fun getUserAgentHeader(): HashMap<String, Any?> {
-        return hashMapOf(USER_AGENT_HEADER_TITLE to getUserAgentHeaderValue())
+    private fun initJsonConvertorFactory() {
+        servicesMap[getKeyOfClass<Converter.Factory>()] = gsonConverterFactory()
     }
 
     private fun initAccountSharedDataSource() {
@@ -116,20 +121,6 @@ internal object ServiceLocator {
         servicesMap[getKeyOfClass<Interceptor>(TOKEN)] = TokenInterceptor()
     }
 
-    private fun initPaymentClient() {
-        servicesMap[getKeyOfClass<Base>(PAYMENT)] = Client
-            .builder()
-            .withDebugMode(true)
-            .withCache(get<Context>().getDefaultCache())
-            .withAuthenticator(get(AUTHENTICATOR))
-            .withInterceptor(get(TOKEN))
-            .build()
-            .buildBase(
-                PAYMENT_BASE_URL,
-                getUserAgentHeader()
-            )
-    }
-
     private fun initPaymentRemoteDataSource() {
         servicesMap[getKeyOfClass<PaymentRemoteDataSource>()] = PaymentRemoteDataSource()
     }
@@ -138,26 +129,12 @@ internal object ServiceLocator {
         servicesMap[getKeyOfClass<PaymentRepository>()] = PaymentRepository()
     }
 
-    private fun initBazaarClient() {
-        servicesMap[getKeyOfClass<Base>(BAZAAR)] = Client
-            .builder()
-            .withDebugMode(true)
-            .withCache(get<Context>().getDefaultCache())
-            .withAuthenticator(get(AUTHENTICATOR))
-            .withInterceptor(get(TOKEN))
-            .build()
-            .buildBase(
-                DEFAULT_BASE_URL,
-                getUserAgentHeader()
-            )
-    }
-
     private fun initBazaarRemoteDataSource() {
-        servicesMap[getKeyOfClass<BazaarRemoteDataSource>()] = BazaarRemoteDataSource()
+        servicesMap[getKeyOfClass<BazaarPaymentRemoteDataSource>()] = BazaarPaymentRemoteDataSource()
     }
 
     private fun initBazaarRepository() {
-        servicesMap[getKeyOfClass<BazaarRepository>()] = BazaarRepository()
+        servicesMap[getKeyOfClass<BazaarPaymentRepository>()] = BazaarPaymentRepository()
     }
 
     inline fun <reified T> get(named: String = ""): T {
@@ -172,28 +149,96 @@ internal object ServiceLocator {
         return T::class.java.name + named
     }
 
-    private fun getUserAgentHeaderValue(): String {
-        return "BazaarPayAndroidSDK/" +
-                "${BuildConfig.VERSION} " +
-                "${get<Context>().packageName}/" +
-                getAppVersionName()
+    private const val REQUEST_TIME_OUT: Long = 60
+    private fun provideOkHttpClient(
+        interceptors: List<Interceptor> = emptyList(),
+        authenticator: Authenticator?= null
+    ): OkHttpClient {
+        val builder = OkHttpClient.Builder()
+        if (BuildConfig.DEBUG) {
+            val loggingInterceptor = get<HttpLoggingInterceptor?>()
+            if (loggingInterceptor != null) {
+                builder.addInterceptor(loggingInterceptor)
+            }
+        }
+        authenticator?.let {
+            builder.authenticator(it)
+        }
+        builder.addInterceptor(AgentInterceptor)
+
+        interceptors.forEach {
+            builder.addInterceptor(it)
+        }
+
+        return builder
+            .connectTimeout(REQUEST_TIME_OUT, TimeUnit.SECONDS)
+            .readTimeout(REQUEST_TIME_OUT, TimeUnit.SECONDS)
+            .build()
     }
 
-    private fun getAppVersionName(): String {
-        return get<Context>().packageManager
-            .getPackageInfo(get<Context>().packageName, 0).versionName
+    private fun provideRetrofit(
+        okHttp: OkHttpClient,
+        baseUrl: String = DEFAULT_BASE_URL,
+        needUnWrapper: Boolean = false
+    ): Retrofit {
+        return Retrofit.Builder()
+            .baseUrl(baseUrl)
+            .addConverterFactory(
+                if (needUnWrapper) {
+                    gsonConverterFactory()
+                } else {
+                    GsonConverterFactory.create(GsonBuilder().create())
+                }
+            )
+            .client(okHttp)
+            .build()
     }
 
-    private const val DEFAULT_BASE_URL: String = "https://api.cafebazaar.ir/"
-    private const val PAYMENT_BASE_URL: String = "https://pardakht.cafebazaar.ir/"
-    private const val USER_AGENT_HEADER_TITLE: String = "UserAgent"
+    private fun initAccountService() {
+        val accountHttpClient = provideOkHttpClient()
+        val accountRetrofit = provideRetrofit(
+            okHttp = accountHttpClient,
+            needUnWrapper = true
+        )
+        servicesMap[getKeyOfClass<AccountService>()] =
+            accountRetrofit.create(AccountService::class.java)
+    }
+
+    private fun initPaymentService() {
+        val paymentHttpClient = provideOkHttpClient(
+            interceptors = listOf(get(TOKEN)),
+            authenticator = get(AUTHENTICATOR)
+        )
+        val paymentRetrofit = provideRetrofit(
+            okHttp = paymentHttpClient,
+            baseUrl = PAYMENT_BASE_URL
+        )
+        servicesMap[getKeyOfClass<PaymentService>()] =
+            paymentRetrofit.create(PaymentService::class.java)
+    }
+
+    private fun initBazaarService() {
+        val bazaarHttpClient = provideOkHttpClient(
+            interceptors = listOf(get(TOKEN)),
+            authenticator = get(AUTHENTICATOR)
+        )
+        val bazaarRetrofit = provideRetrofit(
+            okHttp = bazaarHttpClient,
+            baseUrl = DEFAULT_BASE_URL,
+            needUnWrapper = true
+        )
+        servicesMap[getKeyOfClass<BazaarPaymentService>()] =
+            bazaarRetrofit.create(BazaarPaymentService::class.java)
+    }
+
+    private const val DEFAULT_BASE_URL: String = "https://api.cafebazaar.ir/rest-v1/process/"
+    private const val PAYMENT_BASE_URL: String = "https://pardakht.cafebazaar.ir/pardakht/badje/v1/"
+
     internal const val CHECKOUT_TOKEN: String = "checkout_token"
     internal const val PHONE_NUMBER: String = "phone_number"
     internal const val IS_DARK: String = "is_dark"
     internal const val LANGUAGE: String = "language"
     internal const val ACCOUNT: String = "account"
-    internal const val PAYMENT: String = "payment"
-    internal const val BAZAAR: String = "bazaar"
     private const val AUTHENTICATOR: String = "authenticator"
     private const val TOKEN: String = "token"
 }

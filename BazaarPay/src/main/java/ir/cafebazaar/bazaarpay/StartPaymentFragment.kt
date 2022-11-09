@@ -15,7 +15,9 @@ internal class StartPaymentFragment: Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        findNavController().navigateSafe(getNavDirection())
+        if (savedInstanceState == null) {
+            findNavController().navigateSafe(getNavDirection())
+        }
     }
 
     private fun getNavDirection(): NavDirections {

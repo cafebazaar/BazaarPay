@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.widget.LinearLayout
 import androidx.annotation.StringRes
 import ir.cafebazaar.bazaarpay.databinding.ViewNotLoginBinding
+import ir.cafebazaar.bazaarpay.extensions.setSafeOnClickListener
 
 class NotLoginErrorView @JvmOverloads constructor(
     context: Context,
@@ -29,7 +30,7 @@ class NotLoginErrorView @JvmOverloads constructor(
     }
 
     fun setOnLoginButtonClickListener(callBack: () -> Unit) {
-        binding.loginButton.setOnClickListener {
+        binding.loginButton.setSafeOnClickListener {
             callBack.invoke()
         }
     }

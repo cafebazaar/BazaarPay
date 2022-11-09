@@ -12,7 +12,5 @@ fun NavController.navigateSafe(directions: NavDirections) {
 fun NavController.navigateSafe(@IdRes resId: Int, args: Bundle? = null) {
     if (currentDestination?.getAction(resId) != null) {
         navigate(resId, args)
-    } else {
-        Throwable("trying to navigate to a unknown destination")
     }
 }

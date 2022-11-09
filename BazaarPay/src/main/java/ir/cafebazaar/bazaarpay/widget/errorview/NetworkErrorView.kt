@@ -6,6 +6,7 @@ import android.view.Gravity
 import android.view.LayoutInflater
 import android.widget.LinearLayout
 import ir.cafebazaar.bazaarpay.databinding.ViewErrorNetworkBinding
+import ir.cafebazaar.bazaarpay.extensions.setSafeOnClickListener
 
 class NetworkErrorView @JvmOverloads constructor(
     context: Context,
@@ -24,7 +25,7 @@ class NetworkErrorView @JvmOverloads constructor(
     }
 
     fun setOnRetryButtonClickListener(callBack: () -> Unit) {
-        binding.retryButton.setOnClickListener {
+        binding.retryButton.setSafeOnClickListener {
             callBack.invoke()
         }
     }

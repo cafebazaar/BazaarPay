@@ -116,14 +116,14 @@
         app:layout_constraintTop_toBottomOf="@id/phoneInputLayout"
         tools:text="@string/privacy_and_terms_login" />
 
-    <ir.cafebazaar.bazaarpay.widget.button.BazaarButton
+    <ir.cafebazaar.bazaarpay.widget.button.BazaarPayButton
         android:id="@+id/proceedBtn"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/default_margin_double_half"
         android:layout_marginTop="@dimen/default_margin_double"
         android:layout_marginBottom="@dimen/default_margin_double_half"
-        android:textColor="@color/tc_primary_button"
+        android:textColor="@color/selector_primary_button"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

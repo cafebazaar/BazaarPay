@@ -2,6 +2,7 @@ package ir.cafebazaar.bazaarpay.screens.payment.directdebitactivating.banklist
 
 import androidx.recyclerview.widget.RecyclerView
 import ir.cafebazaar.bazaarpay.databinding.ItemBankListBinding
+import ir.cafebazaar.bazaarpay.extensions.setSafeOnClickListener
 import ir.cafebazaar.bazaarpay.utils.imageloader.ImageLoader
 
 internal class DirectDebitBanksListItemViewHolder(
@@ -11,7 +12,7 @@ internal class DirectDebitBanksListItemViewHolder(
 
     fun bind(bank: BankList.BankListRowItem) {
         with(binding) {
-            root.setOnClickListener {
+            root.setSafeOnClickListener {
                 onItemSelected.invoke(bank)
             }
             root.background = bank.getBackgroundResId(root.context)

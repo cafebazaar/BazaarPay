@@ -1,22 +1,14 @@
 package ir.cafebazaar.bazaarpay.data.bazaar.payment.models.directdebit.banklist.response
 
-import ir.cafebazaar.bazaarpay.data.bazaar.models.BazaarBaseResponse
-import ir.cafebazaar.bazaarpay.extensions.persianDigitsIfPersian
+import com.google.gson.annotations.SerializedName
 import ir.cafebazaar.bazaarpay.data.bazaar.payment.models.directdebit.banklist.AvailableBanks
 import ir.cafebazaar.bazaarpay.data.bazaar.payment.models.directdebit.banklist.Bank
 import ir.cafebazaar.bazaarpay.data.bazaar.payment.models.directdebit.onboarding.response.ThemedIconDto
-import java.util.*
+import ir.cafebazaar.bazaarpay.extensions.persianDigitsIfPersian
+import java.util.Locale
 
-internal class GetAvailableBanksSingleReply(
-    val singleReply: GetAvailableBanksReply
-) : BazaarBaseResponse()
-
-internal data class GetAvailableBanksReply(
-    val getAvailableBanksReply: GetAvailableBanksReplyBody
-)
-
-internal data class GetAvailableBanksReplyBody(
-    val banks: List<BankDto>
+internal class GetAvailableBanksResponseDto(
+    @SerializedName("banks") val banks: List<BankDto>
 ) {
 
     fun toAvailableBanks(): AvailableBanks {
@@ -25,10 +17,10 @@ internal data class GetAvailableBanksReplyBody(
 }
 
 internal class BankDto(
-    val code: String,
-    val name: String,
-    val icon: ThemedIconDto,
-    val description: String
+    @SerializedName("code") val code: String,
+    @SerializedName("name") val name: String,
+    @SerializedName("icon") val icon: ThemedIconDto,
+    @SerializedName("description") val description: String
 ) {
 
     fun toBank(): Bank {

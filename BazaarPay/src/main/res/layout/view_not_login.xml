@@ -23,7 +23,7 @@
         android:text="@string/title_force_login"
         android:textColor="@color/text_primary" />
 
-    <ir.cafebazaar.bazaarpay.widget.button.BazaarButton
+    <ir.cafebazaar.bazaarpay.widget.button.BazaarPayButton
         android:id="@+id/loginButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

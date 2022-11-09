@@ -6,13 +6,20 @@ import ir.cafebazaar.bazaarpay.extensions.fold
 import ir.cafebazaar.bazaarpay.data.bazaar.account.models.getotptoken.WaitingTimeWithEnableCall
 import ir.cafebazaar.bazaarpay.data.bazaar.account.models.getotptokenbycall.WaitingTime
 import ir.cafebazaar.bazaarpay.data.bazaar.account.models.verifyotptoken.LoginResponse
+import ir.cafebazaar.bazaarpay.models.GlobalDispatchers
 import ir.cafebazaar.bazaarpay.utils.Either
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.withContext
 
 internal class AccountRepository {
 
-    private val onSmsPermission: MutableSharedFlow<Intent> = MutableSharedFlow()
+    private val globalDispatchers: GlobalDispatchers by lazy {
+        ServiceLocator.get()
+    }
+
+    private val _onSmsPermissionSharedFlow: MutableSharedFlow<Intent> = MutableSharedFlow()
+    val onSmsPermissionSharedFlow: SharedFlow<Intent> =  _onSmsPermissionSharedFlow
     private val accountLocalDataSource: AccountLocalDataSource = ServiceLocator.get()
     private val accountRemoteDataSource: AccountRemoteDataSource = ServiceLocator.get()
 
@@ -20,33 +27,31 @@ internal class AccountRepository {
         return accountLocalDataSource.accessToken.isNotEmpty()
     }
 
-    fun getAutoFillPhones(): List<String> {
-        return accountLocalDataSource.getAutoFillPhones()
+    suspend fun getAutoFillPhones(): List<String> {
+        return withContext(globalDispatchers.iO) {
+            return@withContext accountLocalDataSource.getAutoFillPhones()
+        }
     }
 
     fun savePhone(phone: String) {
         return accountLocalDataSource.putAutoFillPhones(phone)
     }
 
-    fun getOtpToken(phoneNumber: String):
+    suspend fun getOtpToken(phoneNumber: String):
             Either<WaitingTimeWithEnableCall> {
         return accountRemoteDataSource.getOtpToken(phoneNumber)
     }
 
-    fun getOtpTokenByCall(phoneNumber: String): Either<WaitingTime> {
+    suspend fun getOtpTokenByCall(phoneNumber: String): Either<WaitingTime> {
         return accountRemoteDataSource.getOtpTokenByCall(phoneNumber)
     }
 
-    fun verifyOtpToken(phoneNumber: String, code: String): Either<LoginResponse> {
+    suspend fun verifyOtpToken(phoneNumber: String, code: String): Either<LoginResponse> {
         return accountRemoteDataSource.verifyOtpToken(phoneNumber, code)
     }
 
-    fun getSmsPermissionObservable(): SharedFlow<Intent> {
-        return onSmsPermission
-    }
-
     suspend fun setSmsPermissionObservable(intent: Intent) {
-        onSmsPermission.emit(intent)
+        _onSmsPermissionSharedFlow.emit(intent)
     }
 
     fun saveRefreshToken(refreshToken: String) {

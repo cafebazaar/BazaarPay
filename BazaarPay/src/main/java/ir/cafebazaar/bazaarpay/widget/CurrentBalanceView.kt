@@ -6,7 +6,7 @@ import android.view.Gravity
 import android.view.LayoutInflater
 import android.widget.LinearLayout
 import ir.cafebazaar.bazaarpay.databinding.ViewCurrentBalanceBinding
-import ir.cafebazaar.bazaarpay.extensions.getBalanceTextColor
+import ir.cafebazaar.bazaarpay.utils.getBalanceTextColor
 
 internal class CurrentBalanceView @JvmOverloads constructor(
     context: Context,
@@ -30,7 +30,7 @@ internal class CurrentBalanceView @JvmOverloads constructor(
         binding.balanceTextView.apply {
             text = balanceString
             setTextColor(
-                context.getBalanceTextColor(balance)
+                getBalanceTextColor(context, balance)
             )
         }
     }

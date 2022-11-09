@@ -3,6 +3,7 @@ package ir.cafebazaar.bazaarpay.screens.login.verify
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
 import android.os.Bundle
 import android.text.TextWatcher
 import android.view.LayoutInflater
@@ -19,10 +20,23 @@ import ir.cafebazaar.bazaarpay.FinishCallbacks
 import ir.cafebazaar.bazaarpay.R
 import ir.cafebazaar.bazaarpay.databinding.FragmentVerifyOtpBinding
 import ir.cafebazaar.bazaarpay.databinding.LayoutVerifyHeaderBinding
-import ir.cafebazaar.bazaarpay.extensions.*
+import ir.cafebazaar.bazaarpay.extensions.getReadableErrorMessage
+import ir.cafebazaar.bazaarpay.extensions.gone
+import ir.cafebazaar.bazaarpay.extensions.hideKeyboard
+import ir.cafebazaar.bazaarpay.extensions.invisible
+import ir.cafebazaar.bazaarpay.extensions.isGooglePlayServicesAvailable
+import ir.cafebazaar.bazaarpay.extensions.isLandscape
+import ir.cafebazaar.bazaarpay.extensions.localizeNumber
+import ir.cafebazaar.bazaarpay.extensions.observe
+import ir.cafebazaar.bazaarpay.extensions.setSafeOnClickListener
+import ir.cafebazaar.bazaarpay.extensions.visible
 import ir.cafebazaar.bazaarpay.models.Resource
 import ir.cafebazaar.bazaarpay.models.ResourceState
 import ir.cafebazaar.bazaarpay.models.VerificationState
+import ir.cafebazaar.bazaarpay.receiver.SmsPermissionReceiver
+import ir.cafebazaar.bazaarpay.screens.login.LoginConstants.ACTION_BROADCAST_LOGIN
+import ir.cafebazaar.bazaarpay.screens.login.LoginConstants.SMS_NUMBER
+import ir.cafebazaar.bazaarpay.utils.secondsToStringTime
 
 internal class VerifyOtpFragment : Fragment() {
 
@@ -79,7 +93,7 @@ internal class VerifyOtpFragment : Fragment() {
             findNavController().popBackStack()
         }
 
-        headerBinding.close.setOnClickListener {
+        headerBinding.close.setSafeOnClickListener {
             findNavController().popBackStack()
         }
 
@@ -88,11 +102,11 @@ internal class VerifyOtpFragment : Fragment() {
             phoneNumber.localizeNumber(requireContext())
         )
 
-        binding.resendCodeButton.setOnClickListener { handleResendSmsClick() }
-        binding.callButton.setOnClickListener {
+        binding.resendCodeButton.setSafeOnClickListener { handleResendSmsClick() }
+        binding.callButton.setSafeOnClickListener {
             viewModel.onCallButtonClicked(phoneNumber)
         }
-        headerBinding.proceedBtn.setOnClickListener { handleProceedClick(false) }
+        headerBinding.proceedBtn.setSafeOnClickListener { handleProceedClick(false) }
         // disable when initialized, because there is no text in the input.
         headerBinding.proceedBtn.isEnabled = false
         headerBinding.verificationCodeEditText.setOnEditorActionListener { _, actionId, _ ->
@@ -132,7 +146,19 @@ internal class VerifyOtpFragment : Fragment() {
 
             onStartSmsPermissionLiveData.observe(viewLifecycleOwner, ::onSmsPermission)
             verificationCodeLiveData.observe(viewLifecycleOwner, ::onSmsReceived)
-            onActivityCreated(requireActivity())
+            onActivityCreated()
+            startListeningSms()
+        }
+    }
+
+    private fun startListeningSms() {
+        if (requireActivity().isGooglePlayServicesAvailable()) {
+            SmsRetriever
+                .getClient(requireActivity())
+                .startSmsUserConsent(SMS_NUMBER)
+            IntentFilter(SmsRetriever.SMS_RETRIEVED_ACTION).also { intentFilter ->
+                requireActivity().registerReceiver(SmsPermissionReceiver(), intentFilter)
+            }
         }
     }
 
@@ -212,9 +238,11 @@ internal class VerifyOtpFragment : Fragment() {
     private fun handleResendSmsAndCallState(resource: Resource<Long>) {
 
         when (resource.resourceState) {
-            ResourceState.Success -> onCountDownStarted(resource.data!!)
+            ResourceState.Success -> {
+                resource.data?.let(::onCountDownStarted)
+            }
             ResourceState.Error -> {
-                onCountDownStarted(resource.data!!)
+                resource.data?.let(::onCountDownStarted)
                 showError(requireContext().getReadableErrorMessage(resource.failure))
             }
             ResourceState.Loading -> {
@@ -224,7 +252,7 @@ internal class VerifyOtpFragment : Fragment() {
                 hideKeyboardInLandscape()
             }
             VerificationState.Tick -> {
-                onTick(resource.data!!)
+                resource.data?.let(::onTick)
             }
             VerificationState.FinishCountDown -> {
                 onCountDownFinished()
@@ -240,7 +268,7 @@ internal class VerifyOtpFragment : Fragment() {
     }
 
     private fun onTick(waitingTime: Long) {
-        val untilFinishTimeText = requireContext().secondsToStringTime(waitingTime)
+        val untilFinishTimeText = secondsToStringTime(waitingTime)
         binding.resendText.text = getString(R.string.resend_after, untilFinishTimeText)
     }
 
@@ -269,10 +297,10 @@ internal class VerifyOtpFragment : Fragment() {
     }
 
     override fun onDestroyView() {
-        super.onDestroyView()
         headerBinding.verificationCodeEditText.removeTextChangedListener(
             verificationCodeWatcher
         )
+        super.onDestroyView()
         _binding = null
         _headerBinding = null
     }
@@ -295,7 +323,6 @@ internal class VerifyOtpFragment : Fragment() {
 
     private companion object {
 
-        const val ACTION_BROADCAST_LOGIN = "loginHappened"
         const val SMS_CONSENT_REQUEST = 2
         const val OTP_TOKEN_START_POSITION = 10
         const val OTP_TOKEN_END_POSITION = 14

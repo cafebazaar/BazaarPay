@@ -27,10 +27,8 @@ internal class BankListAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>()
         return items.size
     }
 
-    fun setItems(items: List<BankList>?) {
-        items?.let {
-            this.items.addAll(items)
-            notifyDataSetChanged()
-        }
+    fun setItems(items: List<BankList>) {
+        this.items.addAll(items)
+        notifyDataSetChanged()
     }
 }
