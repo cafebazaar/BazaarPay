@@ -39,6 +39,7 @@ There are three points which you have to consider:
 * `onSuccess`: This function will call after a successful payment flow.
 * `onCancel`: This function will call if the payment flow does not finish successfully (Cancel by the user).
 3. You need to pass the `checkout` token as a parameter during calling `launchBazaarPay` function.*2
+    * You can optionally pass the user phone number in `phoneNumber` in order to pre fill phone number in login screen.
 
 ### Notes:
 
