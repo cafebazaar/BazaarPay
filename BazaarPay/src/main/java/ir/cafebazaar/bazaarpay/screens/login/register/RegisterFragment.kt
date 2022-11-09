@@ -16,6 +16,8 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import ir.cafebazaar.bazaarpay.FinishCallbacks
 import ir.cafebazaar.bazaarpay.R
+import ir.cafebazaar.bazaarpay.ServiceLocator
+import ir.cafebazaar.bazaarpay.ServiceLocator.PHONE_NUMBER
 import ir.cafebazaar.bazaarpay.models.Resource
 import ir.cafebazaar.bazaarpay.models.ResourceState
 import ir.cafebazaar.bazaarpay.databinding.FragmentRegisterBinding
@@ -86,6 +88,7 @@ internal class RegisterFragment : Fragment() {
 
         binding.proceedBtn.setOnClickListener { register() }
 
+        preFillPhoneByDeveloperData()
         setLoginInfo()
     }
 
@@ -136,6 +139,10 @@ internal class RegisterFragment : Fragment() {
         } else {
             false
         }
+    }
+
+    private fun preFillPhoneByDeveloperData() {
+        binding.phoneEditText.setText(ServiceLocator.get<String>(PHONE_NUMBER))
     }
 
     private fun populateAutoFillPhoneNumbers(phonesList: List<String>) {

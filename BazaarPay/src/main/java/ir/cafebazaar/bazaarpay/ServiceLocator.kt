@@ -23,7 +23,7 @@ import okhttp3.Interceptor
 
 internal object ServiceLocator {
 
-    val servicesMap = HashMap<String, Any>()
+    val servicesMap = HashMap<String, Any?>()
 
     fun isConfigInitiated(): Boolean {
         return (servicesMap[getKeyOfClass<String>(CHECKOUT_TOKEN)]) != null
@@ -31,11 +31,13 @@ internal object ServiceLocator {
 
     fun initializeConfigs(
         checkoutToken: String,
+        phoneNumber: String? = null,
         isDark: Boolean,
         language: String,
         languageNumber: Int
     ) {
         servicesMap[getKeyOfClass<String>(CHECKOUT_TOKEN)] = checkoutToken
+        servicesMap[getKeyOfClass<String?>(PHONE_NUMBER)] = phoneNumber
         servicesMap[getKeyOfClass<Boolean>(IS_DARK)] = isDark
         servicesMap[getKeyOfClass<Int>(LANGUAGE)] = languageNumber
         servicesMap[getKeyOfClass<String>(LANGUAGE)] = language
@@ -186,6 +188,7 @@ internal object ServiceLocator {
     private const val PAYMENT_BASE_URL: String = "https://pardakht.cafebazaar.ir/"
     private const val USER_AGENT_HEADER_TITLE: String = "UserAgent"
     internal const val CHECKOUT_TOKEN: String = "checkout_token"
+    internal const val PHONE_NUMBER: String = "phone_number"
     internal const val IS_DARK: String = "is_dark"
     internal const val LANGUAGE: String = "language"
     internal const val ACCOUNT: String = "account"
