@@ -30,7 +30,7 @@ class MainActivity : AppCompatActivity() {
         binding.payButton.setSafeOnClickListener {
             bazaarPayLauncher.launchBazaarPay(
                 checkoutToken = binding.checkoutTokenInput.text.toString(),
-                phoneNumber = "09121234567",
+                phoneNumber = binding.phoneNumberInput.text.toString(),
                 isDarkMode = binding.darkMode.isChecked,
                 isEnglish = binding.english.isChecked
             )
