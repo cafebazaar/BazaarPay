@@ -15,12 +15,12 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
+
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/checkout_token_input"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="5193583945"
-            android:hint="Checkout Token"/>
+            android:hint="Enter checkout token" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -31,12 +31,12 @@
         app:layout_constraintTop_toBottomOf="@id/checkout_token"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
+
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/phoneNumberInput"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="09121234567"
-            android:hint="Optional Phone Number"/>
+            android:hint="Enter mobile (optional)" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <androidx.appcompat.widget.AppCompatCheckBox
