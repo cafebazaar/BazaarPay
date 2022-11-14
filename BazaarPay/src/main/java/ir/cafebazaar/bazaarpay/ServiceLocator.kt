@@ -57,6 +57,7 @@ internal object ServiceLocator {
         servicesMap[getKeyOfClass<Context>()] = context
         initGlobalDispatchers()
         initJsonConvertorFactory()
+        initHttpLoggingInterceptor()
 
         // Account
         initAccountService()
@@ -119,6 +120,12 @@ internal object ServiceLocator {
 
     private fun initTokenInterceptor() {
         servicesMap[getKeyOfClass<Interceptor>(TOKEN)] = TokenInterceptor()
+    }
+
+    private fun initHttpLoggingInterceptor() {
+        servicesMap[getKeyOfClass<HttpLoggingInterceptor>()] = HttpLoggingInterceptor().apply {
+            level = HttpLoggingInterceptor.Level.BODY
+        }
     }
 
     private fun initPaymentRemoteDataSource() {
