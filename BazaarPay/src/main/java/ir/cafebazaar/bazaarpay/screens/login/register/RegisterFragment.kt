@@ -176,7 +176,11 @@ internal class RegisterFragment : Fragment() {
                     }
                 }
                 ResourceState.Error -> {
-                    val message = requireContext().getReadableErrorMessage(resource.failure)
+                    val message = if (resource.failure is InvalidPhoneNumberException) {
+                        getString(R.string.wrong_phone_number)
+                    } else {
+                        requireContext().getReadableErrorMessage(resource.failure)
+                    }
                     showError(message)
                 }
                 ResourceState.Loading -> handleLoading()

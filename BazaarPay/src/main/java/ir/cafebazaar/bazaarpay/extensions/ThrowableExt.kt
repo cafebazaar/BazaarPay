@@ -1,11 +1,14 @@
 package ir.cafebazaar.bazaarpay.extensions
 
 import android.accounts.NetworkErrorException
+import com.google.gson.GsonBuilder
 import com.google.gson.JsonSyntaxException
 import ir.cafebazaar.bazaarpay.data.bazaar.models.ErrorCode
 import ir.cafebazaar.bazaarpay.data.bazaar.models.ErrorModel
 import ir.cafebazaar.bazaarpay.data.bazaar.models.ResponseException
 import ir.cafebazaar.bazaarpay.data.bazaar.models.ResponseProperties
+import ir.cafebazaar.bazaarpay.models.ErrorResponseDto
+import retrofit2.HttpException
 import java.io.IOException
 
 private const val MESSAGE_SERVER_ERROR = "Server Error"
@@ -16,7 +19,7 @@ fun asNetworkException(throwable: Throwable): ErrorModel {
         is IOException -> {
             ErrorModel.NetworkConnection("No Network Connection", throwable)
         }
-        is ResponseException -> {
+        is HttpException -> {
             createHttpError(throwable)
         }
         is ErrorModel -> throwable
@@ -24,15 +27,22 @@ fun asNetworkException(throwable: Throwable): ErrorModel {
     }
 }
 
-private fun createHttpError(throwable: ResponseException?): ErrorModel {
-    return if (throwable == null) {
+private fun createHttpError(throwable: HttpException): ErrorModel {
+    val response = throwable.response()
+    return if (response?.errorBody() == null) {
         ErrorModel.Server(
             MESSAGE_SERVER_ERROR,
             IllegalStateException("response.errorBody() is null")
         )
     } else {
         try {
-            readErrorFromResponse(throwable.responseProperties)
+            val errorBody = response.errorBody()!!.string()
+            val errorResponse = GsonBuilder().create().fromJson(
+                errorBody,
+                ErrorResponseDto::class.java
+            )
+
+            readErrorFromResponse(errorResponse)
         } catch (ignored: Exception) {
             ErrorModel.Server(MESSAGE_SERVER_ERROR, ignored)
         }
@@ -40,7 +50,7 @@ private fun createHttpError(throwable: ResponseException?): ErrorModel {
 }
 
 private fun readErrorFromResponse(
-    errorResponse: ResponseProperties?
+    errorResponse: ErrorResponseDto
 ): ErrorModel {
     return try {
         errorFromErrorResponse(errorResponse)
@@ -56,14 +66,18 @@ private fun readErrorFromResponse(
         ErrorModel.Server("Internal error during parsing error body", ignored)
     }
 }
+
 @Throws
 private fun errorFromErrorResponse(
-    errorResponse: ResponseProperties?
+    errorResponse: ErrorResponseDto
 ): ErrorModel {
-    with(errorResponse) {
+    with(errorResponse.properties) {
         return when (this?.errorCode) {
             ErrorCode.FORBIDDEN.value -> {
                 ErrorModel.Forbidden(errorMessage)
+            }
+            ErrorCode.INPUT_NOT_VALID.value -> {
+                ErrorModel.InputNotValid(errorMessage)
             }
             ErrorCode.NOT_FOUND.value -> {
                 ErrorModel.NotFound(errorMessage)
