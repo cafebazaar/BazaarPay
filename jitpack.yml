@@ -1,4 +1,4 @@
 jdk:
   - openjdk11
 install:
-  - ./gradlew build :Referrer:publishToMavenLocal
+  - ./gradlew build :BazaarPay:publishToMavenLocal
