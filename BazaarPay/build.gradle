@@ -8,7 +8,6 @@ plugins {
 }
 
 apply from: "$rootDir/configs/versions.gradle"
-apply from: "$rootDir/publish/publish.gradle"
 
 final VERSION_NAME = "1.1.0"
 final VERSION_CODE = 2
@@ -79,10 +78,14 @@ dependencies {
     kapt "com.github.bumptech.glide:compiler:$library.glide"
 }
 
-project.afterEvaluate {
-    publishing {
-        publications {
-            release(MavenPublication) {
+publishing {
+    publications {
+        release(MavenPublication) {
+            groupId = 'ir.cafebazaar.BazaarPay'
+            artifactId = project.getName()
+            version = project.android.defaultConfig.versionName
+
+            afterEvaluate {
                 from components.release
             }
         }
