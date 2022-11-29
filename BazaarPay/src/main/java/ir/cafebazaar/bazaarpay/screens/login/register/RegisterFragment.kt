@@ -16,6 +16,8 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import ir.cafebazaar.bazaarpay.FinishCallbacks
 import ir.cafebazaar.bazaarpay.R
+import ir.cafebazaar.bazaarpay.ServiceLocator
+import ir.cafebazaar.bazaarpay.ServiceLocator.PHONE_NUMBER
 import ir.cafebazaar.bazaarpay.models.Resource
 import ir.cafebazaar.bazaarpay.models.ResourceState
 import ir.cafebazaar.bazaarpay.databinding.FragmentRegisterBinding
@@ -93,6 +95,7 @@ internal class RegisterFragment : Fragment() {
 
         binding.proceedBtn.setSafeOnClickListener { register() }
 
+        preFillPhoneByDeveloperData()
         setLoginInfo()
     }
 
@@ -145,6 +148,10 @@ internal class RegisterFragment : Fragment() {
         }
     }
 
+    private fun preFillPhoneByDeveloperData() {
+        binding.phoneEditText.setText(ServiceLocator.get<String>(PHONE_NUMBER))
+    }
+
     private fun populateAutoFillPhoneNumbers(phonesList: List<String>) {
         binding.phoneEditText.apply {
             setAdapter(
@@ -169,7 +176,11 @@ internal class RegisterFragment : Fragment() {
                     }
                 }
                 ResourceState.Error -> {
-                    val message = requireContext().getReadableErrorMessage(resource.failure)
+                    val message = if (resource.failure is InvalidPhoneNumberException) {
+                        getString(R.string.wrong_phone_number)
+                    } else {
+                        requireContext().getReadableErrorMessage(resource.failure)
+                    }
                     showError(message)
                 }
                 ResourceState.Loading -> handleLoading()

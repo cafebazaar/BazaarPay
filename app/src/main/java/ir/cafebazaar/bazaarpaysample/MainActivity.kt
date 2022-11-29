@@ -29,9 +29,10 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
         binding.payButton.setSafeOnClickListener {
             bazaarPayLauncher.launchBazaarPay(
-                binding.checkoutTokenInput.text.toString(),
-                binding.darkMode.isChecked,
-                binding.english.isChecked
+                checkoutToken = binding.checkoutTokenInput.text.toString(),
+                phoneNumber = binding.phoneNumberInput.text.toString(),
+                isDarkMode = binding.darkMode.isChecked,
+                isEnglish = binding.english.isChecked
             )
         }
     }

@@ -19,11 +19,13 @@ class BazaarPayLauncher(
 
     fun launchBazaarPay(
         checkoutToken: String,
+        phoneNumber: String? = null,
         isDarkMode: Boolean = false,
         isEnglish: Boolean = false
     ) {
         ServiceLocator.initializeConfigs(
             checkoutToken,
+            phoneNumber,
             isDarkMode,
             getLanguage(isEnglish),
             getLanguageNumber(isEnglish)

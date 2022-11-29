@@ -185,7 +185,7 @@ internal class DynamicCreditViewModel : ViewModel() {
         return if (price == 0L) {
             null
         } else {
-            price.toPriceFormat(context, Locale(ServiceLocator.get(ServiceLocator.LANGUAGE)))
+            price.toPriceFormat(Locale(ServiceLocator.get(ServiceLocator.LANGUAGE)))
         }
     }
 

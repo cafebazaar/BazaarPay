@@ -11,17 +11,19 @@ fun Long.toToman(): Long = this / TOMAN_RIAL_DIFFERENCE
 
 private const val MAXIMUM_VALUE_DOES_NOT_NEED_SEPARATOR = 999
 
-fun Long.toPriceFormat(context: Context, locale: Locale): String {
-
-    val stringRes = when {
-        this > MAXIMUM_VALUE_DOES_NOT_NEED_SEPARATOR -> {
-            R.string.price_placeholder_seperator
+fun Long.toPriceFormat(locale: Locale): String {
+    val priceString = String.format("%,d", this)
+    val priceWithSeparator = "$priceString " + when (locale.language) {
+        "fa" -> {
+            "تومان"
         }
         else -> {
-            R.string.price_placeholder
+            if (this > MAXIMUM_VALUE_DOES_NOT_NEED_SEPARATOR) {
+                 "Tomans"
+            } else {
+                "Toman"
+            }
         }
     }
-
-    val priceWithSeparator = context.getString(stringRes, this)
     return priceWithSeparator.persianDigitsIfPersian(locale)
 }
