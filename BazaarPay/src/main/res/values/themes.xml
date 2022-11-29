@@ -1,11 +1,13 @@
 <resources>
 
-    <style name="Theme.BazaarPay.NoActionBar">
+    <style name="BazaarPayTheme" parent="Theme.MaterialComponents.DayNight.DarkActionBar" />
+
+    <style name="BazaarPayTheme.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>
 
-    <style name="Theme.BazaarPay.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+    <style name="BazaarPayTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
-    <style name="Theme.BazaarPay.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+    <style name="BazaarPayTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 </resources>
