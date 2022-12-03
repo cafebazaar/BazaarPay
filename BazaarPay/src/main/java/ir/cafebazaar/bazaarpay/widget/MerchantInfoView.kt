@@ -7,7 +7,7 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import ir.cafebazaar.bazaarpay.R
 import ir.cafebazaar.bazaarpay.databinding.ViewMerchantInfoBinding
 import ir.cafebazaar.bazaarpay.extensions.gone
-import ir.cafebazaar.bazaarpay.utils.imageloader.ImageLoader
+import ir.cafebazaar.bazaarpay.utils.imageloader.BazaarPayImageLoader
 
 internal class MerchantInfoView @JvmOverloads constructor(
     context: Context,
@@ -42,7 +42,7 @@ internal class MerchantInfoView @JvmOverloads constructor(
     fun setMerchantIcon(iconUrl: String) {
         with(binding.dealerIconImageView) {
             if (iconUrl.isNotEmpty()) {
-                ImageLoader.loadImage(
+                BazaarPayImageLoader.loadImage(
                     imageView = this,
                     imageURI = iconUrl,
                     placeHolderId = R.drawable.ic_logo_placeholder

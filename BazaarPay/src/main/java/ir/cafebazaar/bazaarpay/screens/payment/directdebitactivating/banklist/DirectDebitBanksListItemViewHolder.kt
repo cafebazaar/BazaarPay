@@ -3,7 +3,7 @@ package ir.cafebazaar.bazaarpay.screens.payment.directdebitactivating.banklist
 import androidx.recyclerview.widget.RecyclerView
 import ir.cafebazaar.bazaarpay.databinding.ItemBankListBinding
 import ir.cafebazaar.bazaarpay.extensions.setSafeOnClickListener
-import ir.cafebazaar.bazaarpay.utils.imageloader.ImageLoader
+import ir.cafebazaar.bazaarpay.utils.imageloader.BazaarPayImageLoader
 
 internal class DirectDebitBanksListItemViewHolder(
     val binding: ItemBankListBinding,
@@ -17,7 +17,7 @@ internal class DirectDebitBanksListItemViewHolder(
             }
             root.background = bank.getBackgroundResId(root.context)
             bank.model.icon.getImageUriFromThemedIcon().let { image ->
-                ImageLoader.loadImage(
+                BazaarPayImageLoader.loadImage(
                     imageView = iconImageView,
                     imageURI = image
                 )

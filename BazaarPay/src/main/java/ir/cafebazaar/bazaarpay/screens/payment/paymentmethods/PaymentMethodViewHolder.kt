@@ -10,7 +10,7 @@ import ir.cafebazaar.bazaarpay.R
 import ir.cafebazaar.bazaarpay.databinding.ItemPaymentOptionBinding
 import ir.cafebazaar.bazaarpay.data.payment.models.getpaymentmethods.PaymentMethod
 import ir.cafebazaar.bazaarpay.extensions.setSafeOnClickListener
-import ir.cafebazaar.bazaarpay.utils.imageloader.ImageLoader
+import ir.cafebazaar.bazaarpay.utils.imageloader.BazaarPayImageLoader
 
 internal class PaymentMethodViewHolder(
     private val binding: ItemPaymentOptionBinding,
@@ -21,7 +21,7 @@ internal class PaymentMethodViewHolder(
         itemView.setSafeOnClickListener { clickListener.onItemClick(absoluteAdapterPosition) }
         with(binding) {
             item.iconUrl?.let {
-                ImageLoader.loadImage(
+                BazaarPayImageLoader.loadImage(
                     imageView = icon,
                     imageURI = it,
                     placeHolderId = R.drawable.ic_default_payment_old

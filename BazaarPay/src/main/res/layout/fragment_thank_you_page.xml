@@ -72,8 +72,8 @@
 
         <ir.cafebazaar.bazaarpay.widget.button.BazaarPayButton
             android:id="@+id/successButton"
-            app:buttonTheme="contained"
-            app:buttonType="app"
+            app:bazaarPayButtonTheme="contained"
+            app:bazaarpayButtonType="app"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/default_margin_double"
@@ -86,8 +86,8 @@
 
         <ir.cafebazaar.bazaarpay.widget.button.BazaarPayButton
             android:id="@+id/tryAgainButton"
-            app:buttonTheme="contained"
-            app:buttonType="app"
+            app:bazaarPayButtonTheme="contained"
+            app:bazaarpayButtonType="app"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/default_margin_double"
@@ -105,8 +105,8 @@
 
         <ir.cafebazaar.bazaarpay.widget.button.BazaarPayButton
             android:id="@+id/cancelButton"
-            app:buttonType="app"
-            app:buttonTheme="outline"
+            app:bazaarpayButtonType="app"
+            app:bazaarPayButtonTheme="outline"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/default_margin"
