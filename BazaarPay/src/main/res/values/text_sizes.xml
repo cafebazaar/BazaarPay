@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <public />
+    <public name="bp_public_text_size" type="dimen"/>
     <dimen name="title_large">48sp</dimen>
     <dimen name="title_medium">34sp</dimen>
     <dimen name="title_small">24sp</dimen>

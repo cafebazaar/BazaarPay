@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <public />
+    <public name="bp_public_color_night_v27" type="color"/>
     <style name="Theme.V27.Bazaar.Primary" parent="Theme.V23.Bazaar.Primary">
         <item name="android:windowLightNavigationBar">false</item>
         <item name="android:navigationBarColor">@color/surface_color_0</item>

@@ -1,5 +1,5 @@
 <resources>
-    <public />
+    <public name="bp_public_dimen" type="dimen"/>
     <dimen name="app_info_button_size">48dp</dimen>
     <dimen name="badge_height">24sp</dimen>
     <dimen name="badge_tag_corner_radius">20dp</dimen>

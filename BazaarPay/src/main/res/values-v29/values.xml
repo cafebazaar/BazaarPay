@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <public />
+    <public name="bp_public_color_v29" type="color"/>
     <bool name="enable_preference_theme_item">false</bool>
     <bool name="enable_preference_theme_dialog">true</bool>
 </resources>

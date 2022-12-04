@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <public />
+    <public name="bp_public_text" type="font"/>
     <style name="Bazaar.Text">
         <item name="android:fontFamily">@font/regular</item>
     </style>

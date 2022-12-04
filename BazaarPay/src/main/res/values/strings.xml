@@ -1,5 +1,5 @@
 <resources>
-    <public />
+    <public name="bp_public_str" type="string"/>
     <string name="title_activity_bazaar_pay">BazaarPayActivity</string>
     <string name="proceed">Proceed</string>
     <string name="privacy_and_terms_login">I accept &lt;a href="http://cafebazaar.ir/terms/?l=en">Terms of Service&lt;/a> and &lt;a href="http://cafebazaar.ir/privacy/?l=en">Privacy Policy&lt;/a>.</string>

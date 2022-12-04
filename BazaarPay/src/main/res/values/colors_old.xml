@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <public />
+    <public name="bp_public_color_old" type="color"/>
 
     <!-- Button Colors -->
     <color name="button_screenshot_slider">#804a4a4a</color>

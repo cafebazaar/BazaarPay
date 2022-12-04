@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <public />
+    <public name="bp_public_color" type="color"/>
 
     <color name="color_primary">@color/black_primary</color>
     <color name="color_hint">@color/black_hint</color>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <public />
+    <public name="bp_public_color_v23" type="color"/>
     <style name="Theme.V23.Bazaar.Primary" parent="Theme.Bazaar">
         <item name="android:windowLightStatusBar">true</item>
         <item name="android:colorPrimaryDark">@color/grey_20</item>
