@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <public />
     <style name="Bazaar.Text">
         <item name="android:fontFamily">@font/regular</item>
     </style>

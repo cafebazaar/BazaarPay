@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
 
+    <public />
     <style name="Theme.Bazaar" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <item name="colorPrimary">@color/surface_color_0</item>
         <item name="colorPrimaryDark">@color/grey_20</item>

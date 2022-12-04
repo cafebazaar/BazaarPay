@@ -1,4 +1,5 @@
 <resources>
+    <public />
 
     <style name="BazaarPayTheme" parent="Theme.MaterialComponents.DayNight.DarkActionBar" />
 

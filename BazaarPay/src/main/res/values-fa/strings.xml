@@ -1,4 +1,5 @@
 <resources>
+    <public />
     <string name="title_activity_bazaar_pay">BazaarPayActivity</string>
     <string name="proceed">ادامه</string>
     <string name="privacy_and_terms_login">&lt;a href="http://cafebazaar.ir/terms/?l=fa">شرایط استفاده از خدمات&lt;/a> و &lt;a href="http://cafebazaar.ir/privacy/?l=fa">حریم خصوصی&lt;/a> را می‌پذیرم.</string>

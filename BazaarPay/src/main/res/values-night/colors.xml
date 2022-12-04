@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <public />
 
     <color name="color_primary">@color/white_primary</color>
     <color name="color_hint">@color/white_hint</color>

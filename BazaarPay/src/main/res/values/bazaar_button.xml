@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <public />
     <dimen name="bazaar_button_large_height">44dp</dimen>
     <dimen name="bazaar_button_medium_height">40dp</dimen>
     <dimen name="bazaar_button_small_height">36dp</dimen>
