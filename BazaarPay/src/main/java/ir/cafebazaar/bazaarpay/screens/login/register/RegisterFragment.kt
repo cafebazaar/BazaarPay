@@ -149,7 +149,10 @@ internal class RegisterFragment : Fragment() {
     }
 
     private fun preFillPhoneByDeveloperData() {
-        binding.phoneEditText.setText(ServiceLocator.get<String>(PHONE_NUMBER))
+        val phoneNumber = ServiceLocator.get<String?>(PHONE_NUMBER)
+        if (!phoneNumber.isNullOrEmpty()) {
+            binding.phoneEditText.setText(phoneNumber)
+        }
     }
 
     private fun populateAutoFillPhoneNumbers(phonesList: List<String>) {
