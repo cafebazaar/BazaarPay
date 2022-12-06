@@ -129,7 +129,7 @@ internal class BazaarPayButton : LinearLayout {
         setPadding(margin, 0, margin, 0)
         typedArray?.let {
             style = ButtonStyle.values()[
-                it.getInt(R.styleable.BazaarButton_bazaarPayButtonTheme, ButtonStyle.CONTAINED.ordinal)
+                it.getInt(R.styleable.BazaarButton_bazaarpayButtonTheme, ButtonStyle.CONTAINED.ordinal)
             ]
             type = ButtonType.values()[
                 it.getInt(R.styleable.BazaarButton_bazaarpayButtonType, ButtonType.APP.ordinal)

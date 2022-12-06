@@ -46,7 +46,7 @@
         <attr name="showLoading" />
         <!-- ATTRIBUTES -->
         <attr name="text" />
-        <attr name="bazaarPayButtonTheme" />
+        <attr name="bazaarpayButtonTheme" />
         <attr name="bazaarpayButtonType" />
         <attr name="sizeMode" />
         <attr name="rightIcon" format="integer" />

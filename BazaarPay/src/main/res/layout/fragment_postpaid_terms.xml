@@ -77,7 +77,7 @@
 
         <ir.cafebazaar.bazaarpay.widget.button.BazaarPayButton
             android:id="@+id/acceptButton"
-            app:bazaarPayButtonTheme="contained"
+            app:bazaarpayButtonTheme="contained"
             app:bazaarpayButtonType="app"
             android:layout_width="0dp"
             android:layout_height="wrap_content"

@@ -114,7 +114,7 @@
             android:layout_gravity="end"
             android:layout_margin="@dimen/default_margin_double"
             android:minHeight="48dp"
-            app:bazaarPayButtonTheme="contained"
+            app:bazaarpayButtonTheme="contained"
             app:bazaarpayButtonType="app"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
