@@ -2,105 +2,53 @@
 <resources>
     <public name="bp_public_color_night" type="color"/>
 
-    <color name="color_primary">@color/white_primary</color>
-    <color name="color_hint">@color/white_hint</color>
-    <color name="color_divider">@color/white_divider</color>
-    <color name="color_disable">#0AFFFFFF</color>
+    <color name="bazaarpay_color_primary">@color/bazaarpay_white_primary</color>
+    <color name="bazaarpay_color_hint">@color/bazaarpay_white_hint</color>
+    <color name="bazaarpay_color_divider">@color/bazaarpay_white_divider</color>
+    <color name="bazaarpay_color_disable">#0AFFFFFF</color>
 
-    <color name="surface_color_0">#121212</color>
-    <color name="surface_color_2">@color/grey_800</color>
+    <color name="bazaarpay_surface_color_0">#121212</color>
+    <color name="bazaarpay_surface_color_2">@color/bazaarpay_grey_800</color>
 
-    <color name="divider_0">#393939</color>
-    <color name="divider_1">#494949</color>
+    <color name="bazaarpay_divider_0">#393939</color>
+    <color name="bazaarpay_divider_1">#494949</color>
 
-    <color name="surface_color_0_transparent">@color/grey_900_transparent</color>
+    <color name="bazaarpay_surface_color_0_transparent">@color/bazaarpay_grey_900_transparent</color>
 
-    <color name="text_hint_color">@color/white_hint</color>
-    <color name="text_light_color">@color/black_primary</color>
-    <color name="text_secondary_light_color">@color/grey_200</color>
+    <color name="bazaarpay_text_hint_color">@color/bazaarpay_white_hint</color>
+    <color name="bazaarpay_text_light_color">@color/bazaarpay_black_primary</color>
+    <color name="bazaarpay_text_secondary_light_color">@color/bazaarpay_grey_200</color>
 
-    <color name="icon_primary_color">@color/white_primary</color>
-    <color name="icon_secondary_color">@color/white_secondary</color>
-    <color name="icon_hint_color">@color/white_hint</color>
-    <color name="icon_light_color">#121212</color>
+    <color name="bazaarpay_icon_primary_color">@color/bazaarpay_white_primary</color>
+    <color name="bazaarpay_icon_secondary_color">@color/bazaarpay_white_secondary</color>
+    <color name="bazaarpay_icon_hint_color">@color/bazaarpay_white_hint</color>
+    <color name="bazaarpay_icon_light_color">#121212</color>
 
-    <color name="viewpager_indicator_selected_color">@color/grey_300</color>
-    <color name="viewpager_indicator_unselected_color">@color/grey_80</color>
+    <color name="bazaarpay_viewpager_indicator_selected_color">@color/bazaarpay_grey_300</color>
+    <color name="bazaarpay_viewpager_indicator_unselected_color">@color/bazaarpay_grey_80</color>
 
-    <color name="app_brand_primary">#4BC381</color>
-    <color name="app_brand_secondary">#8F4BC381</color>
-    <color name="app_brand_hint">#524bc381</color>
-    <color name="app_brand_divider">#1F4bc381</color>
-    <color name="app_brand_light">#26342D</color>
+    <color name="bazaarpay_app_brand_primary">#4BC381</color>
+    <color name="bazaarpay_app_brand_secondary">#8F4BC381</color>
+    <color name="bazaarpay_app_brand_hint">#524bc381</color>
+    <color name="bazaarpay_app_brand_divider">#1F4bc381</color>
+    <color name="bazaarpay_app_brand_light">#26342D</color>
 
-    <color name="video_brand_primary">@color/video_brand_dark</color>
-    <color name="video_brand_secondary">#8FEC607B</color>
+    <color name="bazaarpay_error_primary">#EE4967</color>
+    <color name="bazaarpay_error_dark">#F84746</color>
+    <color name="bazaarpay_error_light">#39292C</color>
 
-    <color name="ad_primary">#80DEEA</color>
-    <color name="ad_background">#1F80DEEA</color>
-
-    <color name="tag_color">#C0C3D2</color>
-
-    <color name="error_primary">#EE4967</color>
-    <color name="error_dark">#F84746</color>
-    <color name="error_light">#39292C</color>
-
-    <color name="warning_primary">#FFA003</color>
-
-    <color name="info_primary">#263238</color>
-    <color name="info_secondary">#455A64</color>
-    <color name="info_hint">#78909C</color>
-
-    <color name="ripple_color">#39FFFFFF</color>
-
-    <color name="video_brand_light">#39292C</color>
-
-    <!--  expandable view gradient  -->
-    <color name="expandable_view_gradient_end_color">#00212121</color>
-
-    <!--  status badge state colors  -->
-    <color name="badge_status_normal">#4BC381</color>
-    <color name="badge_status_warning">#FFA003</color>
-    <color name="badge_status_error">#EC607B</color>
-
-    <!-- overlay colors -->
-    <color name="surface_color_0_overlay">#99121212</color>
-
-    <!--  reply review  -->
-    <color name="reply_divider_color">@color/divider_0</color>
-
-    <!-- flip timer  -->
-    <color name="flip_timer_top_background">@color/grey_850</color>
-    <color name="flip_timer_bottom_background">@color/grey_900</color>
-
-    <!-- new colors -->
-
-    <!-- brand -->
-    <color name="brand_bazaar">#4BC381</color>
-    <color name="brand_bazaar_background">#26342D</color>
-    <color name="brand_bazaar_video">#EE4967</color>
-    <color name="brand_bazaar_video_background">#39292C</color>
-    <color name="brand_ads">#F9A825</color>
-
-    <!-- notifications -->
-    <color name="notification_success">#4BC381</color>
-    <color name="notification_error">#F84746</color>
-    <color name="notification_warning">#FFA003</color>
-
-    <!-- static -->
-    <color name="static_white">#D1D4DD</color>
-    <color name="static_black">#20222A</color>
+    <color name="bazaarpay_ripple_color">#39FFFFFF</color>
 
     <!-- greys -->
-    <color name="grey_10">#191A1F</color>
-    <color name="grey_20">#1D1F23</color>
-    <color name="grey_30">#2B2C32</color>
-    <color name="grey_40">#44464E</color>
-    <color name="grey_50">#60626B</color>
-    <color name="grey_60">#888B96</color>
-    <color name="grey_70">#C0C3D2</color>
-    <color name="grey_80">#D5D8E3</color>
-    <color name="grey_90">#FFFFFF</color>
-    <color name="grey_surface">#20222AAD</color>
+    <color name="bazaarpay_grey_10">#191A1F</color>
+    <color name="bazaarpay_grey_20">#1D1F23</color>
+    <color name="bazaarpay_grey_30">#2B2C32</color>
+    <color name="bazaarpay_grey_40">#44464E</color>
+    <color name="bazaarpay_grey_50">#60626B</color>
+    <color name="bazaarpay_grey_60">#888B96</color>
+    <color name="bazaarpay_grey_70">#C0C3D2</color>
+    <color name="bazaarpay_grey_80">#D5D8E3</color>
+    <color name="bazaarpay_grey_90">#FFFFFF</color>
+    <color name="bazaarpay_grey_surface">#20222AAD</color>
 
 </resources>

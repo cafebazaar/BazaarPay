@@ -3,17 +3,17 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     xmlns:tools="http://schemas.android.com/tools"
-    android:padding="@dimen/default_margin_half">
+    android:padding="@dimen/bazaarpay_default_margin_half">
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/subtitle"
         style="@style/Bazaar.Text.Subtitle2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingStart="@dimen/default_margin"
-        android:paddingTop="@dimen/default_margin"
-        android:paddingEnd="@dimen/default_margin"
-        android:paddingBottom="@dimen/default_margin"
+        android:paddingStart="@dimen/bazaarpay_default_margin"
+        android:paddingTop="@dimen/bazaarpay_default_margin"
+        android:paddingEnd="@dimen/bazaarpay_default_margin"
+        android:paddingBottom="@dimen/bazaarpay_default_margin"
         tools:text="2000 تومان" />
 
 </FrameLayout>

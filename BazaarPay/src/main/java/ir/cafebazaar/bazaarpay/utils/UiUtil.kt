@@ -8,8 +8,8 @@ import ir.cafebazaar.bazaarpay.R
 @ColorInt
 fun getBalanceTextColor(context: Context, balance: Long): Int {
     return if (balance < 0) {
-        ContextCompat.getColor(context, R.color.error_primary)
+        ContextCompat.getColor(context, R.color.bazaarpay_error_primary)
     } else {
-        ContextCompat.getColor(context, R.color.text_secondary)
+        ContextCompat.getColor(context, R.color.bazaarpay_text_secondary)
     }
 }

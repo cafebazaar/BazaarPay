@@ -113,10 +113,10 @@ internal class DirectDebitOnBoardingFragment : Fragment() {
             onPageChangeCallback = object : ViewPager2.OnPageChangeCallback() {
                 override fun onPageSelected(position: Int) {
                     if (position == onBoardingViewPager.adapter?.itemCount?.dec()) {
-                        nextButton.text = getString(R.string.start_activation)
+                        nextButton.text = getString(R.string.bazaarpay_start_activation)
                         skipButton.gone()
                     } else {
-                        nextButton.text = getString(R.string.next)
+                        nextButton.text = getString(R.string.bazaarpay_next)
                         skipButton.visible()
                     }
                 }

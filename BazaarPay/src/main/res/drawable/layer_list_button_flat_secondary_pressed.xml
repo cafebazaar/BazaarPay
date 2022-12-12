@@ -4,7 +4,7 @@
     <item>
         <shape android:shape="rectangle">
             <corners android:radius="28dp" />
-            <solid android:color="@color/app_brand_secondary" />
+            <solid android:color="@color/bazaarpay_app_brand_secondary" />
         </shape>
     </item>
 </layer-list>

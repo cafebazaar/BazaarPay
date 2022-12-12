@@ -71,7 +71,7 @@ internal class DynamicCreditViewModel : ViewModel() {
             }
             priceIsBiggerThanMaximum(priceString) -> {
                 _errorLiveData.value = context.getString(
-                    R.string.dynamic_credit_exceed_amount,
+                    R.string.bazaarpay_dynamic_credit_exceed_amount,
                     creditOptions?.maxAvailableAmount
                 )
                 val maxValue = requireNotNull(creditOptions).maxAvailableAmount
@@ -113,7 +113,7 @@ internal class DynamicCreditViewModel : ViewModel() {
 
         if (!enoughAmount(priceString)) {
             _errorLiveData.value = context.getString(
-                R.string.dynamic_credit_not_enough, creditOptions?.minAvailableAmount
+                R.string.bazaarpay_dynamic_credit_not_enough, creditOptions?.minAvailableAmount
             )
             return
         }

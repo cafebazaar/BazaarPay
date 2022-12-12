@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <public name="bp_public_attr" type="string"/>
     <declare-styleable name="SpinKitView">
         <attr name="loadingColor" format="reference" />
     </declare-styleable>

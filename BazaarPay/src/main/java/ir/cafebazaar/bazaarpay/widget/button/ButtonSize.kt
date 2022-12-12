@@ -10,14 +10,14 @@ internal enum class ButtonSize(
 
     MEDIUM(
         R.dimen.bazaar_button_medium_height,
-        R.dimen.medium_button_width
+        R.dimen.bazaarpay_medium_button_width
     ),
     LARGE(
         R.dimen.bazaar_button_large_height,
-        R.dimen.medium_button_width
+        R.dimen.bazaarpay_medium_button_width
     ),
     SMALL(
         R.dimen.bazaar_button_small_height,
-        R.dimen.small_button_width
+        R.dimen.bazaarpay_small_button_width
     )
 }

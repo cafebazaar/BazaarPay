@@ -7,15 +7,12 @@ internal enum class ButtonType(
 ) {
 
     APP(
-        R.color.app_brand_primary
-    ),
-    VIDEO(
-        R.color.video_brand_primary
+        R.color.bazaarpay_app_brand_primary
     ),
     NEUTRAL(
-        R.color.grey_90
+        R.color.bazaarpay_grey_90
     ),
     DISABLED(
-        R.color.grey_20
+        R.color.bazaarpay_grey_20
     )
 }

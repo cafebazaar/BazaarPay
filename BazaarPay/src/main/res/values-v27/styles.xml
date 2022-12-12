@@ -1,15 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <public name="bp_public_color_v27" type="color"/>
     <style name="Theme.V27.Bazaar.Primary" parent="Theme.V23.Bazaar.Primary">
         <item name="android:windowLightNavigationBar">true</item>
-        <item name="android:navigationBarColor">@color/surface_color_0</item>
+        <item name="android:navigationBarColor">@color/bazaarpay_surface_color_0</item>
     </style>
 
     <style name="Theme.Bazaar.Primary" parent="Theme.V27.Bazaar.Primary" />
 
     <style name="Theme.V27.Bazaar.BottomSheetDialog.Primary" parent="Theme.Bazaar">
-        <item name="android:navigationBarColor">@color/surface_color_0</item>
+        <item name="android:navigationBarColor">@color/bazaarpay_surface_color_0</item>
     </style>
 
     <style name="Theme.Bazaar.BottomSheetDialog.Primary" parent="Theme.V27.Bazaar.BottomSheetDialog.Primary" />

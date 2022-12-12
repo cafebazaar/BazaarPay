@@ -17,10 +17,10 @@
         style="@style/Bazaar.Text.Caption"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/default_margin_half"
+        android:layout_marginHorizontal="@dimen/bazaarpay_default_margin_half"
         android:layout_weight="1"
         android:textAlignment="viewStart"
-        android:textColor="@color/text_secondary"
+        android:textColor="@color/bazaarpay_text_secondary"
         tools:text="امتیاز دریافتی از این خرید" />
 
 </merge>

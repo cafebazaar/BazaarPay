@@ -34,25 +34,25 @@ fun Context.isNetworkAvailable(): Boolean {
 fun Context.getReadableErrorMessage(errorModel: ErrorModel?, longText: Boolean = true): String = when (errorModel) {
     is ErrorModel.NetworkConnection ->
         if (longText) {
-            if (!isNetworkAvailable()) getString(R.string.no_internet_connection)
-            else getString(R.string.error_server_connection_failure)
+            if (!isNetworkAvailable()) getString(R.string.bazaarpay_no_internet_connection)
+            else getString(R.string.bazaarpay_error_server_connection_failure)
         } else {
-            if (!isNetworkAvailable()) getString(R.string.no_internet_connection_short)
-            else getString(R.string.error_server_connection_failure_short)
+            if (!isNetworkAvailable()) getString(R.string.bazaarpay_no_internet_connection_short)
+            else getString(R.string.bazaarpay_error_server_connection_failure_short)
         }
     is ErrorModel.NotFound -> {
         if (errorModel.message.isEmpty()) {
-            getString(R.string.data_not_found)
+            getString(R.string.bazaarpay_data_not_found)
         } else {
             errorModel.message
         }
     }
-    is ErrorModel.RateLimitExceeded -> getString(R.string.rate_limit_exceeded)
-    is InvalidPhoneNumberException -> getString(R.string.wrong_phone_number)
-    is ErrorModel.Server, ErrorModel.UnExpected -> getString(R.string.error_server_connection_failure)
+    is ErrorModel.RateLimitExceeded -> getString(R.string.bazaarpay_rate_limit_exceeded)
+    is InvalidPhoneNumberException -> getString(R.string.bazaarpay_wrong_phone_number)
+    is ErrorModel.Server, ErrorModel.UnExpected -> getString(R.string.bazaarpay_error_server_connection_failure)
     else -> {
         if (errorModel == null || errorModel.message.isEmpty()) {
-            getString(R.string.error_server_connection_failure)
+            getString(R.string.bazaarpay_error_server_connection_failure)
         } else {
             errorModel.message
         }

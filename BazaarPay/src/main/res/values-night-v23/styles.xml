@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <public name="bp_public_color_night_v23" type="color"/>
     <style name="Theme.V23.Bazaar.Primary" parent="Theme.Bazaar">
         <item name="android:windowLightStatusBar">false</item>
-        <item name="android:colorPrimaryDark">@color/grey_20</item>
+        <item name="android:colorPrimaryDark">@color/bazaarpay_grey_20</item>
     </style>
 
     <style name="Theme.Bazaar.Primary" parent="Theme.V23.Bazaar.Primary" />

@@ -2,13 +2,13 @@
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:state_enabled="true">
         <shape android:shape="rectangle">
-            <solid android:color="@color/app_brand_primary" />
+            <solid android:color="@color/bazaarpay_app_brand_primary" />
             <corners android:radius="22dp" />
         </shape>
     </item>
     <item android:state_enabled="false">
         <shape android:shape="rectangle">
-            <solid android:color="@color/color_disable" />
+            <solid android:color="@color/bazaarpay_color_disable" />
             <corners android:radius="22dp" />
         </shape>
     </item>

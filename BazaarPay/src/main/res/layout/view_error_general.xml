@@ -9,8 +9,8 @@
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/icon"
-        android:layout_width="@dimen/central_image_size"
-        android:layout_height="@dimen/central_image_size"
+        android:layout_width="@dimen/bazaarpay_central_image_size"
+        android:layout_height="@dimen/bazaarpay_central_image_size"
         app:srcCompat="@drawable/ic_error_outline_icon_primary_24dp_old" />
 
     <androidx.appcompat.widget.AppCompatTextView
@@ -18,16 +18,16 @@
         style="@style/Bazaar.Text.Body1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/default_margin_triple"
-        android:text="@string/error_server_connection_failure"
-        android:textColor="@color/text_primary" />
+        android:layout_marginTop="@dimen/bazaarpay_default_margin_triple"
+        android:text="@string/bazaarpay_error_server_connection_failure"
+        android:textColor="@color/bazaarpay_text_primary" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/retryButton"
         style="@style/Bazaar.Button.Flat.Primary.SmallText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/default_margin_triple"
-        android:text="@string/try_again" />
+        android:layout_marginTop="@dimen/bazaarpay_default_margin_triple"
+        android:text="@string/bazaarpay_try_again" />
 
 </merge>

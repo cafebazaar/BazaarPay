@@ -30,11 +30,11 @@ fun String.localizeNumber(context: Context): String =
         val result = StringBuilder()
         var phone = this
         while (phone.startsWith("0")) {
-            result.append(context.getString(R.string.number_placeholder, 0))
+            result.append(context.getString(R.string.bazaarpay_number_placeholder, 0))
             phone = phone.substring(1)
         }
 
-        result.append(context.getString(R.string.number_placeholder, this.toLong()))
+        result.append(context.getString(R.string.bazaarpay_number_placeholder, this.toLong()))
         result.toString()
     } catch (e: Exception) {
         this

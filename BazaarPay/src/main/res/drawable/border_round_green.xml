@@ -4,6 +4,6 @@
     <corners android:radius="8dp" />
     <stroke
         android:width="2dp"
-        android:color="@color/app_brand_primary" />
-    <solid android:color="@color/surface_color_0" />
+        android:color="@color/bazaarpay_app_brand_primary" />
+    <solid android:color="@color/bazaarpay_surface_color_0" />
 </shape>

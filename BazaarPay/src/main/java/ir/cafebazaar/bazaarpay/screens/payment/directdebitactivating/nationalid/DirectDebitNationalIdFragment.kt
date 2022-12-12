@@ -68,7 +68,7 @@ internal class DirectDebitNationalIdFragment : Fragment() {
     private fun showError() {
         binding.nationalIdInput.apply {
             isErrorEnabled = true
-            error = context.getString(R.string.invalid_national_id_error)
+            error = context.getString(R.string.bazaarpay_invalid_national_id_error)
         }
     }
 

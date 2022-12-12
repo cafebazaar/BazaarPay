@@ -12,7 +12,7 @@
             android:exported="true"
             android:launchMode="singleTask"
             android:theme="@style/Theme.Bazaar.Primary.Transparent"
-            android:label="@string/title_activity_bazaar_pay"
+            android:label="@string/bazaarpay_title_activity_bazaar_pay"
             android:windowSoftInputMode="adjustResize" >
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />

@@ -204,12 +204,12 @@ internal class BazaarPayButton : LinearLayout {
             }
             ButtonStyle.OUTLINE -> {
                 createLayerList(
-                    ContextCompat.getColor(context, R.color.grey_10),
-                    ContextCompat.getColor(context, R.color.grey_40)
+                    ContextCompat.getColor(context, R.color.bazaarpay_grey_10),
+                    ContextCompat.getColor(context, R.color.bazaarpay_grey_40)
                 )
             }
             ButtonStyle.CONTAINED_GREY -> {
-                createLayerList(ContextCompat.getColor(context, R.color.grey_20))
+                createLayerList(ContextCompat.getColor(context, R.color.bazaarpay_grey_20))
             }
             ButtonStyle.TRANSPARENT -> {
                 createLayerList(Color.TRANSPARENT)
@@ -270,7 +270,7 @@ internal class BazaarPayButton : LinearLayout {
         }
         val disabledStateDrawable = GradientDrawable().apply {
             cornerRadius = buttonCornerRadius
-            val disableColor = ContextCompat.getColor(context, R.color.grey_20)
+            val disableColor = ContextCompat.getColor(context, R.color.bazaarpay_grey_20)
             colors = intArrayOf(disableColor, disableColor, disableColor)
         }
         return StateListDrawable().apply {
@@ -286,7 +286,7 @@ internal class BazaarPayButton : LinearLayout {
     }
 
     private fun createButtonRipple(@ColorInt color: Int): Drawable {
-        val rippleColor = ContextCompat.getColor(context, R.color.ripple_color)
+        val rippleColor = ContextCompat.getColor(context, R.color.bazaarpay_ripple_color)
         return RippleDrawable(
             ColorStateList.valueOf(rippleColor), null, getRippleMask(color)
         )
@@ -328,10 +328,10 @@ internal class BazaarPayButton : LinearLayout {
             ButtonContentColorType.GREY -> {
                 when (type) {
                     ButtonType.NEUTRAL -> {
-                        R.color.grey_90
+                        R.color.bazaarpay_grey_90
                     }
                     else -> {
-                        R.color.grey_10
+                        R.color.bazaarpay_grey_10
                     }
                 }
             }
@@ -344,7 +344,7 @@ internal class BazaarPayButton : LinearLayout {
             ),
             intArrayOf(
                 ContextCompat.getColor(context, enabledStateColorRes),
-                ContextCompat.getColor(context, R.color.grey_60)
+                ContextCompat.getColor(context, R.color.bazaarpay_grey_60)
             )
         )
     }

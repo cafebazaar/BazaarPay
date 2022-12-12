@@ -32,9 +32,9 @@ internal class DynamicCreditOptionViewHolder(
                 ContextCompat.getColor(
                     subtitle.context,
                     if (creditOption.isSelected) {
-                        R.color.app_brand_primary
+                        R.color.bazaarpay_app_brand_primary
                     } else {
-                        R.color.text_secondary
+                        R.color.bazaarpay_text_secondary
                     }
                 )
             )

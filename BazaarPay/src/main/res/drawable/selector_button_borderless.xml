@@ -2,11 +2,11 @@
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:state_pressed="true">
         <shape android:shape="rectangle">
-            <solid android:color="@color/ripple_color" />
+            <solid android:color="@color/bazaarpay_ripple_color" />
             <corners android:radius="28dp" />
         </shape>
     </item>
     <item>
-        <color android:color="@color/transparent" />
+        <color android:color="@color/bazaarpay_transparent" />
     </item>
 </selector>

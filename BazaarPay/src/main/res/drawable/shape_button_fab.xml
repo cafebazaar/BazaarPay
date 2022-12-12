@@ -4,6 +4,6 @@
 
     <corners android:radius="40dp" />
 
-    <solid android:color="@color/app_brand_primary" />
+    <solid android:color="@color/bazaarpay_app_brand_primary" />
 
 </shape>

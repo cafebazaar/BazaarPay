@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:background="@color/black_hint">
+    tools:background="@color/bazaarpay_black_hint">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/contentContainer"
@@ -19,12 +19,12 @@
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/paymentOptionTitle"
             style="@style/Bazaar.Text.Headline2"
-            android:textColor="@color/text_primary"
+            android:textColor="@color/bazaarpay_text_primary"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:padding="@dimen/default_margin_double"
-            android:text="@string/postpaid_terms_title"
+            android:padding="@dimen/bazaarpay_default_margin_double"
+            android:text="@string/bazaarpay_postpaid_terms_title"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -32,7 +32,7 @@
         <ir.cafebazaar.bazaarpay.widget.RTLImageView
             android:id="@+id/backButton"
             style="@style/Bazaar.Image.Toolbar"
-            android:layout_marginStart="@dimen/default_margin_double"
+            android:layout_marginStart="@dimen/bazaarpay_default_margin_double"
             app:layout_constraintBottom_toTopOf="@id/divider"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -51,20 +51,20 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:clipToPadding="false"
-            android:padding="@dimen/default_margin_double_half"
+            android:padding="@dimen/bazaarpay_default_margin_double_half"
             app:layout_constraintBottom_toTopOf="@id/commitButtonDivider"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHeight_max="@dimen/peek_height"
+            app:layout_constraintHeight_max="@dimen/bazaarpay_peek_height"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/divider">
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/bottomSheetMessage"
                 style="@style/Bazaar.Text.Body2"
-                android:textColor="@color/text_secondary"
+                android:textColor="@color/bazaarpay_text_secondary"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/postpaid_terms" />
+                android:text="@string/bazaarpay_postpaid_terms" />
         </ScrollView>
 
         <View
@@ -81,13 +81,13 @@
             app:bazaarpayButtonType="app"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/default_margin_double"
+            android:layout_margin="@dimen/bazaarpay_default_margin_double"
             android:minHeight="48dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/commitButtonDivider"
-            app:text="@string/accept_postpaid_terms" />
+            app:text="@string/bazaarpay_accept_postpaid_terms" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

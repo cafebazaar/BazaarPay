@@ -3,8 +3,8 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:shape="rectangle">
     <corners
-        android:bottomLeftRadius="@dimen/default_corner_radius_double"
-        android:bottomRightRadius="@dimen/default_corner_radius_double" />
+        android:bottomLeftRadius="@dimen/bazaarpay_default_corner_radius_double"
+        android:bottomRightRadius="@dimen/bazaarpay_default_corner_radius_double" />
 
-    <solid android:color="@color/grey_30" />
+    <solid android:color="@color/bazaarpay_grey_30" />
 </shape>

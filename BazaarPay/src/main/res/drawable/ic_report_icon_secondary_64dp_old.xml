@@ -2,7 +2,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:width="64dp"
     android:height="64dp"
-    android:tint="@color/icon_secondary_color"
+    android:tint="@color/bazaarpay_icon_secondary_color"
     android:viewportWidth="24"
     android:viewportHeight="24">
     <path

@@ -1,48 +1,37 @@
 <resources>
-    <public name="bp_public_dimen" type="dimen"/>
-    <dimen name="app_info_button_size">48dp</dimen>
-    <dimen name="badge_height">24sp</dimen>
-    <dimen name="badge_tag_corner_radius">20dp</dimen>
-    <dimen name="small_font_size">14sp</dimen>
-    <dimen name="title2_font_size">18sp</dimen>
-    <!-- buttons  -->
-    <dimen name="primary_button_height">44dp</dimen>
-    <dimen name="secondary_button_min_width">90dp</dimen>
-    <dimen name="cancel_button_min_width">100dp</dimen>
-    <dimen name="secondary_button_height">36dp</dimen>
-    <dimen name="icon_button_padding">10dp</dimen>
-    <dimen name="primary_button_icon_size">14dp</dimen>
-    <dimen name="preview_button_icon_size">20dp</dimen>
-    <dimen name="player_button_width">100dp</dimen>
-    <dimen name="small_button_width">90dp</dimen>
-    <dimen name="medium_button_width">105dp</dimen>
+    <dimen name="bazaarpay_badge_tag_corner_radius">20dp</dimen>
+    <dimen name="bazaarpay_small_font_size">14sp</dimen>
+    <dimen name="bazaarpay_title2_font_size">18sp</dimen>
 
-    <dimen name="match_constraint">0dp</dimen>
+    <dimen name="bazaarpay_small_button_width">90dp</dimen>
+    <dimen name="bazaarpay_medium_button_width">105dp</dimen>
 
-    <dimen name="default_margin">8dp</dimen>
-    <dimen name="default_margin_quarter">2dp</dimen>
-    <dimen name="default_margin_octant">1dp</dimen>
-    <dimen name="default_margin_half">4dp</dimen>
-    <dimen name="default_margin_half_quarter">6dp</dimen>
-    <dimen name="default_margin_double">16dp</dimen>
-    <dimen name="default_margin_double_half">20dp</dimen>
-    <dimen name="default_margin_double_half_quarter">22dp</dimen>
-    <dimen name="default_margin_triple">24dp</dimen>
-    <dimen name="default_margin_quadruple">32dp</dimen>
-    <dimen name="default_margin_quintuple">40dp</dimen>
-    <dimen name="default_margin_duodecuple">96dp</dimen>
-    <dimen name="default_margin_one_half">12dp</dimen>
-    <dimen name="default_components_height">56dp</dimen>
-    <dimen name="default_button_height">48dp</dimen>
-    <dimen name="default_corner_radius_double">8dp</dimen>
-    <dimen name="loading_size">48dp</dimen>
-    <dimen name="payment_error_view_padding">72dp</dimen>
-    <dimen name="round_corner_radius">20dp</dimen>
-    <dimen name="central_image_size">64dp</dimen>
+    <dimen name="bazaarpay_match_constraint">0dp</dimen>
 
-    <dimen name="button_video_play_min_width">110dp</dimen>
-    <dimen name="actionBarSize">56dp</dimen>
-    <dimen name="image_rounded_corner">8dp</dimen>
-    <dimen name="peek_height">300dp</dimen>
+    <dimen name="bazaarpay_default_margin">8dp</dimen>
+    <dimen name="bazaarpay_default_margin_quarter">2dp</dimen>
+    <dimen name="bazaarpay_default_margin_octant">1dp</dimen>
+    <dimen name="bazaarpay_default_margin_half">4dp</dimen>
+    <dimen name="bazaarpay_default_margin_half_quarter">6dp</dimen>
+    <dimen name="bazaarpay_default_margin_double">16dp</dimen>
+    <dimen name="bazaarpay_default_margin_double_half">20dp</dimen>
+    <dimen name="bazaarpay_default_margin_double_half_quarter">22dp</dimen>
+    <dimen name="bazaarpay_default_margin_triple">24dp</dimen>
+    <dimen name="bazaarpay_default_margin_quadruple">32dp</dimen>
+    <dimen name="bazaarpay_default_margin_quintuple">40dp</dimen>
+    <dimen name="bazaarpay_default_margin_duodecuple">96dp</dimen>
+    <dimen name="bazaarpay_default_margin_one_half">12dp</dimen>
+    <dimen name="bazaarpay_default_components_height">56dp</dimen>
+    <dimen name="bazaarpay_default_button_height">48dp</dimen>
+    <dimen name="bazaarpay_default_corner_radius_double">8dp</dimen>
+    <dimen name="bazaarpay_loading_size">48dp</dimen>
+    <dimen name="bazaarpay_payment_error_view_padding">72dp</dimen>
+    <dimen name="bazaarpay_round_corner_radius">20dp</dimen>
+    <dimen name="bazaarpay_central_image_size">64dp</dimen>
+
+    <dimen name="bazaarpay_button_video_play_min_width">110dp</dimen>
+    <dimen name="bazaarpay_actionBarSize">56dp</dimen>
+    <dimen name="bazaarpay_image_rounded_corner">8dp</dimen>
+    <dimen name="bazaarpay_peek_height">300dp</dimen>
 
 </resources>

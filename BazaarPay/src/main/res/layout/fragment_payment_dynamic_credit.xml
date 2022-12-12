@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:background="@color/black_hint">
+    tools:background="@color/bazaarpay_black_hint">
 
     <androidx.core.widget.NestedScrollView
         android:id="@+id/creditScrollView"
@@ -25,9 +25,9 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:padding="@dimen/default_margin_double"
-                android:text="@string/increase_balance"
-                android:textColor="@color/text_primary"
+                android:padding="@dimen/bazaarpay_default_margin_double"
+                android:text="@string/bazaarpay_increase_balance"
+                android:textColor="@color/bazaarpay_text_primary"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -35,7 +35,7 @@
             <ir.cafebazaar.bazaarpay.widget.RTLImageView
                 android:id="@+id/dynamicCreditBack"
                 style="@style/Bazaar.Image.Toolbar"
-                android:layout_marginStart="@dimen/default_margin_double"
+                android:layout_marginStart="@dimen/bazaarpay_default_margin_double"
                 app:layout_constraintBottom_toTopOf="@id/dynamicCreditTitleDivider"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -53,8 +53,8 @@
                 android:id="@+id/merchantInfo"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:paddingHorizontal="@dimen/default_margin_double"
-                android:paddingVertical="@dimen/default_margin"
+                android:paddingHorizontal="@dimen/bazaarpay_default_margin_double"
+                android:paddingVertical="@dimen/bazaarpay_default_margin"
                 app:layout_constraintBottom_toTopOf="@id/dynamicCreditBalance"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -64,8 +64,8 @@
                 android:id="@+id/dynamicCreditBalance"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/default_margin_double"
-                android:layout_marginTop="@dimen/default_margin_double"
+                android:layout_marginHorizontal="@dimen/bazaarpay_default_margin_double"
+                android:layout_marginTop="@dimen/bazaarpay_default_margin_double"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/merchantInfo" />
 
@@ -74,14 +74,14 @@
                 style="@style/Bazaar.Text.Caption"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/default_margin_double"
-                android:layout_marginTop="@dimen/default_margin_double"
+                android:layout_marginHorizontal="@dimen/bazaarpay_default_margin_double"
+                android:layout_marginTop="@dimen/bazaarpay_default_margin_double"
                 android:background="@drawable/shape_round_gray"
-                android:drawablePadding="@dimen/default_margin_half"
+                android:drawablePadding="@dimen/bazaarpay_default_margin_half"
                 android:gravity="center_vertical"
-                android:paddingHorizontal="@dimen/default_margin"
-                android:paddingVertical="@dimen/default_margin_half_quarter"
-                android:textColor="@color/text_hint"
+                android:paddingHorizontal="@dimen/bazaarpay_default_margin"
+                android:paddingVertical="@dimen/bazaarpay_default_margin_half_quarter"
+                android:textColor="@color/bazaarpay_text_hint"
                 app:drawableStartCompat="@drawable/ic_info"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -93,10 +93,10 @@
                 style="@style/Bazaar.Text.Subtitle2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/default_margin_double"
-                android:layout_marginTop="@dimen/default_margin"
-                android:text="@string/select_enter_dynamic_credit_title"
-                android:textColor="@color/text_primary"
+                android:layout_marginStart="@dimen/bazaarpay_default_margin_double"
+                android:layout_marginTop="@dimen/bazaarpay_default_margin"
+                android:text="@string/bazaarpay_select_enter_dynamic_credit_title"
+                android:textColor="@color/bazaarpay_text_primary"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/dynamicCreditSubTitle" />
 
@@ -104,10 +104,10 @@
                 android:id="@+id/dynamicCreditRecyclerView"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/default_margin"
+                android:layout_marginTop="@dimen/bazaarpay_default_margin"
                 android:clipToPadding="false"
-                android:paddingStart="@dimen/default_margin_one_half"
-                android:paddingEnd="@dimen/default_margin_one_half"
+                android:paddingStart="@dimen/bazaarpay_default_margin_one_half"
+                android:paddingEnd="@dimen/bazaarpay_default_margin_one_half"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/dynamicCreditPayOrEnterTitle"
@@ -118,10 +118,10 @@
                 android:id="@+id/priceInputLayout"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/default_margin_double"
-                android:layout_marginTop="@dimen/default_margin_double"
-                android:layout_marginEnd="@dimen/default_margin_double"
-                android:hint="@string/dynamic_text_price_placeholder"
+                android:layout_marginStart="@dimen/bazaarpay_default_margin_double"
+                android:layout_marginTop="@dimen/bazaarpay_default_margin_double"
+                android:layout_marginEnd="@dimen/bazaarpay_default_margin_double"
+                android:hint="@string/bazaarpay_dynamic_text_price_placeholder"
                 android:theme="@style/Bazaar.TextInput"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -137,12 +137,12 @@
                     android:inputType="number"
                     android:longClickable="false"
                     android:maxLength="25"
-                    android:paddingStart="@dimen/default_margin"
-                    android:paddingTop="@dimen/default_margin_double"
-                    android:paddingEnd="@dimen/default_margin"
-                    android:paddingBottom="@dimen/default_margin_double"
+                    android:paddingStart="@dimen/bazaarpay_default_margin"
+                    android:paddingTop="@dimen/bazaarpay_default_margin_double"
+                    android:paddingEnd="@dimen/bazaarpay_default_margin"
+                    android:paddingBottom="@dimen/bazaarpay_default_margin_double"
                     android:singleLine="true"
-                    android:textColor="@color/text_primary"
+                    android:textColor="@color/bazaarpay_text_primary"
                     tools:text="۳۰۰۰ تومان" />
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -152,10 +152,10 @@
                 style="@style/Bazaar.Text.Caption"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/default_margin_double"
-                android:layout_marginTop="@dimen/default_margin_double"
-                android:layout_marginEnd="@dimen/default_margin_double"
-                android:textColor="@color/text_hint"
+                android:layout_marginStart="@dimen/bazaarpay_default_margin_double"
+                android:layout_marginTop="@dimen/bazaarpay_default_margin_double"
+                android:layout_marginEnd="@dimen/bazaarpay_default_margin_double"
+                android:textColor="@color/bazaarpay_text_hint"
                 app:layout_constraintBottom_toTopOf="@id/payButton"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -166,7 +166,7 @@
                 android:id="@+id/payButton"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/default_margin_double"
+                android:layout_margin="@dimen/bazaarpay_default_margin_double"
                 app:bazaarpayButtonTheme="contained"
                 app:bazaarpayButtonType="app"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -174,7 +174,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/dynamicCreditWarning"
                 app:sizeMode="large"
-                app:text="@string/pay"
+                app:text="@string/bazaarpay_pay"
                 tools:visibility="visible" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -190,10 +190,10 @@
         android:visibility="gone">
 
         <ir.cafebazaar.bazaarpay.widget.loading.SpinKitView
-            android:layout_width="@dimen/loading_size"
-            android:layout_height="@dimen/loading_size"
+            android:layout_width="@dimen/bazaarpay_loading_size"
+            android:layout_height="@dimen/bazaarpay_loading_size"
             android:layout_gravity="center"
-            android:layout_margin="@dimen/default_margin_quintuple" />
+            android:layout_margin="@dimen/bazaarpay_default_margin_quintuple" />
 
     </FrameLayout>
 
@@ -203,7 +203,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
         android:background="@drawable/shape_round_top_only"
-        android:paddingVertical="@dimen/payment_error_view_padding"
+        android:paddingVertical="@dimen/bazaarpay_payment_error_view_padding"
         android:visibility="gone" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

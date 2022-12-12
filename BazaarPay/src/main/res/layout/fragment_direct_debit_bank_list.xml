@@ -6,13 +6,13 @@
     android:id="@+id/recyclerCoordinator"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/surface_color_0">
+    android:background="@color/bazaarpay_surface_color_0">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appBarLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingHorizontal="@dimen/default_margin_double"
+        android:paddingHorizontal="@dimen/bazaarpay_default_margin_double"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -21,7 +21,7 @@
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/actionBarSize"
+            android:layout_height="@dimen/bazaarpay_actionBarSize"
             android:theme="@style/ThemeOverlay.MaterialComponents.ActionBar"
             app:popupTheme="@style/ThemeOverlay.MaterialComponents.Light">
 
@@ -41,11 +41,11 @@
                     style="@style/Bazaar.Text.Body1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/default_margin_one_half"
+                    android:layout_marginStart="@dimen/bazaarpay_default_margin_one_half"
                     android:gravity="center_vertical"
                     android:maxLines="1"
                     android:singleLine="true"
-                    android:textColor="@color/text_primary" />
+                    android:textColor="@color/bazaarpay_text_primary" />
             </LinearLayout>
 
         </androidx.appcompat.widget.Toolbar>
@@ -55,7 +55,7 @@
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginBottom="@dimen/default_margin_double"
+        android:layout_marginBottom="@dimen/bazaarpay_default_margin_double"
         app:layout_constraintBottom_toTopOf="@id/actionButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -68,8 +68,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
-        android:layout_marginHorizontal="@dimen/default_margin_double"
-        android:layout_marginBottom="@dimen/default_margin_double"
+        android:layout_marginHorizontal="@dimen/bazaarpay_default_margin_double"
+        android:layout_marginBottom="@dimen/bazaarpay_default_margin_double"
         app:bazaarpayButtonTheme="contained"
         app:bazaarpayButtonType="app"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -78,7 +78,7 @@
         app:layout_dodgeInsetEdges="bottom"
         app:textColor="@color/selector_primary_button"
         app:sizeMode="large"
-        app:text="@string/enter_bank_page" />
+        app:text="@string/bazaarpay_enter_bank_page" />
 
     <ir.cafebazaar.bazaarpay.widget.loading.SpinKitView
         android:id="@+id/loading"

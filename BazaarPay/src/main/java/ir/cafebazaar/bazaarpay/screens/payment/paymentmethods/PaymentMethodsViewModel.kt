@@ -104,19 +104,19 @@ internal class PaymentMethodsViewModel : ViewModel() {
     private fun getPayButtonTextId(type: PaymentMethodsType): Int {
         return when (type) {
             PaymentMethodsType.INCREASE_BALANCE -> {
-                R.string.increase_balance
+                R.string.bazaarpay_increase_balance
             }
             PaymentMethodsType.DIRECT_DEBIT_ACTIVATION -> {
-                R.string.directdebit_signup
+                R.string.bazaarpay_directdebit_signup
             }
             PaymentMethodsType.POSTPAID_CREDIT_ACTIVATION -> {
-                R.string.postpaid_activation
+                R.string.bazaarpay_postpaid_activation
             }
             PaymentMethodsType.POSTPAID_CREDIT -> {
-                R.string.credit_pay
+                R.string.bazaarpay_credit_pay
             }
             else -> {
-                R.string.pay
+                R.string.bazaarpay_pay
             }
         }
     }

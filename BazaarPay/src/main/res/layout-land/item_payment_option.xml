@@ -6,7 +6,7 @@
     style="@style/Bazaar.BottomSheet.Round"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_marginStart="@dimen/default_margin"
+    android:layout_marginStart="@dimen/bazaarpay_default_margin"
     android:paddingTop="0dp"
     android:orientation="vertical">
 
@@ -17,14 +17,14 @@
         android:gravity="center_vertical"
         android:minHeight="56dp"
         android:orientation="horizontal"
-        android:paddingHorizontal="@dimen/default_margin_one_half"
-        android:paddingVertical="@dimen/default_margin">
+        android:paddingHorizontal="@dimen/bazaarpay_default_margin_one_half"
+        android:paddingVertical="@dimen/bazaarpay_default_margin">
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/icon"
             android:layout_width="32dp"
             android:layout_height="32dp"
-            android:layout_marginEnd="@dimen/default_margin_one_half"
+            android:layout_marginEnd="@dimen/bazaarpay_default_margin_one_half"
             android:scaleType="centerCrop"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -43,7 +43,7 @@
                 style="@style/Bazaar.Text.Caption"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="@color/text_hint"
+                android:textColor="@color/bazaarpay_text_hint"
                 tools:text="کلیه کارت‌های شتاب" />
 
             <androidx.appcompat.widget.AppCompatTextView
@@ -51,7 +51,7 @@
                 style="@style/Bazaar.Text.Body2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="@color/text_primary"
+                android:textColor="@color/bazaarpay_text_primary"
                 tools:text="کلیه کارت‌تاب" />
         </LinearLayout>
     </LinearLayout>

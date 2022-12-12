@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ripple
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:color="@color/app_brand_secondary">
+    android:color="@color/bazaarpay_app_brand_secondary">
     <item
         android:id="@android:id/mask"
         android:drawable="@drawable/shape_button_flat_secondary_ripple" />

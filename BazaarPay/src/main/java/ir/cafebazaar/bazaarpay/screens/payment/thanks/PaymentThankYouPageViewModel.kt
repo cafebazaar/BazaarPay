@@ -1,12 +1,10 @@
 package ir.cafebazaar.bazaarpay.screens.payment.thanks
 
-import android.content.Context
 import android.os.CountDownTimer
 import android.text.format.DateUtils.SECOND_IN_MILLIS
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import ir.cafebazaar.bazaarpay.R
-import ir.cafebazaar.bazaarpay.ServiceLocator
 import ir.cafebazaar.bazaarpay.models.Resource
 import ir.cafebazaar.bazaarpay.utils.SingleLiveEvent
 
@@ -43,12 +41,12 @@ internal class PaymentThankYouPageViewModel : ViewModel() {
                 _viewStateLiveData.value = Resource.loaded(
                     data = PaymentThankYouPageSuccessModel(
                         successButtonTextModel = SuccessButtonTextModel(
-                            successButtonTextId = R.string.commit_with_countdown,
+                            successButtonTextId = R.string.bazaarpay_commit_with_countdown,
                             successMessageCountDown = successMessageText
                         ),
                         messageTextModel = PaymentThankYouPageSuccessMessageModel(
                             argMessage = args.message,
-                            defaultMessageId = R.string.payment_done_message
+                            defaultMessageId = R.string.bazaarpay_payment_done_message
                         )
                     )
                 )

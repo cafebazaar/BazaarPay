@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <public name="bazaarpay_app_name" type="string"/>
-    <public name="bazaarpay_public_string" type="string"/>
-    <public name="bazaarpay_public_color" type="color"/>
-</resources>

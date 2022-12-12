@@ -98,7 +98,7 @@ internal class VerifyOtpFragment : Fragment() {
         }
 
         headerBinding.verificationMessageTextView.text = getString(
-            R.string.waiting_for_verification_sms,
+            R.string.bazaarpay_waiting_for_verification_sms,
             phoneNumber.localizeNumber(requireContext())
         )
 
@@ -269,7 +269,7 @@ internal class VerifyOtpFragment : Fragment() {
 
     private fun onTick(waitingTime: Long) {
         val untilFinishTimeText = secondsToStringTime(waitingTime)
-        binding.resendText.text = getString(R.string.resend_after, untilFinishTimeText)
+        binding.resendText.text = getString(R.string.bazaarpay_resend_after, untilFinishTimeText)
     }
 
     private fun onCountDownFinished() {

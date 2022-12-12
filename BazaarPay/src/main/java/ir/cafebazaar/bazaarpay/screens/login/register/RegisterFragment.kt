@@ -119,7 +119,7 @@ internal class RegisterFragment : Fragment() {
 
     private fun setPrivacyAndTerms() {
         binding.privacyAndTerms.run {
-            text = getString(R.string.privacy_and_terms_login).fromHtml()
+            text = getString(R.string.bazaarpay_privacy_and_terms_login).fromHtml()
             movementMethod = LinkMovementMethod.getInstance()
         }
     }
@@ -180,7 +180,7 @@ internal class RegisterFragment : Fragment() {
                 }
                 ResourceState.Error -> {
                     val message = if (resource.failure is InvalidPhoneNumberException) {
-                        getString(R.string.wrong_phone_number)
+                        getString(R.string.bazaarpay_wrong_phone_number)
                     } else {
                         requireContext().getReadableErrorMessage(resource.failure)
                     }

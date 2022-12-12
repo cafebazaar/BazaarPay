@@ -34,7 +34,7 @@ public class SpinKitView extends ProgressBar {
             TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.SpinKitView);
             mColor = ContextCompat.getColor(
                 context,
-                a.getResourceId(R.styleable.SpinKitView_loadingColor, R.color.color_primary)
+                a.getResourceId(R.styleable.SpinKitView_loadingColor, R.color.bazaarpay_color_primary)
             );
             a.recycle();
         }

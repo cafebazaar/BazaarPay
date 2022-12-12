@@ -2,10 +2,10 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:shape="rectangle">
     <corners
-        android:topLeftRadius="@dimen/default_corner_radius_double"
-        android:topRightRadius="@dimen/default_corner_radius_double" />
+        android:topLeftRadius="@dimen/bazaarpay_default_corner_radius_double"
+        android:topRightRadius="@dimen/bazaarpay_default_corner_radius_double" />
     <stroke
         android:width="2dp"
-        android:color="@color/app_brand_primary" />
-    <solid android:color="@color/surface_color_0" />
+        android:color="@color/bazaarpay_app_brand_primary" />
+    <solid android:color="@color/bazaarpay_surface_color_0" />
 </shape>

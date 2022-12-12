@@ -17,18 +17,18 @@
         style="@style/Bazaar.Text.Body1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/default_margin_triple"
-        android:layout_marginTop="@dimen/default_margin_double"
+        android:layout_marginHorizontal="@dimen/bazaarpay_default_margin_triple"
+        android:layout_marginTop="@dimen/bazaarpay_default_margin_double"
         android:gravity="center"
-        android:text="@string/title_force_login"
-        android:textColor="@color/text_primary" />
+        android:text="@string/bazaarpay_title_force_login"
+        android:textColor="@color/bazaarpay_text_primary" />
 
     <ir.cafebazaar.bazaarpay.widget.button.BazaarPayButton
         android:id="@+id/loginButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/default_margin_double"
+        android:layout_marginTop="@dimen/bazaarpay_default_margin_double"
         app:bazaarpayButtonTheme="contained"
         app:bazaarpayButtonType="app"
-        app:text="@string/login" />
+        app:text="@string/bazaarpay_login" />
 </merge>

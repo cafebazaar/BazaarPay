@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <shape xmlns:android="http://schemas.android.com/apk/res/android">
-    <solid android:color="@color/surface_color_0"/>
+    <solid android:color="@color/bazaarpay_surface_color_0"/>
 
     <padding android:left="1dp"
         android:top="1dp"

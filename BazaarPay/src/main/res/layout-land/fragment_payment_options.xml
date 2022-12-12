@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:background="@color/black_hint">
+    tools:background="@color/bazaarpay_black_hint">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/contentContainer"
@@ -22,9 +22,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:padding="@dimen/default_margin_double"
-            android:text="@string/payment_option_title"
-            android:textColor="@color/text_primary"
+            android:padding="@dimen/bazaarpay_default_margin_double"
+            android:text="@string/bazaarpay_payment_option_title"
+            android:textColor="@color/bazaarpay_text_primary"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -32,7 +32,7 @@
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/paymentOptionClose"
             style="@style/Bazaar.Image.Toolbar"
-            android:layout_marginEnd="@dimen/default_margin_double"
+            android:layout_marginEnd="@dimen/bazaarpay_default_margin_double"
             app:layout_constraintBottom_toTopOf="@id/paymentOptionTitleDivider"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -51,10 +51,10 @@
             style="@style/Bazaar.Text.Subtitle2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/default_margin_double"
-            android:layout_marginTop="@dimen/default_margin_one_half"
-            android:text="@string/select_payment_option"
-            android:textColor="@color/text_primary"
+            android:layout_marginStart="@dimen/bazaarpay_default_margin_double"
+            android:layout_marginTop="@dimen/bazaarpay_default_margin_one_half"
+            android:text="@string/bazaarpay_select_payment_option"
+            android:textColor="@color/bazaarpay_text_primary"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/paymentOptionTitleDivider" />
 
@@ -76,13 +76,13 @@
             style="@style/Bazaar.Text.Caption"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/default_margin_double"
+            android:layout_marginHorizontal="@dimen/bazaarpay_default_margin_double"
             android:background="@drawable/shape_round_gray"
-            android:drawablePadding="@dimen/default_margin_half_quarter"
+            android:drawablePadding="@dimen/bazaarpay_default_margin_half_quarter"
             android:gravity="center_vertical"
-            android:paddingHorizontal="@dimen/default_margin"
-            android:paddingVertical="@dimen/default_margin_half_quarter"
-            android:textColor="@color/text_hint"
+            android:paddingHorizontal="@dimen/bazaarpay_default_margin"
+            android:paddingVertical="@dimen/bazaarpay_default_margin_half_quarter"
+            android:textColor="@color/bazaarpay_text_hint"
             android:visibility="visible"
             app:drawableStartCompat="@drawable/ic_info"
             app:layout_constraintBottom_toTopOf="@id/viewMerchantInfo"
@@ -95,7 +95,7 @@
             android:id="@+id/paymentOptionBottomDivider"
             style="@style/Bazaar.HorizontalDivider"
             android:layout_width="0dp"
-            android:layout_marginTop="@dimen/default_margin_one_half"
+            android:layout_marginTop="@dimen/bazaarpay_default_margin_one_half"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/paymentOptionInfo" />
@@ -112,7 +112,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="end"
-            android:layout_margin="@dimen/default_margin_double"
+            android:layout_margin="@dimen/bazaarpay_default_margin_double"
             android:minHeight="48dp"
             app:bazaarpayButtonTheme="contained"
             app:bazaarpayButtonType="app"
@@ -121,7 +121,7 @@
             app:layout_constraintStart_toEndOf="@id/verticalGuideline"
             app:layout_constraintTop_toBottomOf="@id/paymentOptionBottomDivider"
             app:sizeMode="large"
-            app:text="@string/pay"
+            app:text="@string/bazaarpay_pay"
             tools:ignore="SpUsage"
             tools:visibility="visible" />
 
@@ -129,8 +129,8 @@
             android:id="@+id/viewMerchantInfo"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:paddingHorizontal="@dimen/default_margin_double"
-            android:paddingVertical="@dimen/default_margin"
+            android:paddingHorizontal="@dimen/bazaarpay_default_margin_double"
+            android:paddingVertical="@dimen/bazaarpay_default_margin"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@id/verticalGuideline"
             app:layout_constraintStart_toStartOf="parent"
@@ -149,10 +149,10 @@
         tools:visibility="gone">
 
         <ir.cafebazaar.bazaarpay.widget.loading.SpinKitView
-            android:layout_width="@dimen/loading_size"
-            android:layout_height="@dimen/loading_size"
+            android:layout_width="@dimen/bazaarpay_loading_size"
+            android:layout_height="@dimen/bazaarpay_loading_size"
             android:layout_gravity="center"
-            android:layout_margin="@dimen/default_margin_quintuple" />
+            android:layout_margin="@dimen/bazaarpay_default_margin_quintuple" />
 
     </FrameLayout>
 
@@ -162,7 +162,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
         android:background="@drawable/shape_round_top_only"
-        android:paddingVertical="@dimen/payment_error_view_padding"
+        android:paddingVertical="@dimen/bazaarpay_payment_error_view_padding"
         android:visibility="gone" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

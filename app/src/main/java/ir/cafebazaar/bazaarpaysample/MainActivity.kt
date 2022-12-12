@@ -15,11 +15,11 @@ class MainActivity : AppCompatActivity() {
         this,
         {
             binding.result.text = "OK!"
-            binding.result.setTextColor(ContextCompat.getColor(this, R.color.green))
+            binding.result.setTextColor(ContextCompat.getColor(this, R.color.bazaarpay_app_brand_primary))
         },
         {
             binding.result.text = "CANCEL!"
-            binding.result.setTextColor(ContextCompat.getColor(this, R.color.red_notif))
+            binding.result.setTextColor(ContextCompat.getColor(this, R.color.bazaarpay_error_primary))
         }
     )
 

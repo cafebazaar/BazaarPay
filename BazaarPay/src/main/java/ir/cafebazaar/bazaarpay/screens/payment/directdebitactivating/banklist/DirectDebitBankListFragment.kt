@@ -48,7 +48,7 @@ internal class DirectDebitBankListFragment : Fragment() {
         _binding = FragmentDirectDebitBankListBinding.bind(view)
         super.onViewCreated(view, savedInstanceState)
         with(binding) {
-            titleTextView.text = getString(R.string.direct_debit_bank_list)
+            titleTextView.text = getString(R.string.bazaarpay_direct_debit_bank_list)
             backButton.setSafeOnClickListener {
                 findNavController().popBackStack()
             }

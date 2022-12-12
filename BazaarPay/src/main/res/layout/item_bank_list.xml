@@ -6,9 +6,9 @@
     android:id="@+id/root"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginHorizontal="@dimen/default_margin_double"
-    android:layout_marginTop="@dimen/default_margin"
-    android:padding="@dimen/default_margin_one_half">
+    android:layout_marginHorizontal="@dimen/bazaarpay_default_margin_double"
+    android:layout_marginTop="@dimen/bazaarpay_default_margin"
+    android:padding="@dimen/bazaarpay_default_margin_one_half">
 
     <androidx.appcompat.widget.AppCompatRadioButton
         android:id="@+id/radioButton"
@@ -25,7 +25,7 @@
         android:id="@+id/iconImageView"
         android:layout_width="32dp"
         android:layout_height="32dp"
-        android:layout_marginStart="@dimen/default_margin_one_half"
+        android:layout_marginStart="@dimen/bazaarpay_default_margin_one_half"
         app:layout_constraintStart_toEndOf="@id/radioButton"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -34,8 +34,8 @@
         style="@style/Bazaar.Text.Subtitle2"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/default_margin"
-        android:textColor="@color/text_primary"
+        android:layout_marginStart="@dimen/bazaarpay_default_margin"
+        android:textColor="@color/bazaarpay_text_primary"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/iconImageView"
         app:layout_constraintTop_toTopOf="parent"
@@ -46,10 +46,10 @@
         style="@style/Bazaar.Text.Caption"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/default_margin_half"
+        android:layout_marginTop="@dimen/bazaarpay_default_margin_half"
         android:ellipsize="end"
         android:maxLines="1"
-        android:textColor="@color/text_hint"
+        android:textColor="@color/bazaarpay_text_hint"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@id/iconImageView"
         app:layout_constraintTop_toBottomOf="@id/iconImageView"

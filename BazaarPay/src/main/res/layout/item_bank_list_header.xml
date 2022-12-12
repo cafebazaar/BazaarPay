@@ -4,30 +4,30 @@
     android:id="@+id/root"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginHorizontal="@dimen/default_margin_double"
-    android:layout_marginTop="@dimen/default_margin"
+    android:layout_marginHorizontal="@dimen/bazaarpay_default_margin_double"
+    android:layout_marginTop="@dimen/bazaarpay_default_margin"
     android:orientation="vertical">
 
     <androidx.appcompat.widget.AppCompatTextView
         style="@style/Bazaar.Text.Caption"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/bank_list_header_1"
-        android:textColor="@color/text_hint" />
+        android:text="@string/bazaarpay_bank_list_header_1"
+        android:textColor="@color/bazaarpay_text_hint" />
 
     <androidx.appcompat.widget.AppCompatTextView
         style="@style/Bazaar.Text.Caption"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/default_margin_half"
-        android:text="@string/bank_list_header_2"
-        android:textColor="@color/text_hint" />
+        android:layout_marginTop="@dimen/bazaarpay_default_margin_half"
+        android:text="@string/bazaarpay_bank_list_header_2"
+        android:textColor="@color/bazaarpay_text_hint" />
 
     <androidx.appcompat.widget.AppCompatTextView
         style="@style/Bazaar.Text.Subtitle2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/default_margin"
-        android:text="@string/header_select_bank_title"
-        android:textColor="@color/text_hint" />
+        android:layout_marginTop="@dimen/bazaarpay_default_margin"
+        android:text="@string/bazaarpay_header_select_bank_title"
+        android:textColor="@color/bazaarpay_text_hint" />
 </LinearLayout>

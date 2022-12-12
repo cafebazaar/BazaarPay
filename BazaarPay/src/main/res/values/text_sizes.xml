@@ -1,16 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <public name="bp_public_text_size" type="dimen"/>
-    <dimen name="title_large">48sp</dimen>
-    <dimen name="title_medium">34sp</dimen>
-    <dimen name="title_small">24sp</dimen>
-    <dimen name="headline1">20sp</dimen>
-    <dimen name="headline2">18sp</dimen>
-    <dimen name="subtitle1">16sp</dimen>
-    <dimen name="subtitle2">14sp</dimen>
-    <dimen name="body1">16sp</dimen>
-    <dimen name="body2">14sp</dimen>
-    <dimen name="button">14sp</dimen>
-    <dimen name="caption">12sp</dimen>
-    <dimen name="overline">10sp</dimen>
+    <dimen name="bazaarpay_title_large">48sp</dimen>
+    <dimen name="bazaarpay_title_medium">34sp</dimen>
+    <dimen name="bazaarpay_title_small">24sp</dimen>
+    <dimen name="bazaarpay_headline1">20sp</dimen>
+    <dimen name="bazaarpay_headline2">18sp</dimen>
+    <dimen name="bazaarpay_subtitle1">16sp</dimen>
+    <dimen name="bazaarpay_subtitle2">14sp</dimen>
+    <dimen name="bazaarpay_body1">16sp</dimen>
+    <dimen name="bazaarpay_body2">14sp</dimen>
+    <dimen name="bazaarpay_button">14sp</dimen>
+    <dimen name="bazaarpay_caption">12sp</dimen>
+    <dimen name="bazaarpay_overline">10sp</dimen>
 </resources>

@@ -2,7 +2,7 @@
 <shape
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:shape="rectangle">
-    <corners android:radius="@dimen/default_corner_radius_double" />
+    <corners android:radius="@dimen/bazaarpay_default_corner_radius_double" />
 
-    <solid android:color="@color/grey_30" />
+    <solid android:color="@color/bazaarpay_grey_30" />
 </shape>
