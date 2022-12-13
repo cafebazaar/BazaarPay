@@ -196,7 +196,10 @@ internal class VerifyOtpViewModel : ViewModel() {
         }
     }
 
-    fun onSmsMessage(oneTimeCode: String) {
+    fun onSmsMessage(oneTimeSMSMessage: String) {
+        val oneTimeCode = oneTimeSMSMessage.filter {
+            it.isDigit()
+        }.take(4)
         _verificationCodeLiveData.value = oneTimeCode
     }
 

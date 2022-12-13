@@ -311,11 +311,8 @@ internal class VerifyOtpFragment : Fragment() {
             SMS_CONSENT_REQUEST ->
                 if (resultCode == Activity.RESULT_OK && data != null) {
                     val message = data.getStringExtra(SmsRetriever.EXTRA_SMS_MESSAGE)
-                    message?.substring(
-                        OTP_TOKEN_START_POSITION,
-                        OTP_TOKEN_END_POSITION
-                    )?.also { otp ->
-                        viewModel.onSmsMessage(otp)
+                    message?.let {
+                        viewModel.onSmsMessage(it)
                     }
                 }
         }
