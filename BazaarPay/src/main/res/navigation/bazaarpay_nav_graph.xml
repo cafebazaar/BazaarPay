@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/nav_graph"
+    android:id="@+id/bazaarpay_nav_graph"
     app:startDestination="@id/startPaymentFragment">
 
     <action android:id="@+id/open_signin"
