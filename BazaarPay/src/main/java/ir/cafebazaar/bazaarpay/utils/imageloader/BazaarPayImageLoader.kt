@@ -5,6 +5,7 @@ import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.widget.ImageView
 import androidx.annotation.DrawableRes
+import com.bumptech.glide.Glide
 import com.bumptech.glide.RequestBuilder
 import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.GlideException
@@ -49,7 +50,7 @@ internal object BazaarPayImageLoader {
                 roundedCornerCenterCrop
             )
         }
-        val glideRequest = GlideApp.with(imageView.context)
+        val glideRequest = Glide.with(imageView.context)
             .load(Uri.parse(imageURI))
             .centerInside()
             .apply {
@@ -69,7 +70,7 @@ internal object BazaarPayImageLoader {
         }
 
         glideRequest.thumbnail(
-            GlideApp.with(imageView.context)
+            Glide.with(imageView.context)
                 .load(thumbnailUrl)
         ).apply(requestOption)
             .into(imageView)

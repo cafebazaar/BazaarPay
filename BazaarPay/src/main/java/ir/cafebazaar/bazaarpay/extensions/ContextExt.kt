@@ -1,6 +1,5 @@
 package ir.cafebazaar.bazaarpay.extensions
 
-import android.app.ActivityManager
 import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
@@ -9,13 +8,11 @@ import android.net.ConnectivityManager
 import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
-import androidx.core.app.ActivityManagerCompat
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.GoogleApiAvailability
 import ir.cafebazaar.bazaarpay.R
 import ir.cafebazaar.bazaarpay.data.bazaar.models.ErrorModel
 import ir.cafebazaar.bazaarpay.data.bazaar.models.InvalidPhoneNumberException
-import ir.cafebazaar.bazaarpay.utils.imageloader.BazaarPayGlideModule
 
 fun Context.getConnectivityManager() =
     getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
@@ -92,11 +89,4 @@ fun Context.openUrl(
     } catch (e: ActivityNotFoundException) {
         IllegalStateException("No Activity Found for opening :${intent.data}", e)
     }
-}
-
-fun Context.isHighPerformingDevice(): Boolean {
-    val activityManager = (this.getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager)
-    return !ActivityManagerCompat.isLowRamDevice(activityManager) &&
-            Runtime.getRuntime().availableProcessors() >= BazaarPayGlideModule.AVAILABLE_PROCESSORS &&
-            activityManager.memoryClass >= BazaarPayGlideModule.AVAILABLE_MEMORY
 }
