@@ -16,6 +16,9 @@ import ir.cafebazaar.bazaarpay.data.payment.TokenInterceptor
 import ir.cafebazaar.bazaarpay.data.bazaar.payment.BazaarPaymentRemoteDataSource
 import ir.cafebazaar.bazaarpay.data.bazaar.payment.BazaarPaymentRepository
 import ir.cafebazaar.bazaarpay.data.bazaar.payment.api.BazaarPaymentService
+import ir.cafebazaar.bazaarpay.data.device.DeviceLocalDataSource
+import ir.cafebazaar.bazaarpay.data.device.DeviceRepository
+import ir.cafebazaar.bazaarpay.data.device.DeviceSharedDataSource
 import ir.cafebazaar.bazaarpay.data.payment.api.PaymentService
 import ir.cafebazaar.bazaarpay.network.gsonConverterFactory
 import ir.cafebazaar.bazaarpay.network.interceptor.AgentInterceptor
@@ -58,6 +61,11 @@ internal object ServiceLocator {
         initGlobalDispatchers()
         initJsonConvertorFactory()
         initHttpLoggingInterceptor()
+
+        // Device
+        initDeviceSharedDataSource()
+        initDeviceLocalDataSource()
+        initDeviceRepository()
 
         // Account
         initAccountService()
@@ -112,6 +120,14 @@ internal object ServiceLocator {
 
     private fun initAccountRepository() {
         servicesMap[getKeyOfClass<AccountRepository>()] = AccountRepository()
+    }
+
+    private fun initDeviceLocalDataSource() {
+        servicesMap[getKeyOfClass<DeviceLocalDataSource>()] = DeviceLocalDataSource()
+    }
+
+    private fun initDeviceRepository() {
+        servicesMap[getKeyOfClass<DeviceRepository>()] = DeviceRepository()
     }
 
     private fun initAuthenticator() {
@@ -238,6 +254,11 @@ internal object ServiceLocator {
             bazaarRetrofit.create(BazaarPaymentService::class.java)
     }
 
+    private fun initDeviceSharedDataSource() {
+        servicesMap[getKeyOfClass<SharedDataSource>(DEVICE)] =
+            DeviceSharedDataSource()
+    }
+
     private const val DEFAULT_BASE_URL: String = "https://api.cafebazaar.ir/rest-v1/process/"
     private const val PAYMENT_BASE_URL: String = "https://pardakht.cafebazaar.ir/pardakht/badje/v1/"
 
@@ -246,6 +267,7 @@ internal object ServiceLocator {
     internal const val IS_DARK: String = "is_dark"
     internal const val LANGUAGE: String = "language"
     internal const val ACCOUNT: String = "account"
+    internal const val DEVICE: String = "device"
     private const val AUTHENTICATOR: String = "authenticator"
     private const val TOKEN: String = "token"
 }
