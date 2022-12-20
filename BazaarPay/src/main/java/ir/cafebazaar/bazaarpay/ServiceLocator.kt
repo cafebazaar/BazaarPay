@@ -16,6 +16,7 @@ import ir.cafebazaar.bazaarpay.data.payment.TokenInterceptor
 import ir.cafebazaar.bazaarpay.data.bazaar.payment.BazaarPaymentRemoteDataSource
 import ir.cafebazaar.bazaarpay.data.bazaar.payment.BazaarPaymentRepository
 import ir.cafebazaar.bazaarpay.data.bazaar.payment.api.BazaarPaymentService
+import ir.cafebazaar.bazaarpay.data.device.DeviceInterceptor
 import ir.cafebazaar.bazaarpay.data.device.DeviceLocalDataSource
 import ir.cafebazaar.bazaarpay.data.device.DeviceRepository
 import ir.cafebazaar.bazaarpay.data.device.DeviceSharedDataSource
@@ -58,14 +59,16 @@ internal object ServiceLocator {
         context: Context
     ) {
         servicesMap[getKeyOfClass<Context>()] = context
-        initGlobalDispatchers()
-        initJsonConvertorFactory()
-        initHttpLoggingInterceptor()
 
         // Device
         initDeviceSharedDataSource()
         initDeviceLocalDataSource()
         initDeviceRepository()
+
+        initDeviceInterceptor()
+        initGlobalDispatchers()
+        initJsonConvertorFactory()
+        initHttpLoggingInterceptor()
 
         // Account
         initAccountService()
@@ -138,9 +141,13 @@ internal object ServiceLocator {
         servicesMap[getKeyOfClass<Interceptor>(TOKEN)] = TokenInterceptor()
     }
 
+    private fun initDeviceInterceptor() {
+        servicesMap[getKeyOfClass<DeviceInterceptor>()] = DeviceInterceptor()
+    }
+
     private fun initHttpLoggingInterceptor() {
         servicesMap[getKeyOfClass<HttpLoggingInterceptor>()] = HttpLoggingInterceptor().apply {
-            level = HttpLoggingInterceptor.Level.BODY
+            level = HttpLoggingInterceptor.Level.HEADERS
         }
     }
 
@@ -178,19 +185,23 @@ internal object ServiceLocator {
         authenticator: Authenticator?= null
     ): OkHttpClient {
         val builder = OkHttpClient.Builder()
+
+        authenticator?.let {
+            builder.authenticator(it)
+        }
+        builder
+            .addInterceptor(AgentInterceptor)
+            .addInterceptor(get<DeviceInterceptor>())
+
+        interceptors.forEach {
+            builder.addInterceptor(it)
+        }
+
         if (BuildConfig.DEBUG) {
             val loggingInterceptor = get<HttpLoggingInterceptor?>()
             if (loggingInterceptor != null) {
                 builder.addInterceptor(loggingInterceptor)
             }
-        }
-        authenticator?.let {
-            builder.authenticator(it)
-        }
-        builder.addInterceptor(AgentInterceptor)
-
-        interceptors.forEach {
-            builder.addInterceptor(it)
         }
 
         return builder
