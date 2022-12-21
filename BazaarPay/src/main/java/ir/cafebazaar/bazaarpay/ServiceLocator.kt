@@ -147,7 +147,7 @@ internal object ServiceLocator {
 
     private fun initHttpLoggingInterceptor() {
         servicesMap[getKeyOfClass<HttpLoggingInterceptor>()] = HttpLoggingInterceptor().apply {
-            level = HttpLoggingInterceptor.Level.HEADERS
+            level = HttpLoggingInterceptor.Level.BODY
         }
     }
 
