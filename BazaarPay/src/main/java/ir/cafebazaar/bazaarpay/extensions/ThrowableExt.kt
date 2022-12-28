@@ -5,29 +5,34 @@ import com.google.gson.GsonBuilder
 import com.google.gson.JsonSyntaxException
 import ir.cafebazaar.bazaarpay.data.bazaar.models.ErrorCode
 import ir.cafebazaar.bazaarpay.data.bazaar.models.ErrorModel
-import ir.cafebazaar.bazaarpay.data.bazaar.models.ResponseException
-import ir.cafebazaar.bazaarpay.data.bazaar.models.ResponseProperties
-import ir.cafebazaar.bazaarpay.models.ErrorResponseDto
+import ir.cafebazaar.bazaarpay.models.BazaarErrorResponseDto
+import ir.cafebazaar.bazaarpay.models.BazaarPayErrorResponseDto
 import retrofit2.HttpException
 import java.io.IOException
 
 private const val MESSAGE_SERVER_ERROR = "Server Error"
 private const val MESSAGE_INTERNAL_SERVER_ERROR = "Internal Server Error"
 
-fun asNetworkException(throwable: Throwable): ErrorModel {
+fun asNetworkException(
+    serviceType: ServiceType = ServiceType.BAZAAR,
+    throwable: Throwable
+): ErrorModel {
     return when (throwable) {
         is IOException -> {
             ErrorModel.NetworkConnection("No Network Connection", throwable)
         }
         is HttpException -> {
-            createHttpError(throwable)
+            createHttpError(serviceType, throwable)
         }
         is ErrorModel -> throwable
         else -> ErrorModel.Server(MESSAGE_SERVER_ERROR, throwable)
     }
 }
 
-private fun createHttpError(throwable: HttpException): ErrorModel {
+private fun createHttpError(
+    serviceType: ServiceType = ServiceType.BAZAAR,
+    throwable: HttpException
+): ErrorModel {
     val response = throwable.response()
     return if (response?.errorBody() == null) {
         ErrorModel.Server(
@@ -37,12 +42,22 @@ private fun createHttpError(throwable: HttpException): ErrorModel {
     } else {
         try {
             val errorBody = response.errorBody()!!.string()
-            val errorResponse = GsonBuilder().create().fromJson(
-                errorBody,
-                ErrorResponseDto::class.java
-            )
-
-            readErrorFromResponse(errorResponse)
+            when (serviceType) {
+                ServiceType.BAZAAR -> {
+                    val bazaarErrorResponse = GsonBuilder().create().fromJson(
+                        errorBody,
+                        BazaarErrorResponseDto::class.java
+                    )
+                    readErrorFromResponse(bazaarErrorResponse)
+                }
+                ServiceType.BAZAARPAY -> {
+                    val bazaarPayErrorResponse = GsonBuilder().create().fromJson(
+                        errorBody,
+                        BazaarPayErrorResponseDto::class.java
+                    )
+                    readErrorFromBazaarPayResponse(bazaarPayErrorResponse)
+                }
+            }
         } catch (ignored: Exception) {
             ErrorModel.Server(MESSAGE_SERVER_ERROR, ignored)
         }
@@ -50,7 +65,7 @@ private fun createHttpError(throwable: HttpException): ErrorModel {
 }
 
 private fun readErrorFromResponse(
-    errorResponse: ErrorResponseDto
+    errorResponse: BazaarErrorResponseDto
 ): ErrorModel {
     return try {
         errorFromErrorResponse(errorResponse)
@@ -67,9 +82,27 @@ private fun readErrorFromResponse(
     }
 }
 
+private fun readErrorFromBazaarPayResponse(
+    errorResponse: BazaarPayErrorResponseDto
+): ErrorModel {
+    return try {
+        errorFromBazaarPayErrorResponse(errorResponse)
+    } catch (ignored: JsonSyntaxException) {
+        ErrorModel.Server(MESSAGE_SERVER_ERROR, ignored)
+    } catch (ignored: IOException) {
+        ErrorModel.Server(MESSAGE_SERVER_ERROR, ignored)
+    } catch (ignored: IllegalStateException) {
+        ErrorModel.Server(MESSAGE_SERVER_ERROR, ignored)
+    } catch (ignored: ClassCastException) {
+        ErrorModel.Server(MESSAGE_SERVER_ERROR, ignored)
+    } catch (ignored: Exception) {
+        ErrorModel.Server("Internal error during parsing error body", ignored)
+    }
+}
+
 @Throws
 private fun errorFromErrorResponse(
-    errorResponse: ErrorResponseDto
+    errorResponse: BazaarErrorResponseDto
 ): ErrorModel {
     with(errorResponse.properties) {
         return when (this?.errorCode) {
@@ -100,6 +133,16 @@ private fun errorFromErrorResponse(
             )
         }
     }
+}
+
+@Throws
+private fun errorFromBazaarPayErrorResponse(
+    errorResponse: BazaarPayErrorResponseDto
+): ErrorModel {
+    return ErrorModel.Http(
+        message = errorResponse.detail,
+        errorCode = ErrorCode.UNKNOWN
+    )
 }
 
 private fun Int.toErrorCode(): ErrorCode {

@@ -8,6 +8,7 @@ import ir.cafebazaar.bazaarpay.data.payment.models.getpaymentmethods.request.Get
 import ir.cafebazaar.bazaarpay.data.payment.models.merchantinfo.MerchantInfo
 import ir.cafebazaar.bazaarpay.data.payment.models.pay.PayResult
 import ir.cafebazaar.bazaarpay.data.payment.models.pay.request.PayRequest
+import ir.cafebazaar.bazaarpay.extensions.ServiceType
 import ir.cafebazaar.bazaarpay.extensions.safeApiCall
 import ir.cafebazaar.bazaarpay.models.GlobalDispatchers
 import ir.cafebazaar.bazaarpay.screens.payment.paymentmethods.PaymentMethodsType
@@ -28,7 +29,7 @@ internal class PaymentRemoteDataSource {
     suspend fun getPaymentMethods(): Either<PaymentMethodsInfo> {
         val language = ServiceLocator.get<String>(ServiceLocator.LANGUAGE)
         return withContext(globalDispatchers.iO) {
-            return@withContext safeApiCall {
+            return@withContext safeApiCall(ServiceType.BAZAARPAY) {
                 paymentService.getPaymentMethods(
                     GetPaymentMethodsRequest(checkoutToken),
                     language
@@ -40,7 +41,7 @@ internal class PaymentRemoteDataSource {
     suspend fun getMerchantInfo(): Either<MerchantInfo> {
         val language = ServiceLocator.get<String>(ServiceLocator.LANGUAGE)
         return withContext(globalDispatchers.iO) {
-            return@withContext safeApiCall {
+            return@withContext safeApiCall(ServiceType.BAZAARPAY) {
                 paymentService.getMerchantInfo(
                     checkoutToken,
                     language
@@ -55,7 +56,7 @@ internal class PaymentRemoteDataSource {
     ): Either<PayResult> {
         val language = ServiceLocator.get<String>(ServiceLocator.LANGUAGE)
         return withContext(globalDispatchers.iO) {
-            return@withContext safeApiCall {
+            return@withContext safeApiCall(ServiceType.BAZAARPAY) {
                 paymentService.pay(
                     PayRequest(
                         checkoutToken,
