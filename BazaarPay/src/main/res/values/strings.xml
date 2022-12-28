@@ -22,7 +22,7 @@
     <string name="bazaarpay_resend_after" formatted="false">Resend verification code (%s)</string>
     <string name="bazaarpay_number_placeholder">%d</string>
     <string name="bazaarpay_title_current_balance">Current Balance:</string>
-    <string name="bazaarpay_payment_option_title">Bazaar Payment</string>
+    <string name="bazaarpay_payment_option_title">BazaarPay Payment</string>
     <string name="bazaarpay_select_payment_option">Choose Payment Method</string>
     <string name="bazaarpay_pay">Pay</string>
     <string name="bazaarpay_try_again">Try again</string>
