@@ -96,7 +96,8 @@ internal class PaymentMethodsViewModel : ViewModel() {
             _paymentOptionViewLoaderLiveData.value = PaymentMethodViewLoader(
                 price = selectedMethod.priceString,
                 payButton = getPayButtonTextId(selectedMethod.methodType),
-                subDescription = selectedMethod.subDescription
+                subDescription = selectedMethod.subDescription,
+                enabled = selectedMethod.enabled
             )
         }
     }

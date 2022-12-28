@@ -185,6 +185,7 @@ internal class PaymentMethodsFragment : Fragment(), PaymentMethodsClickListener 
             )
 
             payButton.text = getString(viewLoader.payButton)
+            payButton.isEnabled = viewLoader.enabled
 
             if (viewLoader.subDescription.isNullOrEmpty()) {
                 paymentOptionInfo?.gone()

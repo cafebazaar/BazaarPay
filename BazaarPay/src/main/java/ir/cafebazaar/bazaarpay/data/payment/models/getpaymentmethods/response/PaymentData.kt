@@ -32,7 +32,8 @@ internal data class PaymentMethodDto(
     @SerializedName("sub_description") val subDescription: String?,
     @SerializedName("method_type") val methodType: String,
     @SerializedName("icon_url") val iconUrl: String?,
-    @SerializedName("price_string") val priceString: String?
+    @SerializedName("price_string") val priceString: String?,
+    @SerializedName("enabled") val enabled: Boolean?
 ) {
 
     fun toPaymentMethodItem(): PaymentMethod {
@@ -42,7 +43,8 @@ internal data class PaymentMethodDto(
             subDescription,
             PaymentMethodsType.valueOf(methodType.uppercase()),
             iconUrl,
-            priceString
+            priceString,
+            enabled = enabled ?: true
         )
     }
 }

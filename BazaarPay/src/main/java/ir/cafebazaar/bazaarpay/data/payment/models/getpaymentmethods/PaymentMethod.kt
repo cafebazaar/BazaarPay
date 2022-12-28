@@ -19,7 +19,8 @@ internal data class PaymentMethod(
     val subDescription: String?,
     val methodType: PaymentMethodsType,
     val iconUrl: String?,
-    val priceString: String?
+    val priceString: String?,
+    val enabled: Boolean = true
 )
 
 @Parcelize
