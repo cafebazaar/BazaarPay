@@ -98,7 +98,8 @@ internal class PaymentDynamicCreditFragment : Fragment() {
             }
 
             errorLiveData.observe(viewLifecycleOwner) {
-                toastMessage(it)
+                val errorMessage = requireContext().getString(it.first, it.second)
+                toastMessage(errorMessage)
             }
 
             actionLiveData.observe(viewLifecycleOwner) {

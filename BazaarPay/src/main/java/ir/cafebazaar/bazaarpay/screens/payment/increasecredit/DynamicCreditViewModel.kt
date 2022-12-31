@@ -43,8 +43,8 @@ internal class DynamicCreditViewModel : ViewModel() {
     private val _navigationLiveData = SingleLiveEvent<NavDirections>()
     val navigationLiveData: LiveData<NavDirections> = _navigationLiveData
 
-    private val _errorLiveData = SingleLiveEvent<String>()
-    val errorLiveData: LiveData<String> = _errorLiveData
+    private val _errorLiveData = SingleLiveEvent<Pair<Int, Long?>>()
+    val errorLiveData: LiveData<Pair<Int, Long?>> = _errorLiveData
 
     var preText: String? = null
     private var creditOptionsRef: WeakReference<DynamicCreditOption>? = null
@@ -70,10 +70,7 @@ internal class DynamicCreditViewModel : ViewModel() {
                 null
             }
             priceIsBiggerThanMaximum(priceString) -> {
-                _errorLiveData.value = context.getString(
-                    R.string.bazaarpay_dynamic_credit_exceed_amount,
-                    creditOptions?.maxAvailableAmount
-                )
+                _errorLiveData.value = Pair(R.string.bazaarpay_dynamic_credit_exceed_amount, creditOptions?.maxAvailableAmount)
                 val maxValue = requireNotNull(creditOptions).maxAvailableAmount
                 getPriceFromString(maxValue.toString())
             }
@@ -112,9 +109,7 @@ internal class DynamicCreditViewModel : ViewModel() {
         }
 
         if (!enoughAmount(priceString)) {
-            _errorLiveData.value = context.getString(
-                R.string.bazaarpay_dynamic_credit_not_enough, creditOptions?.minAvailableAmount
-            )
+            _errorLiveData.value = Pair(R.string.bazaarpay_dynamic_credit_not_enough, creditOptions?.minAvailableAmount)
             return
         }
 
