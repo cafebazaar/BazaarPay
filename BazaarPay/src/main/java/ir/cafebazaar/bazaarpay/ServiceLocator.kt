@@ -271,7 +271,7 @@ internal object ServiceLocator {
     }
 
     private const val DEFAULT_BASE_URL: String = "https://api.cafebazaar.ir/rest-v1/process/"
-    private const val PAYMENT_BASE_URL: String = "https://pardakht.cafebazaar.ir/pardakht/badje/v1/"
+    private const val PAYMENT_BASE_URL: String = "https://a6ff86a2-7a7c-4882-bdbe-0222e9540c7a.mock.pstmn.io/"
 
     internal const val CHECKOUT_TOKEN: String = "checkout_token"
     internal const val PHONE_NUMBER: String = "phone_number"
