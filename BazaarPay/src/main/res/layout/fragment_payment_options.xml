@@ -57,6 +57,8 @@
             android:padding="@dimen/bazaarpay_default_margin"
             android:gravity="center_vertical"
             android:background="@drawable/shape_gray_round_radius_small"
+            android:visibility="gone"
+            android:animateLayoutChanges="true"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/paymentOptionTitle"
@@ -75,13 +77,12 @@
                 tools:src="@drawable/ic_profile" />
 
             <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/userAccountId"
+                android:id="@+id/userAccountPhone"
                 style="@style/Bazaar.Text.Body1"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:textColor="@color/bazaarpay_text_primary"
-                android:text="۰۹۱۸۶۳۰۰۸۰۰"
                 tools:text="09186300800" />
 
             <LinearLayout

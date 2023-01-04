@@ -34,7 +34,11 @@ internal class AccountRepository {
     }
 
     fun savePhone(phone: String) {
-        return accountLocalDataSource.putAutoFillPhones(phone)
+        accountLocalDataSource.putAutoFillPhones(phone)
+    }
+
+    fun getPhone(): String {
+        return accountLocalDataSource.loginPhone
     }
 
     suspend fun getOtpToken(phoneNumber: String):
