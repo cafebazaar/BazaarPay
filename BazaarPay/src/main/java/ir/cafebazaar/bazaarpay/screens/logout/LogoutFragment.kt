@@ -7,19 +7,17 @@ import android.view.ViewGroup
 import androidx.activity.addCallback
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.NavDirections
 import androidx.navigation.fragment.findNavController
 import ir.cafebazaar.bazaarpay.ServiceLocator
 import ir.cafebazaar.bazaarpay.StartPaymentFragmentDirections
 import ir.cafebazaar.bazaarpay.data.bazaar.account.AccountRepository
 import ir.cafebazaar.bazaarpay.databinding.FragmentLogoutBinding
+import ir.cafebazaar.bazaarpay.extensions.setSafeOnClickListener
 
 internal class LogoutFragment : Fragment() {
 
     private val logoutViewModel: LogoutViewModel by viewModels()
-
-    private val accountRepository: AccountRepository by lazy {
-        ServiceLocator.get()
-    }
 
     private var _binding: FragmentLogoutBinding? = null
     private val binding: FragmentLogoutBinding
@@ -41,9 +39,14 @@ internal class LogoutFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        accountRepository.logout()
-        findNavController().navigate(StartPaymentFragmentDirections.openSignin())
+        logoutViewModel.navigationLiveData.observe(viewLifecycleOwner, ::onNavigationReceived)
+        binding.logoutButton.setSafeOnClickListener {
+            logoutViewModel.onLogoutClicked()
+        }
+    }
 
+    private fun onNavigationReceived(navDirection: NavDirections) {
+        findNavController().navigate(navDirection)
     }
 
     override fun onDestroyView() {
