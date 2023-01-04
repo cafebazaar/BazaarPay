@@ -39,6 +39,9 @@ internal class LogoutFragment : Fragment() {
         binding.logoutButton.setSafeOnClickListener {
             logoutViewModel.onLogoutClicked()
         }
+        binding.cancelButton.setSafeOnClickListener {
+            findNavController().popBackStack()
+        }
     }
 
     private fun onNavigationReceived(navDirection: NavDirections) {

@@ -58,4 +58,9 @@
     <string name="bazaarpay_price_placeholder">%d تومان</string>
     <string name="bazaarpay_dynamic_text_price_placeholder">مبلغ</string>
     <string name="bazaarpay_select_enter_dynamic_credit_title">مبلغ را انتخاب یا وارد کنید.</string>
+    <string name="bazaarpay_change_account">تغییر حساب کاربری</string>
+    <string name="bazaaarpay_change_account_title">تغییر حساب کاربری در بازارپی</string>
+    <string name="bazaarpay_logout_message">آیا می‌خواهید از حساب کاربری فعلی بازارپی خارج شوید و پرداخت را با حساب دیگری انجام دهید؟</string>
+    <string name="bazaarpay_no">خیر</string>
+    <string name="bazaarpay_yes">بله</string>
 </resources>
