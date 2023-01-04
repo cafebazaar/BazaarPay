@@ -31,6 +31,7 @@ import ir.cafebazaar.bazaarpay.data.payment.models.merchantinfo.MerchantInfo
 import ir.cafebazaar.bazaarpay.data.payment.models.pay.PayResult
 import ir.cafebazaar.bazaarpay.extensions.navigateSafe
 import ir.cafebazaar.bazaarpay.extensions.setSafeOnClickListener
+import ir.cafebazaar.bazaarpay.screens.logout.LogoutFragmentDirections
 import ir.cafebazaar.bazaarpay.utils.getErrorViewBasedOnErrorModel
 
 internal class PaymentMethodsFragment : Fragment(), PaymentMethodsClickListener {
@@ -101,6 +102,10 @@ internal class PaymentMethodsFragment : Fragment(), PaymentMethodsClickListener 
             }
 
             initPaymentGatewayRecyclerView()
+
+            changeAccountAction?.setSafeOnClickListener {
+                handleNavigation(LogoutFragmentDirections.openLogout())
+            }
         }
     }
 

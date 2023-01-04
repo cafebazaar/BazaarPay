@@ -7,6 +7,9 @@
     <action android:id="@+id/open_signin"
         app:destination="@id/registerFragment"/>
 
+    <action android:id="@+id/open_logout"
+        app:destination="@id/logoutFragment"/>
+
     <action
         android:id="@+id/open_paymentThankYouPageFragment"
         app:destination="@id/paymentThankYouPageFragment" />
@@ -130,4 +133,9 @@
             android:name="dealer"
             app:argType="ir.cafebazaar.bazaarpay.screens.payment.increasecredit.DynamicCreditOptionDealerArg" />
     </fragment>
+
+    <fragment
+        android:id="@+id/logoutFragment"
+        android:name="ir.cafebazaar.bazaarpay.screens.logout.LogoutFragment"
+        android:label="LogoutFragment" />
 </navigation>
