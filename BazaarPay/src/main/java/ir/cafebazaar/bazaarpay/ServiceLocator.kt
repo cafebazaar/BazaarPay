@@ -20,6 +20,7 @@ import ir.cafebazaar.bazaarpay.data.device.DeviceInterceptor
 import ir.cafebazaar.bazaarpay.data.device.DeviceLocalDataSource
 import ir.cafebazaar.bazaarpay.data.device.DeviceRepository
 import ir.cafebazaar.bazaarpay.data.device.DeviceSharedDataSource
+import ir.cafebazaar.bazaarpay.data.payment.UpdateRefreshTokenHelper
 import ir.cafebazaar.bazaarpay.data.payment.api.PaymentService
 import ir.cafebazaar.bazaarpay.network.gsonConverterFactory
 import ir.cafebazaar.bazaarpay.network.interceptor.AgentInterceptor
@@ -78,6 +79,7 @@ internal object ServiceLocator {
         initAccountRepository()
 
         // Auth
+        initUpdateRefreshTokenHelper()
         initAuthenticator()
         initTokenInterceptor()
 
@@ -131,6 +133,10 @@ internal object ServiceLocator {
 
     private fun initDeviceRepository() {
         servicesMap[getKeyOfClass<DeviceRepository>()] = DeviceRepository()
+    }
+
+    private fun initUpdateRefreshTokenHelper() {
+        servicesMap[getKeyOfClass<UpdateRefreshTokenHelper>()] = UpdateRefreshTokenHelper()
     }
 
     private fun initAuthenticator() {
@@ -271,7 +277,7 @@ internal object ServiceLocator {
     }
 
     private const val DEFAULT_BASE_URL: String = "https://api.cafebazaar.ir/rest-v1/process/"
-    private const val PAYMENT_BASE_URL: String = "https://pardakht.cafebazaar.ir/pardakht/badje/v1/"
+    private const val PAYMENT_BASE_URL: String = "https://a6ff86a2-7a7c-4882-bdbe-0222e9540c7a.mock.pstmn.io"
 
     internal const val CHECKOUT_TOKEN: String = "checkout_token"
     internal const val PHONE_NUMBER: String = "phone_number"
@@ -280,5 +286,6 @@ internal object ServiceLocator {
     internal const val ACCOUNT: String = "account"
     internal const val DEVICE: String = "device"
     private const val AUTHENTICATOR: String = "authenticator"
+    private const val UPDATE_TOKEN: String = "update_token"
     private const val TOKEN: String = "token"
 }

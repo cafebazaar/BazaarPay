@@ -16,12 +16,13 @@ import okhttp3.Route
 internal class AuthenticatorInterceptor: Authenticator {
 
     private val accountRepository: AccountRepository = ServiceLocator.get()
+    private val updateRefreshTokenHelper: UpdateRefreshTokenHelper = ServiceLocator.get()
 
     override fun authenticate(route: Route?, response: Response): Request? {
 
         if (accountRepository.isLoggedIn()) {
             synchronized(LOCK) {
-                return if (accountRepository.needToUpdateRefreshToken()) {
+                return if (updateRefreshTokenHelper.needToUpdateRefreshToken) {
                     getRequestWithSendingRefreshToken(response)
                 } else {
                     response.request.newBuilder().addAuthToken(
@@ -39,7 +40,8 @@ internal class AuthenticatorInterceptor: Authenticator {
         val isRefreshTokenEmpty = refreshTokenEither.getOrNull().isNullOrEmpty()
         val isAuthenticationError =
             refreshTokenEither.getFailureOrNull() == ErrorModel.AuthenticationError
-        return if (refreshTokenEither.isSuccessFull() && isRefreshTokenEmpty.not()) {
+        return if (refreshTokenEither.isSuccessFull() && !isRefreshTokenEmpty) {
+            updateRefreshTokenHelper.onRefreshTokenUpdated()
             val newAccessToken = refreshTokenEither.getOrNull()
             response.request.newBuilder().addAuthToken(newAccessToken).build()
         } else if (isAuthenticationError) {
