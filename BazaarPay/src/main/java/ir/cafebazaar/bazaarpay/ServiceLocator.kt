@@ -286,6 +286,5 @@ internal object ServiceLocator {
     internal const val ACCOUNT: String = "account"
     internal const val DEVICE: String = "device"
     private const val AUTHENTICATOR: String = "authenticator"
-    private const val UPDATE_TOKEN: String = "update_token"
     private const val TOKEN: String = "token"
 }
