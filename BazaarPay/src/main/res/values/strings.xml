@@ -14,7 +14,7 @@
     <string name="bazaarpay_payment_failed">Payment not completed successfully.</string>
     <string name="bazaarpay_gateway_payment_failed">Gateway payment not completed successfully.</string>
     <string name="bazaarpay_payment_gateway_not_available">Please install a browser in order to continue purchase.</string>
-    <string name="bazaarpay_enter_bazaar_pay">Enter BazaarPay</string>
+    <string name="bazaarpay_enter_bazaar_pay">Enter to BazaarPay payment</string>
     <string name="bazaarpay_verification_code_hint">Verification Code</string>
     <string name="bazaarpay_waiting_for_verification_sms">We sent verification code to %s.</string>
     <string name="bazaarpay_resend_verification_sms">Resend verification SMS</string>
@@ -22,8 +22,8 @@
     <string name="bazaarpay_resend_after" formatted="false">Resend verification code (%s)</string>
     <string name="bazaarpay_number_placeholder">%d</string>
     <string name="bazaarpay_title_current_balance">Current Balance:</string>
-    <string name="bazaarpay_payment_option_title">BazaarPay Payment</string>
-    <string name="bazaarpay_select_payment_option">Choose Payment Method</string>
+    <string name="bazaarpay_payment_option_title">Payment with BazaarPay</string>
+    <string name="bazaarpay_select_payment_option">Choose payment method.</string>
     <string name="bazaarpay_pay">Pay</string>
     <string name="bazaarpay_try_again">Try again</string>
     <string name="bazaarpay_title_force_login">In order to see this page, please log into your account.</string>
