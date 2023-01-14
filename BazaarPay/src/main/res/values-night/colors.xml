@@ -27,11 +27,9 @@
     <color name="bazaarpay_viewpager_indicator_selected_color">@color/bazaarpay_grey_300</color>
     <color name="bazaarpay_viewpager_indicator_unselected_color">@color/bazaarpay_grey_80</color>
 
-    <color name="bazaarpay_app_brand_primary">#4BC381</color>
-    <color name="bazaarpay_app_brand_secondary">#8F4BC381</color>
-    <color name="bazaarpay_app_brand_hint">#524bc381</color>
-    <color name="bazaarpay_app_brand_divider">#1F4bc381</color>
-    <color name="bazaarpay_app_brand_light">#26342D</color>
+    <color name="bazaarpay_app_brand_primary">#A469FC</color>
+    <color name="bazaarpay_app_brand_secondary">#3E00E5</color>
+    <color name="bazaarpay_app_brand_light">#3E00E5</color>
 
     <color name="bazaarpay_error_primary">#EE4967</color>
     <color name="bazaarpay_error_dark">#F84746</color>
