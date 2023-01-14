@@ -20,6 +20,7 @@
     <string name="bazaarpay_resend_verification_sms">پیامک دوباره کد</string>
     <string name="bazaarpay_send_code_by_call">تماس تلفنی گویا</string>
     <string name="bazaarpay_resend_after" formatted="false">ارسال دوباره کد (%s)</string>
+    <string name="bazaarpay_resend_after_without_time">ارسال دوباره کد</string>
     <string name="bazaarpay_title_current_balance">موجودی فعلی:</string>
     <string name="bazaarpay_payment_option_title">پرداخت در بازارپی</string>
     <string name="bazaarpay_select_payment_option">روش پرداخت را انتخاب کنید</string>

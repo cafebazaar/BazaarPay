@@ -20,6 +20,7 @@
     <string name="bazaarpay_resend_verification_sms">Resend verification SMS</string>
     <string name="bazaarpay_send_code_by_call">Send code by call</string>
     <string name="bazaarpay_resend_after" formatted="false">Resend verification code (%s)</string>
+    <string name="bazaarpay_resend_after_without_time">Resend verification code</string>
     <string name="bazaarpay_number_placeholder">%d</string>
     <string name="bazaarpay_title_current_balance">Current Balance:</string>
     <string name="bazaarpay_payment_option_title">BazaarPay Payment</string>

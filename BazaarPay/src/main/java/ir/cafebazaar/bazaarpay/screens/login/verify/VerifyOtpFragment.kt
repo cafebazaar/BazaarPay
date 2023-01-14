@@ -36,6 +36,7 @@ import ir.cafebazaar.bazaarpay.models.VerificationState
 import ir.cafebazaar.bazaarpay.receiver.SmsPermissionReceiver
 import ir.cafebazaar.bazaarpay.screens.login.LoginConstants.ACTION_BROADCAST_LOGIN
 import ir.cafebazaar.bazaarpay.screens.login.LoginConstants.SMS_NUMBER
+import ir.cafebazaar.bazaarpay.utils.Second
 import ir.cafebazaar.bazaarpay.utils.secondsToStringTime
 
 internal class VerifyOtpFragment : Fragment() {
@@ -267,8 +268,8 @@ internal class VerifyOtpFragment : Fragment() {
         binding.resendText.visible()
     }
 
-    private fun onTick(waitingTime: Long) {
-        val untilFinishTimeText = secondsToStringTime(waitingTime)
+    private fun onTick(waitingTime: Second) {
+        val untilFinishTimeText = waitingTime.secondsToStringTime()
         binding.resendText.text = getString(R.string.bazaarpay_resend_after, untilFinishTimeText)
     }
 
