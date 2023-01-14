@@ -55,7 +55,10 @@ private fun createHttpError(
                         errorBody,
                         BazaarPayErrorResponseDto::class.java
                     )
-                    readErrorFromBazaarPayResponse(bazaarPayErrorResponse)
+                    readErrorFromBazaarPayResponse(
+                        bazaarPayErrorResponse,
+                        errorBody
+                    )
                 }
             }
         } catch (ignored: Exception) {
@@ -83,10 +86,11 @@ private fun readErrorFromResponse(
 }
 
 private fun readErrorFromBazaarPayResponse(
-    errorResponse: BazaarPayErrorResponseDto
+    errorResponse: BazaarPayErrorResponseDto,
+    errorJson: String? = null
 ): ErrorModel {
     return try {
-        errorFromBazaarPayErrorResponse(errorResponse)
+        errorFromBazaarPayErrorResponse(errorResponse, errorJson)
     } catch (ignored: JsonSyntaxException) {
         ErrorModel.Server(MESSAGE_SERVER_ERROR, ignored)
     } catch (ignored: IOException) {
@@ -137,11 +141,13 @@ private fun errorFromErrorResponse(
 
 @Throws
 private fun errorFromBazaarPayErrorResponse(
-    errorResponse: BazaarPayErrorResponseDto
+    errorResponse: BazaarPayErrorResponseDto,
+    errorJson: String? = null
 ): ErrorModel {
     return ErrorModel.Http(
         message = errorResponse.detail,
-        errorCode = ErrorCode.UNKNOWN
+        errorCode = ErrorCode.UNKNOWN,
+        errorJson = errorJson
     )
 }
 

@@ -15,7 +15,12 @@ sealed class ErrorModel(override val message: String) : Throwable(message) {
         val throwable: Throwable
     ) : ErrorModel(message)
 
-    data class Http(override val message: String, val errorCode: ErrorCode) : ErrorModel(message)
+    data class Http(
+        override val message: String,
+        val errorCode: ErrorCode,
+        val errorJson: String? = null
+    ) : ErrorModel(message)
+
     data class NotFound(override val message: String) : ErrorModel(message)
     data class Forbidden(override val message: String) : ErrorModel(message)
     data class InputNotValid(override val message: String) : ErrorModel(message)
