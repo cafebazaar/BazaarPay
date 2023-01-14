@@ -58,7 +58,7 @@
     <string name="bazaarpay_price_placeholder_seperator">%,d Tomans</string>
     <string name="bazaarpay_price_placeholder">%d Tomans</string>
     <string name="bazaarpay_dynamic_text_price_placeholder">Price</string>
-    <string name="bazaarpay_select_enter_dynamic_credit_title">Choose or Enter Amount</string>
+    <string name="bazaarpay_select_enter_dynamic_credit_title">Choose or enter amount.</string>
     <string name="bazaarpay_change_account">Change account</string>
     <string name="bazaaarpay_change_account_title">Change BazaarPay account</string>
     <string name="bazaarpay_logout_message">Do you want to logout from the current BazaarPay account and do the payment with another account?</string>
