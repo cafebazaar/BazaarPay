@@ -1,9 +1,6 @@
 package ir.cafebazaar.bazaarpay.extensions
 
-import android.content.Context
-import ir.cafebazaar.bazaarpay.R
 import java.util.Locale
-
 
 private const val TOMAN_RIAL_DIFFERENCE = 10
 
