@@ -4,8 +4,8 @@
     <string name="bazaarpay_privacy_and_terms_login">&lt;a href="http://cafebazaar.ir/terms/?l=fa">شرایط استفاده از خدمات&lt;/a> و &lt;a href="http://cafebazaar.ir/privacy/?l=fa">حریم خصوصی&lt;/a> را می‌پذیرم.</string>
     <string name="bazaarpay_user_phone_number_hint">شماره تلفن</string>
     <string name="bazaarpay_enter_phone_number">شماره تلفن خود را وارد کنید.</string>
-    <string name="bazaarpay_wrong_phone_number">لطفاً شماره تلفن خود را به‌ درستی وارد کنید.</string>
-    <string name="bazaarpay_no_internet_connection">لطفاً از اتصال دستگاه خود به اینترنت مطمئن شوید.</string>
+    <string name="bazaarpay_wrong_phone_number">لطفا شماره تلفن خود را به‌ درستی وارد کنید.</string>
+    <string name="bazaarpay_no_internet_connection">لطفا از اتصال دستگاه خود به اینترنت مطمئن شوید.</string>
     <string name="bazaarpay_error_server_connection_failure">در برقراری ارتباط مشکلی پیش آمده</string>
     <string name="bazaarpay_no_internet_connection_short">عدم اتصال به اینترنت</string>
     <string name="bazaarpay_error_server_connection_failure_short">ارتباط برقرار نیست.</string>
@@ -14,7 +14,7 @@
     <string name="bazaarpay_payment_failed">متاسفانه پرداخت ناموفق بود!</string>
     <string name="bazaarpay_gateway_payment_failed">پرداخت اینترنتی ناموفق بود!</string>
     <string name="bazaarpay_payment_gateway_not_available">لطفا برای ادامه‌ی پرداخت، یک مرورگر اینترنت نصب کنید.</string>
-    <string name="bazaarpay_enter_bazaar_pay">ورود به پرداخت بازار</string>
+    <string name="bazaarpay_enter_bazaar_pay">ورود به پرداخت بازارپی</string>
     <string name="bazaarpay_verification_code_hint">کد تایید</string>
     <string name="bazaarpay_waiting_for_verification_sms">کد تایید به شمارهٔ %s ارسال شد.</string>
     <string name="bazaarpay_resend_verification_sms">پیامک دوباره کد</string>
@@ -25,7 +25,7 @@
     <string name="bazaarpay_select_payment_option">روش پرداخت را انتخاب کنید</string>
     <string name="bazaarpay_pay">پرداخت</string>
     <string name="bazaarpay_try_again">تلاش دوباره</string>
-    <string name="bazaarpay_title_force_login">لطفا برای مشاهده این صفحه، وارد حسابتان در بازار شوید.</string>
+    <string name="bazaarpay_title_force_login">لطفا برای مشاهده این صفحه، وارد حسابتان شوید.</string>
     <string name="bazaarpay_login">ورود</string>
     <string name="bazaarpay_increase_balance">افزایش موجودی</string>
     <string name="bazaarpay_directdebit_signup">فعال‌سازی</string>
@@ -45,7 +45,7 @@
     <string name="bazaarpay_commit">باشه</string>
     <string name="bazaarpay_payment_done_message">پرداخت با موفقیت انجام شد.</string>
     <string name="bazaarpay_bank_list_header_1">کارت بانک شما باید متعلق به یکی از بانک‌های زیر باشد.</string>
-    <string name="bazaarpay_bank_list_header_2">لازم است شماره تلفن ثبت شده در حساب بانک و حساب بازار شما یکسان باشد.</string>
+    <string name="bazaarpay_bank_list_header_2">لازم است شماره تلفن ثبت شده در حساب بانک و حساب شما یکسان باشد.</string>
     <string name="bazaarpay_header_select_bank_title">بانک خود را انتخاب کنید.</string>
     <string name="bazaarpay_enter_bank_page">ورود به صفحه بانک</string>
     <string name="bazaarpay_direct_debit_bank_list">انتخاب بانک</string>

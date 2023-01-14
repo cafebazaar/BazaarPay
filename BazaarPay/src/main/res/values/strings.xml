@@ -14,7 +14,7 @@
     <string name="bazaarpay_payment_failed">Payment not completed successfully.</string>
     <string name="bazaarpay_gateway_payment_failed">Gateway payment not completed successfully.</string>
     <string name="bazaarpay_payment_gateway_not_available">Please install a browser in order to continue purchase.</string>
-    <string name="bazaarpay_enter_bazaar_pay">Enter Bazaar Pay</string>
+    <string name="bazaarpay_enter_bazaar_pay">Enter BazaarPay</string>
     <string name="bazaarpay_verification_code_hint">Verification Code</string>
     <string name="bazaarpay_waiting_for_verification_sms">We sent verification code to %s.</string>
     <string name="bazaarpay_resend_verification_sms">Resend verification SMS</string>
@@ -26,7 +26,7 @@
     <string name="bazaarpay_select_payment_option">Choose Payment Method</string>
     <string name="bazaarpay_pay">Pay</string>
     <string name="bazaarpay_try_again">Try again</string>
-    <string name="bazaarpay_title_force_login">In order to see this page, please log into your Bazaar account.</string>
+    <string name="bazaarpay_title_force_login">In order to see this page, please log into your account.</string>
     <string name="bazaarpay_login">Login</string>
     <string name="bazaarpay_increase_balance">Increase balance</string>
     <string name="bazaarpay_directdebit_signup">Register</string>
@@ -46,7 +46,7 @@
     <string name="bazaarpay_commit">OK</string>
     <string name="bazaarpay_payment_done_message">Payment done successfully.</string>
     <string name="bazaarpay_bank_list_header_1">Your bank card must belong to one of the following banks</string>
-    <string name="bazaarpay_bank_list_header_2">The phone number registered in your bank account and your Bazaar account must be the same</string>
+    <string name="bazaarpay_bank_list_header_2">The phone number registered in your bank account and your account must be the same</string>
     <string name="bazaarpay_header_select_bank_title">Select bank</string>
     <string name="bazaarpay_enter_bank_page">Go to the bank page</string>
     <string name="bazaarpay_direct_debit_bank_list">Choose your bank</string>
