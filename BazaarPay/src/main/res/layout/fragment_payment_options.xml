@@ -48,72 +48,18 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/paymentOptionTitle" />
 
-        <LinearLayout
-            android:id="@+id/changeAccountBox"
-            android:layout_width="0dp"
+        <include
+            android:id="@+id/changeAccountLayout"
+            layout="@layout/layout_change_accont"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_margin="@dimen/bazaarpay_default_margin_double"
-            android:padding="@dimen/bazaarpay_default_margin"
-            android:gravity="center_vertical"
-            android:background="@drawable/shape_gray_round_radius_small"
-            android:visibility="gone"
-            android:animateLayoutChanges="true"
+            android:layout_width="0dp"
+            android:layout_marginHorizontal="@dimen/bazaarpay_default_margin_double"
+            android:layout_marginTop="@dimen/bazaarpay_default_margin_double"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/paymentOptionTitle"
-            app:layout_constraintBottom_toTopOf="@id/viewMerchantInfo" >
-
-            <androidx.appcompat.widget.AppCompatImageView
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:layout_marginEnd="@dimen/bazaarpay_default_margin_one_half"
-                android:scaleType="centerCrop"
-                app:srcCompat="@drawable/ic_profile"
-                android:tint="@color/bazaarpay_grey_90"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:src="@drawable/ic_profile" />
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/userAccountPhone"
-                style="@style/Bazaar.Text.Body1"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:textColor="@color/bazaarpay_text_primary"
-                tools:text="09186300800" />
-
-            <LinearLayout
-                android:id="@+id/changeAccountAction"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center_vertical">
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    style="@style/Bazaar.Text.Subtitle2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/bazaarpay_app_brand_primary"
-                    android:text="@string/bazaarpay_change_account"
-                    tools:text="تغییر حساب کاربری" />
-
-                <ir.cafebazaar.bazaarpay.widget.RTLImageView
-                    android:layout_width="32dp"
-                    android:layout_height="32dp"
-                    android:layout_marginStart="@dimen/bazaarpay_default_margin_half"
-                    android:scaleType="centerCrop"
-                    android:tint="@color/bazaarpay_app_brand_primary"
-                    app:srcCompat="@drawable/ic_chevron_right"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    tools:src="@drawable/ic_chevron_right" />
-
-            </LinearLayout>
-
-        </LinearLayout>
+            app:layout_constraintBottom_toTopOf="@id/viewMerchantInfo"
+            />
 
         <ir.cafebazaar.bazaarpay.widget.MerchantInfoView
             android:id="@+id/viewMerchantInfo"
@@ -121,6 +67,7 @@
             android:layout_height="wrap_content"
             android:paddingHorizontal="@dimen/bazaarpay_default_margin_double"
             android:paddingVertical="@dimen/bazaarpay_default_margin"
+            android:layout_marginTop="@dimen/bazaarpay_default_margin"
             app:layout_constraintBottom_toTopOf="@id/selectOptionTitle"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

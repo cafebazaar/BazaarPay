@@ -106,7 +106,7 @@ internal class PaymentMethodsFragment : Fragment(), PaymentMethodsClickListener 
 
             initPaymentGatewayRecyclerView()
 
-            changeAccountAction?.setSafeOnClickListener {
+            changeAccountLayout.changeAccountAction?.setSafeOnClickListener {
                 handleNavigation(LogoutFragmentDirections.openLogout())
             }
         }
@@ -207,11 +207,14 @@ internal class PaymentMethodsFragment : Fragment(), PaymentMethodsClickListener 
     }
 
     private fun setAccountData(phone: String?) {
-        if (phone.isNullOrBlank()) {
-            binding.changeAccountBox?.gone()
-        } else {
-            binding.changeAccountBox?.visible()
-            binding.userAccountPhone?.text = phone.persianDigitsIfPersian(Locale.getDefault())
+        with(binding) {
+            if (phone.isNullOrBlank()) {
+                changeAccountLayout.changeAccountBox.gone()
+            } else {
+                changeAccountLayout.changeAccountBox.visible()
+                changeAccountLayout.userAccountPhone.text =
+                    phone.persianDigitsIfPersian(Locale.getDefault())
+            }
         }
     }
 
