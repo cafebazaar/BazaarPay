@@ -30,8 +30,11 @@ import ir.cafebazaar.bazaarpay.data.payment.models.getpaymentmethods.PaymentMeth
 import ir.cafebazaar.bazaarpay.data.payment.models.merchantinfo.MerchantInfo
 import ir.cafebazaar.bazaarpay.data.payment.models.pay.PayResult
 import ir.cafebazaar.bazaarpay.extensions.navigateSafe
+import ir.cafebazaar.bazaarpay.extensions.persianDigitsIfPersian
 import ir.cafebazaar.bazaarpay.extensions.setSafeOnClickListener
+import ir.cafebazaar.bazaarpay.screens.logout.LogoutFragmentDirections
 import ir.cafebazaar.bazaarpay.utils.getErrorViewBasedOnErrorModel
+import java.util.*
 
 internal class PaymentMethodsFragment : Fragment(), PaymentMethodsClickListener {
 
@@ -91,6 +94,7 @@ internal class PaymentMethodsFragment : Fragment(), PaymentMethodsClickListener 
             getMerchantInfoStateData().observe(viewLifecycleOwner, ::handleMerchantInfoStates)
             paymentMethodViewLoaderLiveData.observe(viewLifecycleOwner, ::loadPaymentOptionView)
             navigationLiveData.observe(viewLifecycleOwner, ::handleNavigation)
+            accountInfoLiveData.observe(viewLifecycleOwner, ::setAccountData)
         }
     }
 
@@ -101,6 +105,10 @@ internal class PaymentMethodsFragment : Fragment(), PaymentMethodsClickListener 
             }
 
             initPaymentGatewayRecyclerView()
+
+            changeAccountLayout.changeAccountAction?.setSafeOnClickListener {
+                handleNavigation(LogoutFragmentDirections.openLogout())
+            }
         }
     }
 
@@ -194,6 +202,18 @@ internal class PaymentMethodsFragment : Fragment(), PaymentMethodsClickListener 
                     visible()
                     text = viewLoader.subDescription
                 }
+            }
+        }
+    }
+
+    private fun setAccountData(phone: String?) {
+        with(binding) {
+            if (phone.isNullOrBlank()) {
+                changeAccountLayout.changeAccountBox.gone()
+            } else {
+                changeAccountLayout.changeAccountBox.visible()
+                changeAccountLayout.userAccountPhone.text =
+                    phone.persianDigitsIfPersian(Locale.getDefault())
             }
         }
     }

@@ -32,11 +32,18 @@ internal class AccountLocalDataSource {
         rejectValue = ""
     )
 
+    var loginPhone: String by DataSourceValueHolder(
+        accountSharedDataSource,
+        LOGIN_PHONE,
+        rejectValue = ""
+    )
+
     fun getAutoFillPhones(): List<String> {
         return autoFillPhones.split(JOIN_STRING_SEPARATOR)
     }
 
     fun putAutoFillPhones(phones: String) {
+        saveLoginPhone(phones)
         getAutoFillPhones()
             .filter { it.isNotEmpty() }
             .toMutableSet()
@@ -45,7 +52,10 @@ internal class AccountLocalDataSource {
             .also { newPhoneNumberList ->
                 autoFillPhones = newPhoneNumberList.joinToString(JOIN_STRING_SEPARATOR)
             }
+    }
 
+    fun saveLoginPhone(phone: String) {
+        loginPhone = phone
     }
 
     fun removeAccessToken() {
@@ -60,6 +70,7 @@ internal class AccountLocalDataSource {
 
         const val REFRESH_TOKEN = "refresh_token"
         const val ACCESS_TOKEN = "access_token"
+        const val LOGIN_PHONE = "login_phone"
         const val ACCESS_TOKEN_TIMESTAMP = "access_token_timestamp"
         const val KEY_AUTO_FILL_PHONES = "auto_fill_phones"
         const val JOIN_STRING_SEPARATOR = ","

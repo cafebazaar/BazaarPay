@@ -1,18 +1,18 @@
 package ir.cafebazaar.bazaarpay.screens.payment.paymentmethods
 
-import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavDirections
 import ir.cafebazaar.bazaarpay.R
 import ir.cafebazaar.bazaarpay.ServiceLocator
+import ir.cafebazaar.bazaarpay.data.bazaar.account.AccountRepository
 import ir.cafebazaar.bazaarpay.data.bazaar.models.ErrorModel
-import ir.cafebazaar.bazaarpay.extensions.fold
 import ir.cafebazaar.bazaarpay.data.payment.PaymentRepository
 import ir.cafebazaar.bazaarpay.data.payment.models.getpaymentmethods.PaymentMethodsInfo
 import ir.cafebazaar.bazaarpay.data.payment.models.merchantinfo.MerchantInfo
 import ir.cafebazaar.bazaarpay.data.payment.models.pay.PayResult
+import ir.cafebazaar.bazaarpay.extensions.fold
 import ir.cafebazaar.bazaarpay.models.PaymentFlowState
 import ir.cafebazaar.bazaarpay.models.Resource
 import ir.cafebazaar.bazaarpay.screens.payment.increasecredit.DynamicCreditOptionDealerArg
@@ -21,14 +21,17 @@ import kotlinx.coroutines.launch
 
 internal class PaymentMethodsViewModel : ViewModel() {
 
-    private val context: Context = ServiceLocator.get()
     private val paymentRepository: PaymentRepository = ServiceLocator.get()
+    private val accountRepository: AccountRepository = ServiceLocator.get()
     private val paymentMethodsStateData = SingleLiveEvent<Resource<PaymentMethodsInfo>>()
     private val payStateData = SingleLiveEvent<Resource<PayResult>>()
     private val merchantInfoStateData = SingleLiveEvent<Resource<MerchantInfo>>()
     private val _paymentOptionViewLoaderLiveData = SingleLiveEvent<PaymentMethodViewLoader>()
     val paymentMethodViewLoaderLiveData: LiveData<PaymentMethodViewLoader> =
         _paymentOptionViewLoaderLiveData
+
+    private val _accountInfoLiveData = SingleLiveEvent<String>()
+    val accountInfoLiveData:LiveData<String> =  _accountInfoLiveData
 
     private val _navigationLiveData = SingleLiveEvent<NavDirections>()
     val navigationLiveData: LiveData<NavDirections> = _navigationLiveData
@@ -45,6 +48,11 @@ internal class PaymentMethodsViewModel : ViewModel() {
         paymentMethodsStateData.value = Resource.loading()
         getMerchantInfo()
         getPaymentMethods()
+        getAccountData()
+    }
+
+    private fun getAccountData() {
+        _accountInfoLiveData.value = accountRepository.getPhone()
     }
 
     private fun getPaymentMethods() {

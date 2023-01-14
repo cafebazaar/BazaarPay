@@ -48,16 +48,30 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/paymentOptionTitle" />
 
+        <include
+            android:id="@+id/changeAccountLayout"
+            layout="@layout/layout_change_accont"
+            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_marginHorizontal="@dimen/bazaarpay_default_margin_double"
+            android:layout_marginTop="@dimen/bazaarpay_default_margin_double"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/paymentOptionTitle"
+            app:layout_constraintBottom_toTopOf="@id/viewMerchantInfo"
+            />
+
         <ir.cafebazaar.bazaarpay.widget.MerchantInfoView
             android:id="@+id/viewMerchantInfo"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:paddingHorizontal="@dimen/bazaarpay_default_margin_double"
             android:paddingVertical="@dimen/bazaarpay_default_margin"
+            android:layout_marginTop="@dimen/bazaarpay_default_margin"
             app:layout_constraintBottom_toTopOf="@id/selectOptionTitle"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/paymentOptionTitle" />
+            app:layout_constraintTop_toBottomOf="@id/changeAccountBox" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/selectOptionTitle"
