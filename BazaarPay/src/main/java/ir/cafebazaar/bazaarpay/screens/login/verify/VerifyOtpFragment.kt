@@ -101,6 +101,10 @@ internal class VerifyOtpFragment : Fragment() {
         headerBinding.editPhoneContainer.userAccountPhone.text =
             phoneNumber.localizeNumber(requireContext())
 
+        headerBinding.editPhoneContainer.changeAccountAction.setSafeOnClickListener {
+            findNavController().popBackStack()
+        }
+
         binding.resendCodeButton.setSafeOnClickListener { handleResendSmsClick() }
         binding.callButton.setSafeOnClickListener {
             viewModel.onCallButtonClicked(phoneNumber)
