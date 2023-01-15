@@ -227,13 +227,14 @@ internal class VerifyOtpFragment : Fragment() {
     }
 
     private fun showError(message: String) {
-
-        headerBinding.verificationCodeInput.isErrorEnabled = true
-        headerBinding.verificationCodeInput.error = message
+        headerBinding.verificationCodeEditText.errorState(true)
+        headerBinding.otpErrorText.visible()
+        headerBinding.otpErrorText.text = message
     }
 
     private fun hideError() {
-        headerBinding.verificationCodeInput.isErrorEnabled = false
+        headerBinding.otpErrorText.invisible()
+        headerBinding.verificationCodeEditText.errorState(false)
     }
 
     private fun handleResendSmsAndCallState(resource: Resource<Long>) {
