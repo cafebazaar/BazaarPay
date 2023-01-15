@@ -64,4 +64,5 @@
     <string name="bazaarpay_logout_message">آیا می‌خواهید از حساب کاربری فعلی بازارپی خارج شوید و پرداخت را با حساب دیگری انجام دهید؟</string>
     <string name="bazaarpay_no">خیر</string>
     <string name="bazaarpay_yes">بله</string>
+    <string name="bazaarpay_enter_otp_message">کد تایید ارسال شده به شماره همراه بالا را وارد کنید.</string>
 </resources>

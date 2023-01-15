@@ -98,10 +98,8 @@ internal class VerifyOtpFragment : Fragment() {
             findNavController().popBackStack()
         }
 
-        headerBinding.verificationMessageTextView.text = getString(
-            R.string.bazaarpay_waiting_for_verification_sms,
+        headerBinding.editPhoneContainer.userAccountPhone.text =
             phoneNumber.localizeNumber(requireContext())
-        )
 
         binding.resendCodeButton.setSafeOnClickListener { handleResendSmsClick() }
         binding.callButton.setSafeOnClickListener {

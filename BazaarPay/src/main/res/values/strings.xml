@@ -65,4 +65,5 @@
     <string name="bazaarpay_logout_message">Do you want to logout from the current BazaarPay account and do the payment with another account?</string>
     <string name="bazaarpay_no">No</string>
     <string name="bazaarpay_yes">Yes</string>
+    <string name="bazaarpay_enter_otp_message">Please enter the code that we sent to the above number.</string>
 </resources>
