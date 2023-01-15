@@ -58,11 +58,13 @@
         android:layout_marginTop="@dimen/bazaarpay_default_margin_double_half"
         android:layout_marginEnd="@dimen/bazaarpay_default_margin_double_half"
         android:layout_marginBottom="@dimen/bazaarpay_default_margin_double_half"
-        android:gravity="start"
+        android:gravity="center"
+        android:textAlignment="center"
         android:text="@string/bazaarpay_enter_phone_number"
-        android:textColor="@color/bazaarpay_text_hint"
+        android:textColor="@color/bazaarpay_grey_90"
         android:visibility="visible"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/logoDivider"
         tools:visibility="visible" />
 

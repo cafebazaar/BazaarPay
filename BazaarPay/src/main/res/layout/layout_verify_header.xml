@@ -51,6 +51,21 @@
         app:layout_constraintStart_toStartOf="parent"
         tools:text="@string/bazaarpay_waiting_for_verification_sms" />
 
+    <ir.cafebazaar.bazaarpay.screens.login.verify.OtpEditText
+        android:id="@+id/et_otp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:cursorVisible="false"
+        android:digits="1234567890"
+        android:inputType="number"
+        android:maxLength="4"
+        android:textIsSelectable="false"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@id/verificationCodeInput"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        />
+
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/verificationCodeInput"
         android:layout_width="@dimen/bazaarpay_match_constraint"
