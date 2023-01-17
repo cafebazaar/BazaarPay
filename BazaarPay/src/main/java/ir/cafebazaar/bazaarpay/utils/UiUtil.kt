@@ -10,6 +10,6 @@ fun getBalanceTextColor(context: Context, balance: Long): Int {
     return if (balance < 0) {
         ContextCompat.getColor(context, R.color.bazaarpay_error_primary)
     } else {
-        ContextCompat.getColor(context, R.color.bazaarpay_text_secondary)
+        ContextCompat.getColor(context, R.color.bazaarpay_text_primary)
     }
 }
