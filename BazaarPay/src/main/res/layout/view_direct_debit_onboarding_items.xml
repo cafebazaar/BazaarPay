@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:gravity="center_vertical"
+    tools:orientation="horizontal"
+    tools:parentTag="android.widget.LinearLayout">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:paddingHorizontal="@dimen/bazaarpay_default_margin_double">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingVertical="@dimen/bazaarpay_default_margin">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/icon1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:tint="@color/bazaarpay_app_brand_primary"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_subscribe" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/title1"
+                style="@style/Bazaar.Text.Subtitle2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/bazaarpay_default_margin"
+                android:gravity="center"
+                android:text="تمدید خودکار اشتراک"
+                android:textAlignment="viewStart"
+                android:textColor="@color/bazaarpay_grey_90"
+                app:layout_constraintBottom_toBottomOf="@id/icon1"
+                app:layout_constraintStart_toEndOf="@id/icon1"
+                app:layout_constraintTop_toTopOf="@id/icon1" />
+
+            <androidx.constraintlayout.widget.Barrier
+                android:id="@+id/titleBarrier1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:barrierDirection="bottom"
+                app:constraint_referenced_ids="icon1,title1" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/subtitle1"
+                style="@style/Bazaar.Text.Caption"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="با فعال‌سازی پرداخت مستقیم اشتراک شما در سرویس‌های مختلف بدون نیاز به اقدام شما به صورت خودکار تمدید می‌شود."
+                android:textAlignment="viewStart"
+                android:textColor="@color/bazaarpay_grey_90"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/titleBarrier1" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/bazaarpay_grey_40" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingVertical="@dimen/bazaarpay_default_margin">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/icon2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:tint="@color/bazaarpay_app_brand_primary"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_info" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/title2"
+                style="@style/Bazaar.Text.Subtitle2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/bazaarpay_default_margin"
+                android:gravity="center"
+                android:text="فعال‌سازی پرداخت مستقیم"
+                android:textAlignment="viewStart"
+                android:textColor="@color/bazaarpay_grey_90"
+                app:layout_constraintBottom_toBottomOf="@id/icon2"
+                app:layout_constraintStart_toEndOf="@id/icon2"
+                app:layout_constraintTop_toTopOf="@id/icon2" />
+
+            <androidx.constraintlayout.widget.Barrier
+                android:id="@+id/titleBarrier2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:barrierDirection="bottom"
+                app:constraint_referenced_ids="icon2,title2" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/subtitle2"
+                style="@style/Bazaar.Text.Caption"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="پرداخت مستقیم را از طریق انتقال به صفحه بانک خود فعال کنید. پس از آن می‌توانید در مدت یک سال روزانه ۱۰ تراکنش تا سقف تعیین شده داشته باشید."
+                android:textAlignment="viewStart"
+                android:textColor="@color/bazaarpay_grey_90"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/titleBarrier2" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/bazaarpay_grey_40" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingVertical="@dimen/bazaarpay_default_margin">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/icon3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:tint="@color/bazaarpay_app_brand_primary"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_clear" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/title3"
+                style="@style/Bazaar.Text.Subtitle2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/bazaarpay_default_margin"
+                android:gravity="center"
+                android:text="غیرفعال‌سازی پرداخت مستقیم"
+                android:textAlignment="viewStart"
+                android:textColor="@color/bazaarpay_grey_90"
+                app:layout_constraintBottom_toBottomOf="@id/icon3"
+                app:layout_constraintStart_toEndOf="@id/icon3"
+                app:layout_constraintTop_toTopOf="@id/icon3" />
+
+            <androidx.constraintlayout.widget.Barrier
+                android:id="@+id/titleBarrier3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:barrierDirection="bottom"
+                app:constraint_referenced_ids="icon3,title3" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/subtitle3"
+                style="@style/Bazaar.Text.Caption"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="در صورت نیاز همیشه می‌توانید با رفتن به صفحه کیف‌پول و پرداخت بازار این سرویس را غیر فعال کنید."
+                android:textAlignment="viewStart"
+                android:textColor="@color/bazaarpay_grey_90"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/titleBarrier3" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </LinearLayout>
+
+
+</ScrollView>

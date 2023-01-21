@@ -4,25 +4,21 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.view.OneShotPreDrawListener
-import androidx.core.view.doOnPreDraw
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.NavDirections
 import androidx.navigation.fragment.findNavController
-import androidx.viewpager2.widget.ViewPager2
 import ir.cafebazaar.bazaarpay.R
 import ir.cafebazaar.bazaarpay.data.bazaar.models.ErrorModel
+import ir.cafebazaar.bazaarpay.data.bazaar.payment.models.directdebit.onboarding.DirectDebitOnBoardingDetails
 import ir.cafebazaar.bazaarpay.databinding.FragmentDirectDebitOnBoardingBinding
 import ir.cafebazaar.bazaarpay.extensions.gone
+import ir.cafebazaar.bazaarpay.extensions.navigateSafe
+import ir.cafebazaar.bazaarpay.extensions.setSafeOnClickListener
 import ir.cafebazaar.bazaarpay.extensions.visible
 import ir.cafebazaar.bazaarpay.models.PaymentFlowState
 import ir.cafebazaar.bazaarpay.models.Resource
 import ir.cafebazaar.bazaarpay.models.ResourceState
-import ir.cafebazaar.bazaarpay.data.bazaar.payment.models.directdebit.onboarding.DirectDebitOnBoardingDetails
-import ir.cafebazaar.bazaarpay.data.bazaar.payment.models.directdebit.onboarding.OnBoardingItem
-import ir.cafebazaar.bazaarpay.extensions.navigateSafe
-import ir.cafebazaar.bazaarpay.extensions.setSafeOnClickListener
 import ir.cafebazaar.bazaarpay.utils.getErrorViewBasedOnErrorModel
 
 internal class DirectDebitOnBoardingFragment : Fragment() {
@@ -30,9 +26,6 @@ internal class DirectDebitOnBoardingFragment : Fragment() {
     private var _binding: FragmentDirectDebitOnBoardingBinding? = null
     private val binding: FragmentDirectDebitOnBoardingBinding
         get() = requireNotNull(_binding)
-
-    private var onPageChangeCallback: ViewPager2.OnPageChangeCallback? = null
-    private var oneShotPreDrawListener: OneShotPreDrawListener? = null
 
     private val onBoardingViewModel: DirectDebitOnBoardingViewModel by viewModels()
 
@@ -57,10 +50,7 @@ internal class DirectDebitOnBoardingFragment : Fragment() {
             backButton.setSafeOnClickListener {
                 findNavController().popBackStack()
             }
-            skipButton.setSafeOnClickListener {
-                onBoardingViewModel.onSkipButtonClicked()
-            }
-            nextButton.setSafeOnClickListener { onNextButtonClicked() }
+            nextButton.setSafeOnClickListener {  }
         }
     }
 
@@ -86,7 +76,6 @@ internal class DirectDebitOnBoardingFragment : Fragment() {
                     }
                 }
                 PaymentFlowState.DirectDebitObBoardingDetails -> {
-                    setUpViewPager((resource.data as DirectDebitOnBoardingDetails).onBoardingDetails)
                     hideErrorView()
                     with(binding) {
                         contentGroup.visible()
@@ -102,43 +91,6 @@ internal class DirectDebitOnBoardingFragment : Fragment() {
                         loading.gone()
                     }
                 }
-            }
-        }
-    }
-
-    private fun setUpViewPager(items: List<OnBoardingItem>) {
-        with(binding) {
-            onBoardingViewPager.adapter = DirectDebitOnBoardingAdapter(items)
-            wormsDotIndicator.setViewPager2(onBoardingViewPager)
-            onPageChangeCallback = object : ViewPager2.OnPageChangeCallback() {
-                override fun onPageSelected(position: Int) {
-                    if (position == onBoardingViewPager.adapter?.itemCount?.dec()) {
-                        nextButton.text = getString(R.string.bazaarpay_start_activation)
-                        skipButton.gone()
-                    } else {
-                        nextButton.text = getString(R.string.bazaarpay_next)
-                        skipButton.visible()
-                    }
-                }
-            }
-            onBoardingViewPager.apply {
-                oneShotPreDrawListener = doOnPreDraw {
-                    onBoardingViewPager.setCurrentItem(0, false)
-                }
-                registerOnPageChangeCallback(requireNotNull(onPageChangeCallback))
-            }
-        }
-    }
-
-    private fun onNextButtonClicked() {
-        with(binding) {
-            val currentPageIndex = onBoardingViewPager.currentItem
-            val lastPageIndex = onBoardingViewPager.adapter?.itemCount?.dec()
-
-            if (currentPageIndex == lastPageIndex) {
-                onBoardingViewModel.onSkipButtonClicked()
-            } else {
-                onBoardingViewPager.currentItem = currentPageIndex + 1
             }
         }
     }
@@ -177,12 +129,6 @@ internal class DirectDebitOnBoardingFragment : Fragment() {
     }
 
     override fun onDestroyView() {
-        onPageChangeCallback?.also {
-            binding.onBoardingViewPager.unregisterOnPageChangeCallback(it)
-        }
-        onPageChangeCallback = null
-        oneShotPreDrawListener?.removeListener()
-        oneShotPreDrawListener = null
         super.onDestroyView()
         _binding = null
     }
