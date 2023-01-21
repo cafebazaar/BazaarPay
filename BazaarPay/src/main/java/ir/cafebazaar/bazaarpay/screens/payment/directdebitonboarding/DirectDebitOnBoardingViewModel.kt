@@ -43,7 +43,7 @@ internal class DirectDebitOnBoardingViewModel : ViewModel() {
         _onBoardingItemsLiveData.value = Resource.failed(failure = error)
     }
 
-    fun onSkipButtonClicked() {
+    fun onNextButtonClicked() {
         _navigationLiveData.value =
             DirectDebitOnBoardingFragmentDirections.actionDirectDebitOnBoardingFragmentToNationalIdFragment()
     }

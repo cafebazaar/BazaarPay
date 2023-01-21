@@ -50,7 +50,9 @@ internal class DirectDebitOnBoardingFragment : Fragment() {
             backButton.setSafeOnClickListener {
                 findNavController().popBackStack()
             }
-            nextButton.setSafeOnClickListener {  }
+            nextButton.setSafeOnClickListener {
+                onBoardingViewModel.onNextButtonClicked()
+            }
         }
     }
 
