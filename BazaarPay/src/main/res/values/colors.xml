@@ -81,4 +81,6 @@
     <color name="bazaarpay_text_secondary">@color/bazaarpay_grey_70</color>
     <color name="bazaarpay_text_hint">@color/bazaarpay_grey_80</color>
 
+    <color name="bazaarpay_success">#0EA960</color>
+
 </resources>

@@ -15,10 +15,12 @@ import ir.cafebazaar.bazaarpay.data.bazaar.models.ErrorModel
 import ir.cafebazaar.bazaarpay.databinding.FragmentThankYouPageBinding
 import ir.cafebazaar.bazaarpay.extensions.getReadableErrorMessage
 import ir.cafebazaar.bazaarpay.extensions.gone
+import ir.cafebazaar.bazaarpay.extensions.persianDigitsIfPersian
 import ir.cafebazaar.bazaarpay.extensions.setSafeOnClickListener
 import ir.cafebazaar.bazaarpay.extensions.visible
 import ir.cafebazaar.bazaarpay.models.Resource
 import ir.cafebazaar.bazaarpay.models.ResourceState
+import java.util.*
 
 internal class PaymentThankYouPageFragment : Fragment() {
 
@@ -94,11 +96,12 @@ internal class PaymentThankYouPageFragment : Fragment() {
                 model.messageTextModel.argMessage ?: getString(
                     model.messageTextModel.defaultMessageId
                 )
-            successButton.text = getString(
-                model.successButtonTextModel.successButtonTextId,
-                model.successButtonTextModel.successMessageCountDown
-            )
-
+            waitingProgressBar.progress = model.paymentProgressBarModel.successMessageCountDown.toInt()
+            secondsTextView.text = context?.resources?.getQuantityString(
+                R.plurals.bazaarpay_seconds,
+                model.paymentProgressBarModel.seconds,
+                model.paymentProgressBarModel.seconds
+            )?.persianDigitsIfPersian(Locale.getDefault())
             successButton.setSafeOnClickListener {
                 finishCallbacks?.onSuccess()
             }

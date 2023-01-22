@@ -66,4 +66,9 @@
     <string name="bazaarpay_no">No</string>
     <string name="bazaarpay_yes">Yes</string>
     <string name="bazaarpay_enter_otp_message">Please enter the code that we sent to the above number.</string>
+    <plurals name="bazaarpay_seconds">
+        <item quantity="one">%d second</item>
+        <item quantity="zero">%d second</item>
+        <item quantity="other">%d seconds</item>
+    </plurals>
 </resources>

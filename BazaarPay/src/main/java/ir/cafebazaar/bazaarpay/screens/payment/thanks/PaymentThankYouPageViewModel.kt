@@ -2,11 +2,13 @@ package ir.cafebazaar.bazaarpay.screens.payment.thanks
 
 import android.os.CountDownTimer
 import android.text.format.DateUtils.SECOND_IN_MILLIS
+import androidx.databinding.adapters.SeekBarBindingAdapter.setProgress
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import ir.cafebazaar.bazaarpay.R
 import ir.cafebazaar.bazaarpay.models.Resource
 import ir.cafebazaar.bazaarpay.utils.SingleLiveEvent
+
 
 internal class PaymentThankYouPageViewModel : ViewModel() {
 
@@ -36,13 +38,13 @@ internal class PaymentThankYouPageViewModel : ViewModel() {
             SECOND_IN_MILLIS
         ) {
             override fun onTick(millisUntilFinished: Long) {
-                val successMessageText = (millisUntilFinished / SECOND_IN_MILLIS).plus(1)
+                val progressPercent = 100 - ((millisUntilFinished * 100) / (COUNT_DOWN_TIMER_SEC * SECOND_IN_MILLIS))
 
                 _viewStateLiveData.value = Resource.loaded(
                     data = PaymentThankYouPageSuccessModel(
-                        successButtonTextModel = SuccessButtonTextModel(
-                            successButtonTextId = R.string.bazaarpay_commit_with_countdown,
-                            successMessageCountDown = successMessageText
+                        paymentProgressBarModel = PaymentProgressBarModel(
+                            successMessageCountDown = progressPercent,
+                            seconds = (millisUntilFinished / SECOND_IN_MILLIS).toInt()
                         ),
                         messageTextModel = PaymentThankYouPageSuccessMessageModel(
                             argMessage = args.message,

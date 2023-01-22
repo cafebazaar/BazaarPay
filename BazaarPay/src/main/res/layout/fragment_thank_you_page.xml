@@ -41,13 +41,14 @@
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/statusIconImageView"
-            android:layout_width="36dp"
-            android:layout_height="36dp"
-            android:layout_marginStart="@dimen/bazaarpay_default_margin_double"
-            app:layout_constraintBottom_toBottomOf="@id/messageTextView"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@id/messageTextView"
-            app:srcCompat="@drawable/ic_success" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/titleDivider"
+            android:layout_marginTop="@dimen/bazaarpay_default_margin_triple"
+            app:srcCompat="@drawable/ic_success"
+            android:tint="@color/bazaarpay_success"/>
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/messageTextView"
@@ -55,20 +56,56 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/bazaarpay_default_margin_double"
-            android:gravity="center_vertical"
-            android:padding="@dimen/bazaarpay_default_margin_double"
+            android:layout_marginHorizontal="@dimen/bazaarpay_default_margin_double"
+            android:gravity="center"
             android:textColor="@color/bazaarpay_text_hint"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/statusIconImageView"
-            app:layout_constraintTop_toBottomOf="@id/titleDivider"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/statusIconImageView"
             tools:text="@string/bazaarpay_payment_done_message" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/subtitleTextView"
+            style="@style/Bazaar.Text.Caption"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/bazaarpay_default_margin_double"
+            android:gravity="center"
+            android:textColor="@color/bazaarpay_text_hint"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/messageTextView"
+            tools:text="تا چند ثانیه‌ی دیگر خرید شما تکمیل و به برنامه مورد نظر برمی‌گردید." />
+
+        <ProgressBar
+            android:id="@+id/waitingProgressBar"
+            android:layout_width="96dp"
+            android:layout_height="4dp"
+            style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+            app:layout_constraintTop_toBottomOf="@id/subtitleTextView"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="@dimen/bazaarpay_default_margin_quadruple"
+            android:progressDrawable="@drawable/progress_drawable"
+            android:indeterminate="false" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/secondsTextView"
+            style="@style/Bazaar.Text.Caption"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textColor="@color/bazaarpay_grey_70"
+            app:layout_constraintStart_toStartOf="@id/waitingProgressBar"
+            app:layout_constraintBottom_toTopOf="@id/waitingProgressBar"
+            tools:text="۴ ثانیه" />
 
         <androidx.constraintlayout.widget.Barrier
             android:id="@+id/contentBarrier"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:barrierDirection="bottom"
-            app:constraint_referenced_ids="messageTextView" />
+            app:constraint_referenced_ids="waitingProgressBar" />
 
         <ir.cafebazaar.bazaarpay.widget.button.BazaarPayButton
             android:id="@+id/successButton"

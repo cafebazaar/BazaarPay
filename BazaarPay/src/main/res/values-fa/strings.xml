@@ -44,7 +44,7 @@
     <string name="bazaarpay_commit_with_countdown">باشه (%d)</string>
     <string name="bazaarpay_cancel">انصراف</string>
     <string name="bazaarpay_commit">باشه</string>
-    <string name="bazaarpay_payment_done_message">پرداخت با موفقیت انجام شد.</string>
+    <string name="bazaarpay_payment_done_message">پرداخت شما با موفقیت انجام شد.</string>
     <string name="bazaarpay_bank_list_header_1">کارت بانک شما باید متعلق به یکی از بانک‌های زیر باشد.</string>
     <string name="bazaarpay_bank_list_header_2">لازم است شماره تلفن ثبت شده در حساب بانک و حساب شما یکسان باشد.</string>
     <string name="bazaarpay_header_select_bank_title">بانک خود را انتخاب کنید.</string>
@@ -65,4 +65,8 @@
     <string name="bazaarpay_no">خیر</string>
     <string name="bazaarpay_yes">بله</string>
     <string name="bazaarpay_enter_otp_message">کد تایید ارسال شده به شماره همراه بالا را وارد کنید.</string>
+    <plurals name="bazaarpay_seconds">
+        <item quantity="one">%d ثانیه</item>
+        <item quantity="other">%d ثانیه</item>
+    </plurals>
 </resources>
