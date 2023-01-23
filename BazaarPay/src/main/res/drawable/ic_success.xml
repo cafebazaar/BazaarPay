@@ -1,9 +1,13 @@
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
-    android:width="24dp"
-    android:height="24dp"
-    android:viewportWidth="36"
-    android:viewportHeight="36">
-    <path
-        android:fillColor="@color/bazaarpay_app_brand_primary"
-        android:pathData="M18,0C8.025,0 0,8.025 0,18C0,27.975 8.025,36 18,36C27.975,36 36,27.975 36,18C36,8.025 27.975,0 18,0ZM26.7,14.7L17.1,24.3C16.65,24.675 16.125,24.9 15.6,24.9C15.075,24.9 14.55,24.675 14.1,24.3L9.3,19.5C8.475,18.675 8.475,17.325 9.3,16.5C10.125,15.675 11.475,15.675 12.3,16.5L15.6,19.8L23.7,11.7C24.525,10.875 25.875,10.875 26.7,11.7C27.525,12.525 27.525,13.875 26.7,14.7Z" />
+    android:width="72dp"
+    android:height="72dp"
+    android:viewportWidth="72"
+    android:viewportHeight="72">
+  <path
+      android:pathData="M36,36m-36,0a36,36 0,1 1,72 0a36,36 0,1 1,-72 0"
+      android:fillColor="#0EA960"/>
+  <path
+      android:pathData="M15.438,34.334C17.356,32.401 20.465,32.401 22.382,34.334L28.173,40.169C28.624,40.624 29.364,40.609 29.797,40.136L49.618,18.449C51.535,16.517 54.644,16.517 56.562,18.449C58.479,20.382 58.479,23.514 56.562,25.447L30.81,53.062C29.823,54.12 28.155,54.146 27.136,53.119L15.438,41.331C13.521,39.399 13.521,36.266 15.438,34.334Z"
+      android:fillColor="#ffffff"
+      android:fillType="evenOdd"/>
 </vector>

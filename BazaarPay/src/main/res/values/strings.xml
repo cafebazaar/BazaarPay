@@ -71,4 +71,6 @@
         <item quantity="zero">%d second</item>
         <item quantity="other">%d seconds</item>
     </plurals>
+    <string name="bazaarpay_return_to_payment">Return to payment</string>
+    <string name="bazaarpay_complete_payment">Complete payment</string>
 </resources>

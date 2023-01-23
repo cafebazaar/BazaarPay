@@ -87,8 +87,7 @@ internal class PaymentThankYouPageFragment : Fragment() {
         with(binding) {
             contentContainer.visible()
             successButton.visible()
-
-            failureButtonsGroup.gone()
+            errorBox.gone()
 
             statusIconImageView.setImageResource(R.drawable.ic_success)
 
@@ -112,20 +111,17 @@ internal class PaymentThankYouPageFragment : Fragment() {
         with(binding) {
             contentContainer.visible()
             successButton.gone()
+            errorBox.visible()
 
-            failureButtonsGroup.visible()
-
-            tryAgainButton.setSafeOnClickListener {
-                findNavController().navigateUp()
-            }
-            cancelButton.setSafeOnClickListener {
+            successButton.setSafeOnClickListener {
                 finishCallbacks?.onCanceled()
             }
-
+            successButton.text = getString(R.string.bazaarpay_return_to_payment)
+            messageTextView.text = getString(R.string.bazaarpay_payment_failed)
             statusIconImageView.setImageResource(
-                error?.getErrorIcon(requireContext()) ?: R.drawable.ic_error_outline_icon_primary_24dp_old
+                error?.getErrorIcon(requireContext()) ?: R.drawable.ic_fail
             )
-            messageTextView.text = requireContext().getReadableErrorMessage(error)
+            errorTextView.text = requireContext().getReadableErrorMessage(error)
         }
     }
 

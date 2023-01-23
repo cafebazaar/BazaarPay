@@ -44,7 +44,7 @@ internal class PaymentThankYouPageViewModel : ViewModel() {
                     data = PaymentThankYouPageSuccessModel(
                         paymentProgressBarModel = PaymentProgressBarModel(
                             successMessageCountDown = progressPercent,
-                            seconds = (millisUntilFinished / SECOND_IN_MILLIS).toInt()
+                            seconds = (millisUntilFinished / SECOND_IN_MILLIS).toInt().plus(1)
                         ),
                         messageTextModel = PaymentThankYouPageSuccessMessageModel(
                             argMessage = args.message,

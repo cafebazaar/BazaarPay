@@ -11,7 +11,7 @@
     <string name="bazaarpay_error_server_connection_failure_short">ارتباط برقرار نیست.</string>
     <string name="bazaarpay_data_not_found">نتیجه‌ای یافت نشد.</string>
     <string name="bazaarpay_rate_limit_exceeded">لطفا کمی بعد دوباره تلاش کنید</string>
-    <string name="bazaarpay_payment_failed">متاسفانه پرداخت ناموفق بود!</string>
+    <string name="bazaarpay_payment_failed">پرداخت شما ناموفق بود!</string>
     <string name="bazaarpay_gateway_payment_failed">پرداخت اینترنتی ناموفق بود!</string>
     <string name="bazaarpay_payment_gateway_not_available">لطفا برای ادامه‌ی پرداخت، یک مرورگر اینترنت نصب کنید.</string>
     <string name="bazaarpay_enter_bazaar_pay">ورود به پرداخت بازارپی</string>
@@ -69,4 +69,7 @@
         <item quantity="one">%d ثانیه</item>
         <item quantity="other">%d ثانیه</item>
     </plurals>
+    <string name="bazaarpay_return_to_payment">بازگشت به صفحه‌ پرداخت</string>
+    <string name="bazaarpay_complete_payment">تکمیل خرید</string>
+
 </resources>
