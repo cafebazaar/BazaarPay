@@ -22,7 +22,9 @@ class MainActivity : AppCompatActivity() {
             binding.result.setTextColor(ContextCompat.getColor(this, R.color.bazaarpay_app_brand_primary))
 
             // If you don't commit the payment in server side you must do it like this in the client
-            commitExample()
+            if (binding.commit.isChecked) {
+                commitExample()
+            }
         },
         {
             binding.result.text = "CANCEL!"
