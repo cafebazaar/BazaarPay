@@ -12,8 +12,6 @@ import ir.cafebazaar.bazaarpay.data.payment.PaymentRepository
 import ir.cafebazaar.bazaarpay.extensions.fold
 import ir.cafebazaar.bazaarpay.utils.getLanguage
 import ir.cafebazaar.bazaarpay.utils.getLanguageNumber
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
 import java.lang.Exception
 
 class BazaarPayLauncher(
