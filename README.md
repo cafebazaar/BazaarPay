@@ -4,7 +4,7 @@ This document aims to help you to integrate the `BazaarPay` android SDK within y
 
 ### Rules:
 You have to get a `checkout` token before starting the payment flow using the SDK.
-You have to commit the `checkout` token after a successful payment flow.
+You have to commit the `checkout` token after a successful payment flow. Recommended way for using this API is calling it from the server side, But this option is also provided in the SDK.
 
 ### Limitations:
 `Minimum Android SDK` >= 17
@@ -40,6 +40,7 @@ There are three points which you have to consider:
 * `onCancel`: This function will call if the payment flow does not finish successfully (Cancel by the user).
 3. You need to pass the `checkout` token as a parameter during calling `launchBazaarPay` function.*2
     * You can optionally pass the user phone number in `phoneNumber` in order to pre fill phone number in login screen.
+4. You have to commit the `checkout` token after a successful payment flow. Recommended way for using this API is calling it from the server side, But this option is also provided in the SDK. For doing this you should call the suspend `commit` function from a coroutine scope. Otherwise if ypu are using other technologies you can implement it yourself. 
 
 ### Notes:
 
