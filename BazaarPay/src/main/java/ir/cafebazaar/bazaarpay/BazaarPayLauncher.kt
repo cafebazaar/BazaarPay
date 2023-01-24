@@ -7,8 +7,13 @@ import android.content.Intent
 import androidx.activity.result.ActivityResultCaller
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import ir.cafebazaar.bazaarpay.data.bazaar.models.ErrorModel
+import ir.cafebazaar.bazaarpay.data.payment.PaymentRepository
+import ir.cafebazaar.bazaarpay.extensions.fold
 import ir.cafebazaar.bazaarpay.utils.getLanguage
 import ir.cafebazaar.bazaarpay.utils.getLanguageNumber
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import java.lang.Exception
 
 class BazaarPayLauncher(
@@ -57,4 +62,26 @@ class BazaarPayLauncher(
                 RESULT_CANCELED -> onCancel()
             }
         }
+}
+
+suspend fun commit(
+    checkoutToken: String,
+    context: Context,
+    onSuccess: () -> Unit,
+    onFailure: (ErrorModel) -> Unit
+) {
+    ServiceLocator.initializeConfigs(
+        checkoutToken = checkoutToken,
+        language = getLanguage(isEnglish = false),
+        languageNumber = getLanguageNumber(isEnglish = false),
+        isDark = false
+    )
+    ServiceLocator.initializeDependencies(context)
+    val payRepository: PaymentRepository = ServiceLocator.get()
+    payRepository.commit(checkoutToken).fold(
+        ifSuccess = {
+            onSuccess.invoke()
+        },
+        ifFailure = onFailure
+    )
 }
