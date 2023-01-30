@@ -128,7 +128,7 @@ internal class VerifyOtpFragment : Fragment() {
 
         verificationCodeWatcher = headerBinding.verificationCodeEditText.doAfterTextChanged {
             hideError()
-            headerBinding.proceedBtn.isEnabled = !it.isNullOrEmpty() &&
+            headerBinding.proceedBtn.isEnabled = it?.length == 4 &&
                     viewModel.verifyCodeStateLiveData.value?.resourceState != ResourceState.Loading
         }
     }

@@ -71,5 +71,14 @@
     </plurals>
     <string name="bazaarpay_return_to_payment">بازگشت به صفحه‌ پرداخت</string>
     <string name="bazaarpay_complete_payment">تکمیل خرید</string>
+    <string name="bazaarpay_dd_auto_renew">تمدید خودکار اشتراک</string>
+    <string name="bazaarpay_dd_auto_renew_dsc">با فعال‌سازی پرداخت مستقیم اشتراک شما در سرویس‌های مختلف بدون نیاز به اقدام شما به صورت خودکار تمدید می‌شود.</string>
+    <string name="bazaarpay_dd_enable">فعال‌سازی پرداخت مستقیم</string>
+    <string name="bazaarpay_dd_enable_dsc">پرداخت مستقیم را از طریق انتقال به صفحه بانک خود فعال کنید. پس از آن می‌توانید در مدت یک سال روزانه ۱۰ تراکنش تا سقف تعیین شده داشته باشید.</string>
+    <string name="bazaarpay_dd_disable">غیرفعال‌سازی پرداخت مستقیم</string>
+    <string name="bazaarpay_dd_disable_dsc">در صورت نیاز همیشه می‌توانید با رفتن به صفحه کیف‌پول و پرداخت بازار این سرویس را غیر فعال کنید.</string>
+    <string name="bazaarpay_dd_guide_title">راهنمای پرداخت مستقیم</string>
+    <string name="bazaarpay_dd_subtitle">با فعال‌سازی پرداخت مستقیم، برداشت وجه از حساب خود را به صورت خودکار و بدون نیاز به درگاه بانکی انجام دهید.</string>
+    <string name="bazaarpay_dd_start">شروع فعال‌سازی</string>
 
 </resources>

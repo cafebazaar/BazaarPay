@@ -73,4 +73,13 @@
     </plurals>
     <string name="bazaarpay_return_to_payment">Return to payment</string>
     <string name="bazaarpay_complete_payment">Complete payment</string>
+    <string name="bazaarpay_dd_auto_renew">Automatic Subscription Renewal</string>
+    <string name="bazaarpay_dd_auto_renew_dsc">Direct debit allows your subscriptions to various services to be renewed automatically without your intervention.</string>
+    <string name="bazaarpay_dd_enable">Enable Direct Debit</string>
+    <string name="bazaarpay_dd_enable_dsc">Set up direct debit through your bank\'s website. Within a year, you will be able to have 10 daily transactions up to the set limit.</string>
+    <string name="bazaarpay_dd_disable">Disable Direct Debit</string>
+    <string name="bazaarpay_dd_disable_dsc">In case of need, you can always disable this service through the wallet and payment market page.</string>
+    <string name="bazaarpay_dd_guide_title">A Guide to Direct Debit</string>
+    <string name="bazaarpay_dd_subtitle">Direct Debit allows you to withdraw funds from your account without utilizing a bank gateway.</string>
+    <string name="bazaarpay_dd_start">Start Activation</string>
 </resources>

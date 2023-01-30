@@ -30,8 +30,9 @@
         style="@style/Bazaar.Text.Headline1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/bazaarpay_default_margin_double"
-        android:text="راهنمای پرداخت مستقیم"
+        android:layout_marginTop="-8dp"
+        android:layout_marginHorizontal="@dimen/bazaarpay_default_margin_double"
+        android:text="@string/bazaarpay_dd_guide_title"
         android:textColor="@color/bazaarpay_grey_90"
         app:layout_constraintTop_toBottomOf="@id/directDebitIcon"
         app:layout_constraintEnd_toEndOf="parent"
@@ -44,8 +45,10 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/bazaarpay_default_margin_double"
         android:layout_marginVertical="@dimen/bazaarpay_default_margin"
-        android:text="با فعال‌سازی پرداخت مستقیم، برداشت وجه از حساب خود را به صورت خودکار و بدون نیاز به درگاه بانکی انجام دهید."
+        android:text="@string/bazaarpay_dd_subtitle"
         android:textColor="@color/bazaarpay_grey_90"
+        android:gravity="center"
+        android:textAlignment="center"
         app:layout_constraintTop_toBottomOf="@id/directDebitOnboardingTitle"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"/>
@@ -73,7 +76,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:sizeMode="large"
-        app:text="شروع فعال‌سازی" />
+        app:text="@string/bazaarpay_dd_start" />
 
     <androidx.constraintlayout.widget.Group
         android:id="@+id/contentGroup"
