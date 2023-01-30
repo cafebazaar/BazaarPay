@@ -1,7 +1,7 @@
-package ir.cafebazaar.bazaarpay.data.bazaar.payment.models.directdebit.contractcreation.response
+package ir.cafebazaar.bazaarpay.data.bazaar.directdebit.contractcreation.response
 
 import com.google.gson.annotations.SerializedName
-import ir.cafebazaar.bazaarpay.data.bazaar.payment.models.directdebit.contractcreation.ContractCreation
+import ir.cafebazaar.bazaarpay.data.bazaar.directdebit.contractcreation.ContractCreation
 
 internal class GetDirectDebitContractCreationUrlResponseDto(
     @SerializedName("url") val url: String

@@ -1,11 +1,11 @@
-package ir.cafebazaar.bazaarpay.data.bazaar.payment.models.directdebit.banklist.response
+package ir.cafebazaar.bazaarpay.data.bazaar.directdebit.banklist.response
 
 import com.google.gson.annotations.SerializedName
 import ir.cafebazaar.bazaarpay.data.bazaar.payment.models.directdebit.banklist.AvailableBanks
 import ir.cafebazaar.bazaarpay.data.bazaar.payment.models.directdebit.banklist.Bank
 import ir.cafebazaar.bazaarpay.data.bazaar.payment.models.directdebit.onboarding.response.ThemedIconDto
 import ir.cafebazaar.bazaarpay.extensions.persianDigitsIfPersian
-import java.util.Locale
+import java.util.*
 
 internal class GetAvailableBanksResponseDto(
     @SerializedName("banks") val banks: List<BankDto>

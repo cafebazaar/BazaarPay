@@ -8,6 +8,9 @@ import ir.cafebazaar.bazaarpay.data.bazaar.account.AccountRepository
 import ir.cafebazaar.bazaarpay.data.bazaar.account.AccountLocalDataSource
 import ir.cafebazaar.bazaarpay.data.bazaar.account.AccountRemoteDataSource
 import ir.cafebazaar.bazaarpay.data.bazaar.account.AccountService
+import ir.cafebazaar.bazaarpay.data.bazaar.directdebit.DirectDebitRemoteDataSource
+import ir.cafebazaar.bazaarpay.data.bazaar.directdebit.DirectDebitRepository
+import ir.cafebazaar.bazaarpay.data.bazaar.directdebit.api.DirectDebitService
 import ir.cafebazaar.bazaarpay.models.GlobalDispatchers
 import ir.cafebazaar.bazaarpay.data.payment.AuthenticatorInterceptor
 import ir.cafebazaar.bazaarpay.data.payment.PaymentRemoteDataSource
@@ -88,6 +91,11 @@ internal object ServiceLocator {
         initPaymentRemoteDataSource()
         initPaymentRepository()
 
+        // DirectDebit
+        initDirectDebitService()
+        initDirectDebitRemoteDataSource()
+        initDirectDebitRepository()
+
         // Bazaar
         initBazaarService()
         initBazaarRemoteDataSource()
@@ -163,6 +171,14 @@ internal object ServiceLocator {
 
     private fun initPaymentRepository() {
         servicesMap[getKeyOfClass<PaymentRepository>()] = PaymentRepository()
+    }
+
+    private fun initDirectDebitRemoteDataSource() {
+        servicesMap[getKeyOfClass<DirectDebitRemoteDataSource>()] = PaymentRemoteDataSource()
+    }
+
+    private fun initDirectDebitRepository() {
+        servicesMap[getKeyOfClass<DirectDebitRepository>()] = PaymentRepository()
     }
 
     private fun initBazaarRemoteDataSource() {
@@ -255,6 +271,19 @@ internal object ServiceLocator {
         )
         servicesMap[getKeyOfClass<PaymentService>()] =
             paymentRetrofit.create(PaymentService::class.java)
+    }
+
+    private fun initDirectDebitService() {
+        val directDebitHttpClient = provideOkHttpClient(
+            interceptors = listOf(get(TOKEN)),
+            authenticator = get(AUTHENTICATOR)
+        )
+        val directDebitRetrofit = provideRetrofit(
+            okHttp = directDebitHttpClient,
+            baseUrl = PAYMENT_BASE_URL
+        )
+        servicesMap[getKeyOfClass<DirectDebitService>()] =
+            directDebitRetrofit.create(DirectDebitService::class.java)
     }
 
     private fun initBazaarService() {

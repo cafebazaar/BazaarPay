@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import ir.cafebazaar.bazaarpay.ServiceLocator
+import ir.cafebazaar.bazaarpay.data.bazaar.directdebit.DirectDebitRepository
 import ir.cafebazaar.bazaarpay.data.bazaar.models.ErrorModel
 import ir.cafebazaar.bazaarpay.extensions.fold
 import ir.cafebazaar.bazaarpay.models.GlobalDispatchers
@@ -12,7 +13,7 @@ import ir.cafebazaar.bazaarpay.models.Resource
 import ir.cafebazaar.bazaarpay.data.bazaar.payment.BazaarPaymentRepository
 import ir.cafebazaar.bazaarpay.data.bazaar.payment.models.directdebit.banklist.AvailableBanks
 import ir.cafebazaar.bazaarpay.data.bazaar.payment.models.directdebit.banklist.Bank
-import ir.cafebazaar.bazaarpay.data.bazaar.payment.models.directdebit.contractcreation.ContractCreation
+import ir.cafebazaar.bazaarpay.data.bazaar.directdebit.contractcreation.ContractCreation
 import ir.cafebazaar.bazaarpay.utils.SingleLiveEvent
 import kotlinx.coroutines.launch
 
@@ -20,7 +21,7 @@ internal open class DirectDebitBankListViewModel : ViewModel() {
 
 
     private val data: MutableList<BankList> = mutableListOf()
-    private val bazaarPaymentRepository: BazaarPaymentRepository = ServiceLocator.get()
+    private val directDebitRepository: DirectDebitRepository = ServiceLocator.get()
     private val globalDispatchers: GlobalDispatchers = ServiceLocator.get()
 
     private val _enableActionButtonStateLiveData = SingleLiveEvent<Boolean>()
@@ -37,7 +38,7 @@ internal open class DirectDebitBankListViewModel : ViewModel() {
 
     fun loadData() {
         viewModelScope.launch {
-            bazaarPaymentRepository.getAvailableBanks()
+            directDebitRepository.getAvailableBanks()
                 .fold(::handleSuccessBankList, ::error)
         }
     }
@@ -103,7 +104,7 @@ internal open class DirectDebitBankListViewModel : ViewModel() {
         nationalId: String
     ) {
         viewModelScope.launch {
-            bazaarPaymentRepository.getDirectDebitContractCreationUrl(
+            directDebitRepository.getDirectDebitContractCreationUrl(
                 bankCode = selectedItem.model.code,
                 nationalId
             ).fold(::registerSucceed, ::registerFailed)
