@@ -80,5 +80,6 @@
     <string name="bazaarpay_dd_guide_title">راهنمای پرداخت مستقیم</string>
     <string name="bazaarpay_dd_subtitle">با فعال‌سازی پرداخت مستقیم، برداشت وجه از حساب خود را به صورت خودکار و بدون نیاز به درگاه بانکی انجام دهید.</string>
     <string name="bazaarpay_dd_start">شروع فعال‌سازی</string>
+    <string name="bazaarpay_edit">ویرایش</string>
 
 </resources>

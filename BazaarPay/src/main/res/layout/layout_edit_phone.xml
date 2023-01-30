@@ -37,7 +37,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/bazaarpay_app_brand_primary"
-            android:text="ویرایش"
+            android:text="@string/bazaarpay_edit"
             tools:text="تغییر حساب کاربری" />
 
         <ir.cafebazaar.bazaarpay.widget.RTLImageView
