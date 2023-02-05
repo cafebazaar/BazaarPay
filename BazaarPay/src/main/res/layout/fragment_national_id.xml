@@ -93,7 +93,7 @@
             app:drawableStartCompat="@drawable/ic_info"
             app:drawableTint="@color/bazaarpay_grey_70"
             android:layout_gravity="center"
-            android:text=" کد ملی و شماره همراه رجیستر شده در بازارپی باید متعلق به یک فرد باشند."
+            android:text="@string/bazaarpay_national_id_hint"
             android:textColor="@color/bazaarpay_text_hint"
             tools:text="تا چند ثانیه‌ی دیگر خرید شما تکمیل و به برنامه مورد نظر برمی‌گردید." />
 
