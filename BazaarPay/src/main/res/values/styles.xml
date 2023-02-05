@@ -48,8 +48,9 @@
     -->
 
     <style name="Bazaar.TextInput" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
-        <item name="boxStrokeColor">@color/bazaarpay_color_hint</item>
+        <item name="boxStrokeColor">@color/bazaarpay_app_brand_primary</item>
         <item name="boxStrokeWidth">1dp</item>
+        <item name="hintTextColor">@color/bazaarpay_grey_70</item>
         <item name="android:textColorHint">@color/bazaarpay_text_hint_color</item>
         <item name="colorError">@color/bazaarpay_error_primary</item>
         <item name="colorPrimary">@color/bazaarpay_app_brand_primary</item>

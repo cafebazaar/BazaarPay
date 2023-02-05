@@ -46,6 +46,8 @@
     <color name="bazaarpay_error_dark">#D0021B</color>
     <color name="bazaarpay_error_light">#FFEAEE</color>
 
+    <color name="bazaarpay_warning">#FFF2DF</color>
+
     <color name="grayish_blue_light">#90A4AE</color>
 
     <color name="bazaarpay_grey_100">#F5F5F5</color>
@@ -80,5 +82,7 @@
     <color name="bazaarpay_text_primary">@color/bazaarpay_grey_90</color>
     <color name="bazaarpay_text_secondary">@color/bazaarpay_grey_70</color>
     <color name="bazaarpay_text_hint">@color/bazaarpay_grey_80</color>
+
+    <color name="bazaarpay_success">#0EA960</color>
 
 </resources>

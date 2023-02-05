@@ -15,6 +15,7 @@
     <string name="bazaarpay_gateway_payment_failed">Gateway payment not completed successfully.</string>
     <string name="bazaarpay_payment_gateway_not_available">Please install a browser in order to continue purchase.</string>
     <string name="bazaarpay_enter_bazaar_pay">Enter to BazaarPay payment</string>
+    <string name="bazaarpay_enter_edit_mobile">Edit</string>
     <string name="bazaarpay_verification_code_hint">Verification Code</string>
     <string name="bazaarpay_waiting_for_verification_sms">We sent verification code to %s.</string>
     <string name="bazaarpay_resend_verification_sms">Resend verification SMS</string>
@@ -38,6 +39,7 @@
     <string name="bazaarpay_start_activation">Start activation</string>
     <string name="bazaarpay_set_national_id">National id registration</string>
     <string name="bazaarpay_national_id_title">To activate direct debit through banking systems, it is necessary to enter the national code of the account holder.</string>
+    <string name="bazaarpay_national_id_hint">The national code and registered mobile number must belong to the same person.</string>
     <string name="bazaarpay_enter_national_id">Enter your national code</string>
     <string name="bazaarpay_national_id_description">Enter 10 digits of the national code in a row without any dashes.</string>
     <string name="bazaarpay_submit_and_continue">Register and continue</string>
@@ -46,6 +48,7 @@
     <string name="bazaarpay_cancel">Cancel</string>
     <string name="bazaarpay_commit">OK</string>
     <string name="bazaarpay_payment_done_message">Payment done successfully.</string>
+    <string name="bazaarpay_payment_done_confirm">In a few seconds, your purchase will be completed and you will return to the desired program.</string>
     <string name="bazaarpay_bank_list_header_1">Your bank card must belong to one of the following banks</string>
     <string name="bazaarpay_bank_list_header_2">The phone number registered in your bank account and your account must be the same</string>
     <string name="bazaarpay_header_select_bank_title">Select bank</string>
@@ -65,4 +68,22 @@
     <string name="bazaarpay_logout_message">Do you want to logout from the current BazaarPay account and do the payment with another account?</string>
     <string name="bazaarpay_no">No</string>
     <string name="bazaarpay_yes">Yes</string>
+    <string name="bazaarpay_enter_otp_message">Please enter the code that we sent to the above number.</string>
+    <plurals name="bazaarpay_seconds">
+        <item quantity="one">%d second</item>
+        <item quantity="zero">%d second</item>
+        <item quantity="other">%d seconds</item>
+    </plurals>
+    <string name="bazaarpay_return_to_payment">Return to payment</string>
+    <string name="bazaarpay_complete_payment">Complete payment</string>
+    <string name="bazaarpay_dd_auto_renew">Automatic Subscription Renewal</string>
+    <string name="bazaarpay_dd_auto_renew_dsc">Direct debit allows your subscriptions to various services to be renewed automatically without your intervention.</string>
+    <string name="bazaarpay_dd_enable">Enable Direct Debit</string>
+    <string name="bazaarpay_dd_enable_dsc">Set up direct debit through your bank\'s website. Within a year, you will be able to have 10 daily transactions up to the set limit.</string>
+    <string name="bazaarpay_dd_disable">Disable Direct Debit</string>
+    <string name="bazaarpay_dd_disable_dsc">In case of need, you can always disable this service through the wallet and payment market page.</string>
+    <string name="bazaarpay_dd_guide_title">A Guide to Direct Debit</string>
+    <string name="bazaarpay_dd_subtitle">Direct Debit allows you to withdraw funds from your account without utilizing a bank gateway.</string>
+    <string name="bazaarpay_dd_start">Start Activation</string>
+    <string name="bazaarpay_edit">Edit</string>
 </resources>

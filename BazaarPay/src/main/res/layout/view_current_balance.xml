@@ -23,12 +23,10 @@
 
     <ir.cafebazaar.bazaarpay.widget.LocalAwareTextView
         android:id="@+id/balanceTextView"
-        style="@style/Bazaar.Text.Body2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/bazaarpay_default_margin_half"
         android:textAlignment="viewStart"
         android:textColor="@color/bazaarpay_text_primary"
         tools:text="۱۳ هزار تومن" />
-
 </merge>
