@@ -72,6 +72,7 @@ class OtpEditText : AppCompatEditText {
         val textLength = text!!.length
         val textWidths = FloatArray(textLength)
         paint.getTextWidths(getText(), 0, textLength, textWidths)
+        paint.color = textColors.defaultColor
         var i = 0
         while (i < mNumChars) {
             canvas.drawLine(

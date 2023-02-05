@@ -78,6 +78,7 @@
         android:layout_marginEnd="@dimen/bazaarpay_default_margin_quintuple"
         android:focusedByDefault="true"
         android:focusable="true"
+        android:textColor="@color/bazaarpay_grey_90"
         app:layout_constraintBottom_toTopOf="@+id/otpErrorText"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
