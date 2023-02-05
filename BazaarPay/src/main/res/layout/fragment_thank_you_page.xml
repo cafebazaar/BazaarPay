@@ -124,6 +124,7 @@
             android:gravity="center"
             android:textColor="@color/bazaarpay_grey_70"
             app:layout_constraintBottom_toTopOf="@id/waitingProgressBar"
+            app:layout_constraintEnd_toEndOf="@+id/waitingProgressBar"
             app:layout_constraintStart_toStartOf="@id/waitingProgressBar"
             tools:text="۴ ثانیه" />
 
