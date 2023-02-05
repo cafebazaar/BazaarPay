@@ -15,6 +15,7 @@
     <string name="bazaarpay_gateway_payment_failed">Gateway payment not completed successfully.</string>
     <string name="bazaarpay_payment_gateway_not_available">Please install a browser in order to continue purchase.</string>
     <string name="bazaarpay_enter_bazaar_pay">Enter to BazaarPay payment</string>
+    <string name="bazaarpay_enter_edit_mobile">Edit</string>
     <string name="bazaarpay_verification_code_hint">Verification Code</string>
     <string name="bazaarpay_waiting_for_verification_sms">We sent verification code to %s.</string>
     <string name="bazaarpay_resend_verification_sms">Resend verification SMS</string>
@@ -38,6 +39,7 @@
     <string name="bazaarpay_start_activation">Start activation</string>
     <string name="bazaarpay_set_national_id">National id registration</string>
     <string name="bazaarpay_national_id_title">To activate direct debit through banking systems, it is necessary to enter the national code of the account holder.</string>
+    <string name="bazaarpay_national_id_hint">The national code and registered mobile number must belong to the same person.</string>
     <string name="bazaarpay_enter_national_id">Enter your national code</string>
     <string name="bazaarpay_national_id_description">Enter 10 digits of the national code in a row without any dashes.</string>
     <string name="bazaarpay_submit_and_continue">Register and continue</string>
@@ -46,6 +48,7 @@
     <string name="bazaarpay_cancel">Cancel</string>
     <string name="bazaarpay_commit">OK</string>
     <string name="bazaarpay_payment_done_message">Payment done successfully.</string>
+    <string name="bazaarpay_payment_done_confirm">In a few seconds, your purchase will be completed and you will return to the desired program.</string>
     <string name="bazaarpay_bank_list_header_1">Your bank card must belong to one of the following banks</string>
     <string name="bazaarpay_bank_list_header_2">The phone number registered in your bank account and your account must be the same</string>
     <string name="bazaarpay_header_select_bank_title">Select bank</string>
