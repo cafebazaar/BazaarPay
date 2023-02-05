@@ -47,6 +47,7 @@
     <string name="bazaarpay_cancel">انصراف</string>
     <string name="bazaarpay_commit">باشه</string>
     <string name="bazaarpay_payment_done_message">پرداخت شما با موفقیت انجام شد.</string>
+    <string name="bazaarpay_payment_done_confirm">تا چند ثانیه‌ی دیگر خرید شما تکمیل و به برنامه مورد نظر برمی‌گردید.</string>
     <string name="bazaarpay_bank_list_header_1">کارت بانک شما باید متعلق به یکی از بانک‌های زیر باشد.</string>
     <string name="bazaarpay_bank_list_header_2">لازم است شماره تلفن ثبت شده در حساب بانک و حساب شما یکسان باشد.</string>
     <string name="bazaarpay_header_select_bank_title">بانک خود را انتخاب کنید.</string>

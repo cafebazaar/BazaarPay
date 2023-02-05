@@ -48,6 +48,7 @@
     <string name="bazaarpay_cancel">Cancel</string>
     <string name="bazaarpay_commit">OK</string>
     <string name="bazaarpay_payment_done_message">Payment done successfully.</string>
+    <string name="bazaarpay_payment_done_confirm">In a few seconds, your purchase will be completed and you will return to the desired program.</string>
     <string name="bazaarpay_bank_list_header_1">Your bank card must belong to one of the following banks</string>
     <string name="bazaarpay_bank_list_header_2">The phone number registered in your bank account and your account must be the same</string>
     <string name="bazaarpay_header_select_bank_title">Select bank</string>
