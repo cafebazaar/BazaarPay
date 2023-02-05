@@ -15,10 +15,12 @@ import ir.cafebazaar.bazaarpay.data.bazaar.models.ErrorModel
 import ir.cafebazaar.bazaarpay.databinding.FragmentThankYouPageBinding
 import ir.cafebazaar.bazaarpay.extensions.getReadableErrorMessage
 import ir.cafebazaar.bazaarpay.extensions.gone
+import ir.cafebazaar.bazaarpay.extensions.persianDigitsIfPersian
 import ir.cafebazaar.bazaarpay.extensions.setSafeOnClickListener
 import ir.cafebazaar.bazaarpay.extensions.visible
 import ir.cafebazaar.bazaarpay.models.Resource
 import ir.cafebazaar.bazaarpay.models.ResourceState
+import java.util.*
 
 internal class PaymentThankYouPageFragment : Fragment() {
 
@@ -85,8 +87,7 @@ internal class PaymentThankYouPageFragment : Fragment() {
         with(binding) {
             contentContainer.visible()
             successButton.visible()
-
-            failureButtonsGroup.gone()
+            errorBox.gone()
 
             statusIconImageView.setImageResource(R.drawable.ic_success)
 
@@ -94,11 +95,12 @@ internal class PaymentThankYouPageFragment : Fragment() {
                 model.messageTextModel.argMessage ?: getString(
                     model.messageTextModel.defaultMessageId
                 )
-            successButton.text = getString(
-                model.successButtonTextModel.successButtonTextId,
-                model.successButtonTextModel.successMessageCountDown
-            )
-
+            waitingProgressBar.progress = model.paymentProgressBarModel.successMessageCountDown.toInt()
+            secondsTextView.text = context?.resources?.getQuantityString(
+                R.plurals.bazaarpay_seconds,
+                model.paymentProgressBarModel.seconds,
+                model.paymentProgressBarModel.seconds
+            )?.persianDigitsIfPersian(Locale.getDefault())
             successButton.setSafeOnClickListener {
                 finishCallbacks?.onSuccess()
             }
@@ -109,20 +111,17 @@ internal class PaymentThankYouPageFragment : Fragment() {
         with(binding) {
             contentContainer.visible()
             successButton.gone()
+            errorBox.visible()
 
-            failureButtonsGroup.visible()
-
-            tryAgainButton.setSafeOnClickListener {
-                findNavController().navigateUp()
-            }
-            cancelButton.setSafeOnClickListener {
+            successButton.setSafeOnClickListener {
                 finishCallbacks?.onCanceled()
             }
-
+            successButton.text = getString(R.string.bazaarpay_return_to_payment)
+            messageTextView.text = getString(R.string.bazaarpay_payment_failed)
             statusIconImageView.setImageResource(
-                error?.getErrorIcon(requireContext()) ?: R.drawable.ic_error_outline_icon_primary_24dp_old
+                error?.getErrorIcon(requireContext()) ?: R.drawable.ic_fail
             )
-            messageTextView.text = requireContext().getReadableErrorMessage(error)
+            errorTextView.text = requireContext().getReadableErrorMessage(error)
         }
     }
 

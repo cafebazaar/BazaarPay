@@ -7,7 +7,9 @@
     android:layout_height="wrap_content"
     android:layout_gravity="bottom">
 
-    <include layout="@layout/layout_verify_header" />
+    <include
+        android:id="@+id/verifyHeaderSection"
+        layout="@layout/layout_verify_header" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/resendCodeButton"
@@ -22,7 +24,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/callButton"
-        app:layout_constraintTop_toBottomOf="@id/proceedBtn"
+        app:layout_constraintTop_toBottomOf="@id/verifyHeaderSection"
         app:layout_constraintWidth_percent="0.5"
         tools:visibility="invisible" />
 
@@ -39,7 +41,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/resendCodeButton"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/proceedBtn"
+        app:layout_constraintTop_toBottomOf="@id/verifyHeaderSection"
         app:layout_constraintWidth_percent="0.5"
         tools:visibility="invisible" />
 
@@ -55,6 +57,6 @@
         android:text="@string/bazaarpay_resend_after_without_time"
         android:textAppearance="@style/Bazaar.Text.Body2"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/proceedBtn" />
+        app:layout_constraintTop_toBottomOf="@id/verifyHeaderSection" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

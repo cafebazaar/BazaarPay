@@ -3,13 +3,13 @@ package ir.cafebazaar.bazaarpay.screens.payment.thanks
 import androidx.annotation.StringRes
 
 internal class PaymentThankYouPageSuccessModel(
-    val successButtonTextModel: SuccessButtonTextModel,
+    val paymentProgressBarModel: PaymentProgressBarModel,
     val messageTextModel: PaymentThankYouPageSuccessMessageModel
 )
 
-internal class SuccessButtonTextModel(
-    @StringRes val successButtonTextId: Int,
-    val successMessageCountDown: Long
+internal class PaymentProgressBarModel(
+    val successMessageCountDown: Long,
+    val seconds: Int
 )
 
 internal class PaymentThankYouPageSuccessMessageModel(

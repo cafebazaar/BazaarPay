@@ -98,10 +98,12 @@ internal class VerifyOtpFragment : Fragment() {
             findNavController().popBackStack()
         }
 
-        headerBinding.verificationMessageTextView.text = getString(
-            R.string.bazaarpay_waiting_for_verification_sms,
+        headerBinding.editPhoneContainer.userAccountPhone.text =
             phoneNumber.localizeNumber(requireContext())
-        )
+
+        headerBinding.editPhoneContainer.changeAccountAction.setSafeOnClickListener {
+            findNavController().popBackStack()
+        }
 
         binding.resendCodeButton.setSafeOnClickListener { handleResendSmsClick() }
         binding.callButton.setSafeOnClickListener {
@@ -126,7 +128,7 @@ internal class VerifyOtpFragment : Fragment() {
 
         verificationCodeWatcher = headerBinding.verificationCodeEditText.doAfterTextChanged {
             hideError()
-            headerBinding.proceedBtn.isEnabled = !it.isNullOrEmpty() &&
+            headerBinding.proceedBtn.isEnabled = it?.length == 4 &&
                     viewModel.verifyCodeStateLiveData.value?.resourceState != ResourceState.Loading
         }
     }
@@ -227,13 +229,14 @@ internal class VerifyOtpFragment : Fragment() {
     }
 
     private fun showError(message: String) {
-
-        headerBinding.verificationCodeInput.isErrorEnabled = true
-        headerBinding.verificationCodeInput.error = message
+        headerBinding.verificationCodeEditText.errorState(true)
+        headerBinding.otpErrorText.visible()
+        headerBinding.otpErrorText.text = message
     }
 
     private fun hideError() {
-        headerBinding.verificationCodeInput.isErrorEnabled = false
+        headerBinding.otpErrorText.invisible()
+        headerBinding.verificationCodeEditText.errorState(false)
     }
 
     private fun handleResendSmsAndCallState(resource: Resource<Long>) {

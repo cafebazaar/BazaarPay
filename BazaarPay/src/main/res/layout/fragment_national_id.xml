@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
     android:background="@color/bazaarpay_surface_color_0">
 
     <com.google.android.material.appbar.AppBarLayout
@@ -70,6 +70,35 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/appBarLayout" />
 
+    <LinearLayout
+        android:id="@+id/warningBox"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/bazaarpay_default_margin_double"
+        android:layout_marginBottom="@dimen/bazaarpay_default_margin_double"
+        android:background="@drawable/background_warning_radius_4"
+        android:layout_marginHorizontal="@dimen/bazaarpay_default_margin_double"
+        android:padding="@dimen/bazaarpay_default_margin"
+        android:visibility="visible"
+        app:layout_constraintBottom_toTopOf="@id/nationalIdInput"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/titleTextView">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/errorTextView"
+            style="@style/Bazaar.Text.Caption"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:drawableStartCompat="@drawable/ic_info"
+            app:drawableTint="@color/bazaarpay_grey_70"
+            android:layout_gravity="center"
+            android:text="@string/bazaarpay_national_id_hint"
+            android:textColor="@color/bazaarpay_text_hint"
+            tools:text="تا چند ثانیه‌ی دیگر خرید شما تکمیل و به برنامه مورد نظر برمی‌گردید." />
+
+    </LinearLayout>
+
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/nationalIdInput"
         android:layout_width="match_parent"
@@ -79,7 +108,7 @@
         android:theme="@style/Bazaar.TextInput"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/titleTextView">
+        app:layout_constraintTop_toBottomOf="@id/warningBox">
 
         <androidx.appcompat.widget.AppCompatEditText
             android:id="@+id/nationalIdEditText"

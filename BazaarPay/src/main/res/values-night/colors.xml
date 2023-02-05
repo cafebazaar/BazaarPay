@@ -35,6 +35,8 @@
     <color name="bazaarpay_error_dark">#F84746</color>
     <color name="bazaarpay_error_light">#39292C</color>
 
+    <color name="bazaarpay_warning">#36312A</color>
+
     <color name="bazaarpay_ripple_color">#39FFFFFF</color>
 
     <!-- greys -->

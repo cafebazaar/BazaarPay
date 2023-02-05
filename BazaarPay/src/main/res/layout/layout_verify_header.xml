@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<merge xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     tools:showIn="@layout/fragment_verify_otp">
 
     <androidx.appcompat.widget.AppCompatTextView
@@ -11,6 +13,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/bazaarpay_default_margin_double"
         android:text="@string/bazaarpay_enter_bazaar_pay"
+        android:textColor="@color/bazaarpay_grey_90"
         app:layout_constraintBottom_toTopOf="@id/logoDivider"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"/>
@@ -31,10 +34,19 @@
         android:layout_margin="@dimen/bazaarpay_default_margin_double_half"
         android:focusable="true"
         android:focusableInTouchMode="true"
-        app:layout_constraintBottom_toBottomOf="@id/verificationMessageTextView"
-        app:layout_constraintBottom_toTopOf="@id/verificationMessageTextView"
+        app:layout_constraintBottom_toTopOf="@id/editPhoneContainer"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <include
+        android:id="@+id/editPhoneContainer"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/verificationMessageTextView"
+        android:layout_margin="@dimen/bazaarpay_default_margin_double"
+        layout="@layout/layout_edit_phone" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/verificationMessageTextView"
@@ -43,48 +55,61 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/bazaarpay_default_margin_quintuple"
         android:layout_marginEnd="@dimen/bazaarpay_default_margin_quintuple"
-        android:layout_marginBottom="@dimen/bazaarpay_default_margin_double_half"
+        android:layout_marginBottom="@dimen/bazaarpay_default_margin_double"
         android:gravity="center"
         android:textColor="@color/bazaarpay_text_hint"
-        app:layout_constraintBottom_toTopOf="@id/verificationCodeInput"
+        android:text="@string/bazaarpay_enter_otp_message"
+        app:layout_constraintBottom_toTopOf="@id/verificationCodeEditText"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         tools:text="@string/bazaarpay_waiting_for_verification_sms" />
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/verificationCodeInput"
+    <ir.cafebazaar.bazaarpay.screens.login.verify.OtpEditText
+        android:id="@+id/verificationCodeEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:cursorVisible="false"
+        android:digits="1234567890"
+        android:inputType="number"
+        android:maxLength="4"
+        android:textIsSelectable="false"
+        android:textSize="24sp"
+        android:layout_marginStart="@dimen/bazaarpay_default_margin_quintuple"
+        android:layout_marginEnd="@dimen/bazaarpay_default_margin_quintuple"
+        android:focusedByDefault="true"
+        android:focusable="true"
+        android:textColor="@color/bazaarpay_grey_90"
+        app:layout_constraintBottom_toTopOf="@+id/otpErrorText"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/otpErrorText"
+        style="@style/Bazaar.Text.Caption"
         android:layout_width="@dimen/bazaarpay_match_constraint"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/bazaarpay_default_margin_quintuple"
         android:layout_marginEnd="@dimen/bazaarpay_default_margin_quintuple"
-        android:hint="@string/bazaarpay_verification_code_hint"
-        android:theme="@style/Bazaar.TextInput"
-        app:layout_constraintBottom_toTopOf="@+id/proceedBtn"
+        android:layout_marginBottom="@dimen/bazaarpay_default_margin_double_half"
+        android:gravity="center"
+        android:visibility="invisible"
+        android:textColor="@color/bazaarpay_error_primary"
+        app:layout_constraintBottom_toTopOf="@id/proceedBtn"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
-
-        <androidx.appcompat.widget.AppCompatEditText
-            android:id="@+id/verificationCodeEditText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:imeOptions="actionDone"
-            android:inputType="number"
-            android:singleLine="true">
-
-            <requestFocus />
-        </androidx.appcompat.widget.AppCompatEditText>
-    </com.google.android.material.textfield.TextInputLayout>
+        app:layout_constraintStart_toStartOf="parent"
+        tools:text="@string/bazaarpay_waiting_for_verification_sms" />
 
     <ir.cafebazaar.bazaarpay.widget.button.BazaarPayButton
         android:id="@+id/proceedBtn"
         android:layout_width="@dimen/bazaarpay_match_constraint"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/bazaarpay_default_margin_quintuple"
+        android:layout_marginHorizontal="@dimen/bazaarpay_default_margin_double"
         android:layout_marginTop="@dimen/bazaarpay_default_margin_double"
         android:textColor="@color/selector_primary_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/verificationCodeInput"
+        app:layout_constraintTop_toBottomOf="@id/otpErrorText"
         app:sizeMode="large"
         app:text="@string/bazaarpay_proceed" />
-</merge>
+</androidx.constraintlayout.widget.ConstraintLayout>

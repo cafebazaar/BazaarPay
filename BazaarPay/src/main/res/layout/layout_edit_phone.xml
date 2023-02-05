@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/changeAccountBox"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:layout_margin="@dimen/bazaarpay_default_margin_double"
+    android:padding="@dimen/bazaarpay_default_margin"
+    android:gravity="center_vertical"
+    android:background="@drawable/shape_gray_round_radius_small"
+    android:visibility="visible">
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/userAccountPhone"
+        style="@style/Bazaar.Text.Body1"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:textColor="@color/bazaarpay_text_primary"
+        android:layout_marginStart="@dimen/bazaarpay_default_margin"
+        tools:text="09186300800" />
+
+    <Space
+        android:layout_width="@dimen/bazaarpay_default_margin_double"
+        android:layout_height="0dp" />
+
+    <LinearLayout
+        android:id="@+id/changeAccountAction"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            style="@style/Bazaar.Text.Subtitle2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/bazaarpay_app_brand_primary"
+            android:text="@string/bazaarpay_enter_edit_mobile"
+            tools:text="تغییر حساب کاربری" />
+
+        <ir.cafebazaar.bazaarpay.widget.RTLImageView
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginStart="@dimen/bazaarpay_default_margin_half"
+            android:scaleType="centerCrop"
+            android:tint="@color/bazaarpay_app_brand_primary"
+            android:layout_marginEnd="@dimen/bazaarpay_default_margin"
+            app:srcCompat="@drawable/ic_edit"
+            tools:src="@drawable/ic_edit" />
+
+    </LinearLayout>
+
+</LinearLayout>
