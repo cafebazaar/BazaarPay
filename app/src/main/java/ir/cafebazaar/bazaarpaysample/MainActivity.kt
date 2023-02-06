@@ -2,6 +2,7 @@ package ir.cafebazaar.bazaarpaysample
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.PersistableBundle
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
 import ir.cafebazaar.bazaarpay.BazaarPayLauncher
@@ -61,5 +62,19 @@ class MainActivity : AppCompatActivity() {
                 )
             }
         }
+    }
+
+    override fun onSaveInstanceState(outState: Bundle, outPersistentState: PersistableBundle) {
+        super.onSaveInstanceState(outState, outPersistentState)
+        outState.putString(KEY_CHECKOUT_TOKEN, checkoutToken)
+    }
+
+    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
+        super.onRestoreInstanceState(savedInstanceState)
+        checkoutToken = savedInstanceState.getString(KEY_CHECKOUT_TOKEN, "")
+    }
+
+    companion object {
+        const val KEY_CHECKOUT_TOKEN = "checkoutToken"
     }
 }
