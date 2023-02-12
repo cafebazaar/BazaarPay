@@ -1,7 +1,7 @@
 <resources>
     <string name="bazaarpay_title_activity_bazaar_pay">BazaarPayActivity</string>
     <string name="bazaarpay_proceed">ادامه</string>
-    <string name="bazaarpay_privacy_and_terms_login">&lt;a href="http://cafebazaar.ir/terms/?l=fa">شرایط استفاده از خدمات&lt;/a> و &lt;a href="http://cafebazaar.ir/privacy/?l=fa">حریم خصوصی&lt;/a> را می‌پذیرم.</string>
+    <string name="bazaarpay_privacy_and_terms_login">&lt;a href="http://app.bazaar-pay.ir/terms-and-conditions">شرایط استفاده از خدمات&lt;/a> و &lt;a href="http://cafebazaar.ir/privacy/?l=fa">حریم خصوصی&lt;/a> را می‌پذیرم.</string>
     <string name="bazaarpay_user_phone_number_hint">شماره تلفن</string>
     <string name="bazaarpay_enter_phone_number">شماره تلفن خود را وارد کنید.</string>
     <string name="bazaarpay_wrong_phone_number">لطفا شماره تلفن خود را به‌ درستی وارد کنید.</string>
