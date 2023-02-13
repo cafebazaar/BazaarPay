@@ -13,11 +13,15 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private val bazaarPayLauncher = BazaarPayLauncher(
         this,
-        {
+        onSuccess = {
             binding.result.text = "OK!"
             binding.result.setTextColor(ContextCompat.getColor(this, R.color.bazaarpay_app_brand_primary))
         },
-        {
+        onFailure = { message, code, errorJson ->
+            binding.result.text = "Failure! - message: $message , code: $code, errorJson: $errorJson"
+            binding.result.setTextColor(ContextCompat.getColor(this, R.color.bazaarpay_error_primary))
+        },
+        onCancel = {
             binding.result.text = "CANCEL!"
             binding.result.setTextColor(ContextCompat.getColor(this, R.color.bazaarpay_error_primary))
         }

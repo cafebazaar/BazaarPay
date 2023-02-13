@@ -114,7 +114,7 @@ internal class PaymentThankYouPageFragment : Fragment() {
             errorBox.visible()
 
             successButton.setSafeOnClickListener {
-                finishCallbacks?.onCanceled()
+                finishCallbacks?.onFailure(error)
             }
             successButton.text = getString(R.string.bazaarpay_return_to_payment)
             messageTextView.text = getString(R.string.bazaarpay_payment_failed)

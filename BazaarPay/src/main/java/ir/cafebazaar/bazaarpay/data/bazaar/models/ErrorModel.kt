@@ -3,8 +3,9 @@ package ir.cafebazaar.bazaarpay.data.bazaar.models
 import android.content.Context
 import ir.cafebazaar.bazaarpay.R
 import ir.cafebazaar.bazaarpay.extensions.isNetworkAvailable
+import java.io.Serializable
 
-sealed class ErrorModel(override val message: String) : Throwable(message) {
+sealed class ErrorModel(override val message: String) : Throwable(message), Serializable {
     data class NetworkConnection(
         override val message: String,
         val throwable: Throwable

@@ -7,6 +7,10 @@ import android.content.Intent
 import androidx.activity.result.ActivityResultCaller
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import ir.cafebazaar.bazaarpay.BazaarPayActivity.Companion.KEY_ERROR_MESSAGE
+import ir.cafebazaar.bazaarpay.BazaarPayActivity.Companion.KEY_HTTP_ERROR_CODE
+import ir.cafebazaar.bazaarpay.BazaarPayActivity.Companion.KEY_HTTP_ERROR_JSON
+import ir.cafebazaar.bazaarpay.BazaarPayActivity.Companion.RESULT_ERROR
 import ir.cafebazaar.bazaarpay.utils.getLanguage
 import ir.cafebazaar.bazaarpay.utils.getLanguageNumber
 import java.lang.Exception
@@ -14,6 +18,7 @@ import java.lang.Exception
 class BazaarPayLauncher(
     private val context: Context,
     private val onSuccess: () -> Unit,
+    private val onFailure: (String?, Int?, String?) -> Unit,
     private val onCancel: () -> Unit,
 ) {
 
@@ -54,6 +59,12 @@ class BazaarPayLauncher(
         ) { result ->
             when (result.resultCode) {
                 RESULT_OK -> onSuccess()
+                RESULT_ERROR -> {
+                    val message = result.data?.getStringExtra(KEY_ERROR_MESSAGE)
+                    val errorCode = result.data?.getIntExtra(KEY_HTTP_ERROR_CODE, -1)
+                    val errorJson = result.data?.getStringExtra(KEY_HTTP_ERROR_JSON)
+                    onFailure(message, errorCode, errorJson)
+                }
                 RESULT_CANCELED -> onCancel()
             }
         }

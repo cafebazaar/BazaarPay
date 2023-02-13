@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.navigation.findNavController
 import androidx.navigation.navOptions
+import ir.cafebazaar.bazaarpay.data.bazaar.models.ErrorModel
 import ir.cafebazaar.bazaarpay.databinding.ActivityBazaarPayBinding
 import java.util.Locale
 
@@ -182,6 +183,24 @@ class BazaarPayActivity : AppCompatActivity(), FinishCallbacks {
         finishActivity()
     }
 
+    override fun onFailure(errorModel: ErrorModel?) {
+        if (errorModel != null) {
+            val data = Intent().apply {
+                with(errorModel) {
+                    putExtra(KEY_ERROR_MESSAGE, message)
+                    if (this is ErrorModel.Http) {
+                        putExtra(KEY_HTTP_ERROR_CODE, errorCode)
+                        putExtra(KEY_HTTP_ERROR_JSON, errorJson)
+                    }
+                }
+            }
+            setResult(RESULT_ERROR, data)
+        } else {
+            setResult(RESULT_ERROR)
+        }
+        finishActivity()
+    }
+
     private fun finishActivity() {
         ServiceLocator.clear()
         finish()
@@ -199,5 +218,12 @@ class BazaarPayActivity : AppCompatActivity(), FinishCallbacks {
                 intent.dataString?.lowercase()?.contains("in_progress") == true
             )
         ) == true
+    }
+
+    companion object {
+        const val RESULT_ERROR = -2
+        const val KEY_ERROR_MESSAGE = "errorMessage"
+        const val KEY_HTTP_ERROR_CODE = "httpErrorCode"
+        const val KEY_HTTP_ERROR_JSON = "httpErrorJSON"
     }
 }
