@@ -9,6 +9,7 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import ir.cafebazaar.bazaarpay.data.bazaar.models.ErrorModel
 import ir.cafebazaar.bazaarpay.data.payment.PaymentRepository
+import ir.cafebazaar.bazaarpay.data.payment.models.pay.PurchaseStatus
 import ir.cafebazaar.bazaarpay.extensions.fold
 import ir.cafebazaar.bazaarpay.utils.getLanguage
 import ir.cafebazaar.bazaarpay.utils.getLanguageNumber
@@ -62,11 +63,9 @@ class BazaarPayLauncher(
         }
 }
 
-suspend fun commit(
-    checkoutToken: String,
+fun initSDKForAPICall(
     context: Context,
-    onSuccess: () -> Unit,
-    onFailure: (ErrorModel) -> Unit
+    checkoutToken: String
 ) {
     ServiceLocator.initializeConfigs(
         checkoutToken = checkoutToken,
@@ -75,10 +74,35 @@ suspend fun commit(
         isDark = false
     )
     ServiceLocator.initializeDependencies(context)
+}
+
+suspend fun commit(
+    checkoutToken: String,
+    context: Context,
+    onSuccess: () -> Unit,
+    onFailure: (ErrorModel) -> Unit
+) {
+    initSDKForAPICall(context, checkoutToken)
     val payRepository: PaymentRepository = ServiceLocator.get()
     payRepository.commit(checkoutToken).fold(
         ifSuccess = {
             onSuccess.invoke()
+        },
+        ifFailure = onFailure
+    )
+}
+
+suspend fun trace(
+    checkoutToken: String,
+    context: Context,
+    onSuccess: (PurchaseStatus) -> Unit,
+    onFailure: (ErrorModel) -> Unit
+) {
+    initSDKForAPICall(context, checkoutToken)
+    val payRepository: PaymentRepository = ServiceLocator.get()
+    payRepository.trace(checkoutToken).fold(
+        ifSuccess = {
+            onSuccess.invoke(it)
         },
         ifFailure = onFailure
     )
