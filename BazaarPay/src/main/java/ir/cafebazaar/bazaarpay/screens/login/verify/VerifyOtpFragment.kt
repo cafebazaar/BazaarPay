@@ -19,7 +19,6 @@ import com.google.android.gms.auth.api.phone.SmsRetriever
 import ir.cafebazaar.bazaarpay.FinishCallbacks
 import ir.cafebazaar.bazaarpay.R
 import ir.cafebazaar.bazaarpay.databinding.FragmentVerifyOtpBinding
-import ir.cafebazaar.bazaarpay.databinding.LayoutVerifyHeaderBinding
 import ir.cafebazaar.bazaarpay.extensions.getReadableErrorMessage
 import ir.cafebazaar.bazaarpay.extensions.gone
 import ir.cafebazaar.bazaarpay.extensions.hideKeyboard
@@ -51,11 +50,7 @@ internal class VerifyOtpFragment : Fragment() {
     private var _binding: FragmentVerifyOtpBinding? = null
     private val binding: FragmentVerifyOtpBinding
         get() = requireNotNull(_binding)
-
-    private var _headerBinding: LayoutVerifyHeaderBinding? = null
-    private val headerBinding: LayoutVerifyHeaderBinding
-        get() = requireNotNull(_headerBinding)
-
+    
     private val phoneNumber: String
         get() = fragmentArgs.phoneNumber
 
@@ -76,14 +71,12 @@ internal class VerifyOtpFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentVerifyOtpBinding.inflate(
             inflater,
             container,
             false
         )
-
-        _headerBinding = LayoutVerifyHeaderBinding.bind(binding.root)
         return binding.root
     }
 
@@ -94,14 +87,14 @@ internal class VerifyOtpFragment : Fragment() {
             findNavController().popBackStack()
         }
 
-        headerBinding.close.setSafeOnClickListener {
+        binding.close.setSafeOnClickListener {
             findNavController().popBackStack()
         }
 
-        headerBinding.editPhoneContainer.userAccountPhone.text =
+        binding.editPhoneContainer.userAccountPhone.text =
             phoneNumber.localizeNumber(requireContext())
 
-        headerBinding.editPhoneContainer.changeAccountAction.setSafeOnClickListener {
+        binding.editPhoneContainer.changeAccountAction.setSafeOnClickListener {
             findNavController().popBackStack()
         }
 
@@ -109,13 +102,13 @@ internal class VerifyOtpFragment : Fragment() {
         binding.callButton.setSafeOnClickListener {
             viewModel.onCallButtonClicked(phoneNumber)
         }
-        headerBinding.proceedBtn.setSafeOnClickListener { handleProceedClick(false) }
+        binding.proceedBtn.setSafeOnClickListener { handleProceedClick(false) }
         // disable when initialized, because there is no text in the input.
-        headerBinding.proceedBtn.isEnabled = false
-        headerBinding.verificationCodeEditText.setOnEditorActionListener { _, actionId, _ ->
+        binding.proceedBtn.isEnabled = false
+        binding.verificationCodeEditText.setOnEditorActionListener { _, actionId, _ ->
             return@setOnEditorActionListener when (actionId) {
                 EditorInfo.IME_ACTION_DONE -> {
-                    if (headerBinding.proceedBtn.isEnabled) {
+                    if (binding.proceedBtn.isEnabled) {
                         handleProceedClick(false)
                         true
                     } else {
@@ -126,9 +119,9 @@ internal class VerifyOtpFragment : Fragment() {
             }
         }
 
-        verificationCodeWatcher = headerBinding.verificationCodeEditText.doAfterTextChanged {
+        verificationCodeWatcher = binding.verificationCodeEditText.doAfterTextChanged {
             hideError()
-            headerBinding.proceedBtn.isEnabled = it?.length == 4 &&
+            binding.proceedBtn.isEnabled = it?.length == 4 &&
                     viewModel.verifyCodeStateLiveData.value?.resourceState != ResourceState.Loading
         }
     }
@@ -170,7 +163,7 @@ internal class VerifyOtpFragment : Fragment() {
     }
 
     private fun onSmsReceived(otpCode: String) {
-        headerBinding.verificationCodeEditText.setText(otpCode)
+        binding.verificationCodeEditText.setText(otpCode)
         handleProceedClick(true)
     }
 
@@ -190,7 +183,7 @@ internal class VerifyOtpFragment : Fragment() {
     }
 
     private fun handleVerifyCodeLoading() {
-        headerBinding.proceedBtn.isLoading = true
+        binding.proceedBtn.isLoading = true
     }
 
     private fun handleResendSmsClick() {
@@ -198,12 +191,12 @@ internal class VerifyOtpFragment : Fragment() {
     }
 
     private fun handleProceedClick(isAutomatic: Boolean) {
-        val code = headerBinding.verificationCodeEditText.text?.toString() ?: ""
+        val code = binding.verificationCodeEditText.text?.toString() ?: ""
         viewModel.verifyCode(phoneNumber, code)
     }
 
     private fun handleVerifyCodeSuccess() {
-        headerBinding.proceedBtn.isLoading = false
+        binding.proceedBtn.isLoading = false
 
         sendLoginBroadcast()
         hideKeyboardInLandscape()
@@ -223,20 +216,20 @@ internal class VerifyOtpFragment : Fragment() {
     }
 
     private fun handleVerifyCodeError(message: String) {
-        headerBinding.proceedBtn.isLoading = false
+        binding.proceedBtn.isLoading = false
         showError(message)
         hideKeyboardInLandscape()
     }
 
     private fun showError(message: String) {
-        headerBinding.verificationCodeEditText.errorState(true)
-        headerBinding.otpErrorText.visible()
-        headerBinding.otpErrorText.text = message
+        binding.verificationCodeEditText.errorState(true)
+        binding.otpErrorText.visible()
+        binding.otpErrorText.text = message
     }
 
     private fun hideError() {
-        headerBinding.otpErrorText.invisible()
-        headerBinding.verificationCodeEditText.errorState(false)
+        binding.otpErrorText.invisible()
+        binding.verificationCodeEditText.errorState(false)
     }
 
     private fun handleResendSmsAndCallState(resource: Resource<Long>) {
@@ -286,7 +279,7 @@ internal class VerifyOtpFragment : Fragment() {
 
     private fun hideKeyboardInLandscape() {
         if (requireContext().isLandscape) {
-            hideKeyboard(headerBinding.verificationCodeEditText.windowToken)
+            hideKeyboard(binding.verificationCodeEditText.windowToken)
         }
     }
 
@@ -301,12 +294,12 @@ internal class VerifyOtpFragment : Fragment() {
     }
 
     override fun onDestroyView() {
-        headerBinding.verificationCodeEditText.removeTextChangedListener(
+        binding.verificationCodeEditText.removeTextChangedListener(
             verificationCodeWatcher
         )
         super.onDestroyView()
         _binding = null
-        _headerBinding = null
+        _binding = null
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
