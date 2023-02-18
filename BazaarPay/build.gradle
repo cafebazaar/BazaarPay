@@ -9,8 +9,8 @@ plugins {
 
 apply from: "$rootDir/configs/versions.gradle"
 
-final VERSION_NAME = "2.0.1"
-final VERSION_CODE = 12
+final VERSION_NAME = "2.0.2"
+final VERSION_CODE = 13
 
 android {
     compileSdk build.compileSdk
