@@ -7,16 +7,6 @@
     android:layout_height="match_parent"
     android:background="@color/bazaarpay_surface_color_0">
 
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/background"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_on_boarding" />
-
     <ir.cafebazaar.bazaarpay.widget.RTLImageView
         android:id="@+id/backButton"
         style="@style/Bazaar.Image.Toolbar.Icon"
@@ -26,47 +16,70 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_round_arrow_back_icon_secondary_24dp_old" />
 
-    <androidx.viewpager2.widget.ViewPager2
-        android:id="@+id/onBoardingViewPager"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginTop="@dimen/bazaarpay_default_components_height"
-        android:layout_marginBottom="@dimen/bazaarpay_default_margin_one_half"
-        app:layout_constraintBottom_toTopOf="@+id/wormsDotIndicator"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <com.tbuonomo.viewpagerdotsindicator.WormDotsIndicator
-        android:id="@+id/wormsDotIndicator"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/bazaarpay_default_margin_triple"
-        app:dotsColor="@color/bazaarpay_app_brand_primary"
-        app:dotsCornerRadius="8dp"
-        app:dotsSize="12dp"
-        app:dotsSpacing="4dp"
-        app:dotsStrokeColor="@color/bazaarpay_divider_0"
-        app:dotsStrokeWidth="6dp"
-        app:layout_constraintBottom_toTopOf="@id/nextButton"
-        app:layout_constraintTop_toBottomOf="@id/onBoardingViewPager"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:selectedDotColor="@color/bazaarpay_app_brand_primary" />
-
-    <ir.cafebazaar.bazaarpay.widget.button.BazaarPayButton
-        android:id="@+id/skipButton"
+    <ScrollView
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/bazaarpay_default_margin_double"
-        android:layout_marginBottom="@dimen/bazaarpay_default_margin_double"
-        app:bazaarpayButtonTheme="transparent"
-        app:bazaarpayButtonType="app"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/nextButton"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toBottomOf="@id/backButton"
         app:layout_constraintStart_toStartOf="parent"
-        app:sizeMode="large"
-        app:text="@string/bazaarpay_skip" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/nextButton"
+        android:layout_marginBottom="@dimen/bazaarpay_default_margin_double"
+        >
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/directDebitIcon"
+                android:layout_width="130dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/backButton"
+                app:srcCompat="@drawable/ic_direct_debit_onboarding_image" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/directDebitOnboardingTitle"
+                style="@style/Bazaar.Text.Headline1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="-8dp"
+                android:layout_marginHorizontal="@dimen/bazaarpay_default_margin_double"
+                android:text="@string/bazaarpay_dd_guide_title"
+                android:textColor="@color/bazaarpay_grey_90"
+                app:layout_constraintTop_toBottomOf="@id/directDebitIcon"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"/>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/directDebitOnboardingSubtitle"
+                style="@style/Bazaar.Text.Body"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/bazaarpay_default_margin_double"
+                android:layout_marginVertical="@dimen/bazaarpay_default_margin"
+                android:text="@string/bazaarpay_dd_subtitle"
+                android:textColor="@color/bazaarpay_grey_90"
+                android:gravity="center"
+                android:textAlignment="center"
+                app:layout_constraintTop_toBottomOf="@id/directDebitOnboardingTitle"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"/>
+
+            <include
+                android:id="@+id/directDebitOnBoardingItems"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginVertical="@dimen/bazaarpay_default_margin_double"
+                app:layout_constraintBottom_toTopOf="@id/nextButton"
+                app:layout_constraintTop_toBottomOf="@id/directDebitOnboardingSubtitle"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                layout="@layout/view_direct_debit_onboarding_items" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
 
     <ir.cafebazaar.bazaarpay.widget.button.BazaarPayButton
         android:id="@+id/nextButton"
@@ -78,16 +91,16 @@
         app:bazaarpayButtonType="app"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/skipButton"
+        app:layout_constraintStart_toStartOf="parent"
         app:sizeMode="large"
-        app:text="@string/bazaarpay_next" />
+        app:text="@string/bazaarpay_dd_start" />
 
     <androidx.constraintlayout.widget.Group
         android:id="@+id/contentGroup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:visibility="gone"
-        app:constraint_referenced_ids="onBoardingViewPager,wormsDotIndicator,skipButton,nextButton"
+        app:constraint_referenced_ids="nextButton,directDebitOnBoardingItems,directDebitIcon,directDebitOnboardingTitle,directDebitOnboardingSubtitle"
         tools:visibility="visible" />
 
     <ir.cafebazaar.bazaarpay.widget.loading.SpinKitView
