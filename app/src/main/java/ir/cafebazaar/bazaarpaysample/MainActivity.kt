@@ -9,6 +9,7 @@ import ir.cafebazaar.bazaarpay.BazaarPayLauncher
 import ir.cafebazaar.bazaarpay.R
 import ir.cafebazaar.bazaarpay.commit
 import ir.cafebazaar.bazaarpay.extensions.setSafeOnClickListener
+import ir.cafebazaar.bazaarpay.trace
 import ir.cafebazaar.bazaarpaysample.databinding.ActivityMainBinding
 import kotlinx.coroutines.launch
 
@@ -47,6 +48,21 @@ class MainActivity : AppCompatActivity() {
             )
         }
     }
+
+    private fun traceExample(checkoutToken: String) {
+        lifecycleScope.launch {
+            trace(
+                checkoutToken,
+                this@MainActivity,
+                onSuccess = {
+                    binding.traceResult.text = it.toString()
+                },
+                onFailure = {
+                    binding.traceResult.text = it.message
+                }
+            )
+        }
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -61,6 +77,11 @@ class MainActivity : AppCompatActivity() {
                     isEnglish = binding.english.isChecked
                 )
             }
+        }
+
+        binding.traceButton.setSafeOnClickListener {
+            checkoutToken = binding.checkoutTokenInput.text.toString()
+            traceExample(checkoutToken)
         }
     }
 
