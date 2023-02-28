@@ -7,5 +7,6 @@ enum class PurchaseStatus {
     PaidCommitted,
     Refunded,
     TimedOut,
-    UnKnown
+    PaidNotCommittedRefunded,
+    ApiError
 }

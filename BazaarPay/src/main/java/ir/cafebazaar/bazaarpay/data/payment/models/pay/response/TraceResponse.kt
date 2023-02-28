@@ -16,8 +16,9 @@ internal data class TraceResponse(
            "paid_committed" -> PurchaseStatus.PaidCommitted
            "refunded" -> PurchaseStatus.Refunded
            "timed_out" -> PurchaseStatus.TimedOut
+           "paid_not_committed_refunded" -> PurchaseStatus.PaidNotCommittedRefunded
            else -> {
-               PurchaseStatus.UnKnown
+               PurchaseStatus.ApiError
            }
        }
     }
