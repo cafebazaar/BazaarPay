@@ -3,8 +3,10 @@ package ir.cafebazaar.bazaarpay.data.payment.api
 import ir.cafebazaar.bazaarpay.data.payment.models.getpaymentmethods.request.GetPaymentMethodsRequest
 import ir.cafebazaar.bazaarpay.data.payment.models.getpaymentmethods.response.PaymentMethodsInfoDto
 import ir.cafebazaar.bazaarpay.data.payment.models.merchantinfo.response.MerchantInfoDto
+import ir.cafebazaar.bazaarpay.data.payment.models.pay.request.CommitRequest
 import ir.cafebazaar.bazaarpay.data.payment.models.pay.request.PayRequest
 import ir.cafebazaar.bazaarpay.data.payment.models.pay.response.PayResponse
+import okhttp3.ResponseBody
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
@@ -29,6 +31,11 @@ internal interface PaymentService {
         @Body payRequest: PayRequest,
         @Query(PAY_ENDPOINT_LANG) lang: String
     ): PayResponse
+
+    @POST("commit/")
+    suspend fun commit(
+        @Body commitRequest: CommitRequest
+    ): ResponseBody
 
     companion object {
         const val PAY_ENDPOINT_LANG = "lang"

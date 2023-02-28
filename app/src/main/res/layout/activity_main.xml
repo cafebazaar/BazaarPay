@@ -48,6 +48,18 @@
         app:layout_constraintHorizontal_bias="1"
         app:layout_constraintStart_toStartOf="@id/checkout_token"
         app:layout_constraintTop_toBottomOf="@id/phoneNumber"/>
+
+    <androidx.appcompat.widget.AppCompatCheckBox
+        android:id="@+id/commit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:text="Commit Payment"
+        app:layout_constraintHorizontal_bias="1"
+        app:layout_constraintStart_toEndOf="@id/dark_mode"
+        app:layout_constraintTop_toTopOf="@id/dark_mode"
+        app:layout_constraintBottom_toBottomOf="@id/dark_mode"/>
+
     <RadioGroup
         android:id="@+id/radio_group"
         android:layout_width="wrap_content"
