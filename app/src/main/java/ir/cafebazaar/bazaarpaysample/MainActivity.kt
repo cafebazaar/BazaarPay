@@ -3,6 +3,7 @@ package ir.cafebazaar.bazaarpaysample
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.PersistableBundle
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
 import ir.cafebazaar.bazaarpay.BazaarPayLauncher
@@ -61,6 +62,11 @@ class MainActivity : AppCompatActivity() {
                     isEnglish = binding.english.isChecked
                 )
             }
+        }
+
+        binding.fragmentButton.setSafeOnClickListener {
+            val intent = Intent(this, MainFragmentActivity::class.java)
+            startActivity(intent)
         }
     }
 
