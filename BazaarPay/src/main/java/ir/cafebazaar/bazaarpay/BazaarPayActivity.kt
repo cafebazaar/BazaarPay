@@ -6,17 +6,20 @@ import android.content.res.Configuration
 import android.os.Build
 import android.os.Bundle
 import android.os.LocaleList
+import android.os.PersistableBundle
 import android.view.animation.AnimationUtils
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.navigation.findNavController
 import androidx.navigation.navOptions
+import ir.cafebazaar.bazaarpay.arg.BazaarPayActivityArgs
 import ir.cafebazaar.bazaarpay.databinding.ActivityBazaarPayBinding
 import java.util.Locale
 
 class BazaarPayActivity : AppCompatActivity(), FinishCallbacks {
 
     private lateinit var binding: ActivityBazaarPayBinding
+    private var args: BazaarPayActivityArgs? = null
     private var currentUiMode: Number? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -24,6 +27,8 @@ class BazaarPayActivity : AppCompatActivity(), FinishCallbacks {
         super.onCreate(savedInstanceState)
         binding = ActivityBazaarPayBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        args = intent.getParcelableExtra(BAZAARPAY_ACTIVITY_ARGS)
 
         handleIntent(intent)
 
@@ -49,6 +54,25 @@ class BazaarPayActivity : AppCompatActivity(), FinishCallbacks {
             newBase
         }.also {
             super.attachBaseContext(it)
+        }
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putParcelable(BAZAARPAY_ACTIVITY_ARGS, args)
+    }
+
+    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
+        super.onRestoreInstanceState(savedInstanceState)
+        val args = savedInstanceState.get(BAZAARPAY_ACTIVITY_ARGS) as? BazaarPayActivityArgs
+        args?.let {
+            ServiceLocator.initializeConfigs(
+                checkoutToken = it.checkoutToken,
+                phoneNumber = it.phoneNumber,
+                isDark = it.isDarkMode,
+                language = it.language,
+                languageNumber = it.languageNumber
+            )
         }
     }
 
@@ -199,5 +223,9 @@ class BazaarPayActivity : AppCompatActivity(), FinishCallbacks {
                 intent.dataString?.lowercase()?.contains("in_progress") == true
             )
         ) == true
+    }
+
+    companion object {
+        const val BAZAARPAY_ACTIVITY_ARGS = "bazaarpayActivityArgs"
     }
 }

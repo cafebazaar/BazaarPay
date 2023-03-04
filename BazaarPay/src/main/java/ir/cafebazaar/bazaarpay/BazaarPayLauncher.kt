@@ -7,6 +7,8 @@ import android.content.Intent
 import androidx.activity.result.ActivityResultCaller
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import ir.cafebazaar.bazaarpay.BazaarPayActivity.Companion.BAZAARPAY_ACTIVITY_ARGS
+import ir.cafebazaar.bazaarpay.arg.BazaarPayActivityArgs
 import ir.cafebazaar.bazaarpay.data.bazaar.models.ErrorModel
 import ir.cafebazaar.bazaarpay.data.payment.PaymentRepository
 import ir.cafebazaar.bazaarpay.data.payment.models.pay.PurchaseStatus
@@ -34,8 +36,16 @@ class BazaarPayLauncher(
             getLanguage(isEnglish),
             getLanguageNumber(isEnglish)
         )
+        val bazaarPayActivityArgs = BazaarPayActivityArgs(
+            checkoutToken,
+            phoneNumber,
+            isDarkMode,
+            getLanguage(isEnglish),
+            getLanguageNumber(isEnglish)
+        )
         Intent(context, BazaarPayActivity::class.java)
             .also {
+                it.putExtra(BAZAARPAY_ACTIVITY_ARGS, bazaarPayActivityArgs)
                 activityResultLauncher.launch(it)
             }
     }
