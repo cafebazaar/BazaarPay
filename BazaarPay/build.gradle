@@ -13,11 +13,11 @@ final VERSION_NAME = "3.0.0"
 final VERSION_CODE = 15
 
 android {
-    compileSdk build.compileSdk
+    compileSdk libs.versions.androidCompileSdk.get() as int
 
     defaultConfig {
-        minSdk build.minSdk
-        targetSdk build.targetSdk
+        minSdk libs.versions.androidMinSdk.get() as int
+        targetSdk libs.versions.androidTargetSdk.get() as int
         versionCode VERSION_CODE
         versionName VERSION_NAME
         multiDexEnabled true
