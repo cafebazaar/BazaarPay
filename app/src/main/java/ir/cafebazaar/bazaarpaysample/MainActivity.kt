@@ -1,8 +1,12 @@
 package ir.cafebazaar.bazaarpaysample
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.PersistableBundle
+import android.widget.Toast
+import androidx.activity.result.ActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
 import ir.cafebazaar.bazaarpay.BazaarPayLauncher
@@ -17,22 +21,34 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var checkoutToken: String
-    private val bazaarPayLauncher = BazaarPayLauncher(
-        this,
-        {
-            binding.result.text = "OK!"
-            binding.result.setTextColor(ContextCompat.getColor(this, R.color.bazaarpay_app_brand_primary))
-
-            // If you don't commit the payment in server side you must do it like this in the client
-            if (binding.commit.isChecked) {
-                commitExample()
+    private val startForResult = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult()
+    ) { result: ActivityResult ->
+        BazaarPayLauncher.onResultLauncher(
+            result,
+            {
+                binding.result.text = "OK!"
+                binding.result.setTextColor(
+                    ContextCompat.getColor(
+                        this,
+                        R.color.bazaarpay_app_brand_primary
+                    )
+                )
+                if (binding.commit.isChecked) {
+                    commitExample()
+                }
+            },
+            {
+                binding.result.text = "CANCEL!"
+                binding.result.setTextColor(
+                    ContextCompat.getColor(
+                        this,
+                        R.color.bazaarpay_error_primary
+                    )
+                )
             }
-        },
-        {
-            binding.result.text = "CANCEL!"
-            binding.result.setTextColor(ContextCompat.getColor(this, R.color.bazaarpay_error_primary))
-        }
-    )
+        )
+    }
 
     private fun commitExample() {
         lifecycleScope.launch {
@@ -70,13 +86,20 @@ class MainActivity : AppCompatActivity() {
         binding.payButton.setSafeOnClickListener {
             checkoutToken = binding.checkoutTokenInput.text.toString()
             checkoutToken.let {
-                bazaarPayLauncher.launchBazaarPay(
-                    checkoutToken = it,
+                BazaarPayLauncher.launchBazaarPay(
+                    context = this,
+                    checkoutToken = binding.checkoutTokenInput.text.toString(),
                     phoneNumber = binding.phoneNumberInput.text.toString(),
                     isDarkMode = binding.darkMode.isChecked,
-                    isEnglish = binding.english.isChecked
+                    isEnglish = binding.english.isChecked,
+                    activityResultLauncher = startForResult
                 )
             }
+        }
+
+        binding.fragmentButton.setSafeOnClickListener {
+            val intent = Intent(this, MainFragmentActivity::class.java)
+            startActivity(intent)
         }
 
         binding.traceButton.setSafeOnClickListener {
