@@ -7,8 +7,6 @@ plugins {
     id 'maven-publish'
 }
 
-apply from: "$rootDir/configs/versions.gradle"
-
 final VERSION_NAME = "3.0.0"
 final VERSION_CODE = 15
 
