@@ -4,6 +4,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.result.ActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import ir.cafebazaar.bazaarpay.BazaarPayLauncher
@@ -12,7 +14,33 @@ import ir.cafebazaar.bazaarpaysample.databinding.FragmentSampleBinding
 
 class SampleFragment : Fragment() {
     private lateinit var binding: FragmentSampleBinding
-    private lateinit var bazaarPayLauncher: BazaarPayLauncher
+
+    private val startForResult = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult()
+    ) { result: ActivityResult ->
+        BazaarPayLauncher.onResultLauncher(
+            result,
+            {
+                binding.result.text = "OK!"
+                binding.result.setTextColor(
+                    ContextCompat.getColor(
+                        requireActivity(),
+                        ir.cafebazaar.bazaarpay.R.color.bazaarpay_app_brand_primary
+                    )
+                )
+            },
+            {
+                binding.result.text = "CANCEL!"
+                binding.result.setTextColor(
+                    ContextCompat.getColor(
+                        requireActivity(),
+                        ir.cafebazaar.bazaarpay.R.color.bazaarpay_error_primary
+                    )
+                )
+            }
+        )
+    }
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -26,25 +54,17 @@ class SampleFragment : Fragment() {
         )
         return binding.root
     }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        bazaarPayLauncher = BazaarPayLauncher(
-            requireActivity(),
-            {
-                binding.result.text = "OK!"
-                binding.result.setTextColor(ContextCompat.getColor(requireActivity(), ir.cafebazaar.bazaarpay.R.color.bazaarpay_app_brand_primary))
-            },
-            {
-                binding.result.text = "CANCEL!"
-                binding.result.setTextColor(ContextCompat.getColor(requireActivity(), ir.cafebazaar.bazaarpay.R.color.bazaarpay_error_primary))
-            }
-        )
 
         binding.payButton.setSafeOnClickListener {
-            bazaarPayLauncher.launchBazaarPay(
+            BazaarPayLauncher.launchBazaarPay(
+                context = requireContext(),
                 checkoutToken = binding.checkoutTokenInput.text.toString(),
                 phoneNumber = binding.phoneNumberInput.text.toString(),
                 isDarkMode = binding.darkMode.isChecked,
-                isEnglish = binding.english.isChecked
+                isEnglish = binding.english.isChecked,
+                activityResultLauncher = startForResult
             )
         }
     }

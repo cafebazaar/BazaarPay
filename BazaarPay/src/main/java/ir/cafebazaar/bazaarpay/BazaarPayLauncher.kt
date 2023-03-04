@@ -4,27 +4,23 @@ import android.app.Activity.RESULT_CANCELED
 import android.app.Activity.RESULT_OK
 import android.content.Context
 import android.content.Intent
-import androidx.activity.result.ActivityResultCaller
+import androidx.activity.result.ActivityResult
 import androidx.activity.result.ActivityResultLauncher
-import androidx.activity.result.contract.ActivityResultContracts
 import ir.cafebazaar.bazaarpay.data.bazaar.models.ErrorModel
 import ir.cafebazaar.bazaarpay.data.payment.PaymentRepository
 import ir.cafebazaar.bazaarpay.extensions.fold
 import ir.cafebazaar.bazaarpay.utils.getLanguage
 import ir.cafebazaar.bazaarpay.utils.getLanguageNumber
-import java.lang.Exception
 
-class BazaarPayLauncher(
-    private val context: Context,
-    private val onSuccess: () -> Unit,
-    private val onCancel: () -> Unit,
-) {
+object BazaarPayLauncher {
 
     fun launchBazaarPay(
+        context: Context,
         checkoutToken: String,
         phoneNumber: String? = null,
         isDarkMode: Boolean = false,
-        isEnglish: Boolean = false
+        isEnglish: Boolean = false,
+        activityResultLauncher: ActivityResultLauncher<Intent>
     ) {
         ServiceLocator.initializeConfigs(
             checkoutToken,
@@ -39,27 +35,16 @@ class BazaarPayLauncher(
             }
     }
 
-    private val activityResultCaller: ActivityResultCaller
-        get() {
-            return if ((context is ActivityResultCaller).not()) {
-                throw Exception(
-                    "Context is not a type of ActivityResultCaller in" +
-                            "BazaarPayLauncher class"
-                )
-            } else {
-                context as ActivityResultCaller
-            }
+    fun onResultLauncher(
+        result: ActivityResult,
+        onSuccess: () -> Unit,
+        onCancel: () -> Unit
+    ) {
+        when (result.resultCode) {
+            RESULT_OK -> onSuccess()
+            RESULT_CANCELED -> onCancel()
         }
-
-    private var activityResultLauncher: ActivityResultLauncher<Intent> =
-        activityResultCaller.registerForActivityResult(
-            ActivityResultContracts.StartActivityForResult()
-        ) { result ->
-            when (result.resultCode) {
-                RESULT_OK -> onSuccess()
-                RESULT_CANCELED -> onCancel()
-            }
-        }
+    }
 }
 
 suspend fun commit(
