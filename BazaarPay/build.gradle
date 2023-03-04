@@ -58,8 +58,6 @@ dependencies {
     implementation libs.androidx.navigation.fragment
     implementation libs.androidx.navigation.ui
     implementation libs.androidx.recyclerview
-    implementation libs.dotsindicator
-    implementation libs.glide.core
     implementation libs.google.gson
     implementation libs.google.material
     implementation libs.google.playservices.auth.core
@@ -71,9 +69,10 @@ dependencies {
     implementation libs.squareup.retrofit.converter
     implementation libs.squareup.retrofit.core
     implementation libs.squareup.retrofit.core
+    implementation libs.glide.core
     kapt libs.glide.compiler
-
-    implementation("com.github.ihsanbal:LoggingInterceptor:$library.loggingInterceptor") {
+    implementation libs.dotsindicator
+    implementation(libs.logginginterceptor) {
         exclude group: 'org.json', module: 'json'
     }
 }

@@ -38,13 +38,10 @@ squareup-retrofit-converter = { group = "com.squareup.retrofit2", name = "conver
 squareup-retrofit-core = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit" }
 
 # Other
-dotsindicator = { group = "com.tbuonomo", name = "dotsindicator", version = "4.2" }
 glide-compiler = { group = "com.github.bumptech.glide", name = "compiler", version.ref = "glide" }
 glide-core = { group = "com.github.bumptech.glide", name = "glide", version.ref = "glide" }
-
-#implementation("com.github.ihsanbal:LoggingInterceptor:$library.loggingInterceptor") {
-#    exclude group: 'org.json', module: 'json'
-#}
+dotsindicator = { group = "com.tbuonomo", name = "dotsindicator", version = "4.2" }
+logginginterceptor = { group = "com.github.ihsanbal", name = "LoggingInterceptor", version = "3.1.0" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "androidPlugin" }
