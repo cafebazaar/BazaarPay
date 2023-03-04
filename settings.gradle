@@ -16,3 +16,7 @@ dependencyResolutionManagement {
 rootProject.name = "BazaarPay"
 include ':app'
 include ':BazaarPay'
+
+// TODO: Starting from Gradle 7.4, Version Catalog
+//  is stable and enabled by default.
+enableFeaturePreview("VERSION_CATALOGS")
