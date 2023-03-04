@@ -7,8 +7,10 @@ import ir.cafebazaar.bazaarpay.data.payment.models.getpaymentmethods.PaymentMeth
 import ir.cafebazaar.bazaarpay.data.payment.models.getpaymentmethods.request.GetPaymentMethodsRequest
 import ir.cafebazaar.bazaarpay.data.payment.models.merchantinfo.MerchantInfo
 import ir.cafebazaar.bazaarpay.data.payment.models.pay.PayResult
+import ir.cafebazaar.bazaarpay.data.payment.models.pay.PurchaseStatus
 import ir.cafebazaar.bazaarpay.data.payment.models.pay.request.CommitRequest
 import ir.cafebazaar.bazaarpay.data.payment.models.pay.request.PayRequest
+import ir.cafebazaar.bazaarpay.data.payment.models.pay.request.TraceRequest
 import ir.cafebazaar.bazaarpay.extensions.ServiceType
 import ir.cafebazaar.bazaarpay.extensions.safeApiCall
 import ir.cafebazaar.bazaarpay.models.GlobalDispatchers
@@ -80,6 +82,18 @@ internal class PaymentRemoteDataSource {
                 paymentService.commit(
                     CommitRequest(checkoutToken)
                 )
+            }
+        }
+    }
+
+    suspend fun trace(
+        checkoutToken: String
+    ): Either<PurchaseStatus> {
+        return withContext(globalDispatchers.iO) {
+            return@withContext safeApiCall(ServiceType.BAZAARPAY) {
+                paymentService.trace(
+                    TraceRequest(checkoutToken)
+                ).toPurchaseState()
             }
         }
     }
