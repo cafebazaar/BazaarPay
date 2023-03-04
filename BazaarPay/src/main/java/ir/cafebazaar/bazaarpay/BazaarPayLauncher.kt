@@ -6,7 +6,6 @@ import android.content.Context
 import android.content.Intent
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.ActivityResultLauncher
-import androidx.activity.result.contract.ActivityResultContracts
 import ir.cafebazaar.bazaarpay.BazaarPayActivity.Companion.BAZAARPAY_ACTIVITY_ARGS
 import ir.cafebazaar.bazaarpay.arg.BazaarPayActivityArgs
 import ir.cafebazaar.bazaarpay.data.bazaar.models.ErrorModel
