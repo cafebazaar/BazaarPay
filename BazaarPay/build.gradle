@@ -60,19 +60,19 @@ dependencies {
     implementation libs.androidx.recyclerview
     implementation libs.google.gson
     implementation libs.google.material
-    implementation libs.google.playservices.auth.core
-    implementation libs.google.playservices.auth.phone
-    implementation libs.google.playservices.base
+    implementation libs.google.playServices.auth.core
+    implementation libs.google.playServices.auth.phone
+    implementation libs.google.playServices.base
     implementation libs.kotlinx.coroutines.core
     implementation libs.squareup.okhttp.core
-    implementation libs.squareup.okhttp.logger
+    implementation libs.squareup.okhttp.loggingInterceptor
     implementation libs.squareup.retrofit.converter
     implementation libs.squareup.retrofit.core
     implementation libs.squareup.retrofit.core
     implementation libs.glide.core
     kapt libs.glide.compiler
-    implementation libs.dotsindicator
-    implementation(libs.logginginterceptor) {
+    implementation libs.dotsIndicator
+    implementation(libs.loggingInterceptor) {
         exclude group: 'org.json', module: 'json'
     }
 }
