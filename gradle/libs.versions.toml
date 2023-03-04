@@ -50,4 +50,4 @@ glide-core = { group = "com.github.bumptech.glide", name = "glide", version.ref 
 android-application = { id = "com.android.application", version.ref = "androidPlugin" }
 android-library = { id = "com.android.library", version.ref = "androidPlugin" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
-androindx-navigation = { id = "androidx.navigation.safeargs.kotlin", version.ref = "androidxNavigation" }
+navigation-safeargs = { id = "androidx.navigation.safeargs.kotlin", version.ref = "androidxNavigation" }
