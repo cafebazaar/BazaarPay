@@ -38,7 +38,7 @@ internal class PaymentThankYouPageViewModel : ViewModel() {
             SECOND_IN_MILLIS
         ) {
             override fun onTick(millisUntilFinished: Long) {
-                val progressPercent = 100 - ((millisUntilFinished * 100) / (COUNT_DOWN_TIMER_SEC * SECOND_IN_MILLIS))
+                val progressPercent = 99 - ((millisUntilFinished * 100) / (COUNT_DOWN_TIMER_SEC * SECOND_IN_MILLIS))
 
                 _viewStateLiveData.value = Resource.loaded(
                     data = PaymentThankYouPageSuccessModel(
