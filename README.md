@@ -28,9 +28,7 @@ dependencies {
 
 ## Checkout Token
 
-You have to get a `checkout` token before starting the payment flow using the SDK. You have to
-commit the `checkout` token after a successful payment flow. The recommended way for using this API
-is calling it from the server side, But this option is also provided in the SDK.
+You need a `checkout` token before starting the payment flow.
 
 ## Usage
 
