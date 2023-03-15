@@ -13,24 +13,23 @@ this API is calling it from the server side, But this option is also provided in
 
 `Minimum Android SDK` >= 17
 
-## Dependency
+## Setup
 
-To start working with `BazaarPay` Android SDK, you need to add its dependency to your `build.gradle`
-file at module level:
-
-```groovy
-dependencies {
-    implementation "com.github.cafebazaar:bazaarpay:[latest_version]"
-}
-```
-
-To use this dependency, you need to add `jitpack` as a `maven` repository in `build.gradle` file in
-project level:
+`BazaarPay` is available on the `jitpack` repository. You can declare this repository in your
+project `build.gradle` file:
 
 ```groovy
 repositories {
     // ...
     maven { url 'https://jitpack.io' }
+}
+```
+
+Add the dependency to your module `build.gradle` file:
+
+```groovy
+dependencies {
+    implementation "com.github.cafebazaar:bazaarpay:[latest_version]"
 }
 ```
 
