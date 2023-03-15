@@ -9,7 +9,7 @@ The library requires Android 4.2 (API level 17) or higher.
 
 ## Setup
 
-`BazaarPay` is available on the `jitpack` repository. You can declare this repository in your
+`BazaarPay` is available through the JitPack repository. You can declare this repository in your
 project `build.gradle` file:
 
 ```groovy
