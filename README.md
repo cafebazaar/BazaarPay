@@ -42,7 +42,7 @@ the `launchBazaarPay` function.
 
 There are three points which you have to consider:
 
-1. You have to create an instance of `BazaarPayLauncher` as a class property.*1
+1. You have to create an instance of `BazaarPayLauncher` as a class property[^1].
 2. You have to pass three parameters while creating a new instance of the `BazaarPayLauncher` class:
 
 * `Context`: Has to be an implementation of `ActivityResultCaller` interface.
@@ -50,7 +50,8 @@ There are three points which you have to consider:
 * `onCancel`: This function will call if the payment flow does not finish successfully (Cancel by
   the user).
 
-3. You need to pass the `checkout` token as a parameter during calling `launchBazaarPay` function.*2
+3. You need to pass the `checkout` token as a parameter during calling `launchBazaarPay`
+   function[^2].
     * You can optionally pass the user phone number in `phoneNumber` in order to pre fill phone
       number in login screen.
 4. You have to commit the `checkout` token after a successful payment flow. Recommended way for
@@ -59,11 +60,9 @@ There are three points which you have to consider:
    you are using other technologies you can implement it yourself. Note that
    it is better to call it from a WorkManager worker or a Service for safety reasons.
 
-### Notes:
-
-*1: This is mandatory because it uses the `Activity Result API`. Look
+[^1]: This is mandatory because it uses the `Activity Result API`. Look
 at [this](https://developer.android.com/training/basics/intents/result) to learn more.
 
-*2: There are two other optional parameters with default
+[^2]: There are two other optional parameters with default
 values (`isEnglish = false / isDarkMode = false`). You can use these parameters to set the
 language (Default is Persian) and dark mode (Default is light) manually.
