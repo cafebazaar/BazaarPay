@@ -32,9 +32,8 @@ You need a `checkout` token before starting the payment flow.
 
 ## Usage
 
-Using the `BazaarPay` Android SDK is very simple. You only need to create an instance
-of `BazaarPayLauncher` class. Then use this instance to start the payment flow by calling
-the `launchBazaarPay` function.
+You need to create an instance of `BazaarPayLauncher` class. Then use this instance to start the
+payment flow by calling the `launchBazaarPay` function.
 
 There are three points which you have to consider:
 
