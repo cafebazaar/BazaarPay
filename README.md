@@ -1,7 +1,7 @@
 ## BazaarPay Android SDK
 
 This document aims to help you to integrate the `BazaarPay` android SDK within your application. For
-the topics out of this scope, you have to read the corresponding documents.
+the topics out of this scope, read the corresponding documents.
 
 ### Minimum requirements
 
@@ -14,7 +14,6 @@ project `build.gradle` file:
 
 ```groovy
 repositories {
-    // ...
     maven { url 'https://jitpack.io' }
 }
 ```
