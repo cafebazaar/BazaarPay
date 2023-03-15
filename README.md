@@ -27,13 +27,13 @@ dependencies {
 }
 ```
 
-## `checkout` token
+## Checkout Token
 
 You have to get a `checkout` token before starting the payment flow using the SDK. You have to
 commit the `checkout` token after a successful payment flow. The recommended way for using this API
 is calling it from the server side, But this option is also provided in the SDK.
 
-## How to use
+## Usage
 
 Using the `BazaarPay` Android SDK is very simple. You only need to create an instance
 of `BazaarPayLauncher` class. Then use this instance to start the payment flow by calling
@@ -51,8 +51,8 @@ There are three points which you have to consider:
 
 3. You need to pass the `checkout` token as a parameter during calling `launchBazaarPay`
    function[^2].
-    * You can optionally pass the user phone number in `phoneNumber` in order to pre fill phone
-      number in login screen.
+   * You can optionally pass the user phone number in `phoneNumber` in order to pre fill phone
+     number in login screen.
 4. You have to commit the `checkout` token after a successful payment flow. Recommended way for
    using this API is calling it from the server side, But this option is also provided in the SDK.
    For doing this you should call the suspend `commit` function from a coroutine scope. Otherwise if
