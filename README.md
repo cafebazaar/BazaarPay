@@ -9,9 +9,9 @@ You have to get a `checkout` token before starting the payment flow using the SD
 You have to commit the `checkout` token after a successful payment flow. Recommended way for using
 this API is calling it from the server side, But this option is also provided in the SDK.
 
-### Limitations:
+### Minimum requirements
 
-`Minimum Android SDK` >= 17
+The library requires Android 4.2 (API level 17) or higher.
 
 ## Setup
 
