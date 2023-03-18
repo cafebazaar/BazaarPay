@@ -5,8 +5,8 @@ the topics out of this scope, read the corresponding documents.
 
 ### Requirements
 
-- Minimum Android Version: The SDK requires Android 4.2 (API level 17) or higher.
-- Checkout Token: You need a checkout token before starting the payment flow.
+- The SDK requires Android 4.2 (API level 17) or higher.
+- You need a *Checkout Token* before starting the payment flow.
 
 ## Setup
 
