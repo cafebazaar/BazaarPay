@@ -85,8 +85,8 @@ There are also other optional parameters that you can configure to your needs:
 
 ### 3. Commit Checkout Token
 
-You have to commit the checkout token after a successful payment. You should call the
-suspend `commit()` function from a coroutine scope to do:
+You have to commit the checkout token after a successful payment. There is a suspend `commit()`
+function for this purpose that you can call from a coroutine scope:
 
 ```kotlin
 // Inside onSuccess callback of launchBazaarPay
