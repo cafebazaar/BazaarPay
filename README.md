@@ -51,7 +51,8 @@ val resultRegistry = registerForActivityResult(
 
 You also need to specify two callback parameters:
 
-* `onSuccess`: Will be called after a successful payment flow.
+* `onSuccess`: Will be called after a successful payment flow. This is the place you need
+  to [commit](#3-commit-checkout-token) the Checkout Token.
 * `onCancel`: Will be called if the payment flow has not been finished successfully (Canceled by the
   user).
 
@@ -85,9 +86,22 @@ There are also other optional parameters that you can configure to your needs:
 ### 3. Commit Checkout Token
 
 You have to commit the checkout token after a successful payment. You should call the
-suspend `commit` function from a coroutine scope to do Otherwise, if you are using other
-technologies you need to implement this yourself. It is better to call it from a WorkManager worker
-or a Service for safety reasons.
+suspend `commit()` function from a coroutine scope to do:
+
+```kotlin
+// Inside onSuccess callback of launchBazaarPay
+myScope.launch {
+    commit(
+        checkoutToken = "CHECKOUT_TOKEN",
+        context = requireContext(),
+        onSuccess = { },
+        onFailure = { }
+    )
+}
+```
+
+Otherwise, if you are using other technologies you need to implement this yourself. It is better to
+call it from a WorkManager worker or a Service for safety reasons.
 
 > Although sending tokens through the SDK is possible, we recommend this happens on the server
 > side. 
