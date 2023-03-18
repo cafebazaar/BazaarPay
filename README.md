@@ -32,9 +32,9 @@ dependencies {
 
 ### 1. Register For Activity Result
 
-`BazaarPay` uses
+*BazaarPay* uses
 the [Activity Result API](https://developer.android.com/training/basics/intents/result). Register
-for an activity result and pass `StartActivityForResult` as its contract parameter. Inside its
+for an activity result and pass `StartActivityForResult` as its `contract` parameter. Inside its
 callback, notify the `BazaarPayLauncher` object about the results as follows:
 
 ```kotlin
