@@ -5,7 +5,7 @@ the topics out of this scope, read the corresponding documents.
 
 ### Minimum requirements
 
-The library requires Android 4.2 (API level 17) or higher.
+The SDK requires Android 4.2 (API level 17) or higher.
 
 ## Setup
 
