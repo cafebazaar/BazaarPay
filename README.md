@@ -3,9 +3,10 @@
 This document aims to help you to integrate the `BazaarPay` android SDK within your application. For
 the topics out of this scope, read the corresponding documents.
 
-### Minimum requirements
+### Requirements
 
-The SDK requires Android 4.2 (API level 17) or higher.
+- Minimum Android Version: The SDK requires Android 4.2 (API level 17) or higher.
+- Checkout Token: You need a checkout token before starting the payment flow.
 
 ## Setup
 
@@ -25,10 +26,6 @@ dependencies {
     implementation "com.github.cafebazaar:bazaarpay:[latest_version]"
 }
 ```
-
-## Checkout Token
-
-You need a checkout token before starting the payment flow.
 
 ## Usage
 
