@@ -6,7 +6,8 @@ the topics out of this scope, read the corresponding documents.
 ### Requirements
 
 - The SDK requires Android 4.2 (API level 17) or higher.
-- You need a *Checkout Token* before starting the payment flow.
+- You need a *Checkout Token* before starting the payment flow. Check out [this]() documentation on
+  how to get one.
 
 ## Setup
 
@@ -33,13 +34,13 @@ dependencies {
 
 `BazaarPay` uses
 the [Activity Result API](https://developer.android.com/training/basics/intents/result). Register
-for an activity result and pass `StartActivityForResult` as its contract parameter. Then inside its
+for an activity result and pass `StartActivityForResult` as its contract parameter. Inside its
 callback, notify the `BazaarPayLauncher` object about the results as follows:
 
 ```kotlin
 val resultRegistry = registerForActivityResult(
     ActivityResultContracts.StartActivityForResult()
-) { result: ActivityResult ->
+) { result ->
     BazaarPayLauncher.onResultLauncher(
         result,
         onSuccess = { },
@@ -59,8 +60,8 @@ You also need to specify two callback parameters:
 After registering for the activity result, you can start a payment flow by calling
 the `launchBazaarPay` function. It takes the following parameters:
 
-* `Context`: Has to be an implementation of the `ActivityResultCaller` interface.
-* `checkoutToken`: The token you [generated before](#checkout-token).
+* `Context`: The context in which payment happens.
+* `checkoutToken`: The token you [generated before](#requirements).
 * `activityResultLauncher`: The launcher you [just registered](#1-register-for-activity-result) for
   its result.
 
