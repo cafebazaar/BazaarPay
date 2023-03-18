@@ -28,36 +28,69 @@ dependencies {
 
 ## Checkout Token
 
-You need a `checkout` token before starting the payment flow.
+You need a checkout token before starting the payment flow.
 
 ## Usage
 
-You need to create an instance of `BazaarPayLauncher` class. Then use this instance to start the
-payment flow by calling the `launchBazaarPay` function.
+### 1. Register For Activity Result
 
-There are three points which you have to consider:
+`BazaarPay` uses
+the [Activity Result API](https://developer.android.com/training/basics/intents/result). Register
+for an activity result and pass `StartActivityForResult` as its contract parameter. Then inside its
+callback, notify the `BazaarPayLauncher` object about the results as follows:
 
-1. You have to create an instance of `BazaarPayLauncher` as a class property[^1].
-2. You have to pass three parameters while creating a new instance of the `BazaarPayLauncher` class:
+```kotlin
+val resultRegistry = registerForActivityResult(
+    ActivityResultContracts.StartActivityForResult()
+) { result: ActivityResult ->
+    BazaarPayLauncher.onResultLauncher(
+        result,
+        onSuccess = { },
+        onCancel = { }
+    )
+}
+```
 
-* `Context`: Has to be an implementation of `ActivityResultCaller` interface.
-* `onSuccess`: This function will call after a successful payment flow.
-* `onCancel`: This function will call if the payment flow does not finish successfully (Cancel by
-  the user).
+You also need to specify two callback parameters:
 
-3. You need to pass the `checkout` token as a parameter during calling `launchBazaarPay`
-   function[^2].
-   * You can optionally pass the user phone number in `phoneNumber` in order to pre fill phone
-     number in login screen.
-4. You have to commit the `checkout` token after a successful payment flow. Recommended way for
-   using this API is calling it from the server side, But this option is also provided in the SDK.
-   For doing this you should call the suspend `commit` function from a coroutine scope. Otherwise if
-   you are using other technologies you can implement it yourself. Note that
-   it is better to call it from a WorkManager worker or a Service for safety reasons.
+* `onSuccess`: Will be called after a successful payment flow.
+* `onCancel`: Will be called if the payment flow has not been finished successfully (Canceled by the
+  user).
 
-[^1]: This is mandatory because it uses the `Activity Result API`. Look
-at [this](https://developer.android.com/training/basics/intents/result) to learn more.
+### 2. Launch Payment
 
-[^2]: There are two other optional parameters with default
-values (`isEnglish = false / isDarkMode = false`). You can use these parameters to set the
-language (Default is Persian) and dark mode (Default is light) manually.
+After registering for the activity result, you can start a payment flow by calling
+the `launchBazaarPay` function. It takes the following parameters:
+
+* `Context`: Has to be an implementation of the `ActivityResultCaller` interface.
+* `checkoutToken`: The token you [generated before]().
+* `activityResultLauncher`: The launcher you [just registered]() for its result.
+
+```kotlin
+BazaarPayLauncher.launchBazaarPay(
+    context = requireContext(),
+    checkoutToken = "CHECKOUT_TOKEN",
+    activityResultLauncher = resultRegistry
+)
+```
+
+There are also other optional parameters that you can configure to your needs:
+
+* `phoneNumber`: Pre-fills the input field of the login screen with the specified number. By
+  default, it uses a null value, resulting in no pre-filled number.
+* `isEnglish`: Whether force English language for the payment flow. The default value is `false` and
+  the Persian language will be used.
+* `isDarkMode`: Payment flow supports Dark Mode for its UI elements. The parameter enables this
+  option, which is `false` by default and uses Light Mode.
+
+### 3. Commit Checkout Token
+
+You have to commit the checkout token after a successful payment. You should call the
+suspend `commit` function from a coroutine scope to do Otherwise, if you are using other
+technologies you need to implement this yourself. It is better to call it from a WorkManager worker
+or a Service for safety reasons.
+
+---
+
+Note: Although sending tokens through the SDK is possible, we recommend this happens on the server
+side. 
