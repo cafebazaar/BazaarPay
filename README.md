@@ -6,7 +6,7 @@ the topics out of this scope, read the corresponding documents.
 ### Requirements
 
 - The SDK requires Android 4.2 (API level 17) or higher.
-- You need a *Checkout Token* before starting the payment flow. Check out [this]() documentation on
+- You need a *Checkout Token* before starting a payment. Check out [this]() documentation on
   how to get one.
 
 ## Setup
@@ -24,7 +24,7 @@ Add the dependency to your module `build.gradle` file:
 
 ```groovy
 dependencies {
-    implementation "com.github.cafebazaar:bazaarpay:[latest_version]"
+    implementation 'com.github.cafebazaar:bazaarpay:[latest_version]'
 }
 ```
 
