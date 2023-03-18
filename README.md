@@ -63,8 +63,9 @@ After registering for the activity result, you can start a payment flow by calli
 the `launchBazaarPay` function. It takes the following parameters:
 
 * `Context`: Has to be an implementation of the `ActivityResultCaller` interface.
-* `checkoutToken`: The token you [generated before]().
-* `activityResultLauncher`: The launcher you [just registered]() for its result.
+* `checkoutToken`: The token you [generated before](#checkout-token).
+* `activityResultLauncher`: The launcher you [just registered](#1-register-for-activity-result) for
+  its result.
 
 ```kotlin
 BazaarPayLauncher.launchBazaarPay(
@@ -90,7 +91,5 @@ suspend `commit` function from a coroutine scope to do Otherwise, if you are usi
 technologies you need to implement this yourself. It is better to call it from a WorkManager worker
 or a Service for safety reasons.
 
----
-
-Note: Although sending tokens through the SDK is possible, we recommend this happens on the server
-side. 
+> Although sending tokens through the SDK is possible, we recommend this happens on the server
+> side. 
