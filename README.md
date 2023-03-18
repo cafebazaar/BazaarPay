@@ -101,7 +101,8 @@ myScope.launch {
 ```
 
 Otherwise, if you are using other technologies you need to implement this yourself. It is better to
-call it from a WorkManager worker or a Service for safety reasons.
+call it from a [WorkManager](https://developer.android.com/topic/libraries/architecture/workmanager)
+worker or a Service for safety reasons.
 
 > Although sending tokens through the SDK is possible, we recommend this happens on the server
 > side. 
