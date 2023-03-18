@@ -52,14 +52,14 @@ val resultRegistry = registerForActivityResult(
 You also need to specify two callback parameters:
 
 * `onSuccess`: Will be called after a successful payment flow. This is the place you need
-  to [commit](#3-commit-checkout-token) the Checkout Token.
+  to [commit](#3-commit-checkout-token) the *Checkout Token*.
 * `onCancel`: Will be called if the payment flow has not been finished successfully (Canceled by the
   user).
 
 ### 2. Launch Payment
 
 After registering for the activity result, you can start a payment flow by calling
-the `launchBazaarPay` function. It takes the following parameters:
+the `launchBazaarPay()` function. It takes the following parameters:
 
 * `Context`: The context in which payment happens.
 * `checkoutToken`: The token you [generated before](#requirements).
@@ -85,7 +85,7 @@ There are also other optional parameters that you can configure to your needs:
 
 ### 3. Commit Checkout Token
 
-You have to commit the checkout token after a successful payment. There is a suspend `commit()`
+You have to commit the *Checkout Token* after a successful payment. There is a suspend `commit()`
 function for this purpose that you can call from a coroutine scope:
 
 ```kotlin
