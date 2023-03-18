@@ -1,6 +1,6 @@
 ## BazaarPay Android SDK
 
-This document aims to help you to integrate the `BazaarPay` android SDK within your application. For
+This document aims to help you to integrate the *BazaarPay* android SDK within your application. For
 the topics out of this scope, read the corresponding documents.
 
 ### Requirements
@@ -51,7 +51,7 @@ val resultRegistry = registerForActivityResult(
 
 You also need to specify two callback parameters:
 
-* `onSuccess`: Will be called after a successful payment flow. This is the place you need
+* `onSuccess`: Will be called after a successful payment. This is the place you need
   to [commit](#3-commit-checkout-token) the *Checkout Token*.
 * `onCancel`: Will be called if the payment flow has not been finished successfully (Canceled by the
   user).
