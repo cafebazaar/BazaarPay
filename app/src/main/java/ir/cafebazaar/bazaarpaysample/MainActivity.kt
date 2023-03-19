@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.os.PersistableBundle
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
@@ -26,26 +27,29 @@ class MainActivity : AppCompatActivity() {
         BazaarPayLauncher.onResultLauncher(
             result,
             {
-                binding.result.text = getString(R.string.message_successful_payment)
-                binding.result.setTextColor(
-                    ContextCompat.getColor(
-                        this,
-                        BazaarPayR.color.bazaarpay_app_brand_primary
-                    )
-                )
+                showPaymentResult(R.string.message_successful_payment)
                 if (binding.commit.isChecked) {
                     commitExample()
                 }
             },
             {
-                binding.result.text = getString(R.string.message_payment_cancelled)
-                binding.result.setTextColor(
-                    ContextCompat.getColor(
-                        this,
-                        BazaarPayR.color.bazaarpay_error_primary
-                    )
-                )
+                showPaymentResult(R.string.message_payment_cancelled, isError = true)
             }
+        )
+    }
+
+    private fun showPaymentResult(
+        @StringRes messageRes: Int,
+        isError: Boolean = false
+    ) {
+        binding.result.setText(messageRes)
+        val colorRes = if (isError) {
+            BazaarPayR.color.bazaarpay_error_primary
+        } else {
+            BazaarPayR.color.bazaarpay_app_brand_primary
+        }
+        binding.result.setTextColor(
+            ContextCompat.getColor(this, colorRes)
         )
     }
 
