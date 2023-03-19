@@ -26,13 +26,13 @@ class MainActivity : AppCompatActivity() {
     ) { result: ActivityResult ->
         BazaarPayLauncher.onResultLauncher(
             result,
-            {
+            onSuccess = {
                 showPaymentResult(R.string.message_successful_payment)
                 if (binding.commit.isChecked) {
                     commitExample()
                 }
             },
-            {
+            onCancel = {
                 showPaymentResult(R.string.message_payment_cancelled, isError = true)
             }
         )

@@ -23,10 +23,10 @@ class SampleFragment : Fragment() {
     ) { result: ActivityResult ->
         BazaarPayLauncher.onResultLauncher(
             result,
-            {
+            onSuccess = {
                 showPaymentResult(R.string.message_successful_payment)
             },
-            {
+            onCancel = {
                 showPaymentResult(R.string.message_payment_cancelled, isError = true)
             }
         )
