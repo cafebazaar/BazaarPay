@@ -15,7 +15,8 @@ import ir.cafebazaar.bazaarpaysample.databinding.FragmentSampleBinding
 import ir.cafebazaar.bazaarpay.R as BazaarPayR
 
 class SampleFragment : Fragment() {
-    private lateinit var binding: FragmentSampleBinding
+    private var _binding: FragmentSampleBinding? = null
+    private val binding get() = _binding!!
 
     private val startForResult = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
@@ -51,7 +52,7 @@ class SampleFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentSampleBinding.inflate(
+        _binding = FragmentSampleBinding.inflate(
             inflater,
             container,
             false
@@ -71,5 +72,10 @@ class SampleFragment : Fragment() {
                 activityResultLauncher = startForResult
             )
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }
