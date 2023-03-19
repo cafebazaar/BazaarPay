@@ -1,16 +1,14 @@
 package ir.cafebazaar.bazaarpaysample
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.PersistableBundle
-import android.widget.Toast
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
 import ir.cafebazaar.bazaarpay.BazaarPayLauncher
-import ir.cafebazaar.bazaarpay.R
 import ir.cafebazaar.bazaarpay.commit
 import ir.cafebazaar.bazaarpay.extensions.setSafeOnClickListener
 import ir.cafebazaar.bazaarpay.trace
@@ -27,11 +25,11 @@ class MainActivity : AppCompatActivity() {
         BazaarPayLauncher.onResultLauncher(
             result,
             {
-                binding.result.text = "OK!"
+                binding.result.text = getString(R.string.message_successful_payment)
                 binding.result.setTextColor(
                     ContextCompat.getColor(
                         this,
-                        R.color.bazaarpay_app_brand_primary
+                        ir.cafebazaar.bazaarpay.R.color.bazaarpay_app_brand_primary
                     )
                 )
                 if (binding.commit.isChecked) {
@@ -39,11 +37,11 @@ class MainActivity : AppCompatActivity() {
                 }
             },
             {
-                binding.result.text = "CANCEL!"
+                binding.result.text = getString(R.string.message_payment_cancelled)
                 binding.result.setTextColor(
                     ContextCompat.getColor(
                         this,
-                        R.color.bazaarpay_error_primary
+                        ir.cafebazaar.bazaarpay.R.color.bazaarpay_error_primary
                     )
                 )
             }
@@ -79,6 +77,7 @@ class MainActivity : AppCompatActivity() {
             )
         }
     }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)

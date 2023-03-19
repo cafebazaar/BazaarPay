@@ -1,3 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">BazaarPay</string>
+    <string name="app_name" translatable="false">BazaarPay</string>
+    <string name="message_payment_cancelled">Payment canceled!</string>
+    <string name="message_successful_payment">Payment finished successfully</string>
 </resources>

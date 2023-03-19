@@ -21,7 +21,7 @@ class SampleFragment : Fragment() {
         BazaarPayLauncher.onResultLauncher(
             result,
             {
-                binding.result.text = "OK!"
+                binding.result.text = getString(R.string.message_successful_payment)
                 binding.result.setTextColor(
                     ContextCompat.getColor(
                         requireActivity(),
@@ -30,7 +30,7 @@ class SampleFragment : Fragment() {
                 )
             },
             {
-                binding.result.text = "CANCEL!"
+                binding.result.text = getString(R.string.message_payment_cancelled)
                 binding.result.setTextColor(
                     ContextCompat.getColor(
                         requireActivity(),
