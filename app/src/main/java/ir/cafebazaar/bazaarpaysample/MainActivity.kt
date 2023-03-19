@@ -89,16 +89,14 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
         binding.payButton.setSafeOnClickListener {
             checkoutToken = binding.checkoutTokenInput.text.toString()
-            checkoutToken.let {
-                BazaarPayLauncher.launchBazaarPay(
-                    context = this,
-                    checkoutToken = binding.checkoutTokenInput.text.toString(),
-                    phoneNumber = binding.phoneNumberInput.text.toString(),
-                    isDarkMode = binding.darkMode.isChecked,
-                    isEnglish = binding.english.isChecked,
-                    activityResultLauncher = startForResult
-                )
-            }
+            BazaarPayLauncher.launchBazaarPay(
+                context = this,
+                checkoutToken = checkoutToken,
+                phoneNumber = binding.phoneNumberInput.text.toString(),
+                isDarkMode = binding.darkMode.isChecked,
+                isEnglish = binding.english.isChecked,
+                activityResultLauncher = startForResult
+            )
         }
 
         binding.fragmentButton.setSafeOnClickListener {
