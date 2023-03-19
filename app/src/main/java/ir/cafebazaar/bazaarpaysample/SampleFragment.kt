@@ -1,9 +1,7 @@
 package ir.cafebazaar.bazaarpaysample
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.StringRes
@@ -14,7 +12,7 @@ import ir.cafebazaar.bazaarpay.extensions.setSafeOnClickListener
 import ir.cafebazaar.bazaarpaysample.databinding.FragmentSampleBinding
 import ir.cafebazaar.bazaarpay.R as BazaarPayR
 
-class SampleFragment : Fragment() {
+class SampleFragment : Fragment(R.layout.fragment_sample) {
     private var _binding: FragmentSampleBinding? = null
     private val binding get() = _binding!!
 
@@ -47,21 +45,8 @@ class SampleFragment : Fragment() {
         )
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        _binding = FragmentSampleBinding.inflate(
-            inflater,
-            container,
-            false
-        )
-        return binding.root
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-
+        _binding = FragmentSampleBinding.bind(view)
         binding.payButton.setSafeOnClickListener {
             BazaarPayLauncher.launchBazaarPay(
                 context = requireContext(),
