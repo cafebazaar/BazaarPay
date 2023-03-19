@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="message_payment_cancelled">پرداخت لغو شد!</string>
+    <string name="message_successful_payment">پرداخت با موفقیت انجام شد!</string>
+</resources>
