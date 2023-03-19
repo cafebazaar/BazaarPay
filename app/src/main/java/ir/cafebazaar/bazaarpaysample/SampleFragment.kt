@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment
 import ir.cafebazaar.bazaarpay.BazaarPayLauncher
 import ir.cafebazaar.bazaarpay.extensions.setSafeOnClickListener
 import ir.cafebazaar.bazaarpaysample.databinding.FragmentSampleBinding
+import ir.cafebazaar.bazaarpay.R as BazaarPayR
 
 class SampleFragment : Fragment() {
     private lateinit var binding: FragmentSampleBinding
@@ -25,7 +26,7 @@ class SampleFragment : Fragment() {
                 binding.result.setTextColor(
                     ContextCompat.getColor(
                         requireActivity(),
-                        ir.cafebazaar.bazaarpay.R.color.bazaarpay_app_brand_primary
+                        BazaarPayR.color.bazaarpay_app_brand_primary
                     )
                 )
             },
@@ -34,7 +35,7 @@ class SampleFragment : Fragment() {
                 binding.result.setTextColor(
                     ContextCompat.getColor(
                         requireActivity(),
-                        ir.cafebazaar.bazaarpay.R.color.bazaarpay_error_primary
+                        BazaarPayR.color.bazaarpay_error_primary
                     )
                 )
             }

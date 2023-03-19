@@ -14,6 +14,7 @@ import ir.cafebazaar.bazaarpay.extensions.setSafeOnClickListener
 import ir.cafebazaar.bazaarpay.trace
 import ir.cafebazaar.bazaarpaysample.databinding.ActivityMainBinding
 import kotlinx.coroutines.launch
+import ir.cafebazaar.bazaarpay.R as BazaarPayR
 
 class MainActivity : AppCompatActivity() {
 
@@ -29,7 +30,7 @@ class MainActivity : AppCompatActivity() {
                 binding.result.setTextColor(
                     ContextCompat.getColor(
                         this,
-                        ir.cafebazaar.bazaarpay.R.color.bazaarpay_app_brand_primary
+                        BazaarPayR.color.bazaarpay_app_brand_primary
                     )
                 )
                 if (binding.commit.isChecked) {
@@ -41,7 +42,7 @@ class MainActivity : AppCompatActivity() {
                 binding.result.setTextColor(
                     ContextCompat.getColor(
                         this,
-                        ir.cafebazaar.bazaarpay.R.color.bazaarpay_error_primary
+                        BazaarPayR.color.bazaarpay_error_primary
                     )
                 )
             }
