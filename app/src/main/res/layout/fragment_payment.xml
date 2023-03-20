@@ -8,13 +8,13 @@
     tools:context=".PaymentActivity">
 
     <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/fragment_title"
+        android:id="@+id/screen_title"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:background="?attr/colorOnSurface"
         android:gravity="center"
         android:padding="16dp"
-        android:text="This is a Fragment!"
+        android:text="@string/label_fragment_payment_sample"
         android:textColor="?attr/colorSurface"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -25,10 +25,10 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:hint="Enter checkout token"
+        android:hint="@string/label_checkout_token"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/fragment_title">
+        app:layout_constraintTop_toBottomOf="@id/screen_title">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/checkout_token_input"
@@ -41,7 +41,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:hint="Enter mobile (optional)"
+        android:hint="@string/label_optional_phone_number"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/checkout_token_layout">
@@ -58,7 +58,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
-        android:text="Dark mode"
+        android:text="@string/label_dark_mode"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/phone_number_layout" />
 
@@ -77,14 +77,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:checked="true"
-            android:text="Persian" />
+            android:text="@string/label_persian" />
 
         <RadioButton
             android:id="@+id/english_option"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:text="English" />
+            android:text="@string/label_english" />
     </RadioGroup>
 
     <Button
@@ -92,7 +92,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="Pay!"
+        android:text="@string/label_start_payment"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/language_options" />
@@ -103,11 +103,11 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:gravity="center"
-        android:text="RESULT!"
         android:textAppearance="?attr/textAppearanceBody2"
         android:textColor="?attr/colorOnBackground"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/payment_button" />
+        app:layout_constraintTop_toBottomOf="@id/payment_button"
+        tools:text="@string/message_successful_payment" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,5 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="label_checkout_token">توکن خرید</string>
+    <string name="label_commit_payment">تایید پرداخت</string>
+    <string name="label_dark_mode">حالت تاریک</string>
+    <string name="label_english">انگلیسی</string>
+    <string name="label_fragment_payment_sample">نمونه پرداخت در فرگمنت</string>
+    <string name="label_open_fragment_payment">مشاهده نمونه پرداخت در فرگمنت</string>
+    <string name="label_optional_phone_number">شماره همراه (اختیاری)</string>
+    <string name="label_persian">فارسی</string>
+    <string name="label_start_payment">شروع پرداخت</string>
+    <string name="label_trace">Trace</string>
     <string name="message_payment_cancelled">پرداخت لغو شد!</string>
     <string name="message_successful_payment">پرداخت با موفقیت انجام شد!</string>
+    <string name="message_trace_result">Trace result here!</string>
 </resources>
