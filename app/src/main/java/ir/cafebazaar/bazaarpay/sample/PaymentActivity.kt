@@ -20,6 +20,34 @@ class PaymentActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityPaymentBinding
     private lateinit var checkoutToken: String
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        binding = ActivityPaymentBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        binding.payButton.setSafeOnClickListener {
+            checkoutToken = binding.checkoutTokenInput.text.toString()
+            BazaarPayLauncher.launchBazaarPay(
+                context = this,
+                checkoutToken = checkoutToken,
+                phoneNumber = binding.phoneNumberInput.text.toString(),
+                isDarkMode = binding.darkMode.isChecked,
+                isEnglish = binding.english.isChecked,
+                activityResultLauncher = registeredLauncher
+            )
+        }
+
+        binding.fragmentButton.setSafeOnClickListener {
+            val intent = Intent(this, PaymentFragmentContainer::class.java)
+            startActivity(intent)
+        }
+
+        binding.traceButton.setSafeOnClickListener {
+            checkoutToken = binding.checkoutTokenInput.text.toString()
+            traceExample(checkoutToken)
+        }
+    }
+
     private val registeredLauncher = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
     ) { result ->
@@ -79,33 +107,6 @@ class PaymentActivity : AppCompatActivity() {
                     binding.traceResult.text = it.message
                 }
             )
-        }
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        binding = ActivityPaymentBinding.inflate(layoutInflater)
-        setContentView(binding.root)
-        binding.payButton.setSafeOnClickListener {
-            checkoutToken = binding.checkoutTokenInput.text.toString()
-            BazaarPayLauncher.launchBazaarPay(
-                context = this,
-                checkoutToken = checkoutToken,
-                phoneNumber = binding.phoneNumberInput.text.toString(),
-                isDarkMode = binding.darkMode.isChecked,
-                isEnglish = binding.english.isChecked,
-                activityResultLauncher = registeredLauncher
-            )
-        }
-
-        binding.fragmentButton.setSafeOnClickListener {
-            val intent = Intent(this, PaymentFragmentContainer::class.java)
-            startActivity(intent)
-        }
-
-        binding.traceButton.setSafeOnClickListener {
-            checkoutToken = binding.checkoutTokenInput.text.toString()
-            traceExample(checkoutToken)
         }
     }
 
