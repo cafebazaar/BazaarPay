@@ -20,7 +20,7 @@ class PaymentActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityPaymentBinding
     private lateinit var checkoutToken: String
-    private val startForResult = registerForActivityResult(
+    private val registeredLauncher = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
     ) { result ->
         BazaarPayLauncher.onResultLauncher(
@@ -94,7 +94,7 @@ class PaymentActivity : AppCompatActivity() {
                 phoneNumber = binding.phoneNumberInput.text.toString(),
                 isDarkMode = binding.darkMode.isChecked,
                 isEnglish = binding.english.isChecked,
-                activityResultLauncher = startForResult
+                activityResultLauncher = registeredLauncher
             )
         }
 

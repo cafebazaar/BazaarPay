@@ -15,7 +15,7 @@ class PaymentFragment : Fragment(R.layout.fragment_payment) {
     private var _binding: FragmentPaymentBinding? = null
     private val binding get() = _binding!!
 
-    private val startForResult = registerForActivityResult(
+    private val registeredLauncher = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
     ) { result ->
         BazaarPayLauncher.onResultLauncher(
@@ -53,7 +53,7 @@ class PaymentFragment : Fragment(R.layout.fragment_payment) {
                 phoneNumber = binding.phoneNumberInput.text.toString(),
                 isDarkMode = binding.darkMode.isChecked,
                 isEnglish = binding.english.isChecked,
-                activityResultLauncher = startForResult
+                activityResultLauncher = registeredLauncher
             )
         }
     }
