@@ -1,4 +1,4 @@
-package ir.cafebazaar.bazaarpaysample
+package ir.cafebazaar.bazaarpay.sample
 
 import android.content.Intent
 import android.os.Bundle
@@ -11,8 +11,8 @@ import androidx.lifecycle.lifecycleScope
 import ir.cafebazaar.bazaarpay.BazaarPayLauncher
 import ir.cafebazaar.bazaarpay.commit
 import ir.cafebazaar.bazaarpay.extensions.setSafeOnClickListener
+import ir.cafebazaar.bazaarpay.sample.databinding.ActivityMainBinding
 import ir.cafebazaar.bazaarpay.trace
-import ir.cafebazaar.bazaarpaysample.databinding.ActivityMainBinding
 import kotlinx.coroutines.launch
 import ir.cafebazaar.bazaarpay.R as BazaarPayR
 

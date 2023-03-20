@@ -1,4 +1,4 @@
-package ir.cafebazaar.bazaarpaysample
+package ir.cafebazaar.bazaarpay.sample
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity

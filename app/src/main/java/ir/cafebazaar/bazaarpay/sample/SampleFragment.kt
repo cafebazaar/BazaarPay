@@ -1,4 +1,4 @@
-package ir.cafebazaar.bazaarpaysample
+package ir.cafebazaar.bazaarpay.sample
 
 import android.os.Bundle
 import android.view.View
@@ -8,7 +8,7 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import ir.cafebazaar.bazaarpay.BazaarPayLauncher
 import ir.cafebazaar.bazaarpay.extensions.setSafeOnClickListener
-import ir.cafebazaar.bazaarpaysample.databinding.FragmentSampleBinding
+import ir.cafebazaar.bazaarpay.sample.databinding.FragmentSampleBinding
 import ir.cafebazaar.bazaarpay.R as BazaarPayR
 
 class SampleFragment : Fragment(R.layout.fragment_sample) {
