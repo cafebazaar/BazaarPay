@@ -27,14 +27,7 @@ class PaymentActivity : AppCompatActivity() {
         setContentView(binding.root)
         binding.payButton.setSafeOnClickListener {
             checkoutToken = binding.checkoutTokenInput.text.toString()
-            BazaarPayLauncher.launchBazaarPay(
-                context = this,
-                checkoutToken = checkoutToken,
-                phoneNumber = binding.phoneNumberInput.text.toString(),
-                isDarkMode = binding.darkMode.isChecked,
-                isEnglish = binding.english.isChecked,
-                activityResultLauncher = registeredLauncher
-            )
+            startPayment()
         }
 
         binding.fragmentButton.setSafeOnClickListener {
@@ -46,6 +39,17 @@ class PaymentActivity : AppCompatActivity() {
             checkoutToken = binding.checkoutTokenInput.text.toString()
             traceExample(checkoutToken)
         }
+    }
+
+    private fun startPayment() {
+        BazaarPayLauncher.launchBazaarPay(
+            context = this,
+            checkoutToken = checkoutToken,
+            phoneNumber = binding.phoneNumberInput.text.toString(),
+            isDarkMode = binding.darkMode.isChecked,
+            isEnglish = binding.english.isChecked,
+            activityResultLauncher = registeredLauncher
+        )
     }
 
     private val registeredLauncher = registerForActivityResult(

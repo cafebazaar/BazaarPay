@@ -18,15 +18,19 @@ class PaymentFragment : Fragment(R.layout.fragment_payment) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         _binding = FragmentPaymentBinding.bind(view)
         binding.payButton.setSafeOnClickListener {
-            BazaarPayLauncher.launchBazaarPay(
-                context = requireContext(),
-                checkoutToken = binding.checkoutTokenInput.text.toString(),
-                phoneNumber = binding.phoneNumberInput.text.toString(),
-                isDarkMode = binding.darkMode.isChecked,
-                isEnglish = binding.english.isChecked,
-                activityResultLauncher = registeredLauncher
-            )
+            startPayment()
         }
+    }
+
+    private fun startPayment() {
+        BazaarPayLauncher.launchBazaarPay(
+            context = requireContext(),
+            checkoutToken = binding.checkoutTokenInput.text.toString(),
+            phoneNumber = binding.phoneNumberInput.text.toString(),
+            isDarkMode = binding.darkMode.isChecked,
+            isEnglish = binding.english.isChecked,
+            activityResultLauncher = registeredLauncher
+        )
     }
 
     private val registeredLauncher = registerForActivityResult(
