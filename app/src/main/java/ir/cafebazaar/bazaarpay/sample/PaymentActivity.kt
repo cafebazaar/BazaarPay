@@ -25,6 +25,10 @@ class PaymentActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityPaymentBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        registerClickListeners(binding)
+    }
+
+    private fun registerClickListeners(binding: ActivityPaymentBinding) {
         binding.payButton.setSafeOnClickListener {
             checkoutToken = binding.checkoutTokenInput.text.toString()
             startPayment()
@@ -103,7 +107,7 @@ class PaymentActivity : AppCompatActivity() {
         lifecycleScope.launch {
             trace(
                 checkoutToken,
-                this@PaymentActivity,
+                context = this@PaymentActivity,
                 onSuccess = {
                     binding.traceResult.text = it.toString()
                 },
