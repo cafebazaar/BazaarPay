@@ -5,12 +5,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".MainActivity">
+    tools:context=".PaymentActivity">
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/fragment_container_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:name="ir.cafebazaar.bazaarpay.sample.SampleFragment" />
+        android:name="ir.cafebazaar.bazaarpay.sample.PaymentFragment" />
 
 </LinearLayout>

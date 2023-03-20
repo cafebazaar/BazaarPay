@@ -11,14 +11,14 @@ import androidx.lifecycle.lifecycleScope
 import ir.cafebazaar.bazaarpay.BazaarPayLauncher
 import ir.cafebazaar.bazaarpay.commit
 import ir.cafebazaar.bazaarpay.extensions.setSafeOnClickListener
-import ir.cafebazaar.bazaarpay.sample.databinding.ActivityMainBinding
+import ir.cafebazaar.bazaarpay.sample.databinding.ActivityPaymentBinding
 import ir.cafebazaar.bazaarpay.trace
 import kotlinx.coroutines.launch
 import ir.cafebazaar.bazaarpay.R as BazaarPayR
 
-class MainActivity : AppCompatActivity() {
+class PaymentActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivityMainBinding
+    private lateinit var binding: ActivityPaymentBinding
     private lateinit var checkoutToken: String
     private val startForResult = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
@@ -56,7 +56,7 @@ class MainActivity : AppCompatActivity() {
         lifecycleScope.launch {
             commit(
                 checkoutToken,
-                this@MainActivity,
+                this@PaymentActivity,
                 onSuccess = {
                     // Successfully committed!
                 },
@@ -71,7 +71,7 @@ class MainActivity : AppCompatActivity() {
         lifecycleScope.launch {
             trace(
                 checkoutToken,
-                this@MainActivity,
+                this@PaymentActivity,
                 onSuccess = {
                     binding.traceResult.text = it.toString()
                 },
@@ -84,7 +84,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityMainBinding.inflate(layoutInflater)
+        binding = ActivityPaymentBinding.inflate(layoutInflater)
         setContentView(binding.root)
         binding.payButton.setSafeOnClickListener {
             checkoutToken = binding.checkoutTokenInput.text.toString()
@@ -99,7 +99,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         binding.fragmentButton.setSafeOnClickListener {
-            val intent = Intent(this, MainFragmentActivity::class.java)
+            val intent = Intent(this, PaymentFragmentContainer::class.java)
             startActivity(intent)
         }
 

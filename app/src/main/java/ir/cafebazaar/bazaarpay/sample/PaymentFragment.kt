@@ -8,11 +8,11 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import ir.cafebazaar.bazaarpay.BazaarPayLauncher
 import ir.cafebazaar.bazaarpay.extensions.setSafeOnClickListener
-import ir.cafebazaar.bazaarpay.sample.databinding.FragmentSampleBinding
+import ir.cafebazaar.bazaarpay.sample.databinding.FragmentPaymentBinding
 import ir.cafebazaar.bazaarpay.R as BazaarPayR
 
-class SampleFragment : Fragment(R.layout.fragment_sample) {
-    private var _binding: FragmentSampleBinding? = null
+class PaymentFragment : Fragment(R.layout.fragment_payment) {
+    private var _binding: FragmentPaymentBinding? = null
     private val binding get() = _binding!!
 
     private val startForResult = registerForActivityResult(
@@ -45,7 +45,7 @@ class SampleFragment : Fragment(R.layout.fragment_sample) {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        _binding = FragmentSampleBinding.bind(view)
+        _binding = FragmentPaymentBinding.bind(view)
         binding.payButton.setSafeOnClickListener {
             BazaarPayLauncher.launchBazaarPay(
                 context = requireContext(),
