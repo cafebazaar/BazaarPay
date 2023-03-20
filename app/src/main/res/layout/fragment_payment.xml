@@ -7,7 +7,7 @@
     tools:context=".PaymentActivity">
 
     <TextView
-        android:id="@+id/fragmentTitle"
+        android:id="@+id/fragment_title"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:background="@color/black"
@@ -20,13 +20,13 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/checkout_token"
+        android:id="@+id/checkout_token_layout"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/fragmentTitle">
+        app:layout_constraintTop_toBottomOf="@id/fragment_title">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/checkout_token_input"
@@ -36,48 +36,48 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/phoneNumber"
+        android:id="@+id/phone_number_layout"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/checkout_token">
+        app:layout_constraintTop_toBottomOf="@id/checkout_token_layout">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/phoneNumberInput"
+            android:id="@+id/phone_number_input"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Enter mobile (optional)" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <androidx.appcompat.widget.AppCompatCheckBox
-        android:id="@+id/dark_mode"
+        android:id="@+id/dark_mode_checkbox"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
         android:text="Dark mode"
         app:layout_constraintHorizontal_bias="1"
-        app:layout_constraintStart_toStartOf="@id/checkout_token"
-        app:layout_constraintTop_toBottomOf="@id/phoneNumber" />
+        app:layout_constraintStart_toStartOf="@id/checkout_token_layout"
+        app:layout_constraintTop_toBottomOf="@id/phone_number_layout" />
 
     <RadioGroup
-        android:id="@+id/radio_group"
+        android:id="@+id/language_options"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintStart_toStartOf="@id/dark_mode"
-        app:layout_constraintTop_toBottomOf="@id/dark_mode">
+        app:layout_constraintStart_toStartOf="@id/dark_mode_checkbox"
+        app:layout_constraintTop_toBottomOf="@id/dark_mode_checkbox">
 
         <androidx.appcompat.widget.AppCompatRadioButton
-            android:id="@+id/persian"
+            android:id="@+id/persian_option"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:checked="true"
             android:text="Persian" />
 
         <androidx.appcompat.widget.AppCompatRadioButton
-            android:id="@+id/english"
+            android:id="@+id/english_option"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
@@ -85,17 +85,17 @@
     </RadioGroup>
 
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/pay_button"
+        android:id="@+id/payment_button"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
         android:text="Pay!"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/radio_group" />
+        app:layout_constraintTop_toBottomOf="@id/language_options" />
 
     <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/result"
+        android:id="@+id/payment_result"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
@@ -103,6 +103,6 @@
         android:text="RESULT!"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/pay_button" />
+        app:layout_constraintTop_toBottomOf="@id/payment_button" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

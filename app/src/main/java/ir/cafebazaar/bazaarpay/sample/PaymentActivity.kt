@@ -29,7 +29,7 @@ class PaymentActivity : AppCompatActivity() {
     }
 
     private fun registerClickListeners(binding: ActivityPaymentBinding) {
-        binding.payButton.setSafeOnClickListener {
+        binding.paymentButton.setSafeOnClickListener {
             checkoutToken = binding.checkoutTokenInput.text.toString()
             startPayment()
         }
@@ -39,7 +39,7 @@ class PaymentActivity : AppCompatActivity() {
             startTracing()
         }
 
-        binding.fragmentButton.setSafeOnClickListener {
+        binding.fragmentPaymentButton.setSafeOnClickListener {
             val intent = Intent(this, PaymentFragmentContainer::class.java)
             startActivity(intent)
         }
@@ -50,8 +50,8 @@ class PaymentActivity : AppCompatActivity() {
             context = this,
             checkoutToken = checkoutToken,
             phoneNumber = binding.phoneNumberInput.text.toString(),
-            isDarkMode = binding.darkMode.isChecked,
-            isEnglish = binding.english.isChecked,
+            isDarkMode = binding.darkModeCheckbox.isChecked,
+            isEnglish = binding.englishOption.isChecked,
             activityResultLauncher = registeredLauncher
         )
     }
@@ -63,7 +63,7 @@ class PaymentActivity : AppCompatActivity() {
             result,
             onSuccess = {
                 showPaymentResult(R.string.message_successful_payment)
-                if (binding.commit.isChecked) {
+                if (binding.commitPaymentCheckbox.isChecked) {
                     commitCheckoutToken()
                 }
             },
@@ -77,13 +77,13 @@ class PaymentActivity : AppCompatActivity() {
         @StringRes messageRes: Int,
         isError: Boolean = false
     ) {
-        binding.result.setText(messageRes)
+        binding.paymentResult.setText(messageRes)
         val colorRes = if (isError) {
             BazaarPayR.color.bazaarpay_error_primary
         } else {
             BazaarPayR.color.bazaarpay_app_brand_primary
         }
-        binding.result.setTextColor(
+        binding.paymentResult.setTextColor(
             ContextCompat.getColor(this, colorRes)
         )
     }

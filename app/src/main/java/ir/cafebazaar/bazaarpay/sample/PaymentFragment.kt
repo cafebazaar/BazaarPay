@@ -17,7 +17,7 @@ class PaymentFragment : Fragment(R.layout.fragment_payment) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         _binding = FragmentPaymentBinding.bind(view)
-        binding.payButton.setSafeOnClickListener {
+        binding.paymentButton.setSafeOnClickListener {
             startPayment()
         }
     }
@@ -27,8 +27,8 @@ class PaymentFragment : Fragment(R.layout.fragment_payment) {
             context = requireContext(),
             checkoutToken = binding.checkoutTokenInput.text.toString(),
             phoneNumber = binding.phoneNumberInput.text.toString(),
-            isDarkMode = binding.darkMode.isChecked,
-            isEnglish = binding.english.isChecked,
+            isDarkMode = binding.darkModeCheckbox.isChecked,
+            isEnglish = binding.englishOption.isChecked,
             activityResultLauncher = registeredLauncher
         )
     }
@@ -51,13 +51,13 @@ class PaymentFragment : Fragment(R.layout.fragment_payment) {
         @StringRes messageRes: Int,
         isError: Boolean = false
     ) {
-        binding.result.setText(messageRes)
+        binding.paymentResult.setText(messageRes)
         val colorRes = if (isError) {
             BazaarPayR.color.bazaarpay_error_primary
         } else {
             BazaarPayR.color.bazaarpay_app_brand_primary
         }
-        binding.result.setTextColor(
+        binding.paymentResult.setTextColor(
             ContextCompat.getColor(requireActivity(), colorRes)
         )
     }
