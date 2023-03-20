@@ -30,14 +30,14 @@ class PaymentActivity : AppCompatActivity() {
             startPayment()
         }
 
+        binding.traceButton.setSafeOnClickListener {
+            checkoutToken = binding.checkoutTokenInput.text.toString()
+            startTracing()
+        }
+
         binding.fragmentButton.setSafeOnClickListener {
             val intent = Intent(this, PaymentFragmentContainer::class.java)
             startActivity(intent)
-        }
-
-        binding.traceButton.setSafeOnClickListener {
-            checkoutToken = binding.checkoutTokenInput.text.toString()
-            traceExample(checkoutToken)
         }
     }
 
@@ -60,7 +60,7 @@ class PaymentActivity : AppCompatActivity() {
             onSuccess = {
                 showPaymentResult(R.string.message_successful_payment)
                 if (binding.commit.isChecked) {
-                    commitExample()
+                    commitCheckoutToken()
                 }
             },
             onCancel = {
@@ -84,7 +84,7 @@ class PaymentActivity : AppCompatActivity() {
         )
     }
 
-    private fun commitExample() {
+    private fun commitCheckoutToken() {
         lifecycleScope.launch {
             commit(
                 checkoutToken,
@@ -99,7 +99,7 @@ class PaymentActivity : AppCompatActivity() {
         }
     }
 
-    private fun traceExample(checkoutToken: String) {
+    private fun startTracing() {
         lifecycleScope.launch {
             trace(
                 checkoutToken,
