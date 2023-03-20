@@ -1,15 +1,13 @@
 package ir.cafebazaar.bazaarpaysample
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.PersistableBundle
-import android.widget.Toast
-import androidx.activity.result.ActivityResult
-import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
-import ir.cafebazaar.bazaarpay.BazaarPayLauncher
+import ir.cafebazaar.bazaarpay.BazaarPayContract
+import ir.cafebazaar.bazaarpay.BazaarPayOptions
 import ir.cafebazaar.bazaarpay.R
 import ir.cafebazaar.bazaarpay.commit
 import ir.cafebazaar.bazaarpay.extensions.setSafeOnClickListener
@@ -21,33 +19,29 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var checkoutToken: String
-    private val startForResult = registerForActivityResult(
-        ActivityResultContracts.StartActivityForResult()
-    ) { result: ActivityResult ->
-        BazaarPayLauncher.onResultLauncher(
-            result,
-            {
-                binding.result.text = "OK!"
-                binding.result.setTextColor(
-                    ContextCompat.getColor(
-                        this,
-                        R.color.bazaarpay_app_brand_primary
-                    )
+    private val paymentLauncher = registerForActivityResult(
+        BazaarPayContract()
+    ) { isSuccessful ->
+        if (isSuccessful) {
+            binding.result.text = "OK!"
+            binding.result.setTextColor(
+                ContextCompat.getColor(
+                    this,
+                    R.color.bazaarpay_app_brand_primary
                 )
-                if (binding.commit.isChecked) {
-                    commitExample()
-                }
-            },
-            {
-                binding.result.text = "CANCEL!"
-                binding.result.setTextColor(
-                    ContextCompat.getColor(
-                        this,
-                        R.color.bazaarpay_error_primary
-                    )
-                )
+            )
+            if (binding.commit.isChecked) {
+                commitExample()
             }
-        )
+        } else {
+            binding.result.text = "CANCEL!"
+            binding.result.setTextColor(
+                ContextCompat.getColor(
+                    this,
+                    R.color.bazaarpay_error_primary
+                )
+            )
+        }
     }
 
     private fun commitExample() {
@@ -79,22 +73,20 @@ class MainActivity : AppCompatActivity() {
             )
         }
     }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         binding.payButton.setSafeOnClickListener {
             checkoutToken = binding.checkoutTokenInput.text.toString()
-            checkoutToken.let {
-                BazaarPayLauncher.launchBazaarPay(
-                    context = this,
-                    checkoutToken = binding.checkoutTokenInput.text.toString(),
-                    phoneNumber = binding.phoneNumberInput.text.toString(),
-                    isDarkMode = binding.darkMode.isChecked,
-                    isEnglish = binding.english.isChecked,
-                    activityResultLauncher = startForResult
-                )
-            }
+            val options = BazaarPayOptions(
+                checkoutToken = binding.checkoutTokenInput.text.toString(),
+                phoneNumber = binding.phoneNumberInput.text.toString(),
+                isInDarkMode = binding.darkMode.isChecked,
+                isEnglish = binding.english.isChecked,
+            )
+            paymentLauncher.launch(options)
         }
 
         binding.fragmentButton.setSafeOnClickListener {
