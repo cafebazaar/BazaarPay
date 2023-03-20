@@ -42,10 +42,10 @@
         android:id="@+id/dark_mode_checkbox"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="16dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
         android:text="Dark mode"
-        app:layout_constraintHorizontal_bias="1"
-        app:layout_constraintStart_toStartOf="@id/checkout_token_layout"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/phone_number_layout" />
 
     <CheckBox
@@ -55,7 +55,6 @@
         android:layout_marginStart="16dp"
         android:text="Commit Payment"
         app:layout_constraintBottom_toBottomOf="@id/dark_mode_checkbox"
-        app:layout_constraintHorizontal_bias="1"
         app:layout_constraintStart_toEndOf="@id/dark_mode_checkbox"
         app:layout_constraintTop_toTopOf="@id/dark_mode_checkbox" />
 
@@ -63,8 +62,10 @@
         android:id="@+id/language_options"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
         android:orientation="horizontal"
-        app:layout_constraintStart_toStartOf="@id/dark_mode_checkbox"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/dark_mode_checkbox">
 
         <RadioButton
@@ -99,6 +100,8 @@
         android:layout_marginTop="16dp"
         android:gravity="center"
         android:text="RESULT!"
+        android:textAppearance="?attr/textAppearanceBody2"
+        android:textColor="?attr/colorOnBackground"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/payment_button" />
@@ -120,6 +123,8 @@
         android:layout_marginTop="16dp"
         android:gravity="center"
         android:text="Trace RESULT!"
+        android:textAppearance="?attr/textAppearanceBody2"
+        android:textColor="?attr/colorOnBackground"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/trace_button" />
