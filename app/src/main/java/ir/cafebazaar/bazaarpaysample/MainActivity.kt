@@ -3,7 +3,6 @@ package ir.cafebazaar.bazaarpaysample
 import android.content.Intent
 import android.os.Bundle
 import android.os.PersistableBundle
-import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
@@ -23,7 +22,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var checkoutToken: String
     private val startForResult = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
-    ) { result: ActivityResult ->
+    ) { result ->
         BazaarPayLauncher.onResultLauncher(
             result,
             onSuccess = {

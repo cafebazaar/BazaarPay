@@ -2,7 +2,6 @@ package ir.cafebazaar.bazaarpaysample
 
 import android.os.Bundle
 import android.view.View
-import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.StringRes
 import androidx.core.content.ContextCompat
@@ -18,7 +17,7 @@ class SampleFragment : Fragment(R.layout.fragment_sample) {
 
     private val startForResult = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
-    ) { result: ActivityResult ->
+    ) { result ->
         BazaarPayLauncher.onResultLauncher(
             result,
             onSuccess = {
