@@ -38,7 +38,7 @@ for an activity result and pass `StartActivityForResult` as its `contract` param
 callback, notify the `BazaarPayLauncher` object about the results as follows:
 
 ```kotlin
-val resultRegistry = registerForActivityResult(
+val registeredLauncher = registerForActivityResult(
     ActivityResultContracts.StartActivityForResult()
 ) { result ->
     BazaarPayLauncher.onResultLauncher(
@@ -70,7 +70,7 @@ the `launchBazaarPay()` function. It takes the following parameters:
 BazaarPayLauncher.launchBazaarPay(
     context = requireContext(),
     checkoutToken = "CHECKOUT_TOKEN",
-    activityResultLauncher = resultRegistry
+    activityResultLauncher = registeredLauncher
 )
 ```
 
