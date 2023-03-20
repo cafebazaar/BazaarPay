@@ -38,7 +38,7 @@
             android:hint="Enter mobile (optional)" />
     </com.google.android.material.textfield.TextInputLayout>
 
-    <androidx.appcompat.widget.AppCompatCheckBox
+    <CheckBox
         android:id="@+id/dark_mode_checkbox"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -48,7 +48,7 @@
         app:layout_constraintStart_toStartOf="@id/checkout_token_layout"
         app:layout_constraintTop_toBottomOf="@id/phone_number_layout" />
 
-    <androidx.appcompat.widget.AppCompatCheckBox
+    <CheckBox
         android:id="@+id/commit_payment_checkbox"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -67,14 +67,14 @@
         app:layout_constraintStart_toStartOf="@id/dark_mode_checkbox"
         app:layout_constraintTop_toBottomOf="@id/dark_mode_checkbox">
 
-        <androidx.appcompat.widget.AppCompatRadioButton
+        <RadioButton
             android:id="@+id/persian_option"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:checked="true"
             android:text="Persian" />
 
-        <androidx.appcompat.widget.AppCompatRadioButton
+        <RadioButton
             android:id="@+id/english_option"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -82,7 +82,7 @@
             android:text="English" />
     </RadioGroup>
 
-    <androidx.appcompat.widget.AppCompatButton
+    <Button
         android:id="@+id/payment_button"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -103,7 +103,7 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/payment_button" />
 
-    <androidx.appcompat.widget.AppCompatButton
+    <Button
         android:id="@+id/trace_button"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -124,8 +124,9 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/trace_button" />
 
-    <androidx.appcompat.widget.AppCompatButton
+    <Button
         android:id="@+id/fragment_payment_button"
+        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
