@@ -6,8 +6,8 @@ the topics out of this scope, read the corresponding documents.
 ### Requirements
 
 - The SDK requires Android 4.2 (API level 17) or higher.
-- You need a *Checkout Token* before starting a payment. Check out [this]() documentation on
-  how to get one.
+- You need a *Checkout Token* before starting a payment. It is a unique identifier that provides
+  essential payment information. Check out [this]() documentation on how to generate one.
 
 ## Setup
 
@@ -53,7 +53,8 @@ You also need to specify two callback parameters:
 
 * `onSuccess` - Will be called after a successful payment. This is the place you need
   to [commit](#3-commit-checkout-token) the *Checkout Token*.
-* `onCancel` - Will be called if the payment flow has not been finished successfully (Canceled by the
+* `onCancel` - Will be called if the payment flow has not been finished successfully (Canceled by
+  the
   user).
 
 ### 2. Launch Payment
@@ -76,12 +77,12 @@ BazaarPayLauncher.launchBazaarPay(
 
 There are also other optional parameters that you can configure to your needs:
 
-* `phoneNumber` - Pre-fills the input field of the login screen with the specified number. By
-  default, it uses a null value, resulting in no pre-filled number.
-* `isEnglish` - Whether force English language for the payment flow. The default value is `false` and
+* `phoneNumber` - the default phone number to pre-fill the login screen's input field. It uses a
+  null value by default, resulting in no pre-filled input.
+* `isDarkMode` - enables Dark Mode for the UI elements of the payment flow, which are in Light Mode
+  by default.
+* `isEnglish` - forces the English language for the payment flow. The default value is false, and
   the Persian language will be used.
-* `isDarkMode` - Payment flow supports Dark Mode for its UI elements. The parameter enables this
-  option, which is `false` by default and uses Light Mode.
 
 ### 3. Commit Checkout Token
 
