@@ -51,9 +51,9 @@ val registeredLauncher = registerForActivityResult(
 
 You also need to specify two callback parameters:
 
-* `onSuccess`: Will be called after a successful payment. This is the place you need
+* `onSuccess` - Will be called after a successful payment. This is the place you need
   to [commit](#3-commit-checkout-token) the *Checkout Token*.
-* `onCancel`: Will be called if the payment flow has not been finished successfully (Canceled by the
+* `onCancel` - Will be called if the payment flow has not been finished successfully (Canceled by the
   user).
 
 ### 2. Launch Payment
@@ -61,9 +61,9 @@ You also need to specify two callback parameters:
 After registering for the activity result, you can start a payment flow by calling
 the `launchBazaarPay()` function. It takes the following parameters:
 
-* `Context`: The context in which payment happens.
-* `checkoutToken`: The token you [generated before](#requirements).
-* `activityResultLauncher`: The launcher you [just registered](#1-register-for-activity-result) for
+* `Context` - The context in which payment happens.
+* `checkoutToken` - The token you [generated before](#requirements).
+* `activityResultLauncher` - The launcher you [just registered](#1-register-for-activity-result) for
   its result.
 
 ```kotlin
@@ -76,11 +76,11 @@ BazaarPayLauncher.launchBazaarPay(
 
 There are also other optional parameters that you can configure to your needs:
 
-* `phoneNumber`: Pre-fills the input field of the login screen with the specified number. By
+* `phoneNumber` - Pre-fills the input field of the login screen with the specified number. By
   default, it uses a null value, resulting in no pre-filled number.
-* `isEnglish`: Whether force English language for the payment flow. The default value is `false` and
+* `isEnglish` - Whether force English language for the payment flow. The default value is `false` and
   the Persian language will be used.
-* `isDarkMode`: Payment flow supports Dark Mode for its UI elements. The parameter enables this
+* `isDarkMode` - Payment flow supports Dark Mode for its UI elements. The parameter enables this
   option, which is `false` by default and uses Light Mode.
 
 ### 3. Commit Checkout Token
