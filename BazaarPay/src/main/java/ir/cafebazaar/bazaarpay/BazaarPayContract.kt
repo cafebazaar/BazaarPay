@@ -8,6 +8,13 @@ import ir.cafebazaar.bazaarpay.arg.BazaarPayActivityArgs
 import ir.cafebazaar.bazaarpay.utils.getLanguage
 import ir.cafebazaar.bazaarpay.utils.getLanguageNumber
 
+/**
+ * An [ActivityResultContract] to start a payment.
+ *
+ * The input is a [BazaarPayOptions] that configures the payment flow.
+ *
+ * Returns `true` if the payment was successful.
+ */
 class BazaarPayContract : ActivityResultContract<BazaarPayOptions, Boolean>() {
 
     override fun createIntent(context: Context, input: BazaarPayOptions): Intent {
