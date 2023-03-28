@@ -7,17 +7,15 @@ plugins {
     id 'maven-publish'
 }
 
-apply from: "$rootDir/configs/versions.gradle"
-
 final VERSION_NAME = "3.0.1"
 final VERSION_CODE = 16
 
 android {
-    compileSdk build.compileSdk
+    compileSdk libs.versions.androidCompileSdk.get() as int
 
     defaultConfig {
-        minSdk build.minSdk
-        targetSdk build.targetSdk
+        minSdk libs.versions.androidMinSdk.get() as int
+        targetSdk libs.versions.androidTargetSdk.get() as int
         versionCode VERSION_CODE
         versionName VERSION_NAME
         multiDexEnabled true
@@ -49,34 +47,33 @@ android {
 }
 
 dependencies {
-
-    implementation "androidx.core:core-ktx:$library.core"
-    implementation "androidx.appcompat:appcompat:$library.appcompat"
-    implementation "androidx.lifecycle:lifecycle-livedata-ktx:$library.lifecycle"
-    implementation "com.google.android.material:material:$library.material"
-    implementation "androidx.constraintlayout:constraintlayout:$library.constraintlayout"
-    implementation "androidx.navigation:navigation-fragment-ktx:$library.navigation"
-    implementation "androidx.navigation:navigation-ui-ktx:$library.navigation"
-    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$library.lifecycle"
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$library.kotlinx"
-    implementation "com.google.android.gms:play-services-base:$library.playServicesBase"
-    implementation "com.google.android.gms:play-services-auth-api-phone:$library.playServicesAuthApiPhone"
-    implementation "com.google.android.gms:play-services-auth:$library.playServicesAuth"
-
-    implementation "com.squareup.retrofit2:converter-gson:$library.retrofit"
-    implementation "com.squareup.retrofit2:retrofit:$library.retrofit"
-    implementation "com.google.code.gson:gson:$library.gson"
-    implementation "com.squareup.okhttp3:okhttp:$library.okhttpParent"
-    implementation "com.squareup.okhttp3:logging-interceptor:$library.okhttp"
-    implementation("com.github.ihsanbal:LoggingInterceptor:$library.loggingInterceptor") {
+    implementation libs.androidx.appcompat
+    implementation libs.androidx.constraintlayout
+    implementation libs.androidx.core
+    implementation libs.androidx.lifecycle.livedata
+    implementation libs.androidx.lifecycle.viewmodel
+    implementation libs.androidx.multidex
+    implementation libs.androidx.multidex
+    implementation libs.androidx.navigation.fragment
+    implementation libs.androidx.navigation.ui
+    implementation libs.androidx.recyclerview
+    implementation libs.google.gson
+    implementation libs.google.material
+    implementation libs.google.playServices.auth.core
+    implementation libs.google.playServices.auth.phone
+    implementation libs.google.playServices.base
+    implementation libs.kotlinx.coroutines.core
+    implementation libs.squareup.okhttp.core
+    implementation libs.squareup.okhttp.loggingInterceptor
+    implementation libs.squareup.retrofit.converter
+    implementation libs.squareup.retrofit.core
+    implementation libs.squareup.retrofit.core
+    implementation libs.glide.core
+    kapt libs.glide.compiler
+    implementation libs.dotsIndicator
+    implementation(libs.loggingInterceptor) {
         exclude group: 'org.json', module: 'json'
     }
-
-    implementation "androidx.multidex:multidex:$library.multidex"
-    implementation "com.github.bumptech.glide:glide:$library.glide"
-    implementation "androidx.recyclerview:recyclerview:$library.recyclerview"
-    implementation "com.tbuonomo:dotsindicator:$library.dotsindicator"
-    kapt "com.github.bumptech.glide:compiler:$library.glide"
 }
 
 publishing {
