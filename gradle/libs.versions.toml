@@ -38,7 +38,7 @@ squareup-retrofit-converter = { group = "com.squareup.retrofit2", name = "conver
 squareup-retrofit-core = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit" }
 
 # Other
-glide-compiler = { group = "com.github.bumptech.glide", name = "compiler", version.ref = "glide" }
+glide-compiler = { group = "com.github.bumptech.glide", name = "ksp", version.ref = "glide" }
 glide-core = { group = "com.github.bumptech.glide", name = "glide", version.ref = "glide" }
 dotsIndicator = { group = "com.tbuonomo", name = "dotsindicator", version = "4.2" }
 loggingInterceptor = { group = "com.github.ihsanbal", name = "LoggingInterceptor", version = "3.1.0" }
