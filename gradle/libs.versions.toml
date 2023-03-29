@@ -47,5 +47,5 @@ loggingInterceptor = { group = "com.github.ihsanbal", name = "LoggingInterceptor
 android-application = { id = "com.android.application", version.ref = "androidPlugin" }
 android-library = { id = "com.android.library", version.ref = "androidPlugin" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
-ksp = { id = "com.google.devtools.ksp", version = "1.6.21-1.0.5" }
+ksp = { id = "com.google.devtools.ksp", version = "1.6.21-1.0.6" }
 navigation-safeargs = { id = "androidx.navigation.safeargs.kotlin", version.ref = "androidxNavigation" }
