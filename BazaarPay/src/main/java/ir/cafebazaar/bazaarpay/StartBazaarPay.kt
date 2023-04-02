@@ -15,7 +15,7 @@ import ir.cafebazaar.bazaarpay.utils.getLanguageNumber
  *
  * Returns `true` if the payment was successful.
  */
-class BazaarPayContract : ActivityResultContract<BazaarPayOptions, Boolean>() {
+class StartBazaarPay : ActivityResultContract<BazaarPayOptions, Boolean>() {
 
     override fun createIntent(context: Context, input: BazaarPayOptions): Intent {
         ServiceLocator.initializeConfigs(

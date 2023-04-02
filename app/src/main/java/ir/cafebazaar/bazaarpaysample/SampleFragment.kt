@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import ir.cafebazaar.bazaarpay.BazaarPayContract
+import ir.cafebazaar.bazaarpay.StartBazaarPay
 import ir.cafebazaar.bazaarpay.BazaarPayOptions
 import ir.cafebazaar.bazaarpay.extensions.setSafeOnClickListener
 import ir.cafebazaar.bazaarpaysample.databinding.FragmentSampleBinding
@@ -14,8 +14,8 @@ import ir.cafebazaar.bazaarpaysample.databinding.FragmentSampleBinding
 class SampleFragment : Fragment() {
     private lateinit var binding: FragmentSampleBinding
 
-    private val paymentLauncher = registerForActivityResult(
-        BazaarPayContract()
+    private val bazaarPayLauncher = registerForActivityResult(
+        StartBazaarPay()
     ) { isSuccessful ->
         if (isSuccessful) {
             binding.result.text = "OK!"
@@ -58,7 +58,7 @@ class SampleFragment : Fragment() {
                 isInDarkMode = binding.darkMode.isChecked,
                 isEnglish = binding.english.isChecked,
             )
-            paymentLauncher.launch(options)
+            bazaarPayLauncher.launch(options)
         }
     }
 }

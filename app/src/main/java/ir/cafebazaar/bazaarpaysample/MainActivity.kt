@@ -6,7 +6,7 @@ import android.os.PersistableBundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
-import ir.cafebazaar.bazaarpay.BazaarPayContract
+import ir.cafebazaar.bazaarpay.StartBazaarPay
 import ir.cafebazaar.bazaarpay.BazaarPayOptions
 import ir.cafebazaar.bazaarpay.R
 import ir.cafebazaar.bazaarpay.commit
@@ -19,8 +19,8 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var checkoutToken: String
-    private val paymentLauncher = registerForActivityResult(
-        BazaarPayContract()
+    private val bazaarPayLauncher = registerForActivityResult(
+        StartBazaarPay()
     ) { isSuccessful ->
         if (isSuccessful) {
             binding.result.text = "OK!"
@@ -86,7 +86,7 @@ class MainActivity : AppCompatActivity() {
                 isInDarkMode = binding.darkMode.isChecked,
                 isEnglish = binding.english.isChecked,
             )
-            paymentLauncher.launch(options)
+            bazaarPayLauncher.launch(options)
         }
 
         binding.fragmentButton.setSafeOnClickListener {
