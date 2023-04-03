@@ -30,52 +30,41 @@ dependencies {
 
 ## Usage
 
-### 1. Register For Activity Result
+### 1. Register Payment Callback
 
 *BazaarPay* uses
 the [Activity Result API](https://developer.android.com/training/basics/intents/result). Register
-for an activity result and pass `StartActivityForResult` as its `contract` parameter. Inside its
-callback, notify the `BazaarPayLauncher` object about the results as follows:
+the payment callback by calling the `registerForActivityResult` with an instance
+of `StartBazaarPay` as its `contract` parameter. The callback provides you with a boolean that
+indicates whether the payment was successful or not:
 
 ```kotlin
-val registeredLauncher = registerForActivityResult(
-    ActivityResultContracts.StartActivityForResult()
-) { result ->
-    BazaarPayLauncher.onResultLauncher(
-        result,
-        onSuccess = { },
-        onCancel = { }
-    )
+val bazaarPayLauncher = registerForActivityResult(StartBazaarPay()) { isSuccessful ->
+    if (isSuccessful) {
+        // A successful payment.
+    } else {
+        // An unsuccessful payment (Canceled by the user).
+    }
 }
 ```
 
-You also need to specify two callback parameters:
-
-* `onSuccess` - Will be called after a successful payment. This is the place you need
-  to [commit](#3-commit-checkout-token) the *Checkout Token*.
-* `onCancel` - Will be called if the payment flow has not been finished successfully (Canceled by
-  the
-  user).
+The happy path of this `if` statement is the place you need to [commit](#3-commit-checkout-token)
+the *Checkout Token*.
 
 ### 2. Launch Payment
 
-After registering for the activity result, you can start a payment flow by calling
-the `launchBazaarPay()` function. It takes the following parameters:
-
-* `Context` - The context in which payment happens.
-* `checkoutToken` - The token you [generated before](#requirements).
-* `activityResultLauncher` - The launcher you [just registered](#1-register-for-activity-result) for
-  its result.
+Registering the payment callback will return a payment launcher instance. You can start a payment
+flow by calling the `launch()` function on the payment launcher. It takes an instance of
+the `BazaarPayOptions` as its parameter:
 
 ```kotlin
-BazaarPayLauncher.launchBazaarPay(
-    context = requireContext(),
-    checkoutToken = "CHECKOUT_TOKEN",
-    activityResultLauncher = registeredLauncher
-)
+val options = BazaarPayOptions(checkoutToken = "CHECKOUT_TOKEN")
+bazaarPayLauncher.launch(options)
 ```
 
-There are also other optional parameters that you can configure to your needs:
+`BazaarPayOptions` has a mandatory `checkoutToken` constructor parameter which is the token
+you [generated before](#requirements). But there are also other optional parameters that you can
+configure to your needs:
 
 * `phoneNumber` - the default phone number to pre-fill the login screen's input field. It uses a
   null value by default, resulting in no pre-filled input.
@@ -86,7 +75,7 @@ There are also other optional parameters that you can configure to your needs:
 
 ### 3. Commit Checkout Token
 
-You have to commit the *Checkout Token* after a successful payment. There is a suspend `commit()`
+You have to commit the *Checkout Token* after successful payment. There is a suspend `commit()`
 function for this purpose that you can call from a coroutine scope:
 
 ```kotlin
@@ -101,7 +90,7 @@ myScope.launch {
 }
 ```
 
-Otherwise, if you are using other technologies you need to implement this yourself. It is better to
+Otherwise, if you are using other technologies, you need to implement this yourself. It is better to
 call it from a [WorkManager](https://developer.android.com/topic/libraries/architecture/workmanager)
 worker or a Service for safety reasons.
 
