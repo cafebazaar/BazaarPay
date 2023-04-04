@@ -5,8 +5,6 @@ import android.content.Context
 import android.content.Intent
 import androidx.activity.result.contract.ActivityResultContract
 import ir.cafebazaar.bazaarpay.arg.BazaarPayActivityArgs
-import ir.cafebazaar.bazaarpay.utils.getLanguage
-import ir.cafebazaar.bazaarpay.utils.getLanguageNumber
 
 /**
  * An [ActivityResultContract] to start a payment.
@@ -21,16 +19,12 @@ class StartBazaarPay : ActivityResultContract<BazaarPayOptions, Boolean>() {
         ServiceLocator.initializeConfigs(
             input.checkoutToken,
             input.phoneNumber,
-            input.isInDarkMode,
-            getLanguage(input.isEnglish),
-            getLanguageNumber(input.isEnglish)
+            input.isInDarkMode
         )
         val bazaarPayActivityArgs = BazaarPayActivityArgs(
             input.checkoutToken,
             input.phoneNumber,
-            input.isInDarkMode,
-            getLanguage(input.isEnglish),
-            getLanguageNumber(input.isEnglish)
+            input.isInDarkMode
         )
         return Intent(context, BazaarPayActivity::class.java).apply {
             putExtra(BazaarPayActivity.BAZAARPAY_ACTIVITY_ARGS, bazaarPayActivityArgs)

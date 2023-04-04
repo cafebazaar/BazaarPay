@@ -6,8 +6,6 @@ import android.content.Intent
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.ActivityResultLauncher
 import ir.cafebazaar.bazaarpay.arg.BazaarPayActivityArgs
-import ir.cafebazaar.bazaarpay.utils.getLanguage
-import ir.cafebazaar.bazaarpay.utils.getLanguageNumber
 
 @Deprecated(
     message = "Use the BazaarPayContract class instead",
@@ -20,22 +18,17 @@ object BazaarPayLauncher {
         checkoutToken: String,
         phoneNumber: String? = null,
         isDarkMode: Boolean = false,
-        isEnglish: Boolean = false,
         activityResultLauncher: ActivityResultLauncher<Intent>
     ) {
         ServiceLocator.initializeConfigs(
             checkoutToken,
             phoneNumber,
-            isDarkMode,
-            getLanguage(isEnglish),
-            getLanguageNumber(isEnglish)
+            isDarkMode
         )
         val bazaarPayActivityArgs = BazaarPayActivityArgs(
             checkoutToken,
             phoneNumber,
-            isDarkMode,
-            getLanguage(isEnglish),
-            getLanguageNumber(isEnglish)
+            isDarkMode
         )
         Intent(context, BazaarPayActivity::class.java)
             .also {

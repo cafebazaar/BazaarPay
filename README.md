@@ -68,10 +68,8 @@ configure to your needs:
 
 * `phoneNumber` - the default phone number to pre-fill the login screen's input field. It uses a
   null value by default, resulting in no pre-filled input.
-* `isDarkMode` - enables Dark Mode for the UI elements of the payment flow, which are in Light Mode
+* `isInDarkMode` - enables Dark Mode for the UI elements of the payment flow, which are in Light Mode
   by default.
-* `isEnglish` - forces the English language for the payment flow. The default value is false, and
-  the Persian language will be used.
 
 ### 3. Commit Checkout Token
 

@@ -83,8 +83,7 @@ class MainActivity : AppCompatActivity() {
             val options = BazaarPayOptions(
                 checkoutToken = binding.checkoutTokenInput.text.toString(),
                 phoneNumber = binding.phoneNumberInput.text.toString(),
-                isInDarkMode = binding.darkMode.isChecked,
-                isEnglish = binding.english.isChecked,
+                isInDarkMode = binding.darkMode.isChecked
             )
             bazaarPayLauncher.launch(options)
         }

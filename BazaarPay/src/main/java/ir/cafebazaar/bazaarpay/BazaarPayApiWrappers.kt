@@ -5,8 +5,6 @@ import ir.cafebazaar.bazaarpay.data.bazaar.models.ErrorModel
 import ir.cafebazaar.bazaarpay.data.payment.PaymentRepository
 import ir.cafebazaar.bazaarpay.data.payment.models.pay.PurchaseStatus
 import ir.cafebazaar.bazaarpay.extensions.fold
-import ir.cafebazaar.bazaarpay.utils.getLanguage
-import ir.cafebazaar.bazaarpay.utils.getLanguageNumber
 
 fun initSDKForAPICall(
     context: Context,
@@ -14,8 +12,6 @@ fun initSDKForAPICall(
 ) {
     ServiceLocator.initializeConfigs(
         checkoutToken = checkoutToken,
-        language = getLanguage(isEnglish = false),
-        languageNumber = getLanguageNumber(isEnglish = false),
         isDark = false
     )
     ServiceLocator.initializeDependencies(context)
