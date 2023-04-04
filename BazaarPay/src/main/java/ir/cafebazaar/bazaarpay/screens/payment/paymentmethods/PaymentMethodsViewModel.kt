@@ -170,26 +170,23 @@ internal class PaymentMethodsViewModel : ViewModel() {
             paymentMethodsStateData.paymentMethods.firstOrNull {
                 it.methodType == PaymentMethodsType.INCREASE_BALANCE
             }?.priceString?.let { priceString ->
-                merchantInfoStateData.value?.data?.logoUrl?.let { logoUrl ->
-                    merchantInfoStateData.value?.data?.accountName?.let { accountName ->
-                        DynamicCreditOptionDealerArg(
-                            iconUrl = logoUrl,
-                            name = paymentMethodsStateData.destinationTitle,
-                            info = accountName,
-                            priceString = priceString
-                        )
-                    }
-                }
-            }?.let { dynamicCreditOptionDealerArg ->
-                paymentMethodsStateData.dynamicCreditOption?.let { dynamicCreditOption ->
-                    PaymentMethodsFragmentDirections
+                val merchantLogo = merchantInfoStateData.value?.data?.logoUrl
+                val merchantAccountName = merchantInfoStateData.value?.data?.accountName
+                val dynamicCreditOptionDealerArg = DynamicCreditOptionDealerArg(
+                    iconUrl = merchantLogo,
+                    name = paymentMethodsStateData.destinationTitle,
+                    info = merchantAccountName,
+                    priceString = priceString
+                )
+                val dynamicCreditOption = paymentMethodsStateData.dynamicCreditOption
+                if (dynamicCreditOption != null) {
+                    val nav = PaymentMethodsFragmentDirections
                         .actionPaymentMethodsFragmentToPaymentDynamicCreditFragment(
                             dynamicCreditOption,
                             dynamicCreditOptionDealerArg
                         )
+                    _navigationLiveData.value = nav
                 }
-            }?.let {
-                _navigationLiveData.value = it
             }
         }
     }

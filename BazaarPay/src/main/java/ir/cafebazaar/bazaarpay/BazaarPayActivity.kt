@@ -69,9 +69,7 @@ class BazaarPayActivity : AppCompatActivity(), FinishCallbacks {
             ServiceLocator.initializeConfigs(
                 checkoutToken = it.checkoutToken,
                 phoneNumber = it.phoneNumber,
-                isDark = it.isDarkMode,
-                language = it.language,
-                languageNumber = it.languageNumber
+                isDark = it.isDarkMode
             )
         }
     }
@@ -130,7 +128,7 @@ class BazaarPayActivity : AppCompatActivity(), FinishCallbacks {
         uiMode: Int
     ): Context {
         var contextWithCorrectTheme = setCorrectUiMode(context, uiMode)
-        val newLocale = Locale(ServiceLocator.get(ServiceLocator.LANGUAGE))
+        val newLocale = Locale("fa")
         Locale.setDefault(newLocale)
 
         val res = contextWithCorrectTheme.resources

@@ -63,7 +63,6 @@ class SampleFragment : Fragment() {
                 checkoutToken = binding.checkoutTokenInput.text.toString(),
                 phoneNumber = binding.phoneNumberInput.text.toString(),
                 isDarkMode = binding.darkMode.isChecked,
-                isEnglish = binding.english.isChecked,
                 activityResultLauncher = startForResult
             )
         }

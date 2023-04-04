@@ -1,7 +1,6 @@
 package ir.cafebazaar.bazaarpay.data.payment.models.merchantinfo
 
 internal data class MerchantInfo(
-    val accountName: String,
-    val logoUrl: String,
-    val primaryColor: String
+    val accountName: String?,
+    val logoUrl: String?
 )

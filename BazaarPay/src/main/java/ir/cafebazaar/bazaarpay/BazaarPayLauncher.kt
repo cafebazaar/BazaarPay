@@ -12,8 +12,6 @@ import ir.cafebazaar.bazaarpay.data.bazaar.models.ErrorModel
 import ir.cafebazaar.bazaarpay.data.payment.PaymentRepository
 import ir.cafebazaar.bazaarpay.data.payment.models.pay.PurchaseStatus
 import ir.cafebazaar.bazaarpay.extensions.fold
-import ir.cafebazaar.bazaarpay.utils.getLanguage
-import ir.cafebazaar.bazaarpay.utils.getLanguageNumber
 
 object BazaarPayLauncher {
 
@@ -22,22 +20,17 @@ object BazaarPayLauncher {
         checkoutToken: String,
         phoneNumber: String? = null,
         isDarkMode: Boolean = false,
-        isEnglish: Boolean = false,
         activityResultLauncher: ActivityResultLauncher<Intent>
     ) {
         ServiceLocator.initializeConfigs(
             checkoutToken,
             phoneNumber,
-            isDarkMode,
-            getLanguage(isEnglish),
-            getLanguageNumber(isEnglish)
+            isDarkMode
         )
         val bazaarPayActivityArgs = BazaarPayActivityArgs(
             checkoutToken,
             phoneNumber,
-            isDarkMode,
-            getLanguage(isEnglish),
-            getLanguageNumber(isEnglish)
+            isDarkMode
         )
         Intent(context, BazaarPayActivity::class.java)
             .also {
@@ -64,8 +57,6 @@ fun initSDKForAPICall(
 ) {
     ServiceLocator.initializeConfigs(
         checkoutToken = checkoutToken,
-        language = getLanguage(isEnglish = false),
-        languageNumber = getLanguageNumber(isEnglish = false),
         isDark = false
     )
     ServiceLocator.initializeDependencies(context)

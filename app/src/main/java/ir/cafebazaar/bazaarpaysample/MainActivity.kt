@@ -4,7 +4,6 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.PersistableBundle
-import android.widget.Toast
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
@@ -91,7 +90,6 @@ class MainActivity : AppCompatActivity() {
                     checkoutToken = binding.checkoutTokenInput.text.toString(),
                     phoneNumber = binding.phoneNumberInput.text.toString(),
                     isDarkMode = binding.darkMode.isChecked,
-                    isEnglish = binding.english.isChecked,
                     activityResultLauncher = startForResult
                 )
             }

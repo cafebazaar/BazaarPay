@@ -62,26 +62,7 @@
         app:layout_constraintHorizontal_bias="1"
         app:layout_constraintStart_toStartOf="@id/checkout_token"
         app:layout_constraintTop_toBottomOf="@id/phoneNumber"/>
-    <RadioGroup
-        android:id="@+id/radio_group"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintStart_toStartOf="@id/dark_mode"
-        app:layout_constraintTop_toBottomOf="@id/dark_mode">
-    <androidx.appcompat.widget.AppCompatRadioButton
-        android:id="@+id/persian"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Persian"
-        android:checked="true"/>
-    <androidx.appcompat.widget.AppCompatRadioButton
-        android:id="@+id/english"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:text="English"/>
-    </RadioGroup>
+
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/pay_button"
         android:layout_width="0dp"
@@ -90,7 +71,7 @@
         android:text="Pay!"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/radio_group" />
+        app:layout_constraintTop_toBottomOf="@id/dark_mode" />
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/result"
         android:layout_width="0dp"

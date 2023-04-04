@@ -1,21 +1,18 @@
 package ir.cafebazaar.bazaarpay.screens.payment.increasecredit
 
-import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.navigation.NavDirections
 import ir.cafebazaar.bazaarpay.R
 import ir.cafebazaar.bazaarpay.ServiceLocator
-import ir.cafebazaar.bazaarpay.models.GlobalDispatchers
-import ir.cafebazaar.bazaarpay.models.Resource
 import ir.cafebazaar.bazaarpay.data.payment.PaymentRepository
 import ir.cafebazaar.bazaarpay.data.payment.models.getpaymentmethods.DynamicCreditOption
 import ir.cafebazaar.bazaarpay.extensions.digits
 import ir.cafebazaar.bazaarpay.extensions.fold
 import ir.cafebazaar.bazaarpay.extensions.toPriceFormat
 import ir.cafebazaar.bazaarpay.extensions.toToman
+import ir.cafebazaar.bazaarpay.models.Resource
 import ir.cafebazaar.bazaarpay.screens.payment.paymentmethods.PaymentMethodsType
 import ir.cafebazaar.bazaarpay.utils.SingleLiveEvent
 import kotlinx.coroutines.launch
@@ -24,9 +21,7 @@ import java.util.*
 
 internal class DynamicCreditViewModel : ViewModel() {
 
-    private val context: Context = ServiceLocator.get()
     private val paymentRepository: PaymentRepository = ServiceLocator.get()
-    private val globalDispatchers: GlobalDispatchers = ServiceLocator.get()
 
     private val _editTextValueLiveData = MutableLiveData<String?>()
     val editTextValueLiveData: LiveData<String?> = _editTextValueLiveData
