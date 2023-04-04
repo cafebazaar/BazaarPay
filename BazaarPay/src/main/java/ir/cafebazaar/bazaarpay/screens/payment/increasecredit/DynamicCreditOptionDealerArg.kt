@@ -5,8 +5,8 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class DynamicCreditOptionDealerArg(
-    val iconUrl: String,
-    val name: String,
-    val info: String,
+    val iconUrl: String?,
+    val name: String?,
+    val info: String?,
     val priceString: String
 ) : Parcelable
