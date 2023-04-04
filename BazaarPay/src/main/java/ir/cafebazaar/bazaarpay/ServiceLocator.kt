@@ -45,15 +45,13 @@ internal object ServiceLocator {
     fun initializeConfigs(
         checkoutToken: String,
         phoneNumber: String? = null,
-        isDark: Boolean,
-        language: String,
-        languageNumber: Int
+        isDark: Boolean
     ) {
         servicesMap[getKeyOfClass<String>(CHECKOUT_TOKEN)] = checkoutToken
         servicesMap[getKeyOfClass<String?>(PHONE_NUMBER)] = phoneNumber
         servicesMap[getKeyOfClass<Boolean>(IS_DARK)] = isDark
-        servicesMap[getKeyOfClass<Int>(LANGUAGE)] = languageNumber
-        servicesMap[getKeyOfClass<String>(LANGUAGE)] = language
+        servicesMap[getKeyOfClass<Int>(LANGUAGE)] = 2
+        servicesMap[getKeyOfClass<String>(LANGUAGE)] = "fa"
     }
 
     fun initializeDependencies(
