@@ -24,7 +24,7 @@ internal class MerchantInfoView @JvmOverloads constructor(
     }
 
     fun setMerchantName(
-        merchantName: String
+        merchantName: String?
     ) {
         with(binding) {
             productNameTextView.text = merchantName
@@ -32,16 +32,16 @@ internal class MerchantInfoView @JvmOverloads constructor(
     }
 
     fun setMerchantInfo(
-        merchantInfo: String
+        merchantInfo: String?
     ) {
         with(binding) {
             dealerInfoTextView.text = merchantInfo
         }
     }
 
-    fun setMerchantIcon(iconUrl: String) {
+    fun setMerchantIcon(iconUrl: String?) {
         with(binding.dealerIconImageView) {
-            if (iconUrl.isNotEmpty()) {
+            if (!iconUrl.isNullOrEmpty()) {
                 BazaarPayImageLoader.loadImage(
                     imageView = this,
                     imageURI = iconUrl,
