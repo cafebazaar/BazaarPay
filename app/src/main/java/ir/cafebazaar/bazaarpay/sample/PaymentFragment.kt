@@ -28,7 +28,6 @@ class PaymentFragment : Fragment(R.layout.fragment_payment) {
             checkoutToken = binding.checkoutTokenInput.text.toString(),
             phoneNumber = binding.phoneNumberInput.text.toString(),
             isDarkMode = binding.darkModeCheckbox.isChecked,
-            isEnglish = binding.englishOption.isChecked,
             activityResultLauncher = registeredLauncher
         )
     }

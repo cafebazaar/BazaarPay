@@ -51,7 +51,6 @@ class PaymentActivity : AppCompatActivity() {
             checkoutToken = checkoutToken,
             phoneNumber = binding.phoneNumberInput.text.toString(),
             isDarkMode = binding.darkModeCheckbox.isChecked,
-            isEnglish = binding.englishOption.isChecked,
             activityResultLauncher = registeredLauncher
         )
     }
