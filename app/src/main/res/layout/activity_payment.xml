@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_margin="24dp"
-    tools:context=".PaymentActivity">
+    tools:context=".SamplePaymentActivity">
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/checkout_token_layout"
@@ -105,11 +105,11 @@
         tools:text="@string/message_trace_result" />
 
     <Button
-        android:id="@+id/fragment_payment_button"
+        android:id="@+id/payment_fragment_button"
         style="@style/Widget.MaterialComponents.Button.OutlinedButton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="@string/label_open_fragment_payment"
+        android:text="@string/label_open_payment_fragment"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent" />

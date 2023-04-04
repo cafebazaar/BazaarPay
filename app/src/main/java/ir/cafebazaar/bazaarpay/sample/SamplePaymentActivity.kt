@@ -16,7 +16,7 @@ import ir.cafebazaar.bazaarpay.trace
 import kotlinx.coroutines.launch
 import ir.cafebazaar.bazaarpay.R as BazaarPayR
 
-class PaymentActivity : AppCompatActivity() {
+class SamplePaymentActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityPaymentBinding
     private lateinit var checkoutToken: String
@@ -39,8 +39,8 @@ class PaymentActivity : AppCompatActivity() {
             startTracing()
         }
 
-        binding.fragmentPaymentButton.setSafeOnClickListener {
-            val intent = Intent(this, PaymentFragmentContainer::class.java)
+        binding.paymentFragmentButton.setSafeOnClickListener {
+            val intent = Intent(this, SampleFragmentContainer::class.java)
             startActivity(intent)
         }
     }
@@ -91,7 +91,7 @@ class PaymentActivity : AppCompatActivity() {
         lifecycleScope.launch {
             commit(
                 checkoutToken,
-                this@PaymentActivity,
+                context = this@SamplePaymentActivity,
                 onSuccess = {
                     // Successfully committed!
                 },
@@ -106,7 +106,7 @@ class PaymentActivity : AppCompatActivity() {
         lifecycleScope.launch {
             trace(
                 checkoutToken,
-                context = this@PaymentActivity,
+                context = this@SamplePaymentActivity,
                 onSuccess = {
                     binding.traceResult.text = it.toString()
                 },

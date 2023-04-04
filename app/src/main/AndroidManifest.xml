@@ -10,7 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/BazaarPaySampleTheme">
         <activity
-            android:name=".PaymentActivity"
+            android:name=".SamplePaymentActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -20,7 +20,7 @@
         </activity>
 
         <activity
-            android:name=".PaymentFragmentContainer"
+            android:name=".SampleFragmentContainer"
             android:exported="true"/>
     </application>
 

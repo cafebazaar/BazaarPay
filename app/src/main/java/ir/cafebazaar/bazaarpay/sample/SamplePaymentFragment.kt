@@ -11,7 +11,7 @@ import ir.cafebazaar.bazaarpay.extensions.setSafeOnClickListener
 import ir.cafebazaar.bazaarpay.sample.databinding.FragmentPaymentBinding
 import ir.cafebazaar.bazaarpay.R as BazaarPayR
 
-class PaymentFragment : Fragment(R.layout.fragment_payment) {
+class SamplePaymentFragment : Fragment(R.layout.fragment_payment) {
     private var _binding: FragmentPaymentBinding? = null
     private val binding get() = _binding!!
 
