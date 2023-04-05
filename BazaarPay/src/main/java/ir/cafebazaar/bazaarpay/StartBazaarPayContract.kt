@@ -13,7 +13,7 @@ import ir.cafebazaar.bazaarpay.arg.BazaarPayActivityArgs
  *
  * Returns `true` if the payment was successful.
  */
-class StartBazaarPay : ActivityResultContract<BazaarPayOptions, Boolean>() {
+class StartBazaarPayContract : ActivityResultContract<BazaarPayOptions, Boolean>() {
 
     override fun createIntent(context: Context, input: BazaarPayOptions): Intent {
         ServiceLocator.initializeConfigs(

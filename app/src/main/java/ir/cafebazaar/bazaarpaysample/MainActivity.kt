@@ -6,7 +6,7 @@ import android.os.PersistableBundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
-import ir.cafebazaar.bazaarpay.StartBazaarPay
+import ir.cafebazaar.bazaarpay.StartBazaarPayContract
 import ir.cafebazaar.bazaarpay.BazaarPayOptions
 import ir.cafebazaar.bazaarpay.R
 import ir.cafebazaar.bazaarpay.commit
@@ -20,7 +20,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var checkoutToken: String
     private val bazaarPayLauncher = registerForActivityResult(
-        StartBazaarPay()
+        StartBazaarPayContract()
     ) { isSuccessful ->
         if (isSuccessful) {
             binding.result.text = "OK!"

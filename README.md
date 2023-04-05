@@ -35,7 +35,7 @@ dependencies {
 *BazaarPay* uses
 the [Activity Result API](https://developer.android.com/training/basics/intents/result). Register
 the payment callback by calling the `registerForActivityResult` with an instance
-of `StartBazaarPay` as its `contract` parameter. The callback provides you with a boolean that
+of `StartBazaarPayContract` as its `contract` parameter. The callback provides you with a boolean that
 indicates whether the payment was successful or not:
 
 ```kotlin
