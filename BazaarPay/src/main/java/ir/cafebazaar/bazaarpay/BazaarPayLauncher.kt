@@ -8,7 +8,7 @@ import androidx.activity.result.ActivityResultLauncher
 import ir.cafebazaar.bazaarpay.arg.BazaarPayActivityArgs
 
 @Deprecated(
-    message = "Use the BazaarPayContract class instead",
+    message = "Use the StartBazaarPay class instead",
     level = DeprecationLevel.WARNING
 )
 object BazaarPayLauncher {
