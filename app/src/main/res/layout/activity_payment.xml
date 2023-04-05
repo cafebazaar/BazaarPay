@@ -37,6 +37,7 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/checkout_token_layout"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
@@ -53,6 +54,7 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/phone_number_layout"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
@@ -89,9 +91,11 @@
 
     <Button
         android:id="@+id/payment_button"
-        android:layout_width="0dp"
+        style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
+        android:minWidth="240dp"
         android:text="@string/label_start_payment"
         app:layout_constraintEnd_toEndOf="@id/guideline_end"
         app:layout_constraintStart_toStartOf="@id/guideline_start"
@@ -112,9 +116,11 @@
 
     <Button
         android:id="@+id/trace_button"
-        android:layout_width="0dp"
+        style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
+        android:minWidth="240dp"
         android:text="@string/label_trace"
         app:layout_constraintEnd_toEndOf="@id/guideline_end"
         app:layout_constraintStart_toStartOf="@id/guideline_start"
@@ -136,7 +142,7 @@
     <Button
         android:id="@+id/payment_fragment_button"
         style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="24dp"
         android:text="@string/label_open_payment_fragment"
