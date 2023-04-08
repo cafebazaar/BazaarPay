@@ -16,8 +16,8 @@ the topics out of this scope, read the corresponding documents.
 
 ### Configure the repository
 
-`BazaarPay` is available through the JitPack repository. You can declare this repository in your
-project `build.gradle` file:
+`BazaarPay` is available through the *JitPack* repository. You can declare this repository in your
+build script as follows:
 
 ```groovy
 repositories {
