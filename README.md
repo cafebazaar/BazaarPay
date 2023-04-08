@@ -6,11 +6,11 @@
 BazaarPay is an all-in-one digital payment service that provides innovative payment solutions,
 including [Direct debit](https://en.wikipedia.org/wiki/Direct_debit)
 , [E-wallet](https://en.wikipedia.org/wiki/Digital_wallet),
-and [BNPL](https://en.wikipedia.org/wiki/Buy_now,_pay_later), to simplify money management
-and help businesses increase sales.
+and [BNPL](https://en.wikipedia.org/wiki/Buy_now,_pay_later). Our goal is to simplify money
+management and help businesses increase sales.
 
-This project is the Android SDK for integrating BazaarPay within your Android application. For
-additional information about BazaarPay, please visit our [website](https://bazaarpay.ir/).
+This project is the SDK for integrating BazaarPay within your Android applications. For additional
+information about BazaarPay, please visit our [website](https://bazaarpay.ir/).
 
 ### Requirements
 
