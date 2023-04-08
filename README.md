@@ -1,5 +1,7 @@
 ## BazaarPay Android SDK
 
+<img width="600" alt="Logo" src="https://bazaar-pay.ir/wp-content/uploads/2022/12/01.svg">
+
 [![Download](https://img.shields.io/jitpack/version/com.github.cafebazaar/bazaarpay)](https://jitpack.io/#cafebazaar/bazaarpay)
 [![GitHub licence](https://img.shields.io/github/license/cafebazaar/BazaarPay)](https://www.apache.org/licenses/LICENSE-2.0)
 
