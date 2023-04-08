@@ -5,7 +5,6 @@ import android.content.Context
 import android.content.Intent
 import androidx.activity.result.contract.ActivityResultContract
 import ir.cafebazaar.bazaarpay.arg.BazaarPayActivityArgs
-import kotlinx.coroutines.flow.flow
 
 /**
  * An [ActivityResultContract] to start a payment.
