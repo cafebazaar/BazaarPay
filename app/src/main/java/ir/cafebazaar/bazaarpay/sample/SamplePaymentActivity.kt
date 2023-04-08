@@ -3,12 +3,12 @@ package ir.cafebazaar.bazaarpay.sample
 import android.content.Intent
 import android.os.Bundle
 import android.os.PersistableBundle
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
-import ir.cafebazaar.bazaarpay.BazaarPayLauncher
+import ir.cafebazaar.bazaarpay.BazaarPayOptions
+import ir.cafebazaar.bazaarpay.StartBazaarPay
 import ir.cafebazaar.bazaarpay.commit
 import ir.cafebazaar.bazaarpay.extensions.setSafeOnClickListener
 import ir.cafebazaar.bazaarpay.sample.databinding.ActivityPaymentBinding
@@ -46,30 +46,23 @@ class SamplePaymentActivity : AppCompatActivity() {
     }
 
     private fun startPayment() {
-        BazaarPayLauncher.launchBazaarPay(
-            context = this,
+        val options = BazaarPayOptions(
             checkoutToken = checkoutToken,
             phoneNumber = binding.phoneNumberInput.text.toString(),
-            isDarkMode = binding.darkModeCheckbox.isChecked,
-            activityResultLauncher = registeredLauncher
+            isInDarkMode = binding.darkModeCheckbox.isChecked
         )
+        bazaarPayLauncher.launch(options)
     }
 
-    private val registeredLauncher = registerForActivityResult(
-        ActivityResultContracts.StartActivityForResult()
-    ) { result ->
-        BazaarPayLauncher.onResultLauncher(
-            result,
-            onSuccess = {
-                showPaymentResult(R.string.message_successful_payment)
-                if (binding.commitPaymentCheckbox.isChecked) {
-                    commitCheckoutToken()
-                }
-            },
-            onCancel = {
-                showPaymentResult(R.string.message_payment_cancelled, isError = true)
+    private val bazaarPayLauncher = registerForActivityResult(StartBazaarPay()) { isSuccessful ->
+        if (isSuccessful) {
+            showPaymentResult(R.string.message_successful_payment)
+            if (binding.commitPaymentCheckbox.isChecked) {
+                commitCheckoutToken()
             }
-        )
+        } else {
+            showPaymentResult(R.string.message_payment_cancelled, isError = true)
+        }
     }
 
     private fun showPaymentResult(
