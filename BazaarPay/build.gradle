@@ -11,6 +11,7 @@ final VERSION_NAME = "4.0.0"
 final VERSION_CODE = 18
 
 android {
+    namespace 'ir.cafebazaar.bazaarpay'
     compileSdk libs.versions.androidCompileSdk.get() as int
 
     defaultConfig {

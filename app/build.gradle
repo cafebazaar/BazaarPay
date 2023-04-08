@@ -4,6 +4,7 @@ plugins {
 }
 
 android {
+    namespace 'ir.cafebazaar.bazaarpay.sample'
     compileSdk libs.versions.androidCompileSdk.get() as int
 
     defaultConfig {
