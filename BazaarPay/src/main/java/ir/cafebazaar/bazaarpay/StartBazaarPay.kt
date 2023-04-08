@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import androidx.activity.result.contract.ActivityResultContract
 import ir.cafebazaar.bazaarpay.arg.BazaarPayActivityArgs
+import kotlinx.coroutines.flow.flow
 
 /**
  * An [ActivityResultContract] to start a payment.
@@ -12,6 +13,20 @@ import ir.cafebazaar.bazaarpay.arg.BazaarPayActivityArgs
  * The input is a [BazaarPayOptions] that configures the payment flow.
  *
  * Returns `true` if the payment was successful.
+ *
+ * Example of usage:
+ *
+ * ```
+ * val bazaarPayLauncher = registerForActivityResult(StartBazaarPay()) { isSuccessful ->
+ *     if (isSuccessful) {
+ *          // A successful payment.
+ *     } else {
+ *          // An unsuccessful payment (Canceled by the user).
+ *     }
+ * }
+ *
+ * val options = BazaarPayOptions(checkoutToken = "CHECKOUT_TOKEN")
+ * bazaarPayLauncher.launch(options)
  */
 class StartBazaarPay : ActivityResultContract<BazaarPayOptions, Boolean>() {
 
