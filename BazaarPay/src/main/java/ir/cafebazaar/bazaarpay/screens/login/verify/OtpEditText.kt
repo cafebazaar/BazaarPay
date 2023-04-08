@@ -2,6 +2,7 @@ package ir.cafebazaar.bazaarpay.screens.login.verify
 
 import android.content.Context
 import android.graphics.Canvas
+import android.graphics.Color
 import android.graphics.Paint
 import ir.cafebazaar.bazaarpay.R
 import android.util.AttributeSet
@@ -75,6 +76,11 @@ class OtpEditText : AppCompatEditText {
         paint.color = textColors.defaultColor
         var i = 0
         while (i < mNumChars) {
+            if (i == textLength) {
+                mLinesPaint!!.color = resources.getColor(R.color.bazaarpay_app_brand_primary)
+            } else {
+                mLinesPaint!!.color = resources.getColor(R.color.bazaarpay_grey_60)
+            }
             canvas.drawLine(
                 startX.toFloat(),
                 bottom.toFloat(),
