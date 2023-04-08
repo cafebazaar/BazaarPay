@@ -1,5 +1,8 @@
 ## BazaarPay Android SDK
 
+[![Download](https://img.shields.io/jitpack/version/com.github.cafebazaar/bazaarpay)](https://jitpack.io/#cafebazaar/bazaarpay)
+[![GitHub licence](https://img.shields.io/github/license/cafebazaar/BazaarPay)](https://www.apache.org/licenses/LICENSE-2.0)
+
 This document aims to help you to integrate the *BazaarPay* android SDK within your application. For
 the topics out of this scope, read the corresponding documents.
 
