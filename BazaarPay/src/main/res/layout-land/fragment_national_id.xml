@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/bazaarpay_surface_color_0">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appBarLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fitsSystemWindows="true"
+        android:paddingHorizontal="@dimen/bazaarpay_default_margin_double"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:theme="@style/ThemeOverlay.MaterialComponents.ActionBar"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:popupTheme="@style/ThemeOverlay.MaterialComponents.Light">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/bazaarpay_actionBarSize"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <ir.cafebazaar.bazaarpay.widget.RTLImageView
+                    android:id="@+id/toolbarBack"
+                    style="@style/Bazaar.Image.Toolbar.Icon"
+                    app:srcCompat="@drawable/ic_round_arrow_back_icon_secondary_24dp_old" />
+
+                <ir.cafebazaar.bazaarpay.widget.LocalAwareTextView
+                    android:id="@+id/toolbarTitle"
+                    style="@style/Bazaar.Text.Body1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginHorizontal="@dimen/bazaarpay_default_margin_one_half"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:maxLines="1"
+                    android:singleLine="true"
+                    android:text="@string/bazaarpay_set_national_id"
+                    android:textColor="@color/bazaarpay_text_primary" />
+
+            </LinearLayout>
+
+        </androidx.appcompat.widget.Toolbar>
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/appBarLayout"
+        android:layout_marginTop="@dimen/bazaarpay_default_margin">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/titleTextView"
+            style="@style/Bazaar.Text.Caption"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/bazaarpay_default_margin_double"
+            android:text="@string/bazaarpay_national_id_title"
+            android:textColor="@color/bazaarpay_text_hint"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/appBarLayout" />
+
+        <LinearLayout
+            android:id="@+id/warningBox"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/bazaarpay_default_margin"
+            android:layout_marginBottom="@dimen/bazaarpay_default_margin_double"
+            android:background="@drawable/background_warning_radius_4"
+            android:layout_marginHorizontal="@dimen/bazaarpay_default_margin_double"
+            android:padding="@dimen/bazaarpay_default_margin"
+            android:visibility="visible"
+            app:layout_constraintBottom_toTopOf="@id/nationalIdInput"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/titleTextView">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/errorTextView"
+                style="@style/Bazaar.Text.Caption"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:drawableStartCompat="@drawable/ic_info"
+                app:drawableTint="@color/bazaarpay_grey_70"
+                android:layout_gravity="center"
+                android:text="@string/bazaarpay_national_id_hint"
+                android:textColor="@color/bazaarpay_text_hint"
+                tools:text="تا چند ثانیه‌ی دیگر خرید شما تکمیل و به برنامه مورد نظر برمی‌گردید." />
+
+        </LinearLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/nationalIdInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/bazaarpay_default_margin_double"
+            android:layout_marginTop="@dimen/bazaarpay_default_margin"
+            android:theme="@style/Bazaar.TextInput"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/warningBox">
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/nationalIdEditText"
+                style="@style/Bazaar.Text.Body"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/bazaarpay_enter_national_id"
+                android:imeOptions="actionDone"
+                android:inputType="number"
+                android:maxLength="10"
+                android:singleLine="true">
+
+                <requestFocus />
+            </androidx.appcompat.widget.AppCompatEditText>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/descriptionTextView"
+            style="@style/Bazaar.Text.Caption"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="10sp"
+            android:layout_marginHorizontal="@dimen/bazaarpay_default_margin_double"
+            android:layout_marginTop="@dimen/bazaarpay_default_margin_half"
+            android:text="@string/bazaarpay_national_id_description"
+            android:textColor="@color/bazaarpay_text_hint"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/nationalIdInput" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <ir.cafebazaar.bazaarpay.widget.button.BazaarPayButton
+        android:id="@+id/acceptButton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/bazaarpay_default_margin_double"
+        android:layout_marginTop="@dimen/bazaarpay_default_margin"
+        app:bazaarpayButtonTheme="contained"
+        app:bazaarpayButtonType="app"
+        app:layout_constraintTop_toBottomOf="@id/content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:sizeMode="small"
+        app:text="@string/bazaarpay_submit_and_continue" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

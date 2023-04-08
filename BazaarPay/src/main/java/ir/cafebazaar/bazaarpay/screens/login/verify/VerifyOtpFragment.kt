@@ -5,11 +5,13 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.os.Bundle
+import android.text.InputType
 import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
+import android.view.inputmethod.InputMethodManager
 import androidx.activity.addCallback
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
@@ -124,6 +126,9 @@ internal class VerifyOtpFragment : Fragment() {
             binding.proceedBtn.isEnabled = it?.length == 4 &&
                     viewModel.verifyCodeStateLiveData.value?.resourceState != ResourceState.Loading
         }
+
+        binding.verificationCodeEditText.requestFocus()
+
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
