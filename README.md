@@ -19,22 +19,54 @@ the topics out of this scope, read the corresponding documents.
 `BazaarPay` is available through the *JitPack* repository. You can declare this repository in your
 build script as follows:
 
+<details open>
+<summary>Kotlin DSL</summary>
+
+```kotlin
+repositories {
+    maven { url = uri("https://jitpack.io") }
+}
+```
+
+</details>
+
+<details>
+<summary>Groovy DSL</summary>
+
 ```groovy
 repositories {
     maven { url 'https://jitpack.io' }
 }
 ```
 
+</details>
+
 ### Add the dependency
 
 After repository configuration, add a dependency on *BazaarPay* to your module's `build.gradle`
 file:
+
+<details open>
+<summary>Kotlin DSL</summary>
+
+```kotlin
+dependencies {
+    implementation("com.github.cafebazaar:bazaarpay:[latest_version]")
+}
+```
+
+</details>
+
+<details>
+<summary>Groovy DSL</summary>
 
 ```groovy
 dependencies {
     implementation 'com.github.cafebazaar:bazaarpay:[latest_version]'
 }
 ```
+
+</details>
 
 ## Usage
 
