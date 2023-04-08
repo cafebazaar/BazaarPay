@@ -80,7 +80,7 @@ You have to commit the *Checkout Token* after successful payment. There is a sus
 function for this purpose that you can call from a coroutine scope:
 
 ```kotlin
-// Inside onSuccess callback of launchBazaarPay
+// Inside isSuccessful branch of the registered payment callback
 myScope.launch {
     commit(
         checkoutToken = "CHECKOUT_TOKEN",
