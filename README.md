@@ -3,14 +3,14 @@
 [![Download](https://img.shields.io/jitpack/version/com.github.cafebazaar/bazaarpay)](https://jitpack.io/#cafebazaar/bazaarpay)
 [![GitHub licence](https://img.shields.io/github/license/cafebazaar/BazaarPay)](https://www.apache.org/licenses/LICENSE-2.0)
 
-*BazaarPay* is an all-in-one digital payment service that provides innovative payment solutions,
+BazaarPay is an all-in-one digital payment service that provides innovative payment solutions,
 including [Direct debit](https://en.wikipedia.org/wiki/Direct_debit)
 , [E-wallet](https://en.wikipedia.org/wiki/Digital_wallet),
 and [BNPL](https://en.wikipedia.org/wiki/Buy_now,_pay_later), to simplify money management
 and help businesses increase sales.
 
-This project is the Android SDK for integrating *BazaarPay* within your Android application. For
-additional information about *BazaarPay*, please visit our [website](https://bazaarpay.ir/).
+This project is the Android SDK for integrating BazaarPay within your Android application. For
+additional information about BazaarPay, please visit our [website](https://bazaarpay.ir/).
 
 ### Requirements
 
@@ -49,7 +49,7 @@ repositories {
 
 ### Add the dependency
 
-After repository configuration, add a dependency on *BazaarPay* to your module's `build.gradle`
+After repository configuration, add a dependency on BazaarPay to your module's `build.gradle`
 file:
 
 <details open>
@@ -78,7 +78,7 @@ dependencies {
 
 ### 1. Register Payment Callback
 
-*BazaarPay* uses
+BazaarPay uses
 the [Activity Result API](https://developer.android.com/training/basics/intents/result). Register
 the payment callback by calling the `registerForActivityResult` with an instance
 of `StartBazaarPay` as its `contract` parameter. The callback provides you with a boolean that
