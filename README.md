@@ -69,10 +69,8 @@ bazaarPayLauncher.launch(options)
 you [generated before](#requirements). But there are also other optional parameters that you can
 configure to your needs:
 
-* `phoneNumber` - the default phone number to pre-fill the login screen's input field. It uses a
-  null value by default, resulting in no pre-filled input.
-* `isInDarkMode` - enables Dark Mode for the UI elements of the payment flow, which are in Light Mode
-  by default.
+* `phoneNumber` - pre-fills the input field of the login screen with this number.
+* `isInDarkMode` - enables Dark Mode for the UI elements of the payment flow.
 
 ### 3. Commit Checkout Token
 
