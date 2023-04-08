@@ -7,7 +7,7 @@ android {
     compileSdk libs.versions.androidCompileSdk.get() as int
 
     defaultConfig {
-        applicationId "ir.cafebazaar.bazaarpaysample"
+        applicationId "ir.cafebazaar.bazaarpay.sample"
         minSdk libs.versions.androidMinSdk.get() as int
         targetSdk libs.versions.androidTargetSdk.get() as int
         versionCode 1
