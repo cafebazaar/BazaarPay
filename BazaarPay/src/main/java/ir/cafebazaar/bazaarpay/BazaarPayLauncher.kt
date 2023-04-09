@@ -52,9 +52,13 @@ object BazaarPayLauncher {
     }
 
     /**
-     * Notifies BazaarPay about the incoming [ActivityResult].
+     * Notifies BazaarPay about the incoming [ActivityResult] and parses the result.
      *
      * After parsing the result, either [onSuccess] or [onCancel] callbacks will be executed.
+     *
+     * @param result the incoming result from the [Activity].
+     * @param onSuccess the callback when result shows a successful payment.
+     * @param onCancel the callback when result shows payment canceled by the user.
      */
     fun onResultLauncher(
         result: ActivityResult,
