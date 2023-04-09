@@ -234,6 +234,7 @@ internal class PaymentMethodsFragment : Fragment(), PaymentMethodsClickListener 
                 PaymentFlowState.MerchantInfo -> {
                     setupMerchantInfoViews(resource.data as MerchantInfo)
                 }
+                else -> error("Invalid state of handleDataState:${resource.resourceState}")
             }
         }
     }
@@ -268,6 +269,7 @@ internal class PaymentMethodsFragment : Fragment(), PaymentMethodsClickListener 
                 ResourceState.Error -> {
                     toastMessage(requireContext().getReadableErrorMessage(it.failure))
                 }
+                else -> error("Invalid state of handleDataState:${resource.resourceState}")
             }
         }
     }

@@ -97,6 +97,7 @@ internal class DirectDebitBankListFragment : Fragment() {
                     ResourceState.Success -> {
                         openUrlWithResourceData(resource.data)
                     }
+                    else -> error("Invalid state of handleDataState:${resource.resourceState}")
                 }
             }
             dataLiveData.observe(viewLifecycleOwner, ::handleData)

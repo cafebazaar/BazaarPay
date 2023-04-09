@@ -80,6 +80,7 @@ internal class PaymentThankYouPageFragment : Fragment() {
                 showSuccess(paymentThankYouSuccessModel)
             }
             ResourceState.Error -> showError(resource.failure)
+            else -> error("Invalid state of handleDataState:${resource.resourceState}")
         }
     }
 

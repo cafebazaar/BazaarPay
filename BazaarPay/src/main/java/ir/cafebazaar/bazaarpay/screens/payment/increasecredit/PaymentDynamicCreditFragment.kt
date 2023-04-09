@@ -127,6 +127,7 @@ internal class PaymentDynamicCreditFragment : Fragment() {
             ResourceState.Success -> {
                 resource.data?.let { requireContext().openUrl(it) }
             }
+            else -> error("Invalid state of handleDataState:${resource.resourceState}")
         }
     }
 

@@ -93,6 +93,7 @@ internal class DirectDebitOnBoardingFragment : Fragment() {
                         loading.gone()
                     }
                 }
+                else -> error("Invalid state of handleDataState:${resource.resourceState}")
             }
         }
     }
