@@ -20,6 +20,10 @@ fun initSDKForAPICall(
 /**
  * Commits the [checkoutToken] for a successful payment.
  *
+ * It is better to call it from a WorkManager worker or a Service for safety reasons.
+ *
+ * Although sending tokens through the SDK is possible, we recommend this happens on the server side.
+ *
  * @param checkoutToken the token to commit.
  * @param context the context in which commit happens.
  * @param onSuccess the callback when committed [checkoutToken] successfully.
