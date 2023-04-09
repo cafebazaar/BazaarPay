@@ -144,7 +144,7 @@ internal class PaymentDynamicCreditFragment : Fragment() {
                 initView()
             }
             else -> {
-                IllegalStateException(
+                throw IllegalStateException(
                     "Invalid state of handleDataState:${resource.resourceState}"
                 )
             }
