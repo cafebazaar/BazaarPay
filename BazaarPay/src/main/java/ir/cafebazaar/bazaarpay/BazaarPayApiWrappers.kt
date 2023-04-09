@@ -17,6 +17,14 @@ fun initSDKForAPICall(
     ServiceLocator.initializeDependencies(context)
 }
 
+/**
+ * Commits the [checkoutToken] for a successful payment.
+ *
+ * @param checkoutToken the token to commit.
+ * @param context the context in which commit happens.
+ * @param onSuccess the callback when committed [checkoutToken] successfully.
+ * @param onFailure the callback for an unsuccessful commit with [ErrorModel] to reason about the cause.
+ */
 suspend fun commit(
     checkoutToken: String,
     context: Context,
