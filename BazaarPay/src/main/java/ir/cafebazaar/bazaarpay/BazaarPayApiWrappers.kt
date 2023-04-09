@@ -41,6 +41,14 @@ suspend fun commit(
     )
 }
 
+/**
+ * Traces the current status of the payment using [checkoutToken].
+ *
+ * @param checkoutToken the token to trace payment status for.
+ * @param context the context in which tracing happens.
+ * @param onSuccess the callback when traced payment successfully offering its [PurchaseStatus].
+ * @param onFailure the callback for an unsuccessful tracing with [ErrorModel] to reason about the cause.
+ */
 suspend fun trace(
     checkoutToken: String,
     context: Context,
