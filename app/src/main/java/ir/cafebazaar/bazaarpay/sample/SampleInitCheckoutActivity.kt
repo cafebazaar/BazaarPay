@@ -27,21 +27,29 @@ class SampleInitCheckoutActivity : AppCompatActivity() {
     }
 
     private fun initCheckoutToken() {
-        lifecycleScope.launch {
-            initCheckout(
-                context = this@SampleInitCheckoutActivity,
-                amount = binding.amountEditText.text.toString().toLong(),
-                destination = binding.destinationEditText.text.toString(),
-                serviceName = binding.serviceNameEditText.text.toString(),
-                onSuccess = {
-                    binding.checkoutTokenTextView.text = it.checkoutToken
-                    binding.redirectUrlTextView.text = it.paymentUrl
-                },
-                onFailure = {
-                    binding.checkoutTokenTextView.text = it.message
-                    binding.checkoutTokenTextView.setTextColor(Color.RED)
-                }
-            )
+        val amountString = binding.amountEditText.text.toString()
+        val destination = binding.destinationEditText.text.toString()
+        val serviceName = binding.serviceNameEditText.text.toString()
+        if (amountString.isNotEmpty() &&
+            destination.isNotEmpty() &&
+            serviceName.isNotEmpty()
+        ) {
+            lifecycleScope.launch {
+                initCheckout(
+                    context = this@SampleInitCheckoutActivity,
+                    amount = amountString.toLong(),
+                    destination = destination,
+                    serviceName = serviceName,
+                    onSuccess = {
+                        binding.checkoutTokenTextView.text = it.checkoutToken
+                        binding.redirectUrlTextView.text = it.paymentUrl
+                    },
+                    onFailure = {
+                        binding.checkoutTokenTextView.text = it.message
+                        binding.checkoutTokenTextView.setTextColor(Color.RED)
+                    }
+                )
+            }
         }
     }
 }
