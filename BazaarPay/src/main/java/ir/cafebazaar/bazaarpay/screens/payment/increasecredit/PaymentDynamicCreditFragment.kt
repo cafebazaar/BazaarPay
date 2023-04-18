@@ -184,19 +184,26 @@ internal class PaymentDynamicCreditFragment : Fragment() {
     }
 
     private fun initView() {
-        setDealerInfo()
+        when (dealerArgs) {
+            is DynamicCreditOptionDealerArg.DynamicCreditWithMerchantArg -> {
+                setDealerInfo(dealerArgs as DynamicCreditOptionDealerArg.DynamicCreditWithMerchantArg)
+            }
+            is DynamicCreditOptionDealerArg.DirectDynamicCreditArg -> {
+                binding.merchantInfo.gone()
+            }
+        }
         setCreditOptions()
         with(creditOptionsArgs) {
             binding.dynamicCreditSubTitle.setValueIfNotNullOrEmpty(description)
         }
     }
 
-    private fun setDealerInfo() {
+    private fun setDealerInfo(args: DynamicCreditOptionDealerArg.DynamicCreditWithMerchantArg) {
         with(binding.merchantInfo) {
-            setMerchantName(dealerArgs.name)
-            setPrice(dealerArgs.priceString)
-            setMerchantInfo(dealerArgs.info)
-            setMerchantIcon(dealerArgs.iconUrl)
+            setMerchantName(args.name)
+            setPrice(args.priceString)
+            setMerchantInfo(args.info)
+            setMerchantIcon(args.iconUrl)
         }
     }
 

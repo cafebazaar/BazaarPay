@@ -172,12 +172,13 @@ internal class PaymentMethodsViewModel : ViewModel() {
             }?.priceString?.let { priceString ->
                 val merchantLogo = merchantInfoStateData.value?.data?.logoUrl
                 val merchantAccountName = merchantInfoStateData.value?.data?.accountName
-                val dynamicCreditOptionDealerArg = DynamicCreditOptionDealerArg(
-                    iconUrl = merchantLogo,
-                    name = paymentMethodsStateData.destinationTitle,
-                    info = merchantAccountName,
-                    priceString = priceString
-                )
+                val dynamicCreditOptionDealerArg =
+                    DynamicCreditOptionDealerArg.DynamicCreditWithMerchantArg(
+                        iconUrl = merchantLogo,
+                        name = paymentMethodsStateData.destinationTitle,
+                        info = merchantAccountName,
+                        priceString = priceString
+                    )
                 val dynamicCreditOption = paymentMethodsStateData.dynamicCreditOption
                 if (dynamicCreditOption != null) {
                     val nav = PaymentMethodsFragmentDirections
