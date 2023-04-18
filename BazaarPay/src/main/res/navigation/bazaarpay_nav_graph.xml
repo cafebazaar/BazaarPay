@@ -22,6 +22,12 @@
         android:id="@+id/startPaymentFragment"
         android:name="ir.cafebazaar.bazaarpay.StartPaymentFragment"
         android:label="StartPaymentFragment">
+
+        <argument
+            android:name="paymentType"
+            app:argType="ir.cafebazaar.bazaarpay.arg.PaymentTypeArg"
+            android:defaultValue="PURCHASE"/>
+
         <action
             android:id="@+id/action_startPaymentFragment_to_registerFragment"
             app:destination="@id/registerFragment" />

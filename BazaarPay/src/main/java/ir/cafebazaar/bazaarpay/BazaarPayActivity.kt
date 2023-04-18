@@ -6,15 +6,16 @@ import android.content.res.Configuration
 import android.os.Build
 import android.os.Bundle
 import android.os.LocaleList
-import android.os.PersistableBundle
 import android.view.animation.AnimationUtils
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.navOptions
 import ir.cafebazaar.bazaarpay.arg.BazaarPayActivityArgs
+import ir.cafebazaar.bazaarpay.arg.PaymentTypeArg
 import ir.cafebazaar.bazaarpay.databinding.ActivityBazaarPayBinding
-import java.util.Locale
+import java.util.*
 
 class BazaarPayActivity : AppCompatActivity(), FinishCallbacks {
 
@@ -34,6 +35,15 @@ class BazaarPayActivity : AppCompatActivity(), FinishCallbacks {
 
         initServiceLocator()
         startFadeInAnimation()
+
+        val finalHost = NavHostFragment.create(
+            R.navigation.bazaarpay_nav_graph,
+            StartPaymentFragmentArgs(PaymentTypeArg.PURCHASE).toBundle()
+        )
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.nav_host_fragment_bazaar_pay, finalHost)
+            .setPrimaryNavigationFragment(finalHost) // equivalent to app:defaultNavHost="true"
+            .commit()
     }
 
     override fun onStart() {
