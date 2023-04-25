@@ -43,6 +43,10 @@ class SamplePaymentActivity : AppCompatActivity() {
             val intent = Intent(this, SampleFragmentContainer::class.java)
             startActivity(intent)
         }
+        binding.initCheckoutActivityButton.setSafeOnClickListener {
+            val intent = Intent(this, SampleInitCheckoutActivity::class.java)
+            startActivity(intent)
+        }
     }
 
     private fun startPayment() {

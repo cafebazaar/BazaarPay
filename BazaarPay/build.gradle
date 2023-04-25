@@ -3,7 +3,7 @@ plugins {
     id 'org.jetbrains.kotlin.android'
     id 'kotlin-parcelize'
     id 'androidx.navigation.safeargs.kotlin'
-    id 'kotlin-kapt'
+    id 'com.google.devtools.ksp'
     id 'maven-publish'
 }
 
@@ -43,6 +43,7 @@ android {
     buildFeatures {
         viewBinding true
         dataBinding true
+        buildConfig true
     }
 }
 
@@ -69,7 +70,7 @@ dependencies {
     implementation libs.squareup.retrofit.core
     implementation libs.squareup.retrofit.core
     implementation libs.glide.core
-    kapt libs.glide.compiler
+    ksp libs.glide.compiler
     implementation libs.dotsIndicator
     implementation(libs.loggingInterceptor) {
         exclude group: 'org.json', module: 'json'
