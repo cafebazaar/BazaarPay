@@ -19,15 +19,18 @@ fun initSDKForAPICall(
 }
 
 /**
- * Commits the [checkoutToken] for a successful payment.
+ * Commits the checkout process after a successful payment transaction.
  *
- * It is better to call it from a WorkManager worker or a Service for safety reasons.
+ * If the checkout is not committed within a certain period of time, it will be automatically refunded.
  *
- * Although sending tokens through the SDK is possible, we recommend this happens on the server side.
+ * The recommended way to call this API is server-side for security reasons.
  *
- * @param checkoutToken the token to commit.
+ * If called from a client-side, the developer should ensure that the commit process is finished
+ * before the application is closed (e.g., by using a WorkManager worker or a Service).
+ *
+ * @param checkoutToken the token returned from the checkout API.
  * @param context the context in which commit happens.
- * @param onSuccess the callback when committed [checkoutToken] successfully.
+ * @param onSuccess the callback when the transaction committed successfully.
  * @param onFailure the callback for an unsuccessful commit with [ErrorModel] to reason about the cause.
  */
 suspend fun commit(
