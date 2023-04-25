@@ -22,7 +22,7 @@ object BazaarPayLauncher {
      * Launches BazaarPay flow.
      *
      * @param context the context in which payment happens.
-     * @param checkoutToken the unique identifier that provides essential payment information.
+     * @param checkoutToken the unique identifier of a checkout process.
      * @param isDarkMode enables *Dark-Mode* for the UI elements of the payment flow, which are in *Light-Mode* by default.
      * @param phoneNumber the default phone number to pre-fill the login screen's input field. It uses a `null` value by default, resulting in no pre-filled input.
      * @param activityResultLauncher an instance of the [ActivityResultLauncher] registered using the Activity Result API.

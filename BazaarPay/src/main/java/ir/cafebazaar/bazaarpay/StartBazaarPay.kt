@@ -7,7 +7,7 @@ import androidx.activity.result.contract.ActivityResultContract
 import ir.cafebazaar.bazaarpay.arg.BazaarPayActivityArgs
 
 /**
- * An [ActivityResultContract] to start a payment.
+ * An [ActivityResultContract] to start a payment transaction for a checkout process.
  *
  * The input is a [BazaarPayOptions] that configures the payment flow.
  *
