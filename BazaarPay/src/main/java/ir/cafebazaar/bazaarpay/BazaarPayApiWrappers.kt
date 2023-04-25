@@ -76,12 +76,12 @@ suspend fun trace(
 /**
  * Initiates the checkout process.
  *
- * @param context the context in which init happens.
- * @param amount the amount of the purchase in Rials. Notice that this has some limitations which you should consider based on BazaarPay documentation.
- * @param destination the destination of the purchase which you should get it from the BazaarPay team.
- * @param serviceName the serviceName of the purchase which you should get it from the BazaarPay team.
- * @param onSuccess the callback when initiated checkout successfully offering its [InitCheckoutResult].
- * @param onFailure the callback for an unsuccessful initiation of checkout with [ErrorModel] to reason about the cause.
+ * @param context the context in which initiation happens.
+ * @param amount the amount of the checkout in Rials. Notice that this has some limitations which you should consider based on BazaarPay documentation.
+ * @param destination the destination of the checkout which you should get it from the BazaarPay team.
+ * @param serviceName the serviceName of the checkout which you should get it from the BazaarPay team.
+ * @param onSuccess the callback when initiated checkout process successfully offering its [InitCheckoutResult].
+ * @param onFailure the callback for an unsuccessful initiation of checkout process with [ErrorModel] to reason about the cause.
  */
 suspend fun initCheckout(
     context: Context,
