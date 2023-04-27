@@ -12,6 +12,7 @@ import ir.cafebazaar.bazaarpay.databinding.FragmentPostpaidTermsBinding
 import ir.cafebazaar.bazaarpay.extensions.getReadableErrorMessage
 import ir.cafebazaar.bazaarpay.extensions.setSafeOnClickListener
 import ir.cafebazaar.bazaarpay.extensions.toastMessage
+import ir.cafebazaar.bazaarpay.utils.bindWithRTLSupport
 
 internal class PostpaidTermsFragment : Fragment() {
 
@@ -26,11 +27,7 @@ internal class PostpaidTermsFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentPostpaidTermsBinding.inflate(
-            inflater,
-            container,
-            false
-        )
+        _binding = inflater.bindWithRTLSupport(FragmentPostpaidTermsBinding::inflate, container)
         return binding.root
     }
 
@@ -57,10 +54,10 @@ internal class PostpaidTermsFragment : Fragment() {
         postpaidTermsViewModel.activationLiveData.observe(viewLifecycleOwner) {
             with(binding) {
                 acceptButton.isLoading = it.isLoading
-                if(it.isError) {
+                if (it.isError) {
                     toastMessage(requireContext().getReadableErrorMessage(it.failure))
                 }
-                if(it.isSuccess) {
+                if (it.isSuccess) {
                     onBackPressedClicked()
                 }
             }

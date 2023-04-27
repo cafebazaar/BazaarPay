@@ -2,14 +2,14 @@ package ir.cafebazaar.bazaarpay.screens.payment.directdebitactivating.banklist
 
 import android.content.Context
 import android.graphics.drawable.Drawable
-import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import ir.cafebazaar.bazaarpay.R
+import ir.cafebazaar.bazaarpay.data.bazaar.payment.models.directdebit.banklist.Bank
 import ir.cafebazaar.bazaarpay.databinding.ItemBankListBinding
 import ir.cafebazaar.bazaarpay.databinding.ItemBankListHeaderBinding
-import ir.cafebazaar.bazaarpay.data.bazaar.payment.models.directdebit.banklist.Bank
+import ir.cafebazaar.bazaarpay.utils.bindWithRTLSupport
 
 internal abstract sealed class BankList {
 
@@ -37,11 +37,7 @@ internal abstract sealed class BankList {
 
         override fun createViewHolder(parent: ViewGroup): RecyclerView.ViewHolder {
             return DirectDebitBanksListItemViewHolder(
-                ItemBankListBinding.inflate(
-                    LayoutInflater.from(parent.context),
-                    parent,
-                    false
-                ),
+                parent.bindWithRTLSupport(ItemBankListBinding::inflate),
                 onItemSelected
             )
         }
@@ -57,11 +53,7 @@ internal abstract sealed class BankList {
 
         override fun createViewHolder(parent: ViewGroup): RecyclerView.ViewHolder {
             return DirectDebitBanksListHeaderViewHolder(
-                ItemBankListHeaderBinding.inflate(
-                    LayoutInflater.from(parent.context),
-                    parent,
-                    false
-                )
+                parent.bindWithRTLSupport(ItemBankListHeaderBinding::inflate)
             )
         }
     }
