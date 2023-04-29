@@ -38,7 +38,7 @@ class BazaarPayActivity : AppCompatActivity(), FinishCallbacks {
 
         val finalHost = NavHostFragment.create(
             R.navigation.bazaarpay_nav_graph,
-            StartPaymentFragmentArgs(PaymentTypeArg.PURCHASE).toBundle()
+            StartPaymentFragmentArgs(PaymentTypeArg.INCREASE_BALANCE).toBundle()
         )
         supportFragmentManager.beginTransaction()
             .replace(R.id.nav_host_fragment_bazaar_pay, finalHost)

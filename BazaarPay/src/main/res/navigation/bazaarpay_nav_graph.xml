@@ -35,6 +35,9 @@
             android:id="@+id/action_startPaymentFragment_to_paymentMethodsFragment"
             app:destination="@id/paymentMethodsFragment" />
         <action
+            android:id="@+id/action_startPaymentFragment_to_paymentDynamicCreditFragment"
+            app:destination="@id/paymentDynamicCreditFragment" />
+        <action
             android:id="@+id/action_startPaymentFragment_to_directDebitOnBoardingFragment"
             app:destination="@id/directDebitOnBoardingFragment" />
     </fragment>

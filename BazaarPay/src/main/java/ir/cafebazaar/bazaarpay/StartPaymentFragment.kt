@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.NavDirections
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import ir.cafebazaar.bazaarpay.arg.PaymentTypeArg
 import ir.cafebazaar.bazaarpay.extensions.navigateSafe
 import ir.cafebazaar.bazaarpay.data.bazaar.account.AccountRepository
 
@@ -26,8 +27,14 @@ internal class StartPaymentFragment: Fragment() {
     private fun getNavDirection(): NavDirections {
         return when (accountRepository.isLoggedIn()) {
             true -> {
-                println(args.paymentType)
-                StartPaymentFragmentDirections.actionStartPaymentFragmentToPaymentMethodsFragment()
+                when(args.paymentType) {
+                    PaymentTypeArg.PURCHASE -> {
+                        StartPaymentFragmentDirections.actionStartPaymentFragmentToPaymentMethodsFragment()
+                    }
+                    PaymentTypeArg.INCREASE_BALANCE -> {
+                        StartPaymentFragmentDirections.actionStartPaymentFragmentToPaymentDynamicCreditFragment()
+                    }
+                }
             }
             false -> {
                 StartPaymentFragmentDirections.actionStartPaymentFragmentToRegisterFragment()
