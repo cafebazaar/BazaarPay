@@ -6,9 +6,11 @@ import ir.cafebazaar.bazaarpay.data.payment.api.PaymentService
 import ir.cafebazaar.bazaarpay.data.payment.models.getpaymentmethods.PaymentMethodsInfo
 import ir.cafebazaar.bazaarpay.data.payment.models.getpaymentmethods.request.GetPaymentMethodsRequest
 import ir.cafebazaar.bazaarpay.data.payment.models.merchantinfo.MerchantInfo
+import ir.cafebazaar.bazaarpay.data.payment.models.pay.InitCheckoutResult
 import ir.cafebazaar.bazaarpay.data.payment.models.pay.PayResult
 import ir.cafebazaar.bazaarpay.data.payment.models.pay.PurchaseStatus
 import ir.cafebazaar.bazaarpay.data.payment.models.pay.request.CommitRequest
+import ir.cafebazaar.bazaarpay.data.payment.models.pay.request.InitCheckoutRequest
 import ir.cafebazaar.bazaarpay.data.payment.models.pay.request.PayRequest
 import ir.cafebazaar.bazaarpay.data.payment.models.pay.request.TraceRequest
 import ir.cafebazaar.bazaarpay.extensions.ServiceType
@@ -94,6 +96,19 @@ internal class PaymentRemoteDataSource {
                 paymentService.trace(
                     TraceRequest(checkoutToken)
                 ).toPurchaseState()
+            }
+        }
+    }
+    suspend fun initCheckout(
+        amount: Long,
+        destination: String,
+        serviceName: String
+    ): Either<InitCheckoutResult> {
+        return withContext(globalDispatchers.iO) {
+            return@withContext safeApiCall(ServiceType.BAZAARPAY) {
+                paymentService.initCheckout(
+                    InitCheckoutRequest(amount, destination, serviceName)
+                ).toInitCheckoutResult()
             }
         }
     }

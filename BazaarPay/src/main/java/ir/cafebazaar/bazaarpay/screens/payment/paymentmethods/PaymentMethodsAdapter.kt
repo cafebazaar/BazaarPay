@@ -1,10 +1,10 @@
 package ir.cafebazaar.bazaarpay.screens.payment.paymentmethods
 
-import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import ir.cafebazaar.bazaarpay.databinding.ItemPaymentOptionBinding
 import ir.cafebazaar.bazaarpay.data.payment.models.getpaymentmethods.PaymentMethod
+import ir.cafebazaar.bazaarpay.databinding.ItemPaymentOptionBinding
+import ir.cafebazaar.bazaarpay.utils.bindWithRTLSupport
 
 internal class PaymentMethodsAdapter(private val paymentOptionClickListener: PaymentMethodsClickListener) :
     RecyclerView.Adapter<PaymentMethodViewHolder>() {
@@ -16,7 +16,7 @@ internal class PaymentMethodsAdapter(private val paymentOptionClickListener: Pay
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PaymentMethodViewHolder {
         return PaymentMethodViewHolder(
-            ItemPaymentOptionBinding.inflate(LayoutInflater.from(parent.context), parent, false),
+            parent.bindWithRTLSupport(ItemPaymentOptionBinding::inflate),
             clickListener = paymentOptionClickListener
         )
     }

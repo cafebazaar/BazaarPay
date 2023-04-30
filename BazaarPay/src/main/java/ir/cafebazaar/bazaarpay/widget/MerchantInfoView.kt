@@ -2,11 +2,11 @@ package ir.cafebazaar.bazaarpay.widget
 
 import android.content.Context
 import android.util.AttributeSet
-import android.view.LayoutInflater
 import androidx.constraintlayout.widget.ConstraintLayout
 import ir.cafebazaar.bazaarpay.R
 import ir.cafebazaar.bazaarpay.databinding.ViewMerchantInfoBinding
 import ir.cafebazaar.bazaarpay.extensions.gone
+import ir.cafebazaar.bazaarpay.utils.bindWithRTLSupport
 import ir.cafebazaar.bazaarpay.utils.imageloader.BazaarPayImageLoader
 
 internal class MerchantInfoView @JvmOverloads constructor(
@@ -20,7 +20,12 @@ internal class MerchantInfoView @JvmOverloads constructor(
         get() = requireNotNull(_binding)
 
     init {
-        _binding = ViewMerchantInfoBinding.inflate(LayoutInflater.from(context), this)
+        _binding = this.bindWithRTLSupport({ layoutInflater, viewGroup, _ ->
+            ViewMerchantInfoBinding.inflate(
+                layoutInflater,
+                viewGroup
+            )
+        })
     }
 
     fun setMerchantName(
