@@ -6,7 +6,6 @@ import android.content.res.Configuration
 import android.os.Build
 import android.os.Bundle
 import android.os.LocaleList
-import android.os.PersistableBundle
 import android.view.animation.AnimationUtils
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
@@ -14,6 +13,7 @@ import androidx.navigation.findNavController
 import androidx.navigation.navOptions
 import ir.cafebazaar.bazaarpay.arg.BazaarPayActivityArgs
 import ir.cafebazaar.bazaarpay.databinding.ActivityBazaarPayBinding
+import ir.cafebazaar.bazaarpay.utils.bindWithRTLSupport
 import java.util.Locale
 
 class BazaarPayActivity : AppCompatActivity(), FinishCallbacks {
@@ -25,7 +25,7 @@ class BazaarPayActivity : AppCompatActivity(), FinishCallbacks {
     override fun onCreate(savedInstanceState: Bundle?) {
         initNightMode()
         super.onCreate(savedInstanceState)
-        binding = ActivityBazaarPayBinding.inflate(layoutInflater)
+        binding = layoutInflater.bindWithRTLSupport(ActivityBazaarPayBinding::inflate)
         setContentView(binding.root)
 
         args = intent.getParcelableExtra(BAZAARPAY_ACTIVITY_ARGS)
@@ -99,6 +99,7 @@ class BazaarPayActivity : AppCompatActivity(), FinishCallbacks {
                     R.id.open_paymentThankYouPageFragment
                 )
             }
+
             isDirectDebitActivationIntent(intent) -> {
                 findNavController(R.id.nav_host_fragment_bazaar_pay).navigate(
                     resId = R.id.open_payment_methods,
@@ -143,6 +144,7 @@ class BazaarPayActivity : AppCompatActivity(), FinishCallbacks {
 
                 contextWithCorrectTheme.createConfigurationContext(config)
             }
+
             else -> {
                 config.setLocale(newLocale)
                 contextWithCorrectTheme.createConfigurationContext(config)
@@ -158,9 +160,11 @@ class BazaarPayActivity : AppCompatActivity(), FinishCallbacks {
             uiMode == Configuration.UI_MODE_NIGHT_UNDEFINED -> {
                 contextResource.configuration.uiMode
             }
+
             isDarkMode() -> {
                 Configuration.UI_MODE_NIGHT_YES
             }
+
             else -> {
                 Configuration.UI_MODE_NIGHT_NO
             }
@@ -224,6 +228,7 @@ class BazaarPayActivity : AppCompatActivity(), FinishCallbacks {
     }
 
     companion object {
+
         const val BAZAARPAY_ACTIVITY_ARGS = "bazaarpayActivityArgs"
     }
 }

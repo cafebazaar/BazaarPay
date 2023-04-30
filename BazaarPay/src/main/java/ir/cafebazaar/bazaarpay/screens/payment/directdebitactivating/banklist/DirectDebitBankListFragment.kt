@@ -23,6 +23,7 @@ import ir.cafebazaar.bazaarpay.extensions.setSafeOnClickListener
 import ir.cafebazaar.bazaarpay.extensions.visible
 import ir.cafebazaar.bazaarpay.models.Resource
 import ir.cafebazaar.bazaarpay.models.ResourceState
+import ir.cafebazaar.bazaarpay.utils.bindWithRTLSupport
 import ir.cafebazaar.bazaarpay.utils.getErrorViewBasedOnErrorModel
 
 internal class DirectDebitBankListFragment : Fragment() {
@@ -40,7 +41,10 @@ internal class DirectDebitBankListFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentDirectDebitBankListBinding.inflate(inflater)
+        _binding = inflater.bindWithRTLSupport(
+            FragmentDirectDebitBankListBinding::inflate,
+            container
+        )
         return binding.root
     }
 
@@ -94,6 +98,7 @@ internal class DirectDebitBankListFragment : Fragment() {
                     ResourceState.Error -> {
                         showReadableErrorMessage(resource.failure)
                     }
+
                     ResourceState.Success -> {
                         openUrlWithResourceData(resource.data)
                     }

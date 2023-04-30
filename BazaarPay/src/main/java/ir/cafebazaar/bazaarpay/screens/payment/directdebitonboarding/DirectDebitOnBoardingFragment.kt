@@ -19,6 +19,7 @@ import ir.cafebazaar.bazaarpay.extensions.visible
 import ir.cafebazaar.bazaarpay.models.PaymentFlowState
 import ir.cafebazaar.bazaarpay.models.Resource
 import ir.cafebazaar.bazaarpay.models.ResourceState
+import ir.cafebazaar.bazaarpay.utils.bindWithRTLSupport
 import ir.cafebazaar.bazaarpay.utils.getErrorViewBasedOnErrorModel
 
 internal class DirectDebitOnBoardingFragment : Fragment() {
@@ -34,7 +35,10 @@ internal class DirectDebitOnBoardingFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentDirectDebitOnBoardingBinding.inflate(inflater, container, false)
+        _binding = inflater.bindWithRTLSupport(
+            FragmentDirectDebitOnBoardingBinding::inflate,
+            container
+        )
         return binding.root
     }
 
@@ -77,6 +81,7 @@ internal class DirectDebitOnBoardingFragment : Fragment() {
                         loading.visible()
                     }
                 }
+
                 PaymentFlowState.DirectDebitObBoardingDetails -> {
                     hideErrorView()
                     with(binding) {
@@ -84,6 +89,7 @@ internal class DirectDebitOnBoardingFragment : Fragment() {
                         loading.gone()
                     }
                 }
+
                 ResourceState.Error -> {
                     if (it.failure is ErrorModel.NetworkConnection) {
                         showErrorView(it.failure)

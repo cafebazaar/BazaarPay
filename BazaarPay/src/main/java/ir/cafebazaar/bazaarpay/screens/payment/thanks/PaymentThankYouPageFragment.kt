@@ -8,7 +8,6 @@ import android.view.ViewGroup
 import androidx.activity.addCallback
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.findNavController
 import ir.cafebazaar.bazaarpay.FinishCallbacks
 import ir.cafebazaar.bazaarpay.R
 import ir.cafebazaar.bazaarpay.data.bazaar.models.ErrorModel
@@ -20,7 +19,8 @@ import ir.cafebazaar.bazaarpay.extensions.setSafeOnClickListener
 import ir.cafebazaar.bazaarpay.extensions.visible
 import ir.cafebazaar.bazaarpay.models.Resource
 import ir.cafebazaar.bazaarpay.models.ResourceState
-import java.util.*
+import ir.cafebazaar.bazaarpay.utils.bindWithRTLSupport
+import java.util.Locale
 
 internal class PaymentThankYouPageFragment : Fragment() {
 
@@ -47,11 +47,7 @@ internal class PaymentThankYouPageFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentThankYouPageBinding.inflate(
-            inflater,
-            container,
-            false
-        )
+        _binding = inflater.bindWithRTLSupport(FragmentThankYouPageBinding::inflate, container)
 
         return binding.root
     }
@@ -79,6 +75,7 @@ internal class PaymentThankYouPageFragment : Fragment() {
                 val paymentThankYouSuccessModel = requireNotNull(resource.data)
                 showSuccess(paymentThankYouSuccessModel)
             }
+
             ResourceState.Error -> showError(resource.failure)
         }
     }

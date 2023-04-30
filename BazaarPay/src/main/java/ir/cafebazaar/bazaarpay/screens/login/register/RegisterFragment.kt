@@ -18,11 +18,9 @@ import ir.cafebazaar.bazaarpay.FinishCallbacks
 import ir.cafebazaar.bazaarpay.R
 import ir.cafebazaar.bazaarpay.ServiceLocator
 import ir.cafebazaar.bazaarpay.ServiceLocator.PHONE_NUMBER
-import ir.cafebazaar.bazaarpay.models.Resource
-import ir.cafebazaar.bazaarpay.models.ResourceState
-import ir.cafebazaar.bazaarpay.databinding.FragmentRegisterBinding
 import ir.cafebazaar.bazaarpay.data.bazaar.account.models.getotptoken.WaitingTimeWithEnableCall
 import ir.cafebazaar.bazaarpay.data.bazaar.models.InvalidPhoneNumberException
+import ir.cafebazaar.bazaarpay.databinding.FragmentRegisterBinding
 import ir.cafebazaar.bazaarpay.extensions.fromHtml
 import ir.cafebazaar.bazaarpay.extensions.getReadableErrorMessage
 import ir.cafebazaar.bazaarpay.extensions.gone
@@ -31,6 +29,9 @@ import ir.cafebazaar.bazaarpay.extensions.isLandscape
 import ir.cafebazaar.bazaarpay.extensions.isValidPhoneNumber
 import ir.cafebazaar.bazaarpay.extensions.navigateSafe
 import ir.cafebazaar.bazaarpay.extensions.setSafeOnClickListener
+import ir.cafebazaar.bazaarpay.models.Resource
+import ir.cafebazaar.bazaarpay.models.ResourceState
+import ir.cafebazaar.bazaarpay.utils.bindWithRTLSupport
 
 internal class RegisterFragment : Fragment() {
 
@@ -50,11 +51,7 @@ internal class RegisterFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentRegisterBinding.inflate(
-            inflater,
-            container,
-            false
-        )
+        _binding = inflater.bindWithRTLSupport(FragmentRegisterBinding::inflate, container)
         return binding.root
     }
 
@@ -178,6 +175,7 @@ internal class RegisterFragment : Fragment() {
                         handleSuccess(resource.data)
                     }
                 }
+
                 ResourceState.Error -> {
                     val message = if (resource.failure is InvalidPhoneNumberException) {
                         getString(R.string.bazaarpay_wrong_phone_number)
@@ -186,6 +184,7 @@ internal class RegisterFragment : Fragment() {
                     }
                     showError(message)
                 }
+
                 ResourceState.Loading -> handleLoading()
                 else -> Throwable("Illegal State in handleResourceState")
             }

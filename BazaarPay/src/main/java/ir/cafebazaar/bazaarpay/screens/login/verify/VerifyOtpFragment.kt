@@ -5,13 +5,11 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.os.Bundle
-import android.text.InputType
 import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
-import android.view.inputmethod.InputMethodManager
 import androidx.activity.addCallback
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
@@ -38,6 +36,7 @@ import ir.cafebazaar.bazaarpay.receiver.SmsPermissionReceiver
 import ir.cafebazaar.bazaarpay.screens.login.LoginConstants.ACTION_BROADCAST_LOGIN
 import ir.cafebazaar.bazaarpay.screens.login.LoginConstants.SMS_NUMBER
 import ir.cafebazaar.bazaarpay.utils.Second
+import ir.cafebazaar.bazaarpay.utils.bindWithRTLSupport
 import ir.cafebazaar.bazaarpay.utils.secondsToStringTime
 
 internal class VerifyOtpFragment : Fragment() {
@@ -52,7 +51,7 @@ internal class VerifyOtpFragment : Fragment() {
     private var _binding: FragmentVerifyOtpBinding? = null
     private val binding: FragmentVerifyOtpBinding
         get() = requireNotNull(_binding)
-    
+
     private val phoneNumber: String
         get() = fragmentArgs.phoneNumber
 
@@ -74,11 +73,7 @@ internal class VerifyOtpFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentVerifyOtpBinding.inflate(
-            inflater,
-            container,
-            false
-        )
+        _binding = inflater.bindWithRTLSupport(FragmentVerifyOtpBinding::inflate, container)
         return binding.root
     }
 
@@ -117,6 +112,7 @@ internal class VerifyOtpFragment : Fragment() {
                         false
                     }
                 }
+
                 else -> false
             }
         }
@@ -128,7 +124,6 @@ internal class VerifyOtpFragment : Fragment() {
         }
 
         binding.verificationCodeEditText.requestFocus()
-
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -181,6 +176,7 @@ internal class VerifyOtpFragment : Fragment() {
                         resource.failure
                     )
                 )
+
                 ResourceState.Loading -> handleVerifyCodeLoading()
                 else -> Throwable("illegal state in handleVerifyCodeState")
             }
@@ -243,22 +239,27 @@ internal class VerifyOtpFragment : Fragment() {
             ResourceState.Success -> {
                 resource.data?.let(::onCountDownStarted)
             }
+
             ResourceState.Error -> {
                 resource.data?.let(::onCountDownStarted)
                 showError(requireContext().getReadableErrorMessage(resource.failure))
             }
+
             ResourceState.Loading -> {
                 binding.resendCodeButton.invisible()
                 binding.callButton.invisible()
                 binding.resendText.invisible()
                 hideKeyboardInLandscape()
             }
+
             VerificationState.Tick -> {
                 resource.data?.let(::onTick)
             }
+
             VerificationState.FinishCountDown -> {
                 onCountDownFinished()
             }
+
             else -> Throwable("illegal state in handleResendSmsAndCallState")
         }
     }

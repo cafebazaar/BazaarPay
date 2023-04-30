@@ -8,33 +8,34 @@ import android.view.ViewGroup
 import androidx.activity.addCallback
 import androidx.core.view.children
 import androidx.fragment.app.Fragment
-import ir.cafebazaar.bazaarpay.FinishCallbacks
 import androidx.fragment.app.viewModels
 import androidx.navigation.NavDirections
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.SimpleItemAnimator
+import ir.cafebazaar.bazaarpay.FinishCallbacks
 import ir.cafebazaar.bazaarpay.R
 import ir.cafebazaar.bazaarpay.data.bazaar.models.ErrorModel
-import ir.cafebazaar.bazaarpay.databinding.FragmentPaymentOptionsBinding
-import ir.cafebazaar.bazaarpay.extensions.getReadableErrorMessage
-import ir.cafebazaar.bazaarpay.extensions.gone
-import ir.cafebazaar.bazaarpay.extensions.toastMessage
-import ir.cafebazaar.bazaarpay.extensions.visible
-import ir.cafebazaar.bazaarpay.models.PaymentFlowState
-import ir.cafebazaar.bazaarpay.models.Resource
-import ir.cafebazaar.bazaarpay.models.ResourceState
-import ir.cafebazaar.bazaarpay.screens.payment.paymentmethods.PaymentMethodsAdapter.Companion.DEFAULT_SELECTED_OPTION
 import ir.cafebazaar.bazaarpay.data.payment.models.getpaymentmethods.PaymentMethod
 import ir.cafebazaar.bazaarpay.data.payment.models.getpaymentmethods.PaymentMethodItems
 import ir.cafebazaar.bazaarpay.data.payment.models.getpaymentmethods.PaymentMethodsInfo
 import ir.cafebazaar.bazaarpay.data.payment.models.merchantinfo.MerchantInfo
 import ir.cafebazaar.bazaarpay.data.payment.models.pay.PayResult
+import ir.cafebazaar.bazaarpay.databinding.FragmentPaymentOptionsBinding
+import ir.cafebazaar.bazaarpay.extensions.getReadableErrorMessage
+import ir.cafebazaar.bazaarpay.extensions.gone
 import ir.cafebazaar.bazaarpay.extensions.navigateSafe
 import ir.cafebazaar.bazaarpay.extensions.persianDigitsIfPersian
 import ir.cafebazaar.bazaarpay.extensions.setSafeOnClickListener
+import ir.cafebazaar.bazaarpay.extensions.toastMessage
+import ir.cafebazaar.bazaarpay.extensions.visible
+import ir.cafebazaar.bazaarpay.models.PaymentFlowState
+import ir.cafebazaar.bazaarpay.models.Resource
+import ir.cafebazaar.bazaarpay.models.ResourceState
 import ir.cafebazaar.bazaarpay.screens.logout.LogoutFragmentDirections
+import ir.cafebazaar.bazaarpay.screens.payment.paymentmethods.PaymentMethodsAdapter.Companion.DEFAULT_SELECTED_OPTION
+import ir.cafebazaar.bazaarpay.utils.bindWithRTLSupport
 import ir.cafebazaar.bazaarpay.utils.getErrorViewBasedOnErrorModel
-import java.util.*
+import java.util.Locale
 
 internal class PaymentMethodsFragment : Fragment(), PaymentMethodsClickListener {
 
@@ -62,11 +63,7 @@ internal class PaymentMethodsFragment : Fragment(), PaymentMethodsClickListener 
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentPaymentOptionsBinding.inflate(
-            inflater,
-            container,
-            false
-        )
+        _binding = inflater.bindWithRTLSupport(FragmentPaymentOptionsBinding::inflate, container)
         return binding.root
     }
 
@@ -244,15 +241,18 @@ internal class PaymentMethodsFragment : Fragment(), PaymentMethodsClickListener 
                 ResourceState.Loading -> {
                     showLoadingContainer()
                 }
+
                 PaymentFlowState.PaymentMethodsInfo -> {
                     binding.viewMerchantInfo.setMerchantName(resource.data?.destinationTitle.orEmpty())
                     handlePaymentMethods((resource.data as PaymentMethodsInfo).paymentMethods)
                 }
+
                 ResourceState.Error -> {
                     it.failure?.let { failure ->
                         handleErrorState(failure)
                     }
                 }
+
                 else -> {}
             }
         }
@@ -263,8 +263,8 @@ internal class PaymentMethodsFragment : Fragment(), PaymentMethodsClickListener 
             binding.payButton.isLoading = it.resourceState == ResourceState.Loading
             when (it.resourceState) {
                 ResourceState.Success -> {
-
                 }
+
                 ResourceState.Error -> {
                     toastMessage(requireContext().getReadableErrorMessage(it.failure))
                 }

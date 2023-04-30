@@ -1,10 +1,10 @@
 package ir.cafebazaar.bazaarpay.screens.payment.increasecredit
 
-import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import ir.cafebazaar.bazaarpay.databinding.ItemPaymentDynamicCreditBinding
 import ir.cafebazaar.bazaarpay.data.payment.models.getpaymentmethods.Option
+import ir.cafebazaar.bazaarpay.databinding.ItemPaymentDynamicCreditBinding
+import ir.cafebazaar.bazaarpay.utils.bindWithRTLSupport
 
 internal class DynamicCreditOptionAdapter(
     private val items: List<Option>,
@@ -17,11 +17,7 @@ internal class DynamicCreditOptionAdapter(
     ): DynamicCreditOptionViewHolder {
 
         return DynamicCreditOptionViewHolder(
-            ItemPaymentDynamicCreditBinding.inflate(
-                LayoutInflater.from(parent.context),
-                parent,
-                false
-            ),
+            parent.bindWithRTLSupport(ItemPaymentDynamicCreditBinding::inflate),
             onItemClicked = onItemClicked
         )
     }

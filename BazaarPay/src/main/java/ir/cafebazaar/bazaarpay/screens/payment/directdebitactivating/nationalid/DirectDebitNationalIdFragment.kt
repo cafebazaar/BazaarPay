@@ -16,6 +16,7 @@ import ir.cafebazaar.bazaarpay.databinding.FragmentNationalIdBinding
 import ir.cafebazaar.bazaarpay.extensions.NATIONAL_ID_LENGTH
 import ir.cafebazaar.bazaarpay.extensions.hideKeyboard
 import ir.cafebazaar.bazaarpay.extensions.setSafeOnClickListener
+import ir.cafebazaar.bazaarpay.utils.bindWithRTLSupport
 
 internal class DirectDebitNationalIdFragment : Fragment() {
 
@@ -33,7 +34,7 @@ internal class DirectDebitNationalIdFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         requireActivity().window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN)
-        _binding = FragmentNationalIdBinding.inflate(inflater, container, false)
+        _binding = inflater.bindWithRTLSupport(FragmentNationalIdBinding::inflate, container)
         return binding.root
     }
 

@@ -3,9 +3,9 @@ package ir.cafebazaar.bazaarpay.widget
 import android.content.Context
 import android.util.AttributeSet
 import android.view.Gravity
-import android.view.LayoutInflater
 import android.widget.LinearLayout
 import ir.cafebazaar.bazaarpay.databinding.ViewCurrentBalanceBinding
+import ir.cafebazaar.bazaarpay.utils.bindWithRTLSupport
 import ir.cafebazaar.bazaarpay.utils.getBalanceTextColor
 
 internal class CurrentBalanceView @JvmOverloads constructor(
@@ -20,7 +20,12 @@ internal class CurrentBalanceView @JvmOverloads constructor(
 
     init {
         gravity = Gravity.CENTER_VERTICAL
-        _binding = ViewCurrentBalanceBinding.inflate(LayoutInflater.from(context), this)
+        _binding = this.bindWithRTLSupport({ layoutInflater, viewGroup, _ ->
+            ViewCurrentBalanceBinding.inflate(
+                layoutInflater,
+                viewGroup
+            )
+        })
     }
 
     fun setBalance(
