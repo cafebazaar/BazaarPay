@@ -45,7 +45,7 @@ internal object ServiceLocator {
     fun initializeConfigs(
         checkoutToken: String,
         phoneNumber: String? = null,
-        isDark: Boolean
+        isDark: Boolean?
     ) {
         servicesMap[getKeyOfClass<String>(CHECKOUT_TOKEN)] = checkoutToken
         servicesMap[getKeyOfClass<String?>(PHONE_NUMBER)] = phoneNumber

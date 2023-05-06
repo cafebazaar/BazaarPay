@@ -41,10 +41,6 @@ internal abstract sealed class BankList {
                 onItemSelected
             )
         }
-
-        fun getImageUri(context: Context): String {
-            return model.icon.getImageUriFromThemedIcon()
-        }
     }
 
     object BankListHeaderItem : BankList() {
