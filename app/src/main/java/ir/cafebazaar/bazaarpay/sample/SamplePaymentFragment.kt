@@ -3,6 +3,7 @@ package ir.cafebazaar.bazaarpay.sample
 import android.os.Bundle
 import android.view.View
 import androidx.annotation.StringRes
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import ir.cafebazaar.bazaarpay.BazaarPayOptions
@@ -21,13 +22,21 @@ class SamplePaymentFragment : Fragment(R.layout.fragment_payment) {
         binding.paymentButton.setSafeOnClickListener {
             startPayment()
         }
+
+        binding.darkModeCheckbox.setOnCheckedChangeListener { _, isChecked ->
+            if (isChecked) {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+            } else {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
+            }
+
+        }
     }
 
     private fun startPayment() {
         val options = BazaarPayOptions(
             checkoutToken = binding.checkoutTokenInput.text.toString(),
-            phoneNumber = binding.phoneNumberInput.text.toString(),
-            isInDarkMode = binding.darkModeCheckbox.isChecked
+            phoneNumber = binding.phoneNumberInput.text.toString()
         )
         bazaarPayLauncher.launch(options)
     }
