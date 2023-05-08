@@ -59,7 +59,7 @@ file:
 
 ```kotlin
 dependencies {
-    implementation("com.github.cafebazaar:bazaarpay:4.0.2")
+    implementation("com.github.cafebazaar:bazaarpay:4.0.3")
 }
 ```
 
@@ -70,7 +70,7 @@ dependencies {
 
 ```groovy
 dependencies {
-    implementation 'com.github.cafebazaar:bazaarpay:4.0.2'
+    implementation 'com.github.cafebazaar:bazaarpay:4.0.3'
 }
 ```
 
@@ -115,7 +115,6 @@ you [generated before](#requirements). But there are also other optional paramet
 configure to your needs:
 
 * `phoneNumber` - pre-fills the input field of the login screen with this number.
-* `isInDarkMode` - enables Dark Mode for the UI elements of the payment flow.
 
 ### 3. Commit Checkout Token
 

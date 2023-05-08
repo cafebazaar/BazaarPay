@@ -161,8 +161,12 @@ class BazaarPayActivity : AppCompatActivity(), FinishCallbacks {
                 contextResource.configuration.uiMode
             }
 
-            isDarkMode() -> {
+            isDarkMode() == true -> {
                 Configuration.UI_MODE_NIGHT_YES
+            }
+
+            isDarkMode() == null ->{
+                Configuration.UI_MODE_NIGHT_UNDEFINED
             }
 
             else -> {
@@ -176,12 +180,14 @@ class BazaarPayActivity : AppCompatActivity(), FinishCallbacks {
         return context.createConfigurationContext(overrideConfiguration)
     }
 
-    private fun isDarkMode(): Boolean {
-        return ServiceLocator.getOrNull(ServiceLocator.IS_DARK) ?: false
+    private fun isDarkMode(): Boolean? {
+        return ServiceLocator.getOrNull(ServiceLocator.IS_DARK)
     }
 
     private fun initNightMode() {
-        if (isDarkMode()) {
+        val isDarkEnable = isDarkMode()
+        isDarkEnable ?: return
+        if (isDarkEnable) {
             AppCompatDelegate.MODE_NIGHT_YES
         } else {
             AppCompatDelegate.MODE_NIGHT_NO

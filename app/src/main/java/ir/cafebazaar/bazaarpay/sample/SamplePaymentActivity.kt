@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.os.PersistableBundle
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
 import ir.cafebazaar.bazaarpay.BazaarPayOptions
@@ -47,13 +48,21 @@ class SamplePaymentActivity : AppCompatActivity() {
             val intent = Intent(this, SampleInitCheckoutActivity::class.java)
             startActivity(intent)
         }
+
+        binding.darkModeCheckbox.setOnCheckedChangeListener { _, isChecked ->
+            if (isChecked) {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+            } else {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
+            }
+
+        }
     }
 
     private fun startPayment() {
         val options = BazaarPayOptions(
             checkoutToken = checkoutToken,
-            phoneNumber = binding.phoneNumberInput.text.toString(),
-            isInDarkMode = binding.darkModeCheckbox.isChecked
+            phoneNumber = binding.phoneNumberInput.text.toString()
         )
         bazaarPayLauncher.launch(options)
     }
@@ -125,6 +134,7 @@ class SamplePaymentActivity : AppCompatActivity() {
     }
 
     companion object {
+
         const val KEY_CHECKOUT_TOKEN = "checkoutToken"
     }
 }
