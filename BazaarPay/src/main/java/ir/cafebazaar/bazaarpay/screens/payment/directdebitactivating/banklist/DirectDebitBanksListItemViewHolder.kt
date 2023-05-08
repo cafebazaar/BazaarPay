@@ -7,8 +7,8 @@ import ir.cafebazaar.bazaarpay.utils.imageloader.BazaarPayImageLoader
 
 internal class DirectDebitBanksListItemViewHolder(
     val binding: ItemBankListBinding,
-    val onItemSelected: (BankList.BankListRowItem) -> Unit
-): RecyclerView.ViewHolder(binding.root) {
+    private val onItemSelected: (BankList.BankListRowItem) -> Unit
+) : RecyclerView.ViewHolder(binding.root) {
 
     fun bind(bank: BankList.BankListRowItem) {
         with(binding) {
@@ -16,7 +16,7 @@ internal class DirectDebitBanksListItemViewHolder(
                 onItemSelected.invoke(bank)
             }
             root.background = bank.getBackgroundResId(root.context)
-            bank.model.icon.getImageUriFromThemedIcon().let { image ->
+            bank.model.icon.getImageUriFromThemedIcon(root.context).let { image ->
                 BazaarPayImageLoader.loadImage(
                     imageView = iconImageView,
                     imageURI = image

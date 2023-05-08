@@ -11,7 +11,7 @@
     <string name="label_payment_fragment">نمونه پرداخت در فرگمنت</string>
     <string name="label_persian">فارسی</string>
     <string name="label_start_payment">شروع پرداخت</string>
-    <string name="label_trace">Trace</string>
+    <string name="label_trace">پیگیری خرید</string>
     <string name="label_amount">مقدار خرید</string>
     <string name="label_destination">مقصد</string>
     <string name="label_service_name">نام سرویس</string>
