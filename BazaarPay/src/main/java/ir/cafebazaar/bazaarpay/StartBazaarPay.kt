@@ -31,14 +31,18 @@ class StartBazaarPay : ActivityResultContract<BazaarPayOptions, Boolean>() {
 
     override fun createIntent(context: Context, input: BazaarPayOptions): Intent {
         ServiceLocator.initializeConfigs(
-            input.checkoutToken,
-            input.phoneNumber,
-            input.isInDarkMode
+            checkoutToken = input.checkoutToken,
+            phoneNumber = input.phoneNumber,
+            isDark = input.isInDarkMode,
+            isAutoLoginEnable = input.isAutoLoginEnable,
+            autoLoginPhoneNumber = input.autoLoginPhoneNumber
         )
         val bazaarPayActivityArgs = BazaarPayActivityArgs(
-            input.checkoutToken,
-            input.phoneNumber,
-            input.isInDarkMode
+            checkoutToken = input.checkoutToken,
+            phoneNumber = input.phoneNumber,
+            isDarkMode = input.isInDarkMode,
+            autoLoginPhoneNumber = input.autoLoginPhoneNumber,
+            isAutoLoginEnable = input.isAutoLoginEnable
         )
         return Intent(context, BazaarPayActivity::class.java).apply {
             putExtra(BazaarPayActivity.BAZAARPAY_ACTIVITY_ARGS, bazaarPayActivityArgs)
