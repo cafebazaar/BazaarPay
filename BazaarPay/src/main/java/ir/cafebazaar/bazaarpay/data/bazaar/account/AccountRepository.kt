@@ -33,7 +33,7 @@ internal class AccountRepository {
         return if (isLoggedIn()) {
             false
         } else {
-            ServiceLocator.getOrNull<Boolean>(IS_AUTO_LOGIN_ENABLE) ?: true
+            ServiceLocator.getOrNull<Boolean>(IS_AUTO_LOGIN_ENABLE)?.not() ?: true
         }
     }
 
