@@ -33,12 +33,16 @@ class BazaarPayOptions private constructor(
         private var phoneNumber: String? = null
         private var paymentUrlParser: PaymentURLParser? = null
 
+        @Deprecated(
+            "checkoutToken is deprecated, use PaymentUrl",
+            level = DeprecationLevel.WARNING
+        )
         fun checkoutToken(checkoutToken: String) = apply { this.checkoutToken = checkoutToken }
 
         fun phoneNumber(phoneNumber: String?) = apply { this.phoneNumber = phoneNumber }
 
-        fun paymentUrl(paymentUrl: String) = apply {
-            this.paymentUrlParser = PaymentURLParser(paymentUrl)
+        fun paymentUrl(paymentURL: String) = apply {
+            this.paymentUrlParser = PaymentURLParser(paymentURL)
         }
 
         fun build() = BazaarPayOptions(
