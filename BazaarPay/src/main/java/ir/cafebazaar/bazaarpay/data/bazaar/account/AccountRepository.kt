@@ -4,6 +4,8 @@ import android.content.Intent
 import ir.cafebazaar.bazaarpay.ServiceLocator
 import ir.cafebazaar.bazaarpay.ServiceLocator.AUTO_LOGIN_PHONE_NUMBER
 import ir.cafebazaar.bazaarpay.ServiceLocator.IS_AUTO_LOGIN_ENABLE
+import ir.cafebazaar.bazaarpay.ServiceLocator.getKeyOfClass
+import ir.cafebazaar.bazaarpay.ServiceLocator.servicesMap
 import ir.cafebazaar.bazaarpay.data.bazaar.account.models.getotptoken.WaitingTimeWithEnableCall
 import ir.cafebazaar.bazaarpay.data.bazaar.account.models.getotptokenbycall.WaitingTime
 import ir.cafebazaar.bazaarpay.data.bazaar.account.models.verifyotptoken.LoginResponse
@@ -104,6 +106,8 @@ internal class AccountRepository {
     fun logout() {
         accountLocalDataSource.removeAccessToken()
         accountLocalDataSource.removeRefreshToken()
+        servicesMap[getKeyOfClass<String>(AUTO_LOGIN_PHONE_NUMBER)] = null
+        servicesMap[getKeyOfClass<Boolean>(IS_AUTO_LOGIN_ENABLE)] = false
     }
 
     fun needToUpdateRefreshToken(): Boolean {
