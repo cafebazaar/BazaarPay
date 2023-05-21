@@ -3,16 +3,11 @@ package ir.cafebazaar.bazaarpay
 import android.content.Context
 import com.google.gson.GsonBuilder
 import ir.cafebazaar.bazaarpay.data.SharedDataSource
-import ir.cafebazaar.bazaarpay.data.bazaar.account.AccountSharedDataSource
-import ir.cafebazaar.bazaarpay.data.bazaar.account.AccountRepository
 import ir.cafebazaar.bazaarpay.data.bazaar.account.AccountLocalDataSource
 import ir.cafebazaar.bazaarpay.data.bazaar.account.AccountRemoteDataSource
+import ir.cafebazaar.bazaarpay.data.bazaar.account.AccountRepository
 import ir.cafebazaar.bazaarpay.data.bazaar.account.AccountService
-import ir.cafebazaar.bazaarpay.models.GlobalDispatchers
-import ir.cafebazaar.bazaarpay.data.payment.AuthenticatorInterceptor
-import ir.cafebazaar.bazaarpay.data.payment.PaymentRemoteDataSource
-import ir.cafebazaar.bazaarpay.data.payment.PaymentRepository
-import ir.cafebazaar.bazaarpay.data.payment.TokenInterceptor
+import ir.cafebazaar.bazaarpay.data.bazaar.account.AccountSharedDataSource
 import ir.cafebazaar.bazaarpay.data.bazaar.payment.BazaarPaymentRemoteDataSource
 import ir.cafebazaar.bazaarpay.data.bazaar.payment.BazaarPaymentRepository
 import ir.cafebazaar.bazaarpay.data.bazaar.payment.api.BazaarPaymentService
@@ -20,8 +15,13 @@ import ir.cafebazaar.bazaarpay.data.device.DeviceInterceptor
 import ir.cafebazaar.bazaarpay.data.device.DeviceLocalDataSource
 import ir.cafebazaar.bazaarpay.data.device.DeviceRepository
 import ir.cafebazaar.bazaarpay.data.device.DeviceSharedDataSource
+import ir.cafebazaar.bazaarpay.data.payment.AuthenticatorInterceptor
+import ir.cafebazaar.bazaarpay.data.payment.PaymentRemoteDataSource
+import ir.cafebazaar.bazaarpay.data.payment.PaymentRepository
+import ir.cafebazaar.bazaarpay.data.payment.TokenInterceptor
 import ir.cafebazaar.bazaarpay.data.payment.UpdateRefreshTokenHelper
 import ir.cafebazaar.bazaarpay.data.payment.api.PaymentService
+import ir.cafebazaar.bazaarpay.models.GlobalDispatchers
 import ir.cafebazaar.bazaarpay.network.gsonConverterFactory
 import ir.cafebazaar.bazaarpay.network.interceptor.AgentInterceptor
 import kotlinx.coroutines.Dispatchers
@@ -45,13 +45,17 @@ internal object ServiceLocator {
     fun initializeConfigs(
         checkoutToken: String,
         phoneNumber: String? = null,
-        isDark: Boolean?
+        isDark: Boolean?,
+        autoLoginPhoneNumber: String? = null,
+        isAutoLoginEnable: Boolean = false,
     ) {
         servicesMap[getKeyOfClass<String>(CHECKOUT_TOKEN)] = checkoutToken
         servicesMap[getKeyOfClass<String?>(PHONE_NUMBER)] = phoneNumber
         servicesMap[getKeyOfClass<Boolean>(IS_DARK)] = isDark
         servicesMap[getKeyOfClass<Int>(LANGUAGE)] = 2
         servicesMap[getKeyOfClass<String>(LANGUAGE)] = "fa"
+        servicesMap[getKeyOfClass<String>(AUTO_LOGIN_PHONE_NUMBER)] = autoLoginPhoneNumber
+        servicesMap[getKeyOfClass<Boolean>(IS_AUTO_LOGIN_ENABLE)] = isAutoLoginEnable
     }
 
     fun initializeDependencies(
@@ -186,7 +190,7 @@ internal object ServiceLocator {
     private const val REQUEST_TIME_OUT: Long = 60
     private fun provideOkHttpClient(
         interceptors: List<Interceptor> = emptyList(),
-        authenticator: Authenticator?= null
+        authenticator: Authenticator? = null
     ): OkHttpClient {
         val builder = OkHttpClient.Builder()
 
@@ -281,6 +285,8 @@ internal object ServiceLocator {
     internal const val PHONE_NUMBER: String = "phone_number"
     internal const val IS_DARK: String = "is_dark"
     internal const val LANGUAGE: String = "language"
+    internal const val AUTO_LOGIN_PHONE_NUMBER: String = "autoLoginPhoneNumber"
+    internal const val IS_AUTO_LOGIN_ENABLE: String = "isAutoLoginEnable"
     internal const val ACCOUNT: String = "account"
     internal const val DEVICE: String = "device"
     private const val AUTHENTICATOR: String = "authenticator"
