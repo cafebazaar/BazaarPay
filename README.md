@@ -17,7 +17,7 @@ information about BazaarPay, please visit our [website](https://bazaarpay.ir/).
 ### Requirements
 
 - The SDK requires Android 4.2 (API level 17) or higher.
-- You need a *Checkout Token* before starting a payment. It is a unique identifier that provides
+- You need a *Checkout Token* and a *PaymentURL* before starting a payment. *Checkout Token* is a unique identifier that provides
   essential payment information. Check out [this]() documentation on how to generate one.
 
 ## Setup
@@ -106,11 +106,13 @@ flow by calling the `launch()` function on the payment launcher. It takes an ins
 the `BazaarPayOptions` as its parameter:
 
 ```kotlin
-val options = BazaarPayOptions(checkoutToken = "CHECKOUT_TOKEN")
+val options = BazaarPayOptions
+    .paymentUrl(paymentURL = paymentURL)
+    .build()
 bazaarPayLauncher.launch(options)
 ```
 
-`BazaarPayOptions` has a mandatory `checkoutToken` constructor parameter which is the token
+`BazaarPayOptions` has a mandatory `paymentURL` parameter which is the URL
 you [generated before](#requirements). But there are also other optional parameters that you can
 configure to your needs:
 
