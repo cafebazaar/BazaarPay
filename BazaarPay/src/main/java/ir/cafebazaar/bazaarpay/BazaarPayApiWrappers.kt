@@ -15,7 +15,7 @@ fun initSDKForAPICall(
         checkoutToken = checkoutToken,
         isDark = false
     )
-    ServiceLocator.initializeDependencies(context)
+    ServiceLocator.initializeDependencies(context.applicationContext)
 }
 
 suspend fun commit(
