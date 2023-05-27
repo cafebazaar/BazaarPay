@@ -50,7 +50,9 @@ internal class AccountRepository {
     }
 
     fun getPhone(): String {
-        return accountLocalDataSource.loginPhone.ifEmpty { accountLocalDataSource.loginPhone }
+        return accountLocalDataSource.loginPhone.ifEmpty {
+            ServiceLocator.get<String?>(AUTO_LOGIN_PHONE_NUMBER).orEmpty()
+        }
     }
 
     suspend fun getOtpToken(phoneNumber: String):
