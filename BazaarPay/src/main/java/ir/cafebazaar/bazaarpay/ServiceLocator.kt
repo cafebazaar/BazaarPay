@@ -266,8 +266,7 @@ internal object ServiceLocator {
         )
         val bazaarRetrofit = provideRetrofit(
             okHttp = bazaarHttpClient,
-            baseUrl = DEFAULT_BASE_URL,
-            needUnWrapper = true
+            baseUrl = PAYMENT_BASE_URL
         )
         servicesMap[getKeyOfClass<BazaarPaymentService>()] =
             bazaarRetrofit.create(BazaarPaymentService::class.java)

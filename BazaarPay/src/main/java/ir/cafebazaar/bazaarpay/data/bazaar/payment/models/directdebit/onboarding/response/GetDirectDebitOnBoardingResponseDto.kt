@@ -6,7 +6,7 @@ import ir.cafebazaar.bazaarpay.data.bazaar.payment.models.directdebit.onboarding
 import ir.cafebazaar.bazaarpay.data.bazaar.payment.models.directdebit.onboarding.ThemedIcon
 
 internal class GetDirectDebitOnBoardingResponseDto(
-    @SerializedName("onBoardingDetails") val onBoardingDetails: List<OnBoardingItemDto>
+    @SerializedName("details") val onBoardingDetails: List<OnBoardingItemDto>
 ) {
 
     fun toDirectDebitOnBoardingDetails(): DirectDebitOnBoardingDetails {

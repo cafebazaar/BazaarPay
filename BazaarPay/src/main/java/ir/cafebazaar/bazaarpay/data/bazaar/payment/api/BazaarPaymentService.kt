@@ -1,6 +1,6 @@
 package ir.cafebazaar.bazaarpay.data.bazaar.payment.api
 
-import ir.cafebazaar.bazaarpay.data.bazaar.payment.models.directdebit.banklist.request.GetAvailableBanksSingleRequest
+import ir.cafebazaar.bazaarpay.data.bazaar.payment.models.directdebit.banklist.request.GetAvailableBanksSingleRequestDto
 import ir.cafebazaar.bazaarpay.data.bazaar.payment.models.directdebit.banklist.response.GetAvailableBanksResponseDto
 import ir.cafebazaar.bazaarpay.data.bazaar.payment.models.directdebit.contractcreation.request.GetDirectDebitContractCreationUrlSingleRequest
 import ir.cafebazaar.bazaarpay.data.bazaar.payment.models.directdebit.contractcreation.response.GetDirectDebitContractCreationUrlResponseDto
@@ -13,20 +13,20 @@ import retrofit2.http.POST
 
 internal interface BazaarPaymentService {
 
-    @POST("GetDirectDebitOnBoardingRequest")
+    @POST("direct-debit/get-onboarding")
     suspend fun getDirectDebitOnBoarding(
         @Body getDirectDebitOnBoardingSingleRequest: GetDirectDebitOnBoardingSingleRequest
     ): GetDirectDebitOnBoardingResponseDto
 
-    @POST("GetDirectDebitContractCreationUrlRequest")
+    @POST("direct-debit/get-contract-creation-url")
     suspend fun getCreateContractUrl(
         @Body getDirectDebitContractCreationUrlSingleRequest:
         GetDirectDebitContractCreationUrlSingleRequest
     ): GetDirectDebitContractCreationUrlResponseDto
 
-    @POST("GetAvailableBanksRequest")
+    @POST("direct-debit/get-available-banks")
     suspend fun getAvailableBanks(
-        @Body getAvailableBanksSingleRequest: GetAvailableBanksSingleRequest
+        @Body getAvailableBanksSingleRequestDto: GetAvailableBanksSingleRequestDto
     ): GetAvailableBanksResponseDto
 
     @POST("ActivatePostpaidCreditRequest")
