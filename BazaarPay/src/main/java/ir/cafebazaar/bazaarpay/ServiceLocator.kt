@@ -86,12 +86,11 @@ internal object ServiceLocator {
         initTokenInterceptor()
 
         // Payment
-        initPaymentService()
+        initRetrofitServices()
         initPaymentRemoteDataSource()
         initPaymentRepository()
 
         // Bazaar
-        initBazaarService()
         initBazaarRemoteDataSource()
         initBazaarRepository()
     }
@@ -246,34 +245,22 @@ internal object ServiceLocator {
             accountRetrofit.create(AccountService::class.java)
     }
 
-    private fun initPaymentService() {
+    private fun initRetrofitServices() {
         val paymentHttpClient = provideOkHttpClient(
             interceptors = listOf(get(TOKEN)),
             authenticator = get<Authenticator?>(AUTHENTICATOR).takeIf {
                 isUserLogOutAndAutoLoginEnable().not()
             }
         )
-        val paymentRetrofit = provideRetrofit(
+        val retrofit = provideRetrofit(
             okHttp = paymentHttpClient,
             baseUrl = PAYMENT_BASE_URL
         )
         servicesMap[getKeyOfClass<PaymentService>()] =
-            paymentRetrofit.create(PaymentService::class.java)
-    }
+            retrofit.create(PaymentService::class.java)
 
-    private fun initBazaarService() {
-        val bazaarHttpClient = provideOkHttpClient(
-            interceptors = listOf(get(TOKEN)),
-            authenticator = get<Authenticator?>(AUTHENTICATOR).takeIf {
-                isUserLogOutAndAutoLoginEnable().not()
-            }
-        )
-        val bazaarRetrofit = provideRetrofit(
-            okHttp = bazaarHttpClient,
-            baseUrl = PAYMENT_BASE_URL
-        )
         servicesMap[getKeyOfClass<BazaarPaymentService>()] =
-            bazaarRetrofit.create(BazaarPaymentService::class.java)
+            retrofit.create(BazaarPaymentService::class.java)
     }
 
     private fun initDeviceSharedDataSource() {
