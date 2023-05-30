@@ -249,7 +249,9 @@ internal object ServiceLocator {
     private fun initPaymentService() {
         val paymentHttpClient = provideOkHttpClient(
             interceptors = listOf(get(TOKEN)),
-            authenticator = get(AUTHENTICATOR)
+            authenticator = get<Authenticator?>(AUTHENTICATOR).takeIf {
+                isUserLogOutAndAutoLoginEnable().not()
+            }
         )
         val paymentRetrofit = provideRetrofit(
             okHttp = paymentHttpClient,
@@ -262,7 +264,9 @@ internal object ServiceLocator {
     private fun initBazaarService() {
         val bazaarHttpClient = provideOkHttpClient(
             interceptors = listOf(get(TOKEN)),
-            authenticator = get(AUTHENTICATOR)
+            authenticator = get<Authenticator?>(AUTHENTICATOR).takeIf {
+                isUserLogOutAndAutoLoginEnable().not()
+            }
         )
         val bazaarRetrofit = provideRetrofit(
             okHttp = bazaarHttpClient,
@@ -275,6 +279,15 @@ internal object ServiceLocator {
     private fun initDeviceSharedDataSource() {
         servicesMap[getKeyOfClass<SharedDataSource>(DEVICE)] =
             DeviceSharedDataSource()
+    }
+
+    private fun isUserLogOutAndAutoLoginEnable(): Boolean {
+        val accountLocalDataSource: AccountLocalDataSource = get()
+        val isAutoLoginEnable = getOrNull<Boolean>(IS_AUTO_LOGIN_ENABLE) ?: false
+        fun isLoggedIn(): Boolean {
+            return accountLocalDataSource.accessToken.isNotEmpty()
+        }
+        return isAutoLoginEnable && isLoggedIn().not()
     }
 
     private const val DEFAULT_BASE_URL: String = "https://api.cafebazaar.ir/rest-v1/process/"
