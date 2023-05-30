@@ -8,12 +8,15 @@ import okhttp3.Interceptor
 import okhttp3.Response
 
 object AgentInterceptor : Interceptor {
+
     private const val USER_AGENT_HEADER_TITLE: String = "UserAgent"
 
     override fun intercept(chain: Interceptor.Chain): Response {
         val request =
             chain.request().newBuilder()
-                .header(USER_AGENT_HEADER_TITLE, buildUserAgentHeaderValue())
+                .addHeader("Content-Type", "application/json")
+                .addHeader("Accept", "application/json")
+                .addHeader(USER_AGENT_HEADER_TITLE, buildUserAgentHeaderValue())
                 .build()
         return chain.proceed(request)
     }
