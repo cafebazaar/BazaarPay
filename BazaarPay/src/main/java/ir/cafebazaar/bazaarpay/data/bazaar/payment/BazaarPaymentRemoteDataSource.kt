@@ -4,11 +4,9 @@ import android.content.Context
 import ir.cafebazaar.bazaarpay.ServiceLocator
 import ir.cafebazaar.bazaarpay.data.bazaar.payment.api.BazaarPaymentService
 import ir.cafebazaar.bazaarpay.data.bazaar.payment.models.directdebit.banklist.AvailableBanks
-import ir.cafebazaar.bazaarpay.data.bazaar.payment.models.directdebit.banklist.request.GetAvailableBanksSingleRequestDto
 import ir.cafebazaar.bazaarpay.data.bazaar.payment.models.directdebit.contractcreation.ContractCreation
 import ir.cafebazaar.bazaarpay.data.bazaar.payment.models.directdebit.contractcreation.request.GetDirectDebitContractCreationUrlSingleRequest
 import ir.cafebazaar.bazaarpay.data.bazaar.payment.models.directdebit.onboarding.DirectDebitOnBoardingDetails
-import ir.cafebazaar.bazaarpay.data.bazaar.payment.models.directdebit.onboarding.request.GetDirectDebitOnBoardingSingleRequest
 import ir.cafebazaar.bazaarpay.data.bazaar.payment.models.postpaid.activate.request.ActivatePostpaidCreditSingleRequest
 import ir.cafebazaar.bazaarpay.extensions.ServiceType
 import ir.cafebazaar.bazaarpay.extensions.safeApiCall
@@ -31,9 +29,8 @@ internal class BazaarPaymentRemoteDataSource {
     suspend fun getDirectDebitOnBoarding(): Either<DirectDebitOnBoardingDetails> {
         return withContext(globalDispatchers.iO) {
             return@withContext safeApiCall(serviceType = ServiceType.BAZAARPAY) {
-                bazaarService.getDirectDebitOnBoarding(
-                    GetDirectDebitOnBoardingSingleRequest(checkoutToken = checkoutToken)
-                ).toDirectDebitOnBoardingDetails()
+                bazaarService.getDirectDebitOnBoarding(checkoutToken)
+                    .toDirectDebitOnBoardingDetails()
             }
         }
     }
@@ -60,9 +57,7 @@ internal class BazaarPaymentRemoteDataSource {
     suspend fun getAvailableBanks(): Either<AvailableBanks> {
         return withContext(globalDispatchers.iO) {
             return@withContext safeApiCall(serviceType = ServiceType.BAZAARPAY) {
-                bazaarService.getAvailableBanks(
-                    GetAvailableBanksSingleRequestDto(checkoutToken = checkoutToken)
-                ).toAvailableBanks()
+                bazaarService.getAvailableBanks(checkoutToken).toAvailableBanks()
             }
         }
     }
