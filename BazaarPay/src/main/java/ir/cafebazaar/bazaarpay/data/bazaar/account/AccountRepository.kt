@@ -107,6 +107,7 @@ internal class AccountRepository {
     fun logout() {
         accountLocalDataSource.removeAccessToken()
         accountLocalDataSource.removeRefreshToken()
+        accountLocalDataSource.removePhoneNumber()
         servicesMap[getKeyOfClass<String>(AUTO_LOGIN_PHONE_NUMBER)] = null
         servicesMap[getKeyOfClass<Boolean>(IS_AUTO_LOGIN_ENABLE)] = false
     }

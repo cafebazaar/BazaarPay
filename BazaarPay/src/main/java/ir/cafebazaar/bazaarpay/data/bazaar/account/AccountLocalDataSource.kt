@@ -62,6 +62,10 @@ internal class AccountLocalDataSource {
         accountSharedDataSource.remove(ACCESS_TOKEN, commit = true)
     }
 
+    fun removePhoneNumber() {
+        accountSharedDataSource.remove(LOGIN_PHONE, commit = true)
+    }
+
     fun removeRefreshToken() {
         accountSharedDataSource.remove(REFRESH_TOKEN, commit = true)
     }
