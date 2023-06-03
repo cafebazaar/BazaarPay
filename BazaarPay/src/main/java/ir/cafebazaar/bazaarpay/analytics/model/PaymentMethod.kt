@@ -1,6 +1,6 @@
 package ir.cafebazaar.bazaarpay.analytics.model
 
-enum class PaymentMethod {
+internal enum class PaymentMethod {
     UNKNOWN_METHOD,
     BALANCE,
     BANK_PAYMENT,
