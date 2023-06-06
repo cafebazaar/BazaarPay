@@ -3,16 +3,14 @@ package ir.cafebazaar.bazaarpay
 import android.content.Context
 import com.google.gson.GsonBuilder
 import ir.cafebazaar.bazaarpay.data.SharedDataSource
-import ir.cafebazaar.bazaarpay.data.bazaar.account.AccountSharedDataSource
-import ir.cafebazaar.bazaarpay.data.bazaar.account.AccountRepository
+import ir.cafebazaar.bazaarpay.data.analytics.AnalyticsRemoteDataSource
+import ir.cafebazaar.bazaarpay.data.analytics.AnalyticsRepository
+import ir.cafebazaar.bazaarpay.data.analytics.api.AnalyticsService
 import ir.cafebazaar.bazaarpay.data.bazaar.account.AccountLocalDataSource
 import ir.cafebazaar.bazaarpay.data.bazaar.account.AccountRemoteDataSource
+import ir.cafebazaar.bazaarpay.data.bazaar.account.AccountRepository
 import ir.cafebazaar.bazaarpay.data.bazaar.account.AccountService
-import ir.cafebazaar.bazaarpay.models.GlobalDispatchers
-import ir.cafebazaar.bazaarpay.data.payment.AuthenticatorInterceptor
-import ir.cafebazaar.bazaarpay.data.payment.PaymentRemoteDataSource
-import ir.cafebazaar.bazaarpay.data.payment.PaymentRepository
-import ir.cafebazaar.bazaarpay.data.payment.TokenInterceptor
+import ir.cafebazaar.bazaarpay.data.bazaar.account.AccountSharedDataSource
 import ir.cafebazaar.bazaarpay.data.bazaar.payment.BazaarPaymentRemoteDataSource
 import ir.cafebazaar.bazaarpay.data.bazaar.payment.BazaarPaymentRepository
 import ir.cafebazaar.bazaarpay.data.bazaar.payment.api.BazaarPaymentService
@@ -20,8 +18,13 @@ import ir.cafebazaar.bazaarpay.data.device.DeviceInterceptor
 import ir.cafebazaar.bazaarpay.data.device.DeviceLocalDataSource
 import ir.cafebazaar.bazaarpay.data.device.DeviceRepository
 import ir.cafebazaar.bazaarpay.data.device.DeviceSharedDataSource
+import ir.cafebazaar.bazaarpay.data.payment.AuthenticatorInterceptor
+import ir.cafebazaar.bazaarpay.data.payment.PaymentRemoteDataSource
+import ir.cafebazaar.bazaarpay.data.payment.PaymentRepository
+import ir.cafebazaar.bazaarpay.data.payment.TokenInterceptor
 import ir.cafebazaar.bazaarpay.data.payment.UpdateRefreshTokenHelper
 import ir.cafebazaar.bazaarpay.data.payment.api.PaymentService
+import ir.cafebazaar.bazaarpay.models.GlobalDispatchers
 import ir.cafebazaar.bazaarpay.network.gsonConverterFactory
 import ir.cafebazaar.bazaarpay.network.interceptor.AgentInterceptor
 import kotlinx.coroutines.Dispatchers
@@ -90,6 +93,10 @@ internal object ServiceLocator {
         initBazaarService()
         initBazaarRemoteDataSource()
         initBazaarRepository()
+
+        //analytics
+        initAnalyticsRemoteDataSource()
+        initAnalyticsRepository()
     }
 
     fun clear() {
@@ -119,6 +126,14 @@ internal object ServiceLocator {
 
     private fun initAccountRemoteDataSource() {
         servicesMap[getKeyOfClass<AccountRemoteDataSource>()] = AccountRemoteDataSource()
+    }
+
+    private fun initAnalyticsRemoteDataSource() {
+        servicesMap[getKeyOfClass<AnalyticsRemoteDataSource>()] = AnalyticsRemoteDataSource()
+    }
+
+    private fun initAnalyticsRepository() {
+        servicesMap[getKeyOfClass<AnalyticsRepository>()] = AnalyticsRepository()
     }
 
     private fun initAccountRepository() {
@@ -186,7 +201,7 @@ internal object ServiceLocator {
     private const val REQUEST_TIME_OUT: Long = 60
     private fun provideOkHttpClient(
         interceptors: List<Interceptor> = emptyList(),
-        authenticator: Authenticator?= null
+        authenticator: Authenticator? = null
     ): OkHttpClient {
         val builder = OkHttpClient.Builder()
 
@@ -266,6 +281,9 @@ internal object ServiceLocator {
             needUnWrapper = true
         )
         servicesMap[getKeyOfClass<BazaarPaymentService>()] =
+            bazaarRetrofit.create(BazaarPaymentService::class.java)
+
+        servicesMap[getKeyOfClass<AnalyticsService>()] =
             bazaarRetrofit.create(BazaarPaymentService::class.java)
     }
 
