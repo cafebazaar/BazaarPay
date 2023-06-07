@@ -14,6 +14,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.SimpleItemAnimator
 import ir.cafebazaar.bazaarpay.FinishCallbacks
 import ir.cafebazaar.bazaarpay.R
+import ir.cafebazaar.bazaarpay.base.BaseFragment
 import ir.cafebazaar.bazaarpay.data.bazaar.models.ErrorModel
 import ir.cafebazaar.bazaarpay.data.payment.models.getpaymentmethods.PaymentMethod
 import ir.cafebazaar.bazaarpay.data.payment.models.getpaymentmethods.PaymentMethodItems
@@ -37,7 +38,7 @@ import ir.cafebazaar.bazaarpay.utils.bindWithRTLSupport
 import ir.cafebazaar.bazaarpay.utils.getErrorViewBasedOnErrorModel
 import java.util.Locale
 
-internal class PaymentMethodsFragment : Fragment(), PaymentMethodsClickListener {
+internal class PaymentMethodsFragment : BaseFragment(SCREEN_NAME), PaymentMethodsClickListener {
 
     private val viewModel: PaymentMethodsViewModel by viewModels()
 
@@ -358,6 +359,7 @@ internal class PaymentMethodsFragment : Fragment(), PaymentMethodsClickListener 
 
     companion object {
 
+        private const val SCREEN_NAME = "PaymentMethods"
         private const val KEY_SELECTED_ITEM_POSITION = "selectedItemPos"
     }
 }

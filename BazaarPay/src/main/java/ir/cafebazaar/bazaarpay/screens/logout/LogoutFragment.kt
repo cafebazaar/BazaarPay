@@ -4,15 +4,15 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.NavDirections
 import androidx.navigation.fragment.findNavController
+import ir.cafebazaar.bazaarpay.base.BaseFragment
 import ir.cafebazaar.bazaarpay.databinding.FragmentLogoutBinding
 import ir.cafebazaar.bazaarpay.extensions.setSafeOnClickListener
 import ir.cafebazaar.bazaarpay.utils.bindWithRTLSupport
 
-internal class LogoutFragment : Fragment() {
+internal class LogoutFragment : BaseFragment(SCREEN_NAME) {
 
     private val logoutViewModel: LogoutViewModel by viewModels()
 
@@ -48,5 +48,10 @@ internal class LogoutFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    private companion object {
+
+        const val SCREEN_NAME = "Logout"
     }
 }

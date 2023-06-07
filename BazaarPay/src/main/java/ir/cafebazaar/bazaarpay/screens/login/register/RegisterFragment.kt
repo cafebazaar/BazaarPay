@@ -11,13 +11,13 @@ import android.view.inputmethod.EditorInfo
 import android.widget.ArrayAdapter
 import androidx.activity.addCallback
 import androidx.core.widget.doOnTextChanged
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import ir.cafebazaar.bazaarpay.FinishCallbacks
 import ir.cafebazaar.bazaarpay.R
 import ir.cafebazaar.bazaarpay.ServiceLocator
 import ir.cafebazaar.bazaarpay.ServiceLocator.PHONE_NUMBER
+import ir.cafebazaar.bazaarpay.base.BaseFragment
 import ir.cafebazaar.bazaarpay.data.bazaar.account.models.getotptoken.WaitingTimeWithEnableCall
 import ir.cafebazaar.bazaarpay.data.bazaar.models.InvalidPhoneNumberException
 import ir.cafebazaar.bazaarpay.databinding.FragmentRegisterBinding
@@ -33,7 +33,7 @@ import ir.cafebazaar.bazaarpay.models.Resource
 import ir.cafebazaar.bazaarpay.models.ResourceState
 import ir.cafebazaar.bazaarpay.utils.bindWithRTLSupport
 
-internal class RegisterFragment : Fragment() {
+internal class RegisterFragment : BaseFragment(SCREEN_NAME) {
 
     private var _binding: FragmentRegisterBinding? = null
     private val binding: FragmentRegisterBinding
@@ -233,5 +233,10 @@ internal class RegisterFragment : Fragment() {
         if (requireContext().isLandscape) {
             hideKeyboard(binding.phoneEditText.windowToken)
         }
+    }
+
+    private companion object {
+
+        const val SCREEN_NAME = "Register"
     }
 }

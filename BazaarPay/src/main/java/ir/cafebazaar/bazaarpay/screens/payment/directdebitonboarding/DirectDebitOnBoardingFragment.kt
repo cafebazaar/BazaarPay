@@ -4,11 +4,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.NavDirections
 import androidx.navigation.fragment.findNavController
 import ir.cafebazaar.bazaarpay.R
+import ir.cafebazaar.bazaarpay.base.BaseFragment
 import ir.cafebazaar.bazaarpay.data.bazaar.models.ErrorModel
 import ir.cafebazaar.bazaarpay.data.bazaar.payment.models.directdebit.onboarding.DirectDebitOnBoardingDetails
 import ir.cafebazaar.bazaarpay.databinding.FragmentDirectDebitOnBoardingBinding
@@ -22,7 +22,7 @@ import ir.cafebazaar.bazaarpay.models.ResourceState
 import ir.cafebazaar.bazaarpay.utils.bindWithRTLSupport
 import ir.cafebazaar.bazaarpay.utils.getErrorViewBasedOnErrorModel
 
-internal class DirectDebitOnBoardingFragment : Fragment() {
+internal class DirectDebitOnBoardingFragment : BaseFragment(SCREEN_NAME) {
 
     private var _binding: FragmentDirectDebitOnBoardingBinding? = null
     private val binding: FragmentDirectDebitOnBoardingBinding
@@ -139,5 +139,10 @@ internal class DirectDebitOnBoardingFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    private companion object {
+
+        const val SCREEN_NAME = "DirectDebitOnBoarding"
     }
 }
