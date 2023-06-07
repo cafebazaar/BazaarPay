@@ -2,6 +2,7 @@ package ir.cafebazaar.bazaarpay
 
 import android.content.Context
 import com.google.gson.GsonBuilder
+import ir.cafebazaar.bazaarpay.analytics.Analytics
 import ir.cafebazaar.bazaarpay.data.SharedDataSource
 import ir.cafebazaar.bazaarpay.data.analytics.AnalyticsRemoteDataSource
 import ir.cafebazaar.bazaarpay.data.analytics.AnalyticsRepository
@@ -55,6 +56,7 @@ internal object ServiceLocator {
         servicesMap[getKeyOfClass<Boolean>(IS_DARK)] = isDark
         servicesMap[getKeyOfClass<Int>(LANGUAGE)] = 2
         servicesMap[getKeyOfClass<String>(LANGUAGE)] = "fa"
+        Analytics.setCheckOutToken(checkoutToken)
     }
 
     fun initializeDependencies(
