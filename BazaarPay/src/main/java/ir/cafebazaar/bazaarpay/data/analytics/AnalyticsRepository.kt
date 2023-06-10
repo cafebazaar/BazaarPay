@@ -14,13 +14,13 @@ internal class AnalyticsRepository {
         ServiceLocator.get()
     }
 
+    //todo (fix accountId and deviceId)
     fun sendAnalyticsEvents() = GlobalScope.launch {
         val actionLogs = Analytics.getPendingActionLogs().also {
             if (it.isEmpty()) return@launch
         }.map {
             it.toActionLogDto(
                 source = ANDROID_SDK_SOURCE,
-                traceId = "",
                 accountId = "",
                 deviceId = ""
             )

@@ -6,6 +6,7 @@ import ir.cafebazaar.bazaarpay.BuildConfig
 import ir.cafebazaar.bazaarpay.analytics.model.ActionLog
 import ir.cafebazaar.bazaarpay.analytics.model.EventType
 import ir.cafebazaar.bazaarpay.analytics.model.PaymentFlowDetails
+import java.util.UUID
 import java.util.concurrent.atomic.AtomicLong
 
 internal object Analytics {
@@ -20,6 +21,17 @@ internal object Analytics {
     private var checkOutToken: String? = null
     private var merchantName: String? = null
     private var amount: String? = null
+
+    @Volatile
+    private var SESSION_ID: String? = null
+
+    internal fun getSessionId(): String {
+        return SESSION_ID ?: synchronized(this) {
+            val uuID = UUID.randomUUID().toString()
+            SESSION_ID = uuID
+            uuID
+        }
+    }
 
     fun setCheckOutToken(checkOutToken: String) {
         this.checkOutToken = checkOutToken
@@ -76,13 +88,15 @@ internal object Analytics {
         extra: HashMap<String, Any>,
         pageDetails: HashMap<String, Any>,
     ) {
-        actionLogs.removeAll { it.id <= (lastSyncedId ?: -1L) }
+        actionLogs.takeIf { (it.firstOrNull()?.id ?: 0) <= (lastSyncedId ?: -1L) }
+            ?.removeAll { it.id <= (lastSyncedId ?: -1L) }
         val now = System.currentTimeMillis()
         val gson = Gson()
         val extraInStringFormat = gson.toJson(extra).toString()
         val pageDetailsInStringFormat = gson.toJson(pageDetails).toString()
         val actionLog = ActionLog(
             id = id.incrementAndGet(),
+            sessionId = getSessionId(),
             type = type,
             timestamp = now,
             where = where,
@@ -108,5 +122,9 @@ internal object Analytics {
 
     internal fun onSyncedActionLogs(lastSyncedItem: Long) {
         lastSyncedId = lastSyncedItem
+    }
+
+    internal fun shutDownAnalytics() {
+        SESSION_ID = null
     }
 }

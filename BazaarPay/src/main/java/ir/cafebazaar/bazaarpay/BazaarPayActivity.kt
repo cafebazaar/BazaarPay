@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.navigation.findNavController
 import androidx.navigation.navOptions
+import ir.cafebazaar.bazaarpay.analytics.Analytics
 import ir.cafebazaar.bazaarpay.arg.BazaarPayActivityArgs
 import ir.cafebazaar.bazaarpay.databinding.ActivityBazaarPayBinding
 import ir.cafebazaar.bazaarpay.utils.bindWithRTLSupport
@@ -165,7 +166,7 @@ class BazaarPayActivity : AppCompatActivity(), FinishCallbacks {
                 Configuration.UI_MODE_NIGHT_YES
             }
 
-            isDarkMode() == null ->{
+            isDarkMode() == null -> {
                 Configuration.UI_MODE_NIGHT_UNDEFINED
             }
 
@@ -217,6 +218,11 @@ class BazaarPayActivity : AppCompatActivity(), FinishCallbacks {
     private fun finishActivity() {
         ServiceLocator.clear()
         finish()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        Analytics.shutDownAnalytics()
     }
 
     private fun isIncreaseBalanceDoneIntent(intent: Intent?): Boolean {

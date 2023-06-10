@@ -6,6 +6,7 @@ import ir.cafebazaar.bazaarpay.data.analytics.model.PaymentFlowDetailsDto
 internal data class ActionLog(
     val id: Long,
     val type: EventType,
+    val sessionId: String,
     val timestamp: Long,
     val where: String?,
     val paymentFlowDetails: PaymentFlowDetails,
@@ -29,7 +30,6 @@ internal fun PaymentFlowDetails.toPaymentFlowDetailsDto(): PaymentFlowDetailsDto
 
 internal fun ActionLog.toActionLogDto(
     source: Int,
-    traceId: String,
     accountId: String,
     deviceId: String
 ): ActionLogDto {
@@ -37,7 +37,7 @@ internal fun ActionLog.toActionLogDto(
         id = id,
         source = source,
         type = type,
-        traceId = traceId,
+        traceId = sessionId,
         timestamp = timestamp,
         accountId = accountId,
         deviceId = deviceId,
