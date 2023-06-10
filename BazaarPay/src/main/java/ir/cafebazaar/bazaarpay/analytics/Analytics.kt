@@ -6,6 +6,8 @@ import ir.cafebazaar.bazaarpay.BuildConfig
 import ir.cafebazaar.bazaarpay.analytics.model.ActionLog
 import ir.cafebazaar.bazaarpay.analytics.model.EventType
 import ir.cafebazaar.bazaarpay.analytics.model.PaymentFlowDetails
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import java.util.UUID
 import java.util.concurrent.atomic.AtomicLong
 
@@ -21,6 +23,10 @@ internal object Analytics {
     private var checkOutToken: String? = null
     private var merchantName: String? = null
     private var amount: String? = null
+
+    private const val ACTION_LOG_THRESHOLD = 20
+    private val actionLogsThreshold = MutableStateFlow(Unit)
+    val actionLogsThresholdFlow: StateFlow<Unit> = actionLogsThreshold
 
     @Volatile
     private var SESSION_ID: String? = null
@@ -88,8 +94,12 @@ internal object Analytics {
         extra: HashMap<String, Any>,
         pageDetails: HashMap<String, Any>,
     ) {
+
         actionLogs.takeIf { (it.firstOrNull()?.id ?: 0) <= (lastSyncedId ?: -1L) }
             ?.removeAll { it.id <= (lastSyncedId ?: -1L) }
+
+        checkActionLogThreshold()
+
         val now = System.currentTimeMillis()
         val gson = Gson()
         val extraInStringFormat = gson.toJson(extra).toString()
@@ -115,6 +125,12 @@ internal object Analytics {
         }
     }
 
+    private fun checkActionLogThreshold() {
+        if (actionLogs.size > ACTION_LOG_THRESHOLD) {
+            actionLogsThreshold.value = Unit
+        }
+    }
+
     @Synchronized
     internal fun getPendingActionLogs(): List<ActionLog> {
         return actionLogs.filter { it.id > (lastSyncedId ?: -1) }
@@ -124,6 +140,7 @@ internal object Analytics {
         lastSyncedId = lastSyncedItem
     }
 
+    // this is required to generate a new session id per each session
     internal fun shutDownAnalytics() {
         SESSION_ID = null
     }

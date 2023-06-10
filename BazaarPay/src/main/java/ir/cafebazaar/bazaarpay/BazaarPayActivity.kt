@@ -7,11 +7,12 @@ import android.os.Build
 import android.os.Bundle
 import android.os.LocaleList
 import android.view.animation.AnimationUtils
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.navigation.findNavController
 import androidx.navigation.navOptions
-import ir.cafebazaar.bazaarpay.analytics.Analytics
+import ir.cafebazaar.bazaarpay.analytics.viewmodel.AnalyticsViewModel
 import ir.cafebazaar.bazaarpay.arg.BazaarPayActivityArgs
 import ir.cafebazaar.bazaarpay.databinding.ActivityBazaarPayBinding
 import ir.cafebazaar.bazaarpay.utils.bindWithRTLSupport
@@ -22,6 +23,8 @@ class BazaarPayActivity : AppCompatActivity(), FinishCallbacks {
     private lateinit var binding: ActivityBazaarPayBinding
     private var args: BazaarPayActivityArgs? = null
     private var currentUiMode: Number? = null
+
+    private val analyticsViewModel: AnalyticsViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         initNightMode()
@@ -35,6 +38,8 @@ class BazaarPayActivity : AppCompatActivity(), FinishCallbacks {
 
         initServiceLocator()
         startFadeInAnimation()
+
+        analyticsViewModel.listenThreshold()
     }
 
     override fun onStart() {
@@ -218,11 +223,6 @@ class BazaarPayActivity : AppCompatActivity(), FinishCallbacks {
     private fun finishActivity() {
         ServiceLocator.clear()
         finish()
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        Analytics.shutDownAnalytics()
     }
 
     private fun isIncreaseBalanceDoneIntent(intent: Intent?): Boolean {
