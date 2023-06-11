@@ -10,9 +10,7 @@ import kotlinx.coroutines.launch
 
 internal class AnalyticsRepository {
 
-    private val analyticsRemoteDataSource: AnalyticsRemoteDataSource by lazy {
-        ServiceLocator.get()
-    }
+    private val analyticsRemoteDataSource: AnalyticsRemoteDataSource = ServiceLocator.get()
 
     //todo (fix accountId and deviceId)
     fun sendAnalyticsEvents() = GlobalScope.launch {

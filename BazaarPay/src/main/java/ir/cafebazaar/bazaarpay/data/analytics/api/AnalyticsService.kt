@@ -6,8 +6,8 @@ import retrofit2.http.POST
 
 internal interface AnalyticsService {
 
-    @POST("GetOtpTokenRequest")
+    @POST("analytics/action-log/batch-write")
     suspend fun sendEvents(
         @Body actionLogRequestDto: ActionLogRequestDto
-    ): Unit
+    )
 }

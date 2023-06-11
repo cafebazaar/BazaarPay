@@ -5,20 +5,22 @@ import androidx.lifecycle.viewModelScope
 import ir.cafebazaar.bazaarpay.ServiceLocator
 import ir.cafebazaar.bazaarpay.analytics.Analytics
 import ir.cafebazaar.bazaarpay.data.analytics.AnalyticsRepository
+import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.launch
 
 internal class AnalyticsViewModel : ViewModel() {
 
-    private val analyticsRepository by lazy { ServiceLocator.get<AnalyticsRepository>() }
+    private val analyticsRepository = ServiceLocator.get<AnalyticsRepository>()
 
     fun listenThreshold() = viewModelScope.launch {
-        Analytics.actionLogsThresholdFlow.collect {
+        Analytics.actionLogsThresholdFlow.debounce(1000).collect {
             analyticsRepository.sendAnalyticsEvents()
         }
     }
 
     override fun onCleared() {
-        super.onCleared()
+        analyticsRepository.sendAnalyticsEvents()
         Analytics.shutDownAnalytics()
+        super.onCleared()
     }
 }

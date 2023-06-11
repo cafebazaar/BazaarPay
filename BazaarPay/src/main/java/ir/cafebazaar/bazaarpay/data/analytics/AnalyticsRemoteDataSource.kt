@@ -6,7 +6,7 @@ import ir.cafebazaar.bazaarpay.data.analytics.model.ActionLogRequestDto
 import ir.cafebazaar.bazaarpay.extensions.safeApiCall
 import ir.cafebazaar.bazaarpay.utils.Either
 
-internal class AnalyticsRemoteDataSource() {
+internal class AnalyticsRemoteDataSource {
 
     private val analyticsService: AnalyticsService by lazy {
         ServiceLocator.get()

@@ -6,8 +6,9 @@ import ir.cafebazaar.bazaarpay.BuildConfig
 import ir.cafebazaar.bazaarpay.analytics.model.ActionLog
 import ir.cafebazaar.bazaarpay.analytics.model.EventType
 import ir.cafebazaar.bazaarpay.analytics.model.PaymentFlowDetails
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.channels.BufferOverflow
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.SharedFlow
 import java.util.UUID
 import java.util.concurrent.atomic.AtomicLong
 
@@ -24,9 +25,13 @@ internal object Analytics {
     private var merchantName: String? = null
     private var amount: String? = null
 
-    private const val ACTION_LOG_THRESHOLD = 20
-    private val actionLogsThreshold = MutableStateFlow(Unit)
-    val actionLogsThresholdFlow: StateFlow<Unit> = actionLogsThreshold
+    private const val ACTION_LOG_THRESHOLD = 40
+    private const val ACTION_LOG_RETRY = 3
+    private val actionLogsThreshold = MutableSharedFlow<Unit>(
+        onBufferOverflow = BufferOverflow.DROP_OLDEST,
+        extraBufferCapacity = 1
+    )
+    val actionLogsThresholdFlow: SharedFlow<Unit> = actionLogsThreshold
 
     @Volatile
     private var SESSION_ID: String? = null
@@ -126,8 +131,13 @@ internal object Analytics {
     }
 
     private fun checkActionLogThreshold() {
-        if (actionLogs.size > ACTION_LOG_THRESHOLD) {
-            actionLogsThreshold.value = Unit
+        if (actionLogs.size >= ACTION_LOG_THRESHOLD && actionLogs.size % ACTION_LOG_THRESHOLD == 0) {
+            val result = actionLogsThreshold.tryEmit(Unit)
+            Log.i("AnalyticsRemoteData", "emit  $result  ${actionLogs.size}")
+        }
+        if (actionLogs.size > ACTION_LOG_THRESHOLD * ACTION_LOG_RETRY) {
+            // prevent from outOfMemory in other words the 3 is a retry policy
+            actionLogs.clear()
         }
     }
 
