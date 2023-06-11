@@ -96,8 +96,8 @@ val bazaarPayLauncher = registerForActivityResult(StartBazaarPay()) { isSuccessf
 }
 ```
 
-The happy path of this `if` statement is the place you need to [commit](#3-commit-checkout-token)
-the *Checkout Token*.
+The happy path of this `if` statement is the place you need to [commit](#3-commit-paymentURL)
+the *paymentURL*.
 
 ### 2. Launch Payment
 
@@ -118,7 +118,7 @@ configure to your needs:
 
 * `phoneNumber` - pre-fills the input field of the login screen with this number.
 
-### 3. Commit Checkout Token
+### 3. Commit paymentURL
 
 You have to commit the *Checkout Token* after successful payment. There is a suspend `commit()`
 function for this purpose that you can call from a coroutine scope:
