@@ -54,7 +54,7 @@ class BazaarPayOptions private constructor(
     }
 }
 
-private class PaymentURLParser(val paymentUrl: String) {
+internal class PaymentURLParser(val paymentUrl: String) {
     companion object {
 
         const val CHECKOUT_TOKEN = "token"
@@ -63,16 +63,21 @@ private class PaymentURLParser(val paymentUrl: String) {
     }
 
     fun getCheckoutToken(): String? {
-        return paymentUrl.toUri().getQueryParameter(CHECKOUT_TOKEN)
+        return runCatching { paymentUrl.toUri().getQueryParameter(CHECKOUT_TOKEN) }.getOrNull()
     }
 
     fun getAutoLoginPhoneNumber(): String? {
-        return paymentUrl.toUri().getQueryParameter(AUTO_LOGIN_PHONE_NUMBER).takeIf {
-            isAutoLoginEnable()
-        }
+        return runCatching {
+            paymentUrl.toUri().getQueryParameter(AUTO_LOGIN_PHONE_NUMBER).takeIf {
+                isAutoLoginEnable()
+            }
+        }.getOrNull()
     }
 
     fun isAutoLoginEnable(): Boolean {
-        return paymentUrl.toUri().getBooleanQueryParameter(AUTO_LOGIN, false)
+        return runCatching {
+            paymentUrl.toUri()
+                .getBooleanQueryParameter(AUTO_LOGIN, false)
+        }.getOrElse { false }
     }
 }

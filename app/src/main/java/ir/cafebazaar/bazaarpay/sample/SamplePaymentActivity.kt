@@ -96,7 +96,7 @@ class SamplePaymentActivity : AppCompatActivity() {
     private fun commitCheckoutToken() {
         lifecycleScope.launch {
             commit(
-                paymentURL,
+                paymentURL = paymentURL,
                 context = this@SamplePaymentActivity,
                 onSuccess = {
                     // Successfully committed!
@@ -111,7 +111,7 @@ class SamplePaymentActivity : AppCompatActivity() {
     private fun startTracing() {
         lifecycleScope.launch {
             trace(
-                paymentURL,
+                paymentURL = paymentURL,
                 context = this@SamplePaymentActivity,
                 onSuccess = {
                     binding.traceResult.text = it.toString()

@@ -19,11 +19,13 @@ fun initSDKForAPICall(
 }
 
 suspend fun commit(
-    checkoutToken: String,
+    paymentURL: String,
     context: Context,
     onSuccess: () -> Unit,
     onFailure: (ErrorModel) -> Unit
 ) {
+    val paymentURLParser = PaymentURLParser(paymentURL)
+    val checkoutToken = paymentURLParser.getCheckoutToken() ?: paymentURL
     initSDKForAPICall(context, checkoutToken)
     val payRepository: PaymentRepository = ServiceLocator.get()
     payRepository.commit(checkoutToken).fold(
@@ -35,11 +37,13 @@ suspend fun commit(
 }
 
 suspend fun trace(
-    checkoutToken: String,
+    paymentURL: String,
     context: Context,
     onSuccess: (PurchaseStatus) -> Unit,
     onFailure: (ErrorModel) -> Unit
 ) {
+    val paymentURLParser = PaymentURLParser(paymentURL)
+    val checkoutToken = paymentURLParser.getCheckoutToken() ?: paymentURL
     initSDKForAPICall(context, checkoutToken)
     val payRepository: PaymentRepository = ServiceLocator.get()
     payRepository.trace(checkoutToken).fold(
