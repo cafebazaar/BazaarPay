@@ -4,6 +4,7 @@ import ir.cafebazaar.bazaarpay.ServiceLocator
 import ir.cafebazaar.bazaarpay.analytics.Analytics
 import ir.cafebazaar.bazaarpay.analytics.model.toActionLogDto
 import ir.cafebazaar.bazaarpay.data.analytics.model.ActionLogRequestDto
+import ir.cafebazaar.bazaarpay.data.device.DeviceRepository
 import ir.cafebazaar.bazaarpay.utils.doOnSuccess
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -11,6 +12,8 @@ import kotlinx.coroutines.launch
 internal class AnalyticsRepository {
 
     private val analyticsRemoteDataSource: AnalyticsRemoteDataSource = ServiceLocator.get()
+    private val deviceRepository: DeviceRepository = ServiceLocator.get()
+
 
     //todo (fix accountId and deviceId)
     fun sendAnalyticsEvents() = GlobalScope.launch {
@@ -20,7 +23,7 @@ internal class AnalyticsRepository {
             it.toActionLogDto(
                 source = ANDROID_SDK_SOURCE,
                 accountId = "",
-                deviceId = ""
+                deviceId = deviceRepository.getClientId()
             )
         }
         analyticsRemoteDataSource.sendEventsToServer(ActionLogRequestDto(actionLogs)).doOnSuccess {

@@ -27,7 +27,7 @@ import ir.cafebazaar.bazaarpay.data.payment.UpdateRefreshTokenHelper
 import ir.cafebazaar.bazaarpay.data.payment.api.PaymentService
 import ir.cafebazaar.bazaarpay.models.GlobalDispatchers
 import ir.cafebazaar.bazaarpay.network.gsonConverterFactory
-import ir.cafebazaar.bazaarpay.network.interceptor.AgentInterceptor
+import ir.cafebazaar.bazaarpay.network.interceptor.HeaderInterceptor
 import kotlinx.coroutines.Dispatchers
 import okhttp3.Authenticator
 import okhttp3.Interceptor
@@ -211,7 +211,7 @@ internal object ServiceLocator {
             builder.authenticator(it)
         }
         builder
-            .addInterceptor(AgentInterceptor)
+            .addInterceptor(HeaderInterceptor)
             .addInterceptor(get<DeviceInterceptor>())
 
         interceptors.forEach {

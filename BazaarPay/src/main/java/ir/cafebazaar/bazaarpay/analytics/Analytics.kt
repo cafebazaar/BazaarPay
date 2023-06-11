@@ -14,7 +14,7 @@ import java.util.concurrent.atomic.AtomicLong
 
 internal object Analytics {
 
-    private const val TAG = "Analytics"
+    private const val TAG = "BazaarPayAnalytics"
 
     private val actionLogs = mutableListOf<ActionLog>()
 
@@ -132,8 +132,7 @@ internal object Analytics {
 
     private fun checkActionLogThreshold() {
         if (actionLogs.size >= ACTION_LOG_THRESHOLD && actionLogs.size % ACTION_LOG_THRESHOLD == 0) {
-            val result = actionLogsThreshold.tryEmit(Unit)
-            Log.i("AnalyticsRemoteData", "emit  $result  ${actionLogs.size}")
+            actionLogsThreshold.tryEmit(Unit)
         }
         if (actionLogs.size > ACTION_LOG_THRESHOLD * ACTION_LOG_RETRY) {
             // prevent from outOfMemory in other words the 3 is a retry policy
