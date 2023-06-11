@@ -9,7 +9,9 @@ import ir.cafebazaar.bazaarpay.extensions.fold
 
 fun initSDKForAPICall(
     context: Context,
-    checkoutToken: String
+    checkoutToken: String,
+    autoLoginPhoneNumber: String? = null,
+    isAutoLoginEnable: Boolean = false,
 ) {
     ServiceLocator.initializeConfigs(
         checkoutToken = checkoutToken,
@@ -26,7 +28,9 @@ suspend fun commit(
 ) {
     val paymentURLParser = PaymentURLParser(paymentURL)
     val checkoutToken = paymentURLParser.getCheckoutToken() ?: paymentURL
-    initSDKForAPICall(context, checkoutToken)
+    val autoLoginPhoneNumber = paymentURLParser.getAutoLoginPhoneNumber()
+    val isAutoLoginEnable = paymentURLParser.isAutoLoginEnable()
+    initSDKForAPICall(context, checkoutToken, autoLoginPhoneNumber, isAutoLoginEnable)
     val payRepository: PaymentRepository = ServiceLocator.get()
     payRepository.commit(checkoutToken).fold(
         ifSuccess = {
@@ -44,7 +48,9 @@ suspend fun trace(
 ) {
     val paymentURLParser = PaymentURLParser(paymentURL)
     val checkoutToken = paymentURLParser.getCheckoutToken() ?: paymentURL
-    initSDKForAPICall(context, checkoutToken)
+    val autoLoginPhoneNumber = paymentURLParser.getAutoLoginPhoneNumber()
+    val isAutoLoginEnable = paymentURLParser.isAutoLoginEnable()
+    initSDKForAPICall(context, checkoutToken, autoLoginPhoneNumber, isAutoLoginEnable)
     val payRepository: PaymentRepository = ServiceLocator.get()
     payRepository.trace(checkoutToken).fold(
         ifSuccess = {
