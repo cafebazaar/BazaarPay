@@ -30,8 +30,8 @@ internal class OnBoardingItemDto(
 }
 
 internal class ThemedIconDto(
-    @SerializedName("lightIcon") val lightIcon: String?,
-    @SerializedName("darkIcon") val darkIcon: String?
+    @SerializedName("light_icon") val lightIcon: String?,
+    @SerializedName("dark_icon") val darkIcon: String?
 ) {
 
     fun toThemedIcon(): ThemedIcon {
