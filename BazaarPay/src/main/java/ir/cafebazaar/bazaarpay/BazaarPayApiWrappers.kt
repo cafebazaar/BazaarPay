@@ -15,7 +15,9 @@ fun initSDKForAPICall(
 ) {
     ServiceLocator.initializeConfigs(
         checkoutToken = checkoutToken,
-        isDark = false
+        isDark = false,
+        autoLoginPhoneNumber = autoLoginPhoneNumber,
+        isAutoLoginEnable = isAutoLoginEnable
     )
     ServiceLocator.initializeDependencies(context.applicationContext)
 }
