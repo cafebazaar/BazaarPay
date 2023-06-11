@@ -135,7 +135,7 @@ internal object Analytics {
             actionLogsThreshold.tryEmit(Unit)
         }
         if (actionLogs.size > ACTION_LOG_THRESHOLD * ACTION_LOG_RETRY) {
-            // prevent from outOfMemory in other words the 3 is a retry policy
+            // prevent from outOfMemory in other words the ACTION_LOG_RETRY is a retry policy
             actionLogs.clear()
         }
     }
