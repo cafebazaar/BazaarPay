@@ -71,7 +71,7 @@ class SamplePaymentActivity : AppCompatActivity() {
         if (isSuccessful) {
             showPaymentResult(R.string.message_successful_payment)
             if (binding.commitPaymentCheckbox.isChecked) {
-                commitCheckoutToken()
+                commitPaymentURL()
             }
         } else {
             showPaymentResult(R.string.message_payment_cancelled, isError = true)
@@ -93,7 +93,7 @@ class SamplePaymentActivity : AppCompatActivity() {
         )
     }
 
-    private fun commitCheckoutToken() {
+    private fun commitPaymentURL() {
         lifecycleScope.launch {
             commit(
                 paymentURL = paymentURL,
@@ -125,16 +125,16 @@ class SamplePaymentActivity : AppCompatActivity() {
 
     override fun onSaveInstanceState(outState: Bundle, outPersistentState: PersistableBundle) {
         super.onSaveInstanceState(outState, outPersistentState)
-        outState.putString(KEY_CHECKOUT_TOKEN, paymentURL)
+        outState.putString(KEY_PAYMENT_URL, paymentURL)
     }
 
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
         super.onRestoreInstanceState(savedInstanceState)
-        paymentURL = savedInstanceState.getString(KEY_CHECKOUT_TOKEN, "")
+        paymentURL = savedInstanceState.getString(KEY_PAYMENT_URL, "")
     }
 
     companion object {
 
-        const val KEY_CHECKOUT_TOKEN = "checkoutToken"
+        const val KEY_PAYMENT_URL = "paymentURL"
     }
 }
