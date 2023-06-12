@@ -29,4 +29,10 @@ class GeneralErrorView @JvmOverloads constructor(
             callBack.invoke()
         }
     }
+
+    fun setMessageText(message: String) {
+        if (message.isNotEmpty()) {
+            binding.txtDescription.text = message
+        }
+    }
 }

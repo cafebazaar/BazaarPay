@@ -14,7 +14,7 @@
         app:srcCompat="@drawable/ic_error_outline_icon_primary_24dp_old" />
 
     <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/textView"
+        android:id="@+id/txtDescription"
         style="@style/Bazaar.Text.Body1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
