@@ -17,11 +17,11 @@ import ir.cafebazaar.bazaarpay.screens.payment.paymentmethods.PaymentMethodsType
 import ir.cafebazaar.bazaarpay.utils.SingleLiveEvent
 import kotlinx.coroutines.launch
 import java.lang.ref.WeakReference
-import java.util.*
+import java.util.Locale
 
 internal class DynamicCreditViewModel : ViewModel() {
 
-    private val paymentRepository: PaymentRepository = ServiceLocator.get()
+    private val paymentRepository: PaymentRepository by lazy { ServiceLocator.get() }
 
     private val _editTextValueLiveData = MutableLiveData<String?>()
     val editTextValueLiveData: LiveData<String?> = _editTextValueLiveData
@@ -49,9 +49,11 @@ internal class DynamicCreditViewModel : ViewModel() {
             changeValue.length > currentValue.length -> {
                 getPriceFromString(changeValue)
             }
+
             changeValue.length < currentValue.length -> {
                 getPriceWhenCurrentValueBiggerThanChanged(currentValue, changeValue)
             }
+
             else -> {
                 getPriceFromString(changeValue)
             }
@@ -61,6 +63,7 @@ internal class DynamicCreditViewModel : ViewModel() {
             priceIsZero(priceString) -> {
                 null
             }
+
             priceIsBiggerThanMaximum(priceString) -> {
                 _errorLiveData.value = Pair(
                     R.string.bazaarpay_dynamic_credit_exceed_amount,
@@ -69,6 +72,7 @@ internal class DynamicCreditViewModel : ViewModel() {
                 val maxValue = requireNotNull(creditOptions).maxAvailableAmount.toToman()
                 getPriceFromString(maxValue.toString())
             }
+
             else -> {
                 priceString
             }
@@ -164,10 +168,12 @@ internal class DynamicCreditViewModel : ViewModel() {
                 // duplicate value
                 getPriceFromString(changeValue)
             }
+
             currentDigit == changedDigit -> {
                 // removed from last
                 getPriceIfBiggerThanZero(currentDigit / TOMAN_TO_RIAL_FACTOR)
             }
+
             else -> {
                 getPriceIfBiggerThanZero(changedDigit)
             }

@@ -23,14 +23,9 @@ import okhttp3.ResponseBody
 
 internal class PaymentRemoteDataSource {
 
-    private val checkoutToken: String = ServiceLocator.get(ServiceLocator.CHECKOUT_TOKEN)
-    private val paymentService: PaymentService by lazy {
-        ServiceLocator.get()
-    }
-
-    private val globalDispatchers: GlobalDispatchers by lazy {
-        ServiceLocator.get()
-    }
+    private val checkoutToken: String by lazy { ServiceLocator.get(ServiceLocator.CHECKOUT_TOKEN) }
+    private val paymentService: PaymentService by lazy { ServiceLocator.get() }
+    private val globalDispatchers: GlobalDispatchers by lazy { ServiceLocator.get() }
 
     suspend fun getPaymentMethods(): Either<PaymentMethodsInfo> {
         val language = ServiceLocator.get<String>(ServiceLocator.LANGUAGE)
@@ -99,6 +94,7 @@ internal class PaymentRemoteDataSource {
             }
         }
     }
+
     suspend fun initCheckout(
         amount: Long,
         destination: String,
@@ -114,6 +110,7 @@ internal class PaymentRemoteDataSource {
     }
 
     private companion object {
+
         private val increaseBalanceRedirectUrl =
             "bazaar://${
                 ServiceLocator.get<Context>().packageName
