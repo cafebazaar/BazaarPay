@@ -7,5 +7,7 @@ import kotlinx.parcelize.Parcelize
 internal data class BazaarPayActivityArgs(
     val checkoutToken: String,
     val phoneNumber: String? = null,
-    val isDarkMode: Boolean? = null
+    val isDarkMode: Boolean? = null,
+    val autoLoginPhoneNumber: String? = null,
+    val isAutoLoginEnable: Boolean = false,
 ) : Parcelable

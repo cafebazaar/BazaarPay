@@ -16,7 +16,9 @@ object HeaderInterceptor : Interceptor {
     override fun intercept(chain: Interceptor.Chain): Response {
         val request =
             chain.request().newBuilder()
-                .header(USER_AGENT_HEADER_TITLE, buildUserAgentHeaderValue())
+                .addHeader("Content-Type", "application/json")
+                .addHeader("Accept", "application/json")
+                .addHeader(USER_AGENT_HEADER_TITLE, buildUserAgentHeaderValue())
                 .header(ACTION_LOG_TRACE_ID, Analytics.getSessionId())
                 .build()
         return chain.proceed(request)

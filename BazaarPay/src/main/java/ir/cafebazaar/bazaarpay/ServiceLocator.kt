@@ -49,13 +49,17 @@ internal object ServiceLocator {
     fun initializeConfigs(
         checkoutToken: String,
         phoneNumber: String? = null,
-        isDark: Boolean?
+        isDark: Boolean?,
+        autoLoginPhoneNumber: String? = null,
+        isAutoLoginEnable: Boolean = false,
     ) {
         servicesMap[getKeyOfClass<String>(CHECKOUT_TOKEN)] = checkoutToken
         servicesMap[getKeyOfClass<String?>(PHONE_NUMBER)] = phoneNumber
         servicesMap[getKeyOfClass<Boolean>(IS_DARK)] = isDark
         servicesMap[getKeyOfClass<Int>(LANGUAGE)] = 2
         servicesMap[getKeyOfClass<String>(LANGUAGE)] = "fa"
+        servicesMap[getKeyOfClass<String>(AUTO_LOGIN_PHONE_NUMBER)] = autoLoginPhoneNumber
+        servicesMap[getKeyOfClass<Boolean>(IS_AUTO_LOGIN_ENABLE)] = isAutoLoginEnable
         Analytics.setCheckOutToken(checkoutToken)
     }
 
@@ -87,12 +91,11 @@ internal object ServiceLocator {
         initTokenInterceptor()
 
         // Payment
-        initPaymentService()
+        initRetrofitServices()
         initPaymentRemoteDataSource()
         initPaymentRepository()
 
         // Bazaar
-        initBazaarService()
         initBazaarRemoteDataSource()
         initBazaarRepository()
 
@@ -259,39 +262,39 @@ internal object ServiceLocator {
             accountRetrofit.create(AccountService::class.java)
     }
 
-    private fun initPaymentService() {
+    private fun initRetrofitServices() {
         val paymentHttpClient = provideOkHttpClient(
             interceptors = listOf(get(TOKEN)),
-            authenticator = get(AUTHENTICATOR)
+            authenticator = get<Authenticator?>(AUTHENTICATOR).takeIf {
+                isUserLogOutAndAutoLoginEnable().not()
+            }
         )
-        val paymentRetrofit = provideRetrofit(
+        val retrofit = provideRetrofit(
             okHttp = paymentHttpClient,
             baseUrl = PAYMENT_BASE_URL
         )
         servicesMap[getKeyOfClass<PaymentService>()] =
-            paymentRetrofit.create(PaymentService::class.java)
-    }
+            retrofit.create(PaymentService::class.java)
 
-    private fun initBazaarService() {
-        val bazaarHttpClient = provideOkHttpClient(
-            interceptors = listOf(get(TOKEN)),
-            authenticator = get(AUTHENTICATOR)
-        )
-        val bazaarRetrofit = provideRetrofit(
-            okHttp = bazaarHttpClient,
-            baseUrl = DEFAULT_BASE_URL,
-            needUnWrapper = true
-        )
         servicesMap[getKeyOfClass<BazaarPaymentService>()] =
-            bazaarRetrofit.create(BazaarPaymentService::class.java)
+            retrofit.create(BazaarPaymentService::class.java)
 
         servicesMap[getKeyOfClass<AnalyticsService>()] =
-            bazaarRetrofit.create(BazaarPaymentService::class.java)
+            retrofit.create(BazaarPaymentService::class.java)
     }
 
     private fun initDeviceSharedDataSource() {
         servicesMap[getKeyOfClass<SharedDataSource>(DEVICE)] =
             DeviceSharedDataSource()
+    }
+
+    private fun isUserLogOutAndAutoLoginEnable(): Boolean {
+        val accountLocalDataSource: AccountLocalDataSource = get()
+        val isAutoLoginEnable = getOrNull<Boolean>(IS_AUTO_LOGIN_ENABLE) ?: false
+        fun isLoggedIn(): Boolean {
+            return accountLocalDataSource.accessToken.isNotEmpty()
+        }
+        return isAutoLoginEnable && isLoggedIn().not()
     }
 
     private const val DEFAULT_BASE_URL: String = "https://api.cafebazaar.ir/rest-v1/process/"
@@ -301,6 +304,8 @@ internal object ServiceLocator {
     internal const val PHONE_NUMBER: String = "phone_number"
     internal const val IS_DARK: String = "is_dark"
     internal const val LANGUAGE: String = "language"
+    internal const val AUTO_LOGIN_PHONE_NUMBER: String = "autoLoginPhoneNumber"
+    internal const val IS_AUTO_LOGIN_ENABLE: String = "isAutoLoginEnable"
     internal const val ACCOUNT: String = "account"
     internal const val DEVICE: String = "device"
     private const val AUTHENTICATOR: String = "authenticator"

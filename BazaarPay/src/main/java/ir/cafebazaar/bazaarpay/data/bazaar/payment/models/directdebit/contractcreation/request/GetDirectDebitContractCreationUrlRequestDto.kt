@@ -1,30 +1,11 @@
 package ir.cafebazaar.bazaarpay.data.bazaar.payment.models.directdebit.contractcreation.request
 
-import ir.cafebazaar.bazaarpay.data.bazaar.models.BazaarBaseRequest
+import com.google.gson.annotations.SerializedName
 
-internal class GetDirectDebitContractCreationUrlSingleRequest(
-    bankCode: String,
-    nationalId: String,
-    redirectUrl: String
-) : BazaarBaseRequest() {
-
-    val singleRequest: GetDirectDebitContractCreationUrlRequest =
-        GetDirectDebitContractCreationUrlRequest(
-            GetDirectDebitContractCreationUrlRequestBody(
-                bankCode,
-                nationalId,
-                redirectUrl
-            )
-        )
-}
-
-internal class GetDirectDebitContractCreationUrlRequest(
-    val getDirectDebitContractCreationUrlRequest: GetDirectDebitContractCreationUrlRequestBody
-)
-
-internal data class GetDirectDebitContractCreationUrlRequestBody(
-    var bankCode: String,
-    var nationalId: String,
-    var redirectUrl: String,
-    var source: Int = 0
+internal data class GetDirectDebitContractCreationUrlSingleRequest(
+    @SerializedName("bank") val bankCode: String,
+    @SerializedName("national_id") val nationalId: String,
+    @SerializedName("redirect_url") val redirectUrl: String,
+    @SerializedName("checkout_token") val checkoutToken: String,
+    @SerializedName("source") val source: Int,
 )
