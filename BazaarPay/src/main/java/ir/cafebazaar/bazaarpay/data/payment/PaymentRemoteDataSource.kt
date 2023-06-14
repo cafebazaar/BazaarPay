@@ -57,7 +57,7 @@ internal class PaymentRemoteDataSource {
     }
 
     suspend fun pay(
-        paymentMethod: PaymentMethodsType,
+        paymentMethod: String,
         amount: Long?
     ): Either<PayResult> {
         val language = ServiceLocator.get<String>(ServiceLocator.LANGUAGE)
@@ -66,7 +66,7 @@ internal class PaymentRemoteDataSource {
                 paymentService.pay(
                     PayRequest(
                         checkoutToken,
-                        paymentMethod.value,
+                        paymentMethod,
                         amount,
                         increaseBalanceRedirectUrl
                     ),

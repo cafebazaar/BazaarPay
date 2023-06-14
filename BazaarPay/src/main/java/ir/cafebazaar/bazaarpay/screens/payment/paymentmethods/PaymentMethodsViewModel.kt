@@ -31,7 +31,7 @@ internal class PaymentMethodsViewModel : ViewModel() {
         _paymentOptionViewLoaderLiveData
 
     private val _accountInfoLiveData = SingleLiveEvent<String>()
-    val accountInfoLiveData:LiveData<String> =  _accountInfoLiveData
+    val accountInfoLiveData: LiveData<String> = _accountInfoLiveData
 
     private val _navigationLiveData = SingleLiveEvent<NavDirections>()
     val navigationLiveData: LiveData<NavDirections> = _navigationLiveData
@@ -115,15 +115,19 @@ internal class PaymentMethodsViewModel : ViewModel() {
             PaymentMethodsType.INCREASE_BALANCE -> {
                 R.string.bazaarpay_increase_balance
             }
+
             PaymentMethodsType.DIRECT_DEBIT_ACTIVATION -> {
                 R.string.bazaarpay_directdebit_signup
             }
+
             PaymentMethodsType.POSTPAID_CREDIT_ACTIVATION -> {
                 R.string.bazaarpay_postpaid_activation
             }
+
             PaymentMethodsType.POSTPAID_CREDIT -> {
                 R.string.bazaarpay_credit_pay
             }
+
             else -> {
                 R.string.bazaarpay_pay
             }
@@ -143,19 +147,22 @@ internal class PaymentMethodsViewModel : ViewModel() {
             PaymentMethodsType.INCREASE_BALANCE -> {
                 openIncreaseBalancePage()
             }
+
             PaymentMethodsType.DIRECT_DEBIT_ACTIVATION -> {
                 openDirectDebitOnBoarding()
             }
+
             PaymentMethodsType.POSTPAID_CREDIT_ACTIVATION -> {
                 openPostpaidTermsPage()
             }
+
             else -> {
-                pay(selectedOption.methodType)
+                pay(selectedOption.methodTypeString)
             }
         }
     }
 
-    private fun pay(methodType: PaymentMethodsType) {
+    private fun pay(methodType: String) {
         payStateData.value = Resource.loading()
         viewModelScope.launch {
             paymentRepository.pay(methodType).fold(

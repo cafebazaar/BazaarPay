@@ -41,7 +41,8 @@ internal data class PaymentMethodDto(
             title,
             description,
             subDescription,
-            PaymentMethodsType.valueOf(methodType.uppercase()),
+            PaymentMethodsType.getPaymentMethodsType(methodType),
+            methodType,
             iconUrl,
             priceString,
             enabled = enabled ?: true
