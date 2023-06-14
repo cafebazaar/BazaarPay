@@ -24,6 +24,7 @@ class BazaarPayActivity : AppCompatActivity(), FinishCallbacks {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         initNightMode()
+        initServiceLocator()
         super.onCreate(savedInstanceState)
         binding = layoutInflater.bindWithRTLSupport(ActivityBazaarPayBinding::inflate)
         setContentView(binding.root)
@@ -32,7 +33,6 @@ class BazaarPayActivity : AppCompatActivity(), FinishCallbacks {
 
         handleIntent(intent)
 
-        initServiceLocator()
         startFadeInAnimation()
     }
 
@@ -199,11 +199,7 @@ class BazaarPayActivity : AppCompatActivity(), FinishCallbacks {
     }
 
     private fun initServiceLocator() {
-        if (ServiceLocator.isConfigInitiated()) {
-            ServiceLocator.initializeDependencies(
-                context = applicationContext
-            )
-        }
+        ServiceLocator.initializeDependencies(context = applicationContext)
     }
 
     override fun onSuccess() {
