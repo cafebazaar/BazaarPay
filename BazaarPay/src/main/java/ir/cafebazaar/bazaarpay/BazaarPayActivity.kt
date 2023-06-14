@@ -69,7 +69,9 @@ class BazaarPayActivity : AppCompatActivity(), FinishCallbacks {
             ServiceLocator.initializeConfigs(
                 checkoutToken = it.checkoutToken,
                 phoneNumber = it.phoneNumber,
-                isDark = it.isDarkMode
+                isDark = it.isDarkMode,
+                isAutoLoginEnable = it.isAutoLoginEnable,
+                autoLoginPhoneNumber = it.autoLoginPhoneNumber
             )
         }
     }
@@ -165,7 +167,7 @@ class BazaarPayActivity : AppCompatActivity(), FinishCallbacks {
                 Configuration.UI_MODE_NIGHT_YES
             }
 
-            isDarkMode() == null ->{
+            isDarkMode() == null -> {
                 Configuration.UI_MODE_NIGHT_UNDEFINED
             }
 

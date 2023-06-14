@@ -34,10 +34,12 @@ class SamplePaymentFragment : Fragment(R.layout.fragment_payment) {
     }
 
     private fun startPayment() {
-        val options = BazaarPayOptions(
-            checkoutToken = binding.checkoutTokenInput.text.toString(),
-            phoneNumber = binding.phoneNumberInput.text.toString()
-        )
+        val options = BazaarPayOptions
+            .paymentUrl(paymentURL = binding.paymentUrlInput.text.toString())
+            .phoneNumber(
+                phoneNumber = binding.phoneNumberInput.text.toString()
+            )
+            .build()
         bazaarPayLauncher.launch(options)
     }
 

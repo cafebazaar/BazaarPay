@@ -9,22 +9,30 @@ import ir.cafebazaar.bazaarpay.extensions.fold
 
 fun initSDKForAPICall(
     context: Context,
-    checkoutToken: String
+    checkoutToken: String,
+    autoLoginPhoneNumber: String? = null,
+    isAutoLoginEnable: Boolean = false,
 ) {
     ServiceLocator.initializeConfigs(
         checkoutToken = checkoutToken,
-        isDark = false
+        isDark = false,
+        autoLoginPhoneNumber = autoLoginPhoneNumber,
+        isAutoLoginEnable = isAutoLoginEnable
     )
-    ServiceLocator.initializeDependencies(context)
+    ServiceLocator.initializeDependencies(context.applicationContext)
 }
 
 suspend fun commit(
-    checkoutToken: String,
+    paymentURL: String,
     context: Context,
     onSuccess: () -> Unit,
     onFailure: (ErrorModel) -> Unit
 ) {
-    initSDKForAPICall(context, checkoutToken)
+    val paymentURLParser = PaymentURLParser(paymentURL)
+    val checkoutToken = paymentURLParser.getCheckoutToken() ?: paymentURL
+    val autoLoginPhoneNumber = paymentURLParser.getAutoLoginPhoneNumber()
+    val isAutoLoginEnable = paymentURLParser.isAutoLoginEnable()
+    initSDKForAPICall(context, checkoutToken, autoLoginPhoneNumber, isAutoLoginEnable)
     val payRepository: PaymentRepository = ServiceLocator.get()
     payRepository.commit(checkoutToken).fold(
         ifSuccess = {
@@ -35,12 +43,16 @@ suspend fun commit(
 }
 
 suspend fun trace(
-    checkoutToken: String,
+    paymentURL: String,
     context: Context,
     onSuccess: (PurchaseStatus) -> Unit,
     onFailure: (ErrorModel) -> Unit
 ) {
-    initSDKForAPICall(context, checkoutToken)
+    val paymentURLParser = PaymentURLParser(paymentURL)
+    val checkoutToken = paymentURLParser.getCheckoutToken() ?: paymentURL
+    val autoLoginPhoneNumber = paymentURLParser.getAutoLoginPhoneNumber()
+    val isAutoLoginEnable = paymentURLParser.isAutoLoginEnable()
+    initSDKForAPICall(context, checkoutToken, autoLoginPhoneNumber, isAutoLoginEnable)
     val payRepository: PaymentRepository = ServiceLocator.get()
     payRepository.trace(checkoutToken).fold(
         ifSuccess = {

@@ -20,30 +20,35 @@ fun getErrorViewBasedOnErrorModel(
         is ErrorModel.Forbidden -> {
             getNotFoundErrorView(context, errorModel)
         }
+
         is ErrorModel.NetworkConnection -> {
             if (context.isNetworkAvailable()) {
-                getGeneralErrorView(context, onRetryClicked)
+                getGeneralErrorView(context, onRetryClicked, errorModel)
             } else {
                 getNetworkErrorView(context, onRetryClicked)
             }
         }
+
         is ErrorModel.LoginIsRequired -> {
             getLoginErrorView(context, onLoginClicked)
         }
+
         else -> {
-            getGeneralErrorView(context, onRetryClicked)
+            getGeneralErrorView(context, onRetryClicked, errorModel)
         }
     }
 }
 
 fun getGeneralErrorView(
     context: Context,
-    onRetryClicked: () -> Unit
+    onRetryClicked: () -> Unit,
+    errorModel: ErrorModel
 ): GeneralErrorView {
     return GeneralErrorView(context).apply {
         setOnRetryButtonClickListener {
             onRetryClicked.invoke()
         }
+        setMessageText(errorModel.message)
     }
 }
 
