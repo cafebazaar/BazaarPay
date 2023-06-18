@@ -61,6 +61,7 @@ internal object ServiceLocator {
         servicesMap[getKeyOfClass<String>(AUTO_LOGIN_PHONE_NUMBER)] = autoLoginPhoneNumber
         servicesMap[getKeyOfClass<Boolean>(IS_AUTO_LOGIN_ENABLE)] = isAutoLoginEnable
         Analytics.setCheckOutToken(checkoutToken)
+        Analytics.setAutoLoginState(isAutoLoginEnable)
     }
 
     fun initializeDependencies(

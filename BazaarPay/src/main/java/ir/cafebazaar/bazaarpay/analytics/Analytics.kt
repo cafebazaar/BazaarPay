@@ -24,6 +24,9 @@ internal object Analytics {
     private var checkOutToken: String? = null
     private var merchantName: String? = null
     private var amount: String? = null
+    private var isAutoLoginEnable = false
+
+    private const val IS_AUTO_LOGIN_ENABLE = "isAutoLoginEnable"
 
     private const val ACTION_LOG_THRESHOLD = 40
     private const val ACTION_LOG_RETRY = 3
@@ -54,6 +57,10 @@ internal object Analytics {
 
     fun setAmount(amount: String) {
         this.amount = amount
+    }
+
+    fun setAutoLoginState(isEnable: Boolean) {
+        isAutoLoginEnable = isEnable
     }
 
     @Synchronized
@@ -106,6 +113,10 @@ internal object Analytics {
             ?.removeAll { it.id <= (lastSyncedId ?: -1L) }
 
         checkActionLogThreshold()
+
+        if (isAutoLoginEnable) {
+            extra[IS_AUTO_LOGIN_ENABLE] = true
+        }
 
         val now = System.currentTimeMillis()
         val gson = Gson()
