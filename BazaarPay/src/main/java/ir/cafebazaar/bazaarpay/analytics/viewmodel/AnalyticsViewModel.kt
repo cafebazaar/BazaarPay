@@ -10,16 +10,16 @@ import kotlinx.coroutines.launch
 
 internal class AnalyticsViewModel : ViewModel() {
 
-    private val analyticsRepository = ServiceLocator.get<AnalyticsRepository>()
+    private val analyticsRepository: AnalyticsRepository? = ServiceLocator.getOrNull()
 
     fun listenThreshold() = viewModelScope.launch {
         Analytics.actionLogsThresholdFlow.debounce(1000).collect {
-            analyticsRepository.sendAnalyticsEvents()
+            analyticsRepository?.sendAnalyticsEvents()
         }
     }
 
     override fun onCleared() {
-        analyticsRepository.sendAnalyticsEvents()
+        analyticsRepository?.sendAnalyticsEvents()
         Analytics.shutDownAnalytics()
         super.onCleared()
     }
