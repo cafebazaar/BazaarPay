@@ -7,18 +7,18 @@ import ir.cafebazaar.bazaarpay.analytics.plugins.VisitEventPlugin
 
 /**
  *
- * @property fragmentLabel us the fragment name which sending in `close` and `visit` actionLogs
+ * @property where is the fragment name which sending in `close` and `visit` actionLogs
  */
-internal open class BaseFragment(private val fragmentLabel: String) : Fragment() {
+internal open class BaseFragment(internal val where: String) : Fragment() {
 
     private val closePlugin by lazy {
-        CloseEventPlugin(fragmentLabel, requireActivity()).also {
+        CloseEventPlugin(where, requireActivity()).also {
             lifecycle.addObserver(it)
         }
     }
 
     private val visitPlugin by lazy {
-        VisitEventPlugin(fragmentLabel).also {
+        VisitEventPlugin(where).also {
             lifecycle.addObserver(it)
         }
     }

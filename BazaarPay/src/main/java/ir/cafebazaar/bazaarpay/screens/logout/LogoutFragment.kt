@@ -50,8 +50,9 @@ internal class LogoutFragment : BaseFragment(SCREEN_NAME) {
         _binding = null
     }
 
-    private companion object {
+    companion object {
 
-        const val SCREEN_NAME = "Logout"
+        internal const val SCREEN_NAME = "Logout"
+        internal val CLICK_LOG_OUT = "clickLogOut"
     }
 }
