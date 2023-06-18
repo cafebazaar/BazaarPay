@@ -30,7 +30,7 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
         buildTypes.each {
-            it.buildConfigField 'String', 'VERSION', '"beta"'
+            it.buildConfigField 'String', 'VERSION', "\"${VERSION_CODE}\""
         }
     }
     compileOptions {

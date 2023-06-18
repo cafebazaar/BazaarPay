@@ -26,7 +26,7 @@ object HeaderInterceptor : Interceptor {
 
     private fun buildUserAgentHeaderValue(): String {
         return "BazaarPayAndroidSDK/" +
-                "${BuildConfig.VERSION} " +
+                "${BuildConfig.VERSION}/" +
                 "${ServiceLocator.get<Context>().packageName}/" +
                 getAppVersionName()
     }
