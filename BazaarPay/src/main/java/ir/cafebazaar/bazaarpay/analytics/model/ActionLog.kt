@@ -9,6 +9,7 @@ internal data class ActionLog(
     val sessionId: String,
     val timestamp: Long,
     val where: String?,
+    val what: String?,
     val paymentFlowDetails: PaymentFlowDetails,
     val pageDetails: String?,
     val extra: String?,
@@ -42,6 +43,7 @@ internal fun ActionLog.toActionLogDto(
         accountId = accountId,
         deviceId = deviceId,
         where = where,
+        what = what,
         extra = extra,
         paymentFlowDetailsDto = paymentFlowDetails.toPaymentFlowDetailsDto()
     )

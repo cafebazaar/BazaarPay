@@ -59,10 +59,11 @@ internal object Analytics {
     @Synchronized
     fun sendClickEvent(
         where: String,
+        what: String,
         extra: HashMap<String, Any> = hashMapOf(),
         pageDetails: HashMap<String, Any> = hashMapOf(),
     ) {
-        addAnalyticsEvent(EventType.CLICK, where, extra, pageDetails)
+        addAnalyticsEvent(EventType.CLICK, where, extra, pageDetails, what = what)
     }
 
     @Synchronized
@@ -98,6 +99,7 @@ internal object Analytics {
         where: String,
         extra: HashMap<String, Any>,
         pageDetails: HashMap<String, Any>,
+        what: String? = null,
     ) {
 
         actionLogs.takeIf { (it.firstOrNull()?.id ?: 0) <= (lastSyncedId ?: -1L) }
@@ -115,6 +117,7 @@ internal object Analytics {
             type = type,
             timestamp = now,
             where = where,
+            what = what,
             pageDetails = pageDetailsInStringFormat,
             extra = extraInStringFormat,
             paymentFlowDetails = PaymentFlowDetails(
