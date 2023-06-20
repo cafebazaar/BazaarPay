@@ -36,6 +36,9 @@ internal class PaymentMethodsViewModel : ViewModel() {
     private val _navigationLiveData = SingleLiveEvent<NavDirections>()
     val navigationLiveData: LiveData<NavDirections> = _navigationLiveData
 
+    private val _deepLinkLiveData = SingleLiveEvent<String>()
+    val deepLinkLiveData: LiveData<String> = _deepLinkLiveData
+
     fun getPaymentMethodsStateData(): LiveData<Resource<PaymentMethodsInfo>> =
         paymentMethodsStateData
 
@@ -88,11 +91,15 @@ internal class PaymentMethodsViewModel : ViewModel() {
     }
 
     private fun handlePaySuccess(payResult: PayResult) {
-        _navigationLiveData.value =
-            PaymentMethodsFragmentDirections
-                .openPaymentThankYouPageFragment(
-                    isSuccess = true
-                )
+        if (payResult.redirectUrl.isEmpty()) {
+            _navigationLiveData.value =
+                PaymentMethodsFragmentDirections
+                    .openPaymentThankYouPageFragment(
+                        isSuccess = true
+                    )
+        } else {
+            _deepLinkLiveData.value = payResult.redirectUrl
+        }
     }
 
     private fun handlePayFailure(errorModel: ErrorModel) {
