@@ -48,13 +48,7 @@ class BazaarPayActivity : AppCompatActivity(), FinishCallbacks {
     }
 
     override fun attachBaseContext(newBase: Context) {
-        if (ServiceLocator.isConfigInitiated()) {
-            setLocale(newBase)
-        } else {
-            newBase
-        }.also {
-            super.attachBaseContext(it)
-        }
+        super.attachBaseContext(setLocale(newBase))
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
