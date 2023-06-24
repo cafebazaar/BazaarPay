@@ -9,31 +9,26 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import ir.cafebazaar.bazaarpay.ServiceLocator
+import ir.cafebazaar.bazaarpay.data.bazaar.account.AccountRepository
+import ir.cafebazaar.bazaarpay.data.bazaar.account.models.getotptoken.WaitingTimeWithEnableCall
+import ir.cafebazaar.bazaarpay.data.bazaar.account.models.verifyotptoken.LoginResponse
 import ir.cafebazaar.bazaarpay.data.bazaar.models.ErrorModel
 import ir.cafebazaar.bazaarpay.extensions.fold
 import ir.cafebazaar.bazaarpay.extensions.getFailureOrNull
 import ir.cafebazaar.bazaarpay.extensions.getOrNull
-import ir.cafebazaar.bazaarpay.data.bazaar.account.AccountRepository
-import ir.cafebazaar.bazaarpay.data.bazaar.account.models.getotptoken.WaitingTimeWithEnableCall
-import ir.cafebazaar.bazaarpay.data.bazaar.account.models.verifyotptoken.LoginResponse
-import ir.cafebazaar.bazaarpay.models.GlobalDispatchers
 import ir.cafebazaar.bazaarpay.models.Resource
 import ir.cafebazaar.bazaarpay.models.ResourceState
 import ir.cafebazaar.bazaarpay.models.VerificationState
-import ir.cafebazaar.bazaarpay.receiver.SmsPermissionReceiver
 import ir.cafebazaar.bazaarpay.utils.Either
 import ir.cafebazaar.bazaarpay.utils.SingleLiveEvent
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.launch
 import kotlin.math.max
 import kotlin.properties.Delegates
 
-@OptIn(ExperimentalCoroutinesApi::class)
 internal class VerifyOtpViewModel : ViewModel() {
 
-    private val accountRepository: AccountRepository = ServiceLocator.get()
-    private val globalDispatchers: GlobalDispatchers = ServiceLocator.get()
+    private val accountRepository: AccountRepository by lazy { ServiceLocator.get() }
 
     private var remainingWaitingTime: Long? = null
     private var countDownTimer: CountDownTimer? = null
@@ -118,7 +113,7 @@ internal class VerifyOtpViewModel : ViewModel() {
         }
     }
 
-    private suspend fun handleVerifyCodeResponse(
+    private fun handleVerifyCodeResponse(
         response: Either<LoginResponse>,
         phoneNumber: String
     ) {
@@ -186,7 +181,6 @@ internal class VerifyOtpViewModel : ViewModel() {
         startReceiveSms()
     }
 
-    @OptIn(ExperimentalCoroutinesApi::class)
     @FlowPreview
     private fun startReceiveSms() {
         viewModelScope.launch {

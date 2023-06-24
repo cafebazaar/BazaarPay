@@ -21,8 +21,8 @@ import kotlinx.coroutines.launch
 
 internal class PaymentMethodsViewModel : ViewModel() {
 
-    private val paymentRepository: PaymentRepository = ServiceLocator.get()
-    private val accountRepository: AccountRepository = ServiceLocator.get()
+    private val paymentRepository: PaymentRepository by lazy { ServiceLocator.get() }
+    private val accountRepository: AccountRepository by lazy { ServiceLocator.get() }
     private val paymentMethodsStateData = SingleLiveEvent<Resource<PaymentMethodsInfo>>()
     private val payStateData = SingleLiveEvent<Resource<PayResult>>()
     private val merchantInfoStateData = SingleLiveEvent<Resource<MerchantInfo>>()
