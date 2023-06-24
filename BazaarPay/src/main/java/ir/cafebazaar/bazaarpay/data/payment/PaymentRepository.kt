@@ -23,7 +23,7 @@ internal class PaymentRepository {
     }
 
     suspend fun pay(
-        paymentMethod: PaymentMethodsType,
+        paymentMethod: String,
         amount: Long? = null
     ): Either<PayResult> {
         return paymentRemoteDataSource.pay(paymentMethod, amount)

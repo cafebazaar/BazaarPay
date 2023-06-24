@@ -200,7 +200,7 @@ internal class DynamicCreditViewModel : ViewModel() {
         _actionLiveData.value = Resource.loading()
         viewModelScope.launch {
             paymentRepository.pay(
-                PaymentMethodsType.INCREASE_BALANCE,
+                PaymentMethodsType.INCREASE_BALANCE.value,
                 (priceString.digits() * TOMAN_TO_RIAL_FACTOR)
             ).fold(
                 {
