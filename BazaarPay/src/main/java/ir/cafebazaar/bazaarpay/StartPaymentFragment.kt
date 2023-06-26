@@ -21,7 +21,7 @@ internal class StartPaymentFragment: Fragment() {
     }
 
     private fun getNavDirection(): NavDirections {
-        return when (accountRepository.isLoggedIn()) {
+        return when (accountRepository.needLogin().not()) {
             true -> {
                 StartPaymentFragmentDirections.actionStartPaymentFragmentToPaymentMethodsFragment()
             }

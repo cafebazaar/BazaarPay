@@ -3,16 +3,11 @@ package ir.cafebazaar.bazaarpay
 import android.content.Context
 import com.google.gson.GsonBuilder
 import ir.cafebazaar.bazaarpay.data.SharedDataSource
-import ir.cafebazaar.bazaarpay.data.bazaar.account.AccountSharedDataSource
-import ir.cafebazaar.bazaarpay.data.bazaar.account.AccountRepository
 import ir.cafebazaar.bazaarpay.data.bazaar.account.AccountLocalDataSource
 import ir.cafebazaar.bazaarpay.data.bazaar.account.AccountRemoteDataSource
+import ir.cafebazaar.bazaarpay.data.bazaar.account.AccountRepository
 import ir.cafebazaar.bazaarpay.data.bazaar.account.AccountService
-import ir.cafebazaar.bazaarpay.models.GlobalDispatchers
-import ir.cafebazaar.bazaarpay.data.payment.AuthenticatorInterceptor
-import ir.cafebazaar.bazaarpay.data.payment.PaymentRemoteDataSource
-import ir.cafebazaar.bazaarpay.data.payment.PaymentRepository
-import ir.cafebazaar.bazaarpay.data.payment.TokenInterceptor
+import ir.cafebazaar.bazaarpay.data.bazaar.account.AccountSharedDataSource
 import ir.cafebazaar.bazaarpay.data.bazaar.payment.BazaarPaymentRemoteDataSource
 import ir.cafebazaar.bazaarpay.data.bazaar.payment.BazaarPaymentRepository
 import ir.cafebazaar.bazaarpay.data.bazaar.payment.api.BazaarPaymentService
@@ -20,8 +15,13 @@ import ir.cafebazaar.bazaarpay.data.device.DeviceInterceptor
 import ir.cafebazaar.bazaarpay.data.device.DeviceLocalDataSource
 import ir.cafebazaar.bazaarpay.data.device.DeviceRepository
 import ir.cafebazaar.bazaarpay.data.device.DeviceSharedDataSource
+import ir.cafebazaar.bazaarpay.data.payment.AuthenticatorInterceptor
+import ir.cafebazaar.bazaarpay.data.payment.PaymentRemoteDataSource
+import ir.cafebazaar.bazaarpay.data.payment.PaymentRepository
+import ir.cafebazaar.bazaarpay.data.payment.TokenInterceptor
 import ir.cafebazaar.bazaarpay.data.payment.UpdateRefreshTokenHelper
 import ir.cafebazaar.bazaarpay.data.payment.api.PaymentService
+import ir.cafebazaar.bazaarpay.models.GlobalDispatchers
 import ir.cafebazaar.bazaarpay.network.gsonConverterFactory
 import ir.cafebazaar.bazaarpay.network.interceptor.AgentInterceptor
 import kotlinx.coroutines.Dispatchers
@@ -45,13 +45,17 @@ internal object ServiceLocator {
     fun initializeConfigs(
         checkoutToken: String,
         phoneNumber: String? = null,
-        isDark: Boolean?
+        isDark: Boolean?,
+        autoLoginPhoneNumber: String? = null,
+        isAutoLoginEnable: Boolean = false,
     ) {
         servicesMap[getKeyOfClass<String>(CHECKOUT_TOKEN)] = checkoutToken
         servicesMap[getKeyOfClass<String?>(PHONE_NUMBER)] = phoneNumber
         servicesMap[getKeyOfClass<Boolean>(IS_DARK)] = isDark
-        servicesMap[getKeyOfClass<Int>(LANGUAGE)] = 2
+        servicesMap[getKeyOfClass<Int>(LANGUAGE)] = FA_LANGUAGE
         servicesMap[getKeyOfClass<String>(LANGUAGE)] = "fa"
+        servicesMap[getKeyOfClass<String>(AUTO_LOGIN_PHONE_NUMBER)] = autoLoginPhoneNumber
+        servicesMap[getKeyOfClass<Boolean>(IS_AUTO_LOGIN_ENABLE)] = isAutoLoginEnable
     }
 
     fun initializeDependencies(
@@ -82,12 +86,11 @@ internal object ServiceLocator {
         initTokenInterceptor()
 
         // Payment
-        initPaymentService()
+        initRetrofitServices()
         initPaymentRemoteDataSource()
         initPaymentRepository()
 
         // Bazaar
-        initBazaarService()
         initBazaarRemoteDataSource()
         initBazaarRepository()
     }
@@ -186,7 +189,7 @@ internal object ServiceLocator {
     private const val REQUEST_TIME_OUT: Long = 60
     private fun provideOkHttpClient(
         interceptors: List<Interceptor> = emptyList(),
-        authenticator: Authenticator?= null
+        authenticator: Authenticator? = null
     ): OkHttpClient {
         val builder = OkHttpClient.Builder()
 
@@ -242,36 +245,36 @@ internal object ServiceLocator {
             accountRetrofit.create(AccountService::class.java)
     }
 
-    private fun initPaymentService() {
+    private fun initRetrofitServices() {
         val paymentHttpClient = provideOkHttpClient(
             interceptors = listOf(get(TOKEN)),
-            authenticator = get(AUTHENTICATOR)
+            authenticator = get<Authenticator?>(AUTHENTICATOR).takeIf {
+                isUserLogOutAndAutoLoginEnable().not()
+            }
         )
-        val paymentRetrofit = provideRetrofit(
+        val retrofit = provideRetrofit(
             okHttp = paymentHttpClient,
             baseUrl = PAYMENT_BASE_URL
         )
         servicesMap[getKeyOfClass<PaymentService>()] =
-            paymentRetrofit.create(PaymentService::class.java)
-    }
+            retrofit.create(PaymentService::class.java)
 
-    private fun initBazaarService() {
-        val bazaarHttpClient = provideOkHttpClient(
-            interceptors = listOf(get(TOKEN)),
-            authenticator = get(AUTHENTICATOR)
-        )
-        val bazaarRetrofit = provideRetrofit(
-            okHttp = bazaarHttpClient,
-            baseUrl = DEFAULT_BASE_URL,
-            needUnWrapper = true
-        )
         servicesMap[getKeyOfClass<BazaarPaymentService>()] =
-            bazaarRetrofit.create(BazaarPaymentService::class.java)
+            retrofit.create(BazaarPaymentService::class.java)
     }
 
     private fun initDeviceSharedDataSource() {
         servicesMap[getKeyOfClass<SharedDataSource>(DEVICE)] =
             DeviceSharedDataSource()
+    }
+
+    private fun isUserLogOutAndAutoLoginEnable(): Boolean {
+        val accountLocalDataSource: AccountLocalDataSource = get()
+        val isAutoLoginEnable = getOrNull<Boolean>(IS_AUTO_LOGIN_ENABLE) ?: false
+        fun isLoggedIn(): Boolean {
+            return accountLocalDataSource.accessToken.isNotEmpty()
+        }
+        return isAutoLoginEnable && isLoggedIn().not()
     }
 
     private const val DEFAULT_BASE_URL: String = "https://api.cafebazaar.ir/rest-v1/process/"
@@ -281,8 +284,11 @@ internal object ServiceLocator {
     internal const val PHONE_NUMBER: String = "phone_number"
     internal const val IS_DARK: String = "is_dark"
     internal const val LANGUAGE: String = "language"
+    internal const val AUTO_LOGIN_PHONE_NUMBER: String = "autoLoginPhoneNumber"
+    internal const val IS_AUTO_LOGIN_ENABLE: String = "isAutoLoginEnable"
     internal const val ACCOUNT: String = "account"
     internal const val DEVICE: String = "device"
     private const val AUTHENTICATOR: String = "authenticator"
     private const val TOKEN: String = "token"
+    internal const val FA_LANGUAGE = 2
 }

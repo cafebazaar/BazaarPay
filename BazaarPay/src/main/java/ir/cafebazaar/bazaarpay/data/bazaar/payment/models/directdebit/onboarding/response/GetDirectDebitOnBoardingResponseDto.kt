@@ -6,7 +6,7 @@ import ir.cafebazaar.bazaarpay.data.bazaar.payment.models.directdebit.onboarding
 import ir.cafebazaar.bazaarpay.data.bazaar.payment.models.directdebit.onboarding.ThemedIcon
 
 internal class GetDirectDebitOnBoardingResponseDto(
-    @SerializedName("onBoardingDetails") val onBoardingDetails: List<OnBoardingItemDto>
+    @SerializedName("details") val onBoardingDetails: List<OnBoardingItemDto>
 ) {
 
     fun toDirectDebitOnBoardingDetails(): DirectDebitOnBoardingDetails {
@@ -30,8 +30,8 @@ internal class OnBoardingItemDto(
 }
 
 internal class ThemedIconDto(
-    @SerializedName("lightIcon") val lightIcon: String?,
-    @SerializedName("darkIcon") val darkIcon: String?
+    @SerializedName("light_icon") val lightIcon: String?,
+    @SerializedName("dark_icon") val darkIcon: String?
 ) {
 
     fun toThemedIcon(): ThemedIcon {

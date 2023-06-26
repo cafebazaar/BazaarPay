@@ -21,8 +21,8 @@ import kotlinx.coroutines.launch
 
 internal class PaymentMethodsViewModel : ViewModel() {
 
-    private val paymentRepository: PaymentRepository = ServiceLocator.get()
-    private val accountRepository: AccountRepository = ServiceLocator.get()
+    private val paymentRepository: PaymentRepository by lazy { ServiceLocator.get() }
+    private val accountRepository: AccountRepository by lazy { ServiceLocator.get() }
     private val paymentMethodsStateData = SingleLiveEvent<Resource<PaymentMethodsInfo>>()
     private val payStateData = SingleLiveEvent<Resource<PayResult>>()
     private val merchantInfoStateData = SingleLiveEvent<Resource<MerchantInfo>>()
@@ -31,10 +31,13 @@ internal class PaymentMethodsViewModel : ViewModel() {
         _paymentOptionViewLoaderLiveData
 
     private val _accountInfoLiveData = SingleLiveEvent<String>()
-    val accountInfoLiveData:LiveData<String> =  _accountInfoLiveData
+    val accountInfoLiveData: LiveData<String> = _accountInfoLiveData
 
     private val _navigationLiveData = SingleLiveEvent<NavDirections>()
     val navigationLiveData: LiveData<NavDirections> = _navigationLiveData
+
+    private val _deepLinkLiveData = SingleLiveEvent<String>()
+    val deepLinkLiveData: LiveData<String> = _deepLinkLiveData
 
     fun getPaymentMethodsStateData(): LiveData<Resource<PaymentMethodsInfo>> =
         paymentMethodsStateData
@@ -88,11 +91,16 @@ internal class PaymentMethodsViewModel : ViewModel() {
     }
 
     private fun handlePaySuccess(payResult: PayResult) {
-        _navigationLiveData.value =
-            PaymentMethodsFragmentDirections
-                .openPaymentThankYouPageFragment(
-                    isSuccess = true
-                )
+        payStateData.value = Resource.loaded()
+        if (payResult.redirectUrl.isEmpty()) {
+            _navigationLiveData.value =
+                PaymentMethodsFragmentDirections
+                    .openPaymentThankYouPageFragment(
+                        isSuccess = true
+                    )
+        } else {
+            _deepLinkLiveData.value = payResult.redirectUrl
+        }
     }
 
     private fun handlePayFailure(errorModel: ErrorModel) {
@@ -115,15 +123,19 @@ internal class PaymentMethodsViewModel : ViewModel() {
             PaymentMethodsType.INCREASE_BALANCE -> {
                 R.string.bazaarpay_increase_balance
             }
+
             PaymentMethodsType.DIRECT_DEBIT_ACTIVATION -> {
                 R.string.bazaarpay_directdebit_signup
             }
+
             PaymentMethodsType.POSTPAID_CREDIT_ACTIVATION -> {
                 R.string.bazaarpay_postpaid_activation
             }
+
             PaymentMethodsType.POSTPAID_CREDIT -> {
                 R.string.bazaarpay_credit_pay
             }
+
             else -> {
                 R.string.bazaarpay_pay
             }
@@ -143,19 +155,22 @@ internal class PaymentMethodsViewModel : ViewModel() {
             PaymentMethodsType.INCREASE_BALANCE -> {
                 openIncreaseBalancePage()
             }
+
             PaymentMethodsType.DIRECT_DEBIT_ACTIVATION -> {
                 openDirectDebitOnBoarding()
             }
+
             PaymentMethodsType.POSTPAID_CREDIT_ACTIVATION -> {
                 openPostpaidTermsPage()
             }
+
             else -> {
-                pay(selectedOption.methodType)
+                pay(selectedOption.methodTypeString)
             }
         }
     }
 
-    private fun pay(methodType: PaymentMethodsType) {
+    private fun pay(methodType: String) {
         payStateData.value = Resource.loading()
         viewModelScope.launch {
             paymentRepository.pay(methodType).fold(

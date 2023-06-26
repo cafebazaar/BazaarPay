@@ -18,6 +18,7 @@ internal data class PaymentMethod(
     val description: String?,
     val subDescription: String?,
     val methodType: PaymentMethodsType,
+    val methodTypeString: String,
     val iconUrl: String?,
     val priceString: String?,
     val enabled: Boolean = true

@@ -17,7 +17,7 @@ information about BazaarPay, please visit our [website](https://bazaarpay.ir/).
 ### Requirements
 
 - The SDK requires Android 4.2 (API level 17) or higher.
-- You need a *Checkout Token* before starting a payment. It is a unique identifier that provides
+- You need a *Checkout Token* or a *PaymentURL* before starting a payment. *Checkout Token* is a unique identifier that provides
   essential payment information. Check out [this]() documentation on how to generate one.
 
 ## Setup
@@ -59,7 +59,7 @@ file:
 
 ```kotlin
 dependencies {
-    implementation("com.github.cafebazaar:bazaarpay:4.0.3")
+    implementation("com.github.cafebazaar:bazaarpay:4.1.0")
 }
 ```
 
@@ -70,7 +70,7 @@ dependencies {
 
 ```groovy
 dependencies {
-    implementation 'com.github.cafebazaar:bazaarpay:4.0.3'
+    implementation 'com.github.cafebazaar:bazaarpay:4.1.0'
 }
 ```
 
@@ -96,8 +96,8 @@ val bazaarPayLauncher = registerForActivityResult(StartBazaarPay()) { isSuccessf
 }
 ```
 
-The happy path of this `if` statement is the place you need to [commit](#3-commit-checkout-token)
-the *Checkout Token*.
+The happy path of this `if` statement is the place you need to [commit](#3-commit-paymentURL)
+the *paymentURL*.
 
 ### 2. Launch Payment
 
@@ -106,26 +106,28 @@ flow by calling the `launch()` function on the payment launcher. It takes an ins
 the `BazaarPayOptions` as its parameter:
 
 ```kotlin
-val options = BazaarPayOptions(checkoutToken = "CHECKOUT_TOKEN")
+val options = BazaarPayOptions
+    .paymentUrl(paymentURL = paymentURL)
+    .build()
 bazaarPayLauncher.launch(options)
 ```
 
-`BazaarPayOptions` has a mandatory `checkoutToken` constructor parameter which is the token
+`BazaarPayOptions` has a mandatory `paymentURL` parameter which is the URL
 you [generated before](#requirements). But there are also other optional parameters that you can
 configure to your needs:
 
 * `phoneNumber` - pre-fills the input field of the login screen with this number.
 
-### 3. Commit Checkout Token
+### 3. Commit paymentURL
 
-You have to commit the *Checkout Token* after successful payment. There is a suspend `commit()`
+You have to commit the *Payment URL* after successful payment. There is a suspend `commit()`
 function for this purpose that you can call from a coroutine scope:
 
 ```kotlin
 // Inside isSuccessful branch of the registered payment callback
 myScope.launch {
     commit(
-        checkoutToken = "CHECKOUT_TOKEN",
+        paymentURL = "PAYMENT_URL",
         context = requireContext(),
         onSuccess = { },
         onFailure = { }

@@ -6,7 +6,7 @@ import okhttp3.Interceptor
 import okhttp3.Request
 import okhttp3.Response
 
-internal class TokenInterceptor: Interceptor {
+internal class TokenInterceptor : Interceptor {
 
     private val accountRepository: AccountRepository = ServiceLocator.get()
 
@@ -19,9 +19,11 @@ internal class TokenInterceptor: Interceptor {
             return chain.proceed(originalRequest)
         }
 
-        val requestBuilder = originalRequest.newBuilder()
-            .header(AUTH_TOKEN_KEY, "Bearer $accessToken")
-            .method(originalRequest.method, originalRequest.body)
+        val requestBuilder = originalRequest.newBuilder().apply {
+            if (accessToken.isNotEmpty()) {
+                header(AUTH_TOKEN_KEY, "Bearer $accessToken")
+            }
+        }.method(originalRequest.method, originalRequest.body)
 
         return chain.proceed(requestBuilder.build())
     }

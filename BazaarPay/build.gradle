@@ -7,8 +7,8 @@ plugins {
     id 'maven-publish'
 }
 
-final VERSION_NAME = "4.0.0"
-final VERSION_CODE = 18
+final VERSION_NAME = "4.1.0"
+final VERSION_CODE = 20
 
 android {
     compileSdk libs.versions.androidCompileSdk.get() as int
@@ -30,7 +30,7 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
         buildTypes.each {
-            it.buildConfigField 'String', 'VERSION', '"beta"'
+            it.buildConfigField 'String', 'VERSION', "\"${VERSION_CODE}\""
         }
     }
     compileOptions {

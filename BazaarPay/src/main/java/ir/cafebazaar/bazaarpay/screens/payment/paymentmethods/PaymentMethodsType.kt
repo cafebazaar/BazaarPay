@@ -6,5 +6,13 @@ internal enum class PaymentMethodsType(val value: String) {
     DIRECT_DEBIT_ACTIVATION("direct_debit_activation"),
     DIRECT_DEBIT("direct_debit"),
     POSTPAID_CREDIT_ACTIVATION("postpaid_credit_activation"),
-    POSTPAID_CREDIT("postpaid_credit");
+    POSTPAID_CREDIT("postpaid_credit"),
+    SHETAB("shetab");
+
+    companion object {
+
+        fun getPaymentMethodsType(value: String) = values().firstOrNull {
+            it.value == value
+        } ?: SHETAB
+    }
 }

@@ -20,7 +20,7 @@ import ir.cafebazaar.bazaarpay.R as BazaarPayR
 class SamplePaymentActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityPaymentBinding
-    private lateinit var checkoutToken: String
+    private lateinit var paymentURL: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,12 +31,12 @@ class SamplePaymentActivity : AppCompatActivity() {
 
     private fun registerClickListeners(binding: ActivityPaymentBinding) {
         binding.paymentButton.setSafeOnClickListener {
-            checkoutToken = binding.checkoutTokenInput.text.toString()
+            paymentURL = binding.paymentUrlInput.text.toString()
             startPayment()
         }
 
         binding.traceButton.setSafeOnClickListener {
-            checkoutToken = binding.checkoutTokenInput.text.toString()
+            paymentURL = binding.paymentUrlInput.text.toString()
             startTracing()
         }
 
@@ -60,10 +60,10 @@ class SamplePaymentActivity : AppCompatActivity() {
     }
 
     private fun startPayment() {
-        val options = BazaarPayOptions(
-            checkoutToken = checkoutToken,
-            phoneNumber = binding.phoneNumberInput.text.toString()
-        )
+        val options = BazaarPayOptions
+            .paymentUrl(paymentURL = paymentURL)
+            .phoneNumber(phoneNumber = binding.phoneNumberInput.text.toString())
+            .build()
         bazaarPayLauncher.launch(options)
     }
 
@@ -71,7 +71,7 @@ class SamplePaymentActivity : AppCompatActivity() {
         if (isSuccessful) {
             showPaymentResult(R.string.message_successful_payment)
             if (binding.commitPaymentCheckbox.isChecked) {
-                commitCheckoutToken()
+                commitPaymentURL()
             }
         } else {
             showPaymentResult(R.string.message_payment_cancelled, isError = true)
@@ -93,10 +93,10 @@ class SamplePaymentActivity : AppCompatActivity() {
         )
     }
 
-    private fun commitCheckoutToken() {
+    private fun commitPaymentURL() {
         lifecycleScope.launch {
             commit(
-                checkoutToken,
+                paymentURL = paymentURL,
                 context = this@SamplePaymentActivity,
                 onSuccess = {
                     // Successfully committed!
@@ -111,7 +111,7 @@ class SamplePaymentActivity : AppCompatActivity() {
     private fun startTracing() {
         lifecycleScope.launch {
             trace(
-                checkoutToken,
+                paymentURL = paymentURL,
                 context = this@SamplePaymentActivity,
                 onSuccess = {
                     binding.traceResult.text = it.toString()
@@ -125,16 +125,16 @@ class SamplePaymentActivity : AppCompatActivity() {
 
     override fun onSaveInstanceState(outState: Bundle, outPersistentState: PersistableBundle) {
         super.onSaveInstanceState(outState, outPersistentState)
-        outState.putString(KEY_CHECKOUT_TOKEN, checkoutToken)
+        outState.putString(KEY_PAYMENT_URL, paymentURL)
     }
 
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
         super.onRestoreInstanceState(savedInstanceState)
-        checkoutToken = savedInstanceState.getString(KEY_CHECKOUT_TOKEN, "")
+        paymentURL = savedInstanceState.getString(KEY_PAYMENT_URL, "")
     }
 
     companion object {
 
-        const val KEY_CHECKOUT_TOKEN = "checkoutToken"
+        const val KEY_PAYMENT_URL = "paymentURL"
     }
 }
