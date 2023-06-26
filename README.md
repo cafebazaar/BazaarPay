@@ -17,7 +17,7 @@ information about BazaarPay, please visit our [website](https://bazaarpay.ir/).
 ### Requirements
 
 - The SDK requires Android 4.2 (API level 17) or higher.
-- You need a *Checkout Token* and a *PaymentURL* before starting a payment. *Checkout Token* is a unique identifier that provides
+- You need a *Checkout Token* or a *PaymentURL* before starting a payment. *Checkout Token* is a unique identifier that provides
   essential payment information. Check out [this]() documentation on how to generate one.
 
 ## Setup
@@ -59,7 +59,7 @@ file:
 
 ```kotlin
 dependencies {
-    implementation("com.github.cafebazaar:bazaarpay:4.0.3")
+    implementation("com.github.cafebazaar:bazaarpay:4.1.0")
 }
 ```
 
@@ -70,7 +70,7 @@ dependencies {
 
 ```groovy
 dependencies {
-    implementation 'com.github.cafebazaar:bazaarpay:4.0.3'
+    implementation 'com.github.cafebazaar:bazaarpay:4.1.0'
 }
 ```
 
@@ -120,14 +120,14 @@ configure to your needs:
 
 ### 3. Commit paymentURL
 
-You have to commit the *Checkout Token* after successful payment. There is a suspend `commit()`
+You have to commit the *Payment URL* after successful payment. There is a suspend `commit()`
 function for this purpose that you can call from a coroutine scope:
 
 ```kotlin
 // Inside isSuccessful branch of the registered payment callback
 myScope.launch {
     commit(
-        checkoutToken = "CHECKOUT_TOKEN",
+        paymentURL = "PAYMENT_URL",
         context = requireContext(),
         onSuccess = { },
         onFailure = { }
