@@ -1,37 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:gravity="center"
-    android:orientation="vertical"
-    android:paddingHorizontal="@dimen/bazaarpay_default_margin_quadruple">
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="@dimen/bazaarpay_default_margin"
+    android:paddingVertical="@dimen/bazaarpay_default_margin">
 
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/image"
-        android:layout_width="200dp"
-        android:layout_height="200dp"
-        android:layout_marginBottom="@dimen/bazaarpay_default_components_height" />
+    <ImageView
+        android:id="@+id/icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:srcCompat="@drawable/ic_subscribe" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/title"
-        style="@style/Bazaar.Text.Headline1"
-        android:layout_width="match_parent"
+        style="@style/Bazaar.Text.Subtitle2"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/bazaarpay_default_margin"
-        android:gravity="center"
-        android:textColor="@color/bazaarpay_text_primary"
-        tools:text="این تست آیتم های صفحه آن بردینگ هستش" />
+        android:layout_marginStart="@dimen/bazaarpay_default_margin"
+        android:textAlignment="viewStart"
+        android:textColor="@color/bazaarpay_grey_90"
+        app:layout_constraintBottom_toBottomOf="@id/icon"
+        app:layout_constraintStart_toEndOf="@id/icon"
+        app:layout_constraintTop_toTopOf="@id/icon"
+        tools:text="@string/bazaarpay_dd_auto_renew" />
+
+    <androidx.constraintlayout.widget.Barrier
+        android:id="@+id/titleBarrier"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:barrierDirection="bottom"
+        app:constraint_referenced_ids="icon,title" />
 
     <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/description"
-        style="@style/Bazaar.Text.Body2"
-        android:layout_width="match_parent"
+        android:id="@+id/subtitle"
+        style="@style/Bazaar.Text.Caption"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/bazaarpay_default_margin"
-        android:gravity="center"
-        android:textColor="@color/bazaarpay_text_primary"
-        tools:text="این تست آیتم های صفحه آن بردینگ هستش" />
+        android:textAlignment="viewStart"
+        android:textColor="@color/bazaarpay_grey_90"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/titleBarrier"
+        tools:text="@string/bazaarpay_dd_auto_renew_dsc" />
 
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
+
