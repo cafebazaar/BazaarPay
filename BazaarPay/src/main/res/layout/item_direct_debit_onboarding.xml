@@ -5,13 +5,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginHorizontal="@dimen/bazaarpay_default_margin"
+    android:layout_marginHorizontal="@dimen/bazaarpay_default_margin_double"
     android:paddingVertical="@dimen/bazaarpay_default_margin">
 
     <ImageView
         android:id="@+id/icon"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="@dimen/bazaar_button_icon_size"
+        android:layout_height="@dimen/bazaar_button_icon_size"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:srcCompat="@drawable/ic_subscribe" />
@@ -41,6 +41,7 @@
         style="@style/Bazaar.Text.Caption"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/bazaarpay_default_margin"
         android:textAlignment="viewStart"
         android:textColor="@color/bazaarpay_grey_90"
         app:layout_constraintEnd_toEndOf="parent"
