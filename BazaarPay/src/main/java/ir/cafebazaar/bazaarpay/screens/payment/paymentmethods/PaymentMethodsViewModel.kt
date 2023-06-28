@@ -91,6 +91,7 @@ internal class PaymentMethodsViewModel : ViewModel() {
     }
 
     private fun handlePaySuccess(payResult: PayResult) {
+        payStateData.value = Resource.loaded()
         if (payResult.redirectUrl.isEmpty()) {
             _navigationLiveData.value =
                 PaymentMethodsFragmentDirections
