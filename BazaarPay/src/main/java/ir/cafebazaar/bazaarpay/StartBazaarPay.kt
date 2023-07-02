@@ -30,14 +30,14 @@ import ir.cafebazaar.bazaarpay.arg.BazaarPayActivityArgs
 class StartBazaarPay : ActivityResultContract<BazaarPayOptions, Boolean>() {
 
     override fun createIntent(context: Context, input: BazaarPayOptions): Intent {
-        ServiceLocator.initializeConfigs(
+        ServiceLocator.initializeConfigsForNormal(
             checkoutToken = input.checkoutToken,
             phoneNumber = input.phoneNumber,
             isDark = input.isInDarkMode,
             isAutoLoginEnable = input.isAutoLoginEnable,
             autoLoginPhoneNumber = input.autoLoginPhoneNumber
         )
-        val bazaarPayActivityArgs = BazaarPayActivityArgs(
+        val bazaarPayActivityArgs = BazaarPayActivityArgs.Normal(
             checkoutToken = input.checkoutToken,
             phoneNumber = input.phoneNumber,
             isDarkMode = input.isInDarkMode,

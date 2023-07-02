@@ -180,15 +180,27 @@ class BazaarPayActivity : AppCompatActivity(), FinishCallbacks {
 
     private fun initServiceLocator(savedInstanceState: Bundle?) {
         val restoredArgs = savedInstanceState?.get(BAZAARPAY_ACTIVITY_ARGS) as? BazaarPayActivityArgs
-        restoredArgs?.let {
-            ServiceLocator.initializeConfigs(
-                checkoutToken = it.checkoutToken,
-                phoneNumber = it.phoneNumber,
-                isDark = it.isDarkMode,
-                isAutoLoginEnable = it.isAutoLoginEnable,
-                autoLoginPhoneNumber = it.autoLoginPhoneNumber
-            )
+        restoredArgs ?: return
+        when (restoredArgs) {
+            is BazaarPayActivityArgs.Normal -> {
+                with(restoredArgs) {
+                    ServiceLocator.initializeConfigsForNormal(
+                        checkoutToken = checkoutToken,
+                        phoneNumber = phoneNumber,
+                        isDark = isDarkMode,
+                        isAutoLoginEnable = isAutoLoginEnable,
+                        autoLoginPhoneNumber = autoLoginPhoneNumber
+                    )
+                }
+            }
+
+            is BazaarPayActivityArgs.DirectPayContract -> {
+                with(restoredArgs) {
+                    ServiceLocator.initializeConfigsForDirectPayContract(contractToken, phoneNumber)
+                }
+            }
         }
+
         ServiceLocator.initializeDependencies(context = applicationContext)
     }
 

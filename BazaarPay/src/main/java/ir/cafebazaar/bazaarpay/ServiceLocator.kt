@@ -42,7 +42,7 @@ internal object ServiceLocator {
         return (servicesMap[getKeyOfClass<String>(CHECKOUT_TOKEN)]) != null
     }
 
-    fun initializeConfigs(
+    fun initializeConfigsForNormal(
         checkoutToken: String,
         phoneNumber: String? = null,
         isDark: Boolean?,
@@ -56,6 +56,16 @@ internal object ServiceLocator {
         servicesMap[getKeyOfClass<String>(LANGUAGE)] = "fa"
         servicesMap[getKeyOfClass<String>(AUTO_LOGIN_PHONE_NUMBER)] = autoLoginPhoneNumber
         servicesMap[getKeyOfClass<Boolean>(IS_AUTO_LOGIN_ENABLE)] = isAutoLoginEnable
+    }
+
+    fun initializeConfigsForDirectPayContract(
+        contractToken: String,
+        phoneNumber: String? = null,
+    ) {
+        servicesMap[getKeyOfClass<String?>(DIRECT_PAY_CONTRACT_TOKEN)] = contractToken
+        servicesMap[getKeyOfClass<String?>(PHONE_NUMBER)] = phoneNumber
+        servicesMap[getKeyOfClass<Int>(LANGUAGE)] = FA_LANGUAGE
+        servicesMap[getKeyOfClass<String>(LANGUAGE)] = "fa"
     }
 
     fun initializeDependencies(
@@ -282,6 +292,7 @@ internal object ServiceLocator {
 
     internal const val CHECKOUT_TOKEN: String = "checkout_token"
     internal const val PHONE_NUMBER: String = "phone_number"
+    internal const val DIRECT_PAY_CONTRACT_TOKEN: String = "direct-debit-contract-token"
     internal const val IS_DARK: String = "is_dark"
     internal const val LANGUAGE: String = "language"
     internal const val AUTO_LOGIN_PHONE_NUMBER: String = "autoLoginPhoneNumber"
