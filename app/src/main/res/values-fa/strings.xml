@@ -6,6 +6,7 @@
     <string name="label_english">انگلیسی</string>
     <string name="label_open_payment_fragment">مشاهده نمونه پرداخت در فرگمنت</string>
     <string name="label_open_init_checkout">ایجاد توکن پرداخت</string>
+    <string name="label_open_direct_pay_contract">قرارداد دایرکت پی</string>
     <string name="label_optional_phone_number">شماره همراه (اختیاری)</string>
     <string name="label_payment_activity">مشاهده نمونه پرداخت در اکتیویتی</string>
     <string name="label_payment_fragment">نمونه پرداخت در فرگمنت</string>
