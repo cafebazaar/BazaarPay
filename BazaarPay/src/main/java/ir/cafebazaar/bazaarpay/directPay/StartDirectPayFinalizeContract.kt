@@ -19,9 +19,9 @@ import ir.cafebazaar.bazaarpay.arg.BazaarPayActivityArgs
  * ```
  * val bazaarPayDirectPayContractLauncher = registerForActivityResult(startDirectPayFinalizeContract()) { isSuccessful ->
  *     if (isSuccessful) {
- *          // A successful payment.
+ *          // A successful contract.
  *     } else {
- *          // An unsuccessful payment (Canceled by the user).
+ *          // An unsuccessful contract (Or Canceled by the user).
  *     }
  * }
  *
