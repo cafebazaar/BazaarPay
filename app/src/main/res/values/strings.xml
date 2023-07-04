@@ -22,5 +22,7 @@
     <string name="label_init_checkout_token">Init Checkout Token</string>
     <string name="message_payment_cancelled">Payment canceled!</string>
     <string name="message_successful_payment">Payment finished successfully</string>
+    <string name="message_successful_direct_pay_contract">DirectPay contract approved successfully</string>
+    <string name="message_cancelled_direct_pay_contract">DirectPay contract canceled!</string>
     <string name="message_trace_result">Trace result here!</string>
 </resources>

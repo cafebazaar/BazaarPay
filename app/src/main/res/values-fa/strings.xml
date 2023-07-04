@@ -21,5 +21,7 @@
     <string name="label_init_checkout_token">دریافت چک‌اوت توکن</string>
     <string name="message_payment_cancelled">پرداخت لغو شد!</string>
     <string name="message_successful_payment">پرداخت با موفقیت انجام شد!</string>
+    <string name="message_successful_direct_pay_contract">قرارداد دایرکت پی با موفقیت تایید شد</string>
+    <string name="message_cancelled_direct_pay_contract">فرآیند تایید دایرکت پی کنسل شد!</string>
     <string name="message_trace_result">Trace result here!</string>
 </resources>
