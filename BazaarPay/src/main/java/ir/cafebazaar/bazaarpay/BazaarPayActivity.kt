@@ -71,7 +71,7 @@ class BazaarPayActivity : AppCompatActivity(), FinishCallbacks {
     }
 
     private fun handleIntent(intent: Intent?) {
-        if (ServiceLocator.getOrNull<String>(ServiceLocator.CHECKOUT_TOKEN).isNullOrEmpty()) {
+        validateArguments(args) {
             finishActivity()
             return
         }
@@ -91,6 +91,32 @@ class BazaarPayActivity : AppCompatActivity(), FinishCallbacks {
                     }
                 )
             }
+        }
+    }
+
+    private inline fun validateArguments(args: BazaarPayActivityArgs?, onInvalidInputs: () -> Unit) {
+        if (args == null) {
+            onInvalidInputs()
+            return
+        }
+        when (args) {
+            is BazaarPayActivityArgs.Normal -> {
+                if (ServiceLocator.getOrNull<String>(
+                        ServiceLocator.CHECKOUT_TOKEN
+                    ).isNullOrEmpty()
+                ) {
+                    onInvalidInputs()
+                }
+            }
+
+            is BazaarPayActivityArgs.DirectPayContract -> {
+                if (ServiceLocator.getOrNull<String>(ServiceLocator.DIRECT_PAY_CONTRACT_TOKEN
+                    ).isNullOrEmpty()
+                ) {
+                    onInvalidInputs()
+                }
+            }
+
         }
     }
 
@@ -180,7 +206,6 @@ class BazaarPayActivity : AppCompatActivity(), FinishCallbacks {
 
     private fun initServiceLocator(savedInstanceState: Bundle?) {
         val restoredArgs = savedInstanceState?.get(BAZAARPAY_ACTIVITY_ARGS) as? BazaarPayActivityArgs
-        restoredArgs ?: return
         when (restoredArgs) {
             is BazaarPayActivityArgs.Normal -> {
                 with(restoredArgs) {
