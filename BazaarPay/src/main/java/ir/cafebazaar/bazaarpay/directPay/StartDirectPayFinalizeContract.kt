@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import androidx.activity.result.contract.ActivityResultContract
 import ir.cafebazaar.bazaarpay.BazaarPayActivity
+import ir.cafebazaar.bazaarpay.ServiceLocator.initializeConfigsForDirectPayContract
 import ir.cafebazaar.bazaarpay.arg.BazaarPayActivityArgs
 
 /**
@@ -31,6 +32,10 @@ import ir.cafebazaar.bazaarpay.arg.BazaarPayActivityArgs
 class StartDirectPayFinalizeContract : ActivityResultContract<DirectPayContractOptions, Boolean>() {
 
     override fun createIntent(context: Context, input: DirectPayContractOptions): Intent {
+        initializeConfigsForDirectPayContract(
+            phoneNumber = input.phoneNumber,
+            contractToken = input.contractToken
+        )
         val bazaarPayActivityArgs = BazaarPayActivityArgs.DirectPayContract(
             phoneNumber = input.phoneNumber,
             contractToken = input.contractToken
