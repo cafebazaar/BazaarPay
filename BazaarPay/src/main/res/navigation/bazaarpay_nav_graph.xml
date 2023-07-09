@@ -148,5 +148,9 @@
     <fragment
         android:id="@+id/directPayContractFragment"
         android:name="ir.cafebazaar.bazaarpay.screens.directPay.DirectPayContractFragment"
-        android:label="DirectPayContractFragment" />
+        android:label="DirectPayContractFragment" >
+        <argument
+            android:name="contractToken"
+            app:argType="string" />
+    </fragment>
 </navigation>

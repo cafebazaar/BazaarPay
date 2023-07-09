@@ -40,13 +40,15 @@ internal class StartPaymentFragment : Fragment() {
     }
 
     private fun getNavDirectionBasedOnArguments(): NavDirections {
-        return when (args) {
+        return when (val bazaarPayArgs = args) {
             is BazaarPayActivityArgs.Normal -> {
                 StartPaymentFragmentDirections.actionStartPaymentFragmentToPaymentMethodsFragment()
             }
 
             is BazaarPayActivityArgs.DirectPayContract -> {
-                StartPaymentFragmentDirections.actionStartPaymentFragmentToDirectPayContractFragment()
+                StartPaymentFragmentDirections.actionStartPaymentFragmentToDirectPayContractFragment(
+                    contractToken = bazaarPayArgs.contractToken
+                )
             }
 
             else -> {

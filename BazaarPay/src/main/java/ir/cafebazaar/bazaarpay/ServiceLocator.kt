@@ -15,6 +15,8 @@ import ir.cafebazaar.bazaarpay.data.device.DeviceInterceptor
 import ir.cafebazaar.bazaarpay.data.device.DeviceLocalDataSource
 import ir.cafebazaar.bazaarpay.data.device.DeviceRepository
 import ir.cafebazaar.bazaarpay.data.device.DeviceSharedDataSource
+import ir.cafebazaar.bazaarpay.data.directPay.DirectPayRemoteDataSource
+import ir.cafebazaar.bazaarpay.data.directPay.api.DirectPayService
 import ir.cafebazaar.bazaarpay.data.payment.AuthenticatorInterceptor
 import ir.cafebazaar.bazaarpay.data.payment.PaymentRemoteDataSource
 import ir.cafebazaar.bazaarpay.data.payment.PaymentRepository
@@ -100,6 +102,9 @@ internal object ServiceLocator {
         initPaymentRemoteDataSource()
         initPaymentRepository()
 
+        //directPay
+        initDirectPayDataSource()
+
         // Bazaar
         initBazaarRemoteDataSource()
         initBazaarRepository()
@@ -170,6 +175,10 @@ internal object ServiceLocator {
 
     private fun initPaymentRemoteDataSource() {
         servicesMap[getKeyOfClass<PaymentRemoteDataSource>()] = PaymentRemoteDataSource()
+    }
+
+    private fun initDirectPayDataSource() {
+        servicesMap[getKeyOfClass<DirectPayRemoteDataSource>()] = DirectPayRemoteDataSource()
     }
 
     private fun initPaymentRepository() {
@@ -268,6 +277,9 @@ internal object ServiceLocator {
         )
         servicesMap[getKeyOfClass<PaymentService>()] =
             retrofit.create(PaymentService::class.java)
+
+        servicesMap[getKeyOfClass<DirectPayService>()] =
+            retrofit.create(DirectPayService::class.java)
 
         servicesMap[getKeyOfClass<BazaarPaymentService>()] =
             retrofit.create(BazaarPaymentService::class.java)

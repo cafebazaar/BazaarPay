@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.activity.addCallback
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import ir.cafebazaar.bazaarpay.FinishCallbacks
 import ir.cafebazaar.bazaarpay.databinding.FragmentDirectPayContractBinding
 import ir.cafebazaar.bazaarpay.utils.bindWithRTLSupport
@@ -16,6 +17,8 @@ class DirectPayContractFragment : Fragment() {
     private var _binding: FragmentDirectPayContractBinding? = null
     private val binding: FragmentDirectPayContractBinding
         get() = requireNotNull(_binding)
+
+    private val viewModel by viewModels<DirectPayContractViewModel>()
 
     private var finishCallbacks: FinishCallbacks? = null
 
@@ -39,6 +42,7 @@ class DirectPayContractFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        viewModel.loadData(DirectPayContractFragmentArgs.fromBundle(requireArguments()).contractToken)
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
             handleBackPress()
         }
