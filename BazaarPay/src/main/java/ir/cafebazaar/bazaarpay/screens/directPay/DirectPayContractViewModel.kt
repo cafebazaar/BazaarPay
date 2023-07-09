@@ -9,8 +9,8 @@ import ir.cafebazaar.bazaarpay.data.bazaar.models.ErrorModel
 import ir.cafebazaar.bazaarpay.data.directPay.DirectPayRemoteDataSource
 import ir.cafebazaar.bazaarpay.data.directPay.model.DirectPayContractResponse
 import ir.cafebazaar.bazaarpay.extensions.fold
-import ir.cafebazaar.bazaarpay.models.PaymentFlowState
 import ir.cafebazaar.bazaarpay.models.Resource
+import ir.cafebazaar.bazaarpay.models.ResourceState
 import kotlinx.coroutines.launch
 
 internal class DirectPayContractViewModel : ViewModel() {
@@ -28,7 +28,7 @@ internal class DirectPayContractViewModel : ViewModel() {
     }
 
     private fun success(response: DirectPayContractResponse) {
-        _contractLiveData.value = Resource(PaymentFlowState.DirectDebitObBoardingDetails, response)
+        _contractLiveData.value = Resource(ResourceState.Success, response)
     }
 
     private fun error(error: ErrorModel) {

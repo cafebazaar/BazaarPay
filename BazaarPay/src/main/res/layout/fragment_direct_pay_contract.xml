@@ -2,9 +2,85 @@
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/bazaarpay_surface_color_0">
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/container"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/approveButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/backButton">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/textView"
+                style="@style/Bazaar.Text.Medium.Heading1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="فعال‌سازی «پرداخت خودکار» در مرچنت تست"
+                android:textColor="@color/bazaarpay_black_primary" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/bazaarpay_default_margin_double"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+
+                <ImageView
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_marginHorizontal="@dimen/bazaarpay_default_margin"
+                    android:src="@drawable/ic_logo_with_border" />
+
+                <ImageView
+                    android:layout_width="12dp"
+                    android:layout_height="12dp"
+                    android:layout_marginHorizontal="@dimen/bazaarpay_default_margin"
+                    android:src="@drawable/ic_arrows" />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_marginHorizontal="@dimen/bazaarpay_default_margin"
+                    app:srcCompat="@drawable/ic_contract" />
+
+                <ImageView
+                    android:layout_width="12dp"
+                    android:layout_height="12dp"
+                    android:layout_marginHorizontal="@dimen/bazaarpay_default_margin"
+                    android:src="@drawable/ic_arrows" />
+
+                <ImageView
+                    android:id="@+id/imageMerchant"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_marginHorizontal="@dimen/bazaarpay_default_margin"
+                    tools:src="@drawable/ic_logo_placeholder" />
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginHorizontal="@dimen/bazaarpay_default_margin_double"
+                android:layout_marginTop="@dimen/bazaarpay_default_margin_double"
+                android:background="@color/bazaarpay_grey_30" />
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
 
 
     <ir.cafebazaar.bazaarpay.widget.loading.SpinKitView
@@ -28,5 +104,59 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <ir.cafebazaar.bazaarpay.widget.button.BazaarPayButton
+        android:id="@+id/approveButton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/bazaarpay_default_margin_double"
+        android:layout_marginBottom="@dimen/bazaarpay_default_margin_double"
+        app:bazaarpayButtonTheme="contained"
+        app:bazaarpayButtonType="app"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/guideline2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:sizeMode="large"
+        app:text="بله فعال شود" />
+
+    <ir.cafebazaar.bazaarpay.widget.button.BazaarPayButton
+        android:id="@+id/cancelButton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/bazaarpay_default_margin_double"
+        app:bazaarpayButtonTheme="outline"
+        app:bazaarpayButtonType="app"
+        app:layout_constraintBottom_toBottomOf="@+id/approveButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/guideline2"
+        app:sizeMode="large"
+        app:text="خیر" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="411dp"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintGuide_percent="0.5"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/contentGroup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:constraint_referenced_ids="container,cancelButton,approveButton"
+        tools:visibility="visible" />
+
+    <ir.cafebazaar.bazaarpay.widget.RTLImageView
+        android:id="@+id/backButton"
+        style="@style/Bazaar.Image.Toolbar.Icon"
+        android:layout_marginStart="@dimen/bazaarpay_default_margin_double"
+        android:layout_marginTop="@dimen/bazaarpay_default_margin"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_round_arrow_back_icon_secondary_24dp_old" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
