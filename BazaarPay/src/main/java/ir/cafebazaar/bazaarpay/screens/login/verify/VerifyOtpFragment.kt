@@ -14,10 +14,13 @@ import androidx.activity.addCallback
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.NavDirections
 import androidx.navigation.fragment.findNavController
 import com.google.android.gms.auth.api.phone.SmsRetriever
+import ir.cafebazaar.bazaarpay.BazaarPayActivity
 import ir.cafebazaar.bazaarpay.FinishCallbacks
 import ir.cafebazaar.bazaarpay.R
+import ir.cafebazaar.bazaarpay.arg.BazaarPayActivityArgs
 import ir.cafebazaar.bazaarpay.databinding.FragmentVerifyOtpBinding
 import ir.cafebazaar.bazaarpay.extensions.getReadableErrorMessage
 import ir.cafebazaar.bazaarpay.extensions.gone
@@ -46,6 +49,12 @@ internal class VerifyOtpFragment : Fragment() {
 
     private val fragmentArgs: VerifyOtpFragmentArgs by lazy(LazyThreadSafetyMode.NONE) {
         VerifyOtpFragmentArgs.fromBundle(requireArguments())
+    }
+
+    private val activityArgs: BazaarPayActivityArgs? by lazy {
+        requireActivity().intent.getParcelableExtra(
+            BazaarPayActivity.BAZAARPAY_ACTIVITY_ARGS
+        )
     }
 
     private var _binding: FragmentVerifyOtpBinding? = null
@@ -202,9 +211,7 @@ internal class VerifyOtpFragment : Fragment() {
         sendLoginBroadcast()
         hideKeyboardInLandscape()
 
-        findNavController().navigate(
-            VerifyOtpFragmentDirections.actionVerifyOtpFragmentToPaymentMethodsFragment()
-        )
+        findNavController().navigate(getNavDirectionBasedOnArguments())
     }
 
     private fun sendLoginBroadcast() {
@@ -286,6 +293,24 @@ internal class VerifyOtpFragment : Fragment() {
     private fun hideKeyboardInLandscape() {
         if (requireContext().isLandscape) {
             hideKeyboard(binding.verificationCodeEditText.windowToken)
+        }
+    }
+
+    private fun getNavDirectionBasedOnArguments(): NavDirections {
+        return when (val bazaarPayArgs = activityArgs) {
+            is BazaarPayActivityArgs.Normal -> {
+                VerifyOtpFragmentDirections.actionVerifyOtpFragmentToPaymentMethodsFragment()
+            }
+
+            is BazaarPayActivityArgs.DirectPayContract -> {
+                VerifyOtpFragmentDirections.actionVerifyOtpFragmentToDirectPayContractFragment(
+                    contractToken = bazaarPayArgs.contractToken
+                )
+            }
+
+            else -> {
+                VerifyOtpFragmentDirections.actionVerifyOtpFragmentToPaymentMethodsFragment()
+            }
         }
     }
 

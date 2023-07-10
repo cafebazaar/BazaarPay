@@ -60,6 +60,9 @@
         <action
             android:id="@+id/action_verifyOtpFragment_to_paymentMethodsFragment"
             app:destination="@id/paymentMethodsFragment" />
+        <action
+            android:id="@+id/action_verifyOtpFragment_to_directPayContractFragment"
+            app:destination="@id/directPayContractFragment" />
     </fragment>
     <fragment
         android:id="@+id/paymentMethodsFragment"
