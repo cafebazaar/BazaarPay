@@ -111,6 +111,19 @@ class DirectPayContractFragment : Fragment() {
             imageView = binding.imageMerchant,
             imageURI = data.merchantLogo
         )
+
+        binding.txtDescription.text = data.description
+        binding.txtMerchantDescription.text = data.description
+        BazaarPayImageLoader.loadImage(
+            imageView = binding.imageMerchantInfo,
+            imageURI = data.merchantLogo
+        )
+        binding.txtMerchantTitle.text = getString(
+            R.string.bazaarpay_merchant_message,
+            data.merchantName
+        )
+        binding.txtMerchantDescription.text = "از دیوار چیزی نخرید آقا"
+        binding.txtTitle.text = getString(R.string.bazaarpay_direct_pay_title, data.merchantName)
     }
 
     private fun hideErrorView() {
