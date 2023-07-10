@@ -47,12 +47,18 @@ class SampleDirectPayContractActivity : AppCompatActivity() {
     private fun registerClickListeners(binding: ActivitySampleDirectPayContractActivityBinding) {
         binding.directPayContractButton.setOnClickListener {
             val contractToken = binding.contractTokenInput.text.toString()
-            startDirectPayContract(contractToken)
+            val message = binding.messageInput.text.toString()
+            val phone = binding.phoneInput.text.toString()
+            startDirectPayContract(contractToken = contractToken, message = message, phone = phone)
         }
     }
 
-    private fun startDirectPayContract(contractToken: String) {
-        val options = DirectPayContractOptions(contractToken = contractToken)
+    private fun startDirectPayContract(contractToken: String, message: String, phone: String) {
+        val options = DirectPayContractOptions(
+            contractToken = contractToken,
+            message = message,
+            phoneNumber = phone
+        )
         bazaarPayDirectPayContractLauncher.launch(options)
     }
 }

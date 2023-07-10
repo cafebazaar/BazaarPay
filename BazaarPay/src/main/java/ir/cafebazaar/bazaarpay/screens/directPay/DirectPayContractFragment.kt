@@ -6,11 +6,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.addCallback
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import ir.cafebazaar.bazaarpay.FinishCallbacks
 import ir.cafebazaar.bazaarpay.R
+import ir.cafebazaar.bazaarpay.ServiceLocator
 import ir.cafebazaar.bazaarpay.data.bazaar.models.ErrorModel
 import ir.cafebazaar.bazaarpay.data.directPay.model.DirectPayContractResponse
 import ir.cafebazaar.bazaarpay.databinding.FragmentDirectPayContractBinding
@@ -31,6 +33,8 @@ class DirectPayContractFragment : Fragment() {
         get() = requireNotNull(_binding)
 
     private val viewModel by viewModels<DirectPayContractViewModel>()
+
+    private val merchantMessage: String? by lazy { ServiceLocator.getOrNull(ServiceLocator.DIRECT_PAY_MERCHANT_MESSAGE) }
 
     private var finishCallbacks: FinishCallbacks? = null
 
@@ -118,12 +122,16 @@ class DirectPayContractFragment : Fragment() {
             imageView = binding.imageMerchantInfo,
             imageURI = data.merchantLogo
         )
-        binding.txtMerchantTitle.text = getString(
-            R.string.bazaarpay_merchant_message,
-            data.merchantName
-        )
-        binding.txtMerchantDescription.text = "از دیوار چیزی نخرید آقا"
         binding.txtTitle.text = getString(R.string.bazaarpay_direct_pay_title, data.merchantName)
+
+        binding.merchantMessageContainer.isVisible = merchantMessage.isNullOrEmpty().not()
+        if (merchantMessage.isNullOrEmpty().not()) {
+            binding.txtMerchantTitle.text = getString(
+                R.string.bazaarpay_merchant_message,
+                data.merchantName
+            )
+            binding.txtMerchantDescription.text = merchantMessage
+        }
     }
 
     private fun hideErrorView() {

@@ -9,4 +9,5 @@ package ir.cafebazaar.bazaarpay.directPay
 data class DirectPayContractOptions(
     val contractToken: String,
     val phoneNumber: String? = null,
+    val message: String? = null,
 )

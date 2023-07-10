@@ -63,9 +63,11 @@ internal object ServiceLocator {
     fun initializeConfigsForDirectPayContract(
         contractToken: String,
         phoneNumber: String? = null,
+        message: String? = null,
     ) {
         servicesMap[getKeyOfClass<String?>(DIRECT_PAY_CONTRACT_TOKEN)] = contractToken
         servicesMap[getKeyOfClass<String?>(PHONE_NUMBER)] = phoneNumber
+        servicesMap[getKeyOfClass<String?>(DIRECT_PAY_MERCHANT_MESSAGE)] = message
         servicesMap[getKeyOfClass<Int>(LANGUAGE)] = FA_LANGUAGE
         servicesMap[getKeyOfClass<String>(LANGUAGE)] = "fa"
     }
@@ -304,6 +306,7 @@ internal object ServiceLocator {
 
     internal const val CHECKOUT_TOKEN: String = "checkout_token"
     internal const val PHONE_NUMBER: String = "phone_number"
+    internal const val DIRECT_PAY_MERCHANT_MESSAGE: String = "direct_pay_merchant_message"
     internal const val DIRECT_PAY_CONTRACT_TOKEN: String = "direct-debit-contract-token"
     internal const val IS_DARK: String = "is_dark"
     internal const val LANGUAGE: String = "language"

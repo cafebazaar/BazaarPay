@@ -81,6 +81,7 @@
                 android:background="@color/bazaarpay_grey_30" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/merchantMessageContainer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/bazaarpay_default_margin_double"

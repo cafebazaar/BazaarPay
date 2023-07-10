@@ -34,11 +34,13 @@ class StartDirectPayFinalizeContract : ActivityResultContract<DirectPayContractO
     override fun createIntent(context: Context, input: DirectPayContractOptions): Intent {
         initializeConfigsForDirectPayContract(
             phoneNumber = input.phoneNumber,
-            contractToken = input.contractToken
+            contractToken = input.contractToken,
+            message = input.message,
         )
         val bazaarPayActivityArgs = BazaarPayActivityArgs.DirectPayContract(
             phoneNumber = input.phoneNumber,
-            contractToken = input.contractToken
+            contractToken = input.contractToken,
+            message = input.message
         )
         return Intent(context, BazaarPayActivity::class.java).apply {
             putExtra(BazaarPayActivity.BAZAARPAY_ACTIVITY_ARGS, bazaarPayActivityArgs)

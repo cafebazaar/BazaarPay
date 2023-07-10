@@ -94,7 +94,10 @@ class BazaarPayActivity : AppCompatActivity(), FinishCallbacks {
         }
     }
 
-    private inline fun validateArguments(args: BazaarPayActivityArgs?, onInvalidInputs: () -> Unit) {
+    private inline fun validateArguments(
+        args: BazaarPayActivityArgs?,
+        onInvalidInputs: () -> Unit
+    ) {
         if (args == null) {
             onInvalidInputs()
             return
@@ -110,7 +113,8 @@ class BazaarPayActivity : AppCompatActivity(), FinishCallbacks {
             }
 
             is BazaarPayActivityArgs.DirectPayContract -> {
-                if (ServiceLocator.getOrNull<String>(ServiceLocator.DIRECT_PAY_CONTRACT_TOKEN
+                if (ServiceLocator.getOrNull<String>(
+                        ServiceLocator.DIRECT_PAY_CONTRACT_TOKEN
                     ).isNullOrEmpty()
                 ) {
                     onInvalidInputs()
@@ -221,7 +225,11 @@ class BazaarPayActivity : AppCompatActivity(), FinishCallbacks {
 
             is BazaarPayActivityArgs.DirectPayContract -> {
                 with(restoredArgs) {
-                    ServiceLocator.initializeConfigsForDirectPayContract(contractToken, phoneNumber)
+                    ServiceLocator.initializeConfigsForDirectPayContract(
+                        contractToken = contractToken,
+                        phoneNumber = phoneNumber,
+                        message = message
+                    )
                 }
             }
         }

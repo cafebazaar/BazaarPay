@@ -3,6 +3,7 @@
     <string name="app_name" translatable="false">BazaarPay</string>
     <string name="label_payment_url">Payment URL</string>
     <string name="label_contract_token">Contract Token</string>
+    <string name="label_description">Message (optional)</string>
     <string name="label_commit_payment">Commit Payment</string>
     <string name="label_dark_mode">Dark Mode</string>
     <string name="label_english">English</string>
