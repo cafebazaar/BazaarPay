@@ -21,9 +21,11 @@ fun asNetworkException(
         is IOException -> {
             ErrorModel.NetworkConnection("No Network Connection", throwable)
         }
+
         is HttpException -> {
             createHttpError(serviceType, throwable)
         }
+
         is ErrorModel -> throwable
         else -> ErrorModel.Server(MESSAGE_SERVER_ERROR, throwable)
     }
@@ -40,34 +42,42 @@ private fun createHttpError(
             IllegalStateException("response.errorBody() is null")
         )
     } else {
-        try {
-            val errorBody = response.errorBody()!!.string()
-            when (serviceType) {
-                ServiceType.BAZAAR -> {
-                    val bazaarErrorResponse = GsonBuilder().create().fromJson(
-                        errorBody,
-                        BazaarErrorResponseDto::class.java
-                    )
-                    readErrorFromResponse(bazaarErrorResponse)
-                }
-                ServiceType.BAZAARPAY -> {
-                    val bazaarPayErrorResponse = GsonBuilder().create().fromJson(
-                        errorBody,
-                        BazaarPayErrorResponseDto::class.java
-                    )
-                    readErrorFromBazaarPayResponse(
-                        bazaarPayErrorResponse,
-                        errorBody
-                    )
-                }
-            }
-        } catch (ignored: Exception) {
-            ErrorModel.Server(MESSAGE_SERVER_ERROR, ignored)
-        }
+        val errorBody = response.errorBody()!!.string()
+        makeErrorModelFromNetworkResponse(errorBody, serviceType)
     }
 }
 
-private fun readErrorFromResponse(
+internal fun makeErrorModelFromNetworkResponse(
+    errorBody: String,
+    serviceType: ServiceType = ServiceType.BAZAAR
+): ErrorModel {
+    return try {
+        when (serviceType) {
+            ServiceType.BAZAAR -> {
+                val bazaarErrorResponse = GsonBuilder().create().fromJson(
+                    errorBody,
+                    BazaarErrorResponseDto::class.java
+                )
+                readErrorFromResponse(bazaarErrorResponse)
+            }
+
+            ServiceType.BAZAARPAY -> {
+                val bazaarPayErrorResponse = GsonBuilder().create().fromJson(
+                    errorBody,
+                    BazaarPayErrorResponseDto::class.java
+                )
+                readErrorFromBazaarPayResponse(
+                    bazaarPayErrorResponse,
+                    errorBody
+                )
+            }
+        }
+    } catch (ignored: Exception) {
+        ErrorModel.Server(MESSAGE_SERVER_ERROR, ignored)
+    }
+}
+
+internal fun readErrorFromResponse(
     errorResponse: BazaarErrorResponseDto
 ): ErrorModel {
     return try {
@@ -113,24 +123,30 @@ private fun errorFromErrorResponse(
             ErrorCode.FORBIDDEN.value -> {
                 ErrorModel.Forbidden(errorMessage)
             }
+
             ErrorCode.INPUT_NOT_VALID.value -> {
                 ErrorModel.InputNotValid(errorMessage)
             }
+
             ErrorCode.NOT_FOUND.value -> {
                 ErrorModel.NotFound(errorMessage)
             }
+
             ErrorCode.RATE_LIMIT_EXCEEDED.value -> {
                 ErrorModel.RateLimitExceeded(errorMessage)
             }
+
             ErrorCode.INTERNAL_SERVER_ERROR.value -> {
                 ErrorModel.Server(
                     MESSAGE_INTERNAL_SERVER_ERROR,
                     NetworkErrorException(MESSAGE_INTERNAL_SERVER_ERROR)
                 )
             }
+
             ErrorCode.LOGIN_IS_REQUIRED.value -> {
                 ErrorModel.LoginIsRequired
             }
+
             else -> ErrorModel.Http(
                 this?.errorMessage ?: "",
                 this?.errorCode?.toErrorCode() ?: ErrorCode.UNKNOWN
