@@ -17,7 +17,8 @@ information about BazaarPay, please visit our [website](https://bazaarpay.ir/).
 ### Requirements
 
 - The SDK requires Android 4.2 (API level 17) or higher.
-- You need a *Checkout Token* or a *PaymentURL* before starting a payment. *Checkout Token* is a unique identifier that provides
+- You need a *Checkout Token* or a *PaymentURL* before starting a payment. *Checkout Token* is a
+  unique identifier that provides
   essential payment information. Check out [this]() documentation on how to generate one.
 
 ## Setup
@@ -141,6 +142,41 @@ worker or a Service for safety reasons.
 
 > Although sending tokens through the SDK is possible, we recommend this happens on the server
 > side.
+
+# DirectPay Contract
+
+DirectPay is a feature that enables direct payment from the merchant without user intervention,
+particularly useful for cases like automatic subscription renewal. You can find more information
+about DirectPay [here](https://github.com/BazaarPay/Docs/blob/main/persian/DirectPay.md).
+
+This SDK allows you to obtain permission from the user for DirectPay. We will explain more about it
+below. First, let's register the contract callback.
+
+```kotlin
+val bazaarPayDirectPayContractLauncher = registerForActivityResult(
+    StartDirectPayFinalizeContract()
+) { isSuccessful ->
+    if (isSuccessful) {
+        // A successful directPay contract.
+    } else {
+        // An unsuccessful directPay contract (or canceled by the user).
+    }
+}
+```
+
+## Launch DirectPayContract
+
+To initiate a payment flow, you can call the `launch()` function on the directPayContract launcher. It
+requires an instance of `DirectPayContractOptions` as its parameter:
+
+```kotlin
+ val options = DirectPayContractOptions(
+    contractToken = contractToken,
+    message = message,
+    phoneNumber = phone
+)
+bazaarPayDirectPayContractLauncher.launch(options)
+```
 
 License
 --------
