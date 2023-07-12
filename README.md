@@ -164,9 +164,13 @@ val bazaarPayDirectPayContractLauncher = registerForActivityResult(
 }
 ```
 
+> To provide a better user experience, please display appropriate messages to users in both
+> successful and unsuccessful scenarios, informing them of the outcome.
+
 ## Launch DirectPayContract
 
-To initiate a payment flow, you can call the `launch()` function on the directPayContract launcher. It
+To initiate a payment flow, you can call the `launch()` function on the directPayContract launcher.
+It
 requires an instance of `DirectPayContractOptions` as its parameter:
 
 ```kotlin
