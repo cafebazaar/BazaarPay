@@ -53,8 +53,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"/>
 
-    <include
-        android:id="@+id/directDebitOnBoardingItems"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/directDebitOnBoardingList"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginVertical="@dimen/bazaarpay_default_margin_double"
@@ -62,7 +62,9 @@
         app:layout_constraintTop_toBottomOf="@id/directDebitOnboardingSubtitle"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        layout="@layout/view_direct_debit_onboarding_items" />
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        tools:itemCount="3"
+        tools:listitem="@layout/item_direct_debit_onboarding"/>
 
     <ir.cafebazaar.bazaarpay.widget.button.BazaarPayButton
         android:id="@+id/nextButton"
@@ -83,7 +85,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:visibility="gone"
-        app:constraint_referenced_ids="nextButton,directDebitOnBoardingItems,directDebitIcon,directDebitOnboardingTitle,directDebitOnboardingSubtitle"
+        app:constraint_referenced_ids="nextButton,directDebitOnBoardingList,directDebitIcon,directDebitOnboardingTitle,directDebitOnboardingSubtitle"
         tools:visibility="visible" />
 
     <ir.cafebazaar.bazaarpay.widget.loading.SpinKitView
