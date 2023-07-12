@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.activity.addCallback
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
@@ -13,7 +14,10 @@ import androidx.navigation.fragment.findNavController
 import ir.cafebazaar.bazaarpay.FinishCallbacks
 import ir.cafebazaar.bazaarpay.R
 import ir.cafebazaar.bazaarpay.ServiceLocator
+import ir.cafebazaar.bazaarpay.ServiceLocator.DIRECT_PAY_CONTRACT_TOKEN
+import ir.cafebazaar.bazaarpay.ServiceLocator.DIRECT_PAY_MERCHANT_MESSAGE
 import ir.cafebazaar.bazaarpay.data.bazaar.models.ErrorModel
+import ir.cafebazaar.bazaarpay.data.directPay.model.DirectPayContractAction
 import ir.cafebazaar.bazaarpay.data.directPay.model.DirectPayContractResponse
 import ir.cafebazaar.bazaarpay.databinding.FragmentDirectPayContractBinding
 import ir.cafebazaar.bazaarpay.extensions.gone
@@ -34,7 +38,10 @@ class DirectPayContractFragment : Fragment() {
 
     private val viewModel by viewModels<DirectPayContractViewModel>()
 
-    private val merchantMessage: String? by lazy { ServiceLocator.getOrNull(ServiceLocator.DIRECT_PAY_MERCHANT_MESSAGE) }
+    private val merchantMessage: String? by lazy {
+        ServiceLocator.getOrNull(DIRECT_PAY_MERCHANT_MESSAGE)
+    }
+    private val contractToken: String by lazy { ServiceLocator.get(DIRECT_PAY_CONTRACT_TOKEN) }
 
     private var finishCallbacks: FinishCallbacks? = null
 
@@ -68,11 +75,48 @@ class DirectPayContractFragment : Fragment() {
 
     private fun initViews() {
         binding.backButton.setSafeOnClickListener { handleBackPress() }
-        binding.cancelButton.setSafeOnClickListener { handleBackPress() }
+        binding.cancelButton.setSafeOnClickListener {
+            viewModel.finalizeContract(
+                contractToken = contractToken,
+                action = DirectPayContractAction.Decline
+            )
+        }
+        binding.approveButton.setSafeOnClickListener {
+            viewModel.finalizeContract(
+                contractToken = contractToken,
+                action = DirectPayContractAction.Confirm
+            )
+        }
     }
 
     private fun registerObservers() {
         viewModel.contractLiveData.observe(viewLifecycleOwner, ::onContractLoaded)
+        viewModel.contractActionLiveData.observe(viewLifecycleOwner, ::onFinalizeContractResponse)
+    }
+
+    private fun onFinalizeContractResponse(result: Pair<Resource<Unit>, DirectPayContractAction>) {
+        val (response, action) = result
+        if (action == DirectPayContractAction.Decline) {
+            binding.cancelButton.isLoading = response.isLoading
+            binding.approveButton.isLoading = false
+        } else {
+            binding.cancelButton.isLoading = false
+            binding.approveButton.isLoading = response.isLoading
+        }
+
+        when (response.resourceState) {
+            ResourceState.Success -> {
+                if (action == DirectPayContractAction.Confirm) {
+                    finishCallbacks?.onSuccess()
+                } else {
+                    finishCallbacks?.onCanceled()
+                }
+            }
+
+            ResourceState.Error -> {
+                Toast.makeText(requireContext(), response.failure?.message, Toast.LENGTH_SHORT).show()
+            }
+        }
     }
 
     private fun onContractLoaded(resource: Resource<DirectPayContractResponse>?) {
