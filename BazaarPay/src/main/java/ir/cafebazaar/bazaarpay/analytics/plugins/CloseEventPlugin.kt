@@ -3,7 +3,6 @@ package ir.cafebazaar.bazaarpay.analytics.plugins
 import android.app.Activity
 import androidx.lifecycle.LifecycleOwner
 import ir.cafebazaar.bazaarpay.analytics.Analytics
-import ir.cafebazaar.bazaarpay.analytics.model.EventType
 import ir.cafebazaar.bazaarpay.base.ActivityPlugin
 import ir.cafebazaar.bazaarpay.base.FragmentPlugin
 import ir.cafebazaar.bazaarpay.utils.StopWatch
@@ -30,7 +29,7 @@ internal class CloseEventPlugin(
         if (shouldLogDestructionEvent()) {
             Analytics.sendCloseEvent(
                 where = where,
-                extra = hashMapOf(EventType.CLOSE.toString() to DESTRUCTION_EVENT)
+                extra = hashMapOf(CLOSE_TYPE to DESTRUCTION_EVENT)
             )
         }
         activity = null
@@ -50,5 +49,6 @@ internal class CloseEventPlugin(
 
         const val DESTRUCTION_EVENT = "page_destruction"
         const val ELAPSED_TIME = "elapsed_time"
+        const val CLOSE_TYPE = "close_type"
     }
 }
