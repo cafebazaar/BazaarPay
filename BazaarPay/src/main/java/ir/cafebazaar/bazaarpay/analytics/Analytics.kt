@@ -114,9 +114,7 @@ internal object Analytics {
 
         checkActionLogThreshold()
 
-        if (isAutoLoginEnable) {
-            extra[IS_AUTO_LOGIN_ENABLE] = true
-        }
+        extra[IS_AUTO_LOGIN_ENABLE] = isAutoLoginEnable
 
         val now = System.currentTimeMillis()
         val gson = Gson()
