@@ -1,11 +1,11 @@
 package ir.cafebazaar.bazaarpay.data.bazaar.models
 
-import ir.cafebazaar.bazaarpay.ServiceLocator
+import ir.cafebazaar.bazaarpay.ServiceLocator.FA_LANGUAGE
 
 internal abstract class BazaarBaseRequest(
     val properties: Map<String, Any> = mapOf(
-        "language" to ServiceLocator.get<Int>(ServiceLocator.LANGUAGE),
-        "androidClientInfo" to AndroidClientInfo(ServiceLocator.get(ServiceLocator.LANGUAGE))
+        "language" to FA_LANGUAGE,
+        "androidClientInfo" to AndroidClientInfo("fa")
     )
 )
 

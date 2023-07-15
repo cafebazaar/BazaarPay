@@ -28,6 +28,7 @@ class BazaarPayActivity : AppCompatActivity(), FinishCallbacks {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         initNightMode()
+        initServiceLocator(savedInstanceState)
         super.onCreate(savedInstanceState)
         binding = layoutInflater.bindWithRTLSupport(ActivityBazaarPayBinding::inflate)
         setContentView(binding.root)
@@ -36,7 +37,6 @@ class BazaarPayActivity : AppCompatActivity(), FinishCallbacks {
 
         handleIntent(intent)
 
-        initServiceLocator()
         startFadeInAnimation()
 
         analyticsViewModel.listenThreshold()
@@ -54,32 +54,12 @@ class BazaarPayActivity : AppCompatActivity(), FinishCallbacks {
     }
 
     override fun attachBaseContext(newBase: Context) {
-        if (ServiceLocator.isConfigInitiated()) {
-            setLocale(newBase)
-        } else {
-            newBase
-        }.also {
-            super.attachBaseContext(it)
-        }
+        super.attachBaseContext(setLocale(newBase))
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         outState.putParcelable(BAZAARPAY_ACTIVITY_ARGS, args)
-    }
-
-    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
-        super.onRestoreInstanceState(savedInstanceState)
-        val args = savedInstanceState.get(BAZAARPAY_ACTIVITY_ARGS) as? BazaarPayActivityArgs
-        args?.let {
-            ServiceLocator.initializeConfigs(
-                checkoutToken = it.checkoutToken,
-                phoneNumber = it.phoneNumber,
-                isDark = it.isDarkMode,
-                isAutoLoginEnable = it.isAutoLoginEnable,
-                autoLoginPhoneNumber = it.autoLoginPhoneNumber
-            )
-        }
     }
 
     override fun applyOverrideConfiguration(overrideConfiguration: Configuration?) {
@@ -204,12 +184,18 @@ class BazaarPayActivity : AppCompatActivity(), FinishCallbacks {
         }
     }
 
-    private fun initServiceLocator() {
-        if (ServiceLocator.isConfigInitiated()) {
-            ServiceLocator.initializeDependencies(
-                context = applicationContext
+    private fun initServiceLocator(savedInstanceState: Bundle?) {
+        val restoredArgs = savedInstanceState?.get(BAZAARPAY_ACTIVITY_ARGS) as? BazaarPayActivityArgs
+        restoredArgs?.let {
+            ServiceLocator.initializeConfigs(
+                checkoutToken = it.checkoutToken,
+                phoneNumber = it.phoneNumber,
+                isDark = it.isDarkMode,
+                isAutoLoginEnable = it.isAutoLoginEnable,
+                autoLoginPhoneNumber = it.autoLoginPhoneNumber
             )
         }
+        ServiceLocator.initializeDependencies(context = applicationContext)
     }
 
     override fun onSuccess() {

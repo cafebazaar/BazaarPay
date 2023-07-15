@@ -52,6 +52,7 @@ internal interface PaymentService {
     ): InitCheckoutResponse
 
     companion object {
+
         const val PAY_ENDPOINT_LANG = "lang"
         const val CHECKOUT_TOKEN_LABEL = "checkout_token"
     }

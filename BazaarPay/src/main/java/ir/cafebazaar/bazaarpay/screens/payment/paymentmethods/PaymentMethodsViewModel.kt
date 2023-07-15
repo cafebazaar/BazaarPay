@@ -26,8 +26,8 @@ import kotlinx.coroutines.launch
 
 internal class PaymentMethodsViewModel : ViewModel() {
 
-    private val paymentRepository: PaymentRepository = ServiceLocator.get()
-    private val accountRepository: AccountRepository = ServiceLocator.get()
+    private val paymentRepository: PaymentRepository by lazy { ServiceLocator.get() }
+    private val accountRepository: AccountRepository by lazy { ServiceLocator.get() }
     private val paymentMethodsStateData = SingleLiveEvent<Resource<PaymentMethodsInfo>>()
     private val payStateData = SingleLiveEvent<Resource<PayResult>>()
     private val merchantInfoStateData = SingleLiveEvent<Resource<MerchantInfo>>()
@@ -40,6 +40,9 @@ internal class PaymentMethodsViewModel : ViewModel() {
 
     private val _navigationLiveData = SingleLiveEvent<NavDirections>()
     val navigationLiveData: LiveData<NavDirections> = _navigationLiveData
+
+    private val _deepLinkLiveData = SingleLiveEvent<String>()
+    val deepLinkLiveData: LiveData<String> = _deepLinkLiveData
 
     fun getPaymentMethodsStateData(): LiveData<Resource<PaymentMethodsInfo>> =
         paymentMethodsStateData
@@ -93,11 +96,16 @@ internal class PaymentMethodsViewModel : ViewModel() {
     }
 
     private fun handlePaySuccess(payResult: PayResult) {
-        _navigationLiveData.value =
-            PaymentMethodsFragmentDirections
-                .openPaymentThankYouPageFragment(
-                    isSuccess = true
-                )
+        payStateData.value = Resource.loaded()
+        if (payResult.redirectUrl.isEmpty()) {
+            _navigationLiveData.value =
+                PaymentMethodsFragmentDirections
+                    .openPaymentThankYouPageFragment(
+                        isSuccess = true
+                    )
+        } else {
+            _deepLinkLiveData.value = payResult.redirectUrl
+        }
     }
 
     private fun handlePayFailure(errorModel: ErrorModel) {

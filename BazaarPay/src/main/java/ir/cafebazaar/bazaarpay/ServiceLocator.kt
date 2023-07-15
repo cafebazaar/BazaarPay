@@ -56,7 +56,7 @@ internal object ServiceLocator {
         servicesMap[getKeyOfClass<String>(CHECKOUT_TOKEN)] = checkoutToken
         servicesMap[getKeyOfClass<String?>(PHONE_NUMBER)] = phoneNumber
         servicesMap[getKeyOfClass<Boolean>(IS_DARK)] = isDark
-        servicesMap[getKeyOfClass<Int>(LANGUAGE)] = 2
+        servicesMap[getKeyOfClass<Int>(LANGUAGE)] = FA_LANGUAGE
         servicesMap[getKeyOfClass<String>(LANGUAGE)] = "fa"
         servicesMap[getKeyOfClass<String>(AUTO_LOGIN_PHONE_NUMBER)] = autoLoginPhoneNumber
         servicesMap[getKeyOfClass<Boolean>(IS_AUTO_LOGIN_ENABLE)] = isAutoLoginEnable
@@ -311,4 +311,5 @@ internal object ServiceLocator {
     internal const val DEVICE: String = "device"
     private const val AUTHENTICATOR: String = "authenticator"
     private const val TOKEN: String = "token"
+    internal const val FA_LANGUAGE = 2
 }

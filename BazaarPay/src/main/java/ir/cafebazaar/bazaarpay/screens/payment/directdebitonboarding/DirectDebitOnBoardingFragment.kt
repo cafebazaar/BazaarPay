@@ -1,5 +1,6 @@
 package ir.cafebazaar.bazaarpay.screens.payment.directdebitonboarding
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -27,6 +28,8 @@ internal class DirectDebitOnBoardingFragment : BaseFragment(SCREEN_NAME) {
     private var _binding: FragmentDirectDebitOnBoardingBinding? = null
     private val binding: FragmentDirectDebitOnBoardingBinding
         get() = requireNotNull(_binding)
+
+    private val adapter by lazy { DirectDebitOnBoardingAdapter() }
 
     private val onBoardingViewModel: DirectDebitOnBoardingViewModel by viewModels()
 
@@ -57,6 +60,8 @@ internal class DirectDebitOnBoardingFragment : BaseFragment(SCREEN_NAME) {
             nextButton.setSafeOnClickListener {
                 onBoardingViewModel.onNextButtonClicked()
             }
+
+            directDebitOnBoardingList.adapter = adapter
         }
     }
 
@@ -71,6 +76,7 @@ internal class DirectDebitOnBoardingFragment : BaseFragment(SCREEN_NAME) {
         }
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     private fun handleDirectDebitOnBoardingStates(resource: Resource<DirectDebitOnBoardingDetails>?) {
         resource?.let {
             when (it.resourceState) {
@@ -88,6 +94,8 @@ internal class DirectDebitOnBoardingFragment : BaseFragment(SCREEN_NAME) {
                         contentGroup.visible()
                         loading.gone()
                     }
+                    adapter.setItems(it.data?.onBoardingDetails)
+                    adapter.notifyDataSetChanged()
                 }
 
                 ResourceState.Error -> {

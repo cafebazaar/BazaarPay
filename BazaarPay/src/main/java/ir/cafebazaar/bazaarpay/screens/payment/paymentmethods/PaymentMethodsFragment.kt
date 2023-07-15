@@ -25,6 +25,7 @@ import ir.cafebazaar.bazaarpay.databinding.FragmentPaymentOptionsBinding
 import ir.cafebazaar.bazaarpay.extensions.getReadableErrorMessage
 import ir.cafebazaar.bazaarpay.extensions.gone
 import ir.cafebazaar.bazaarpay.extensions.navigateSafe
+import ir.cafebazaar.bazaarpay.extensions.openUrl
 import ir.cafebazaar.bazaarpay.extensions.persianDigitsIfPersian
 import ir.cafebazaar.bazaarpay.extensions.setSafeOnClickListener
 import ir.cafebazaar.bazaarpay.extensions.toastMessage
@@ -92,8 +93,13 @@ internal class PaymentMethodsFragment : BaseFragment(SCREEN_NAME), PaymentMethod
             getMerchantInfoStateData().observe(viewLifecycleOwner, ::handleMerchantInfoStates)
             paymentMethodViewLoaderLiveData.observe(viewLifecycleOwner, ::loadPaymentOptionView)
             navigationLiveData.observe(viewLifecycleOwner, ::handleNavigation)
+            deepLinkLiveData.observe(viewLifecycleOwner, ::handleDeepLink)
             accountInfoLiveData.observe(viewLifecycleOwner, ::setAccountData)
         }
+    }
+
+    private fun handleDeepLink(deepLink: String) {
+        requireContext().openUrl(deepLink)
     }
 
     private fun initUI() {
