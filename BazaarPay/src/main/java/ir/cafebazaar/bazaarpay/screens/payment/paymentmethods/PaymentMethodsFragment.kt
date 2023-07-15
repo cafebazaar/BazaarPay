@@ -162,7 +162,7 @@ internal class PaymentMethodsFragment : BaseFragment(SCREEN_NAME), PaymentMethod
         with(binding.paymentGatewaysRecyclerView) {
             post {
                 val selectedItem = getSavedSelectedItemPosition()
-                onItemClick(selectedItem)
+                onItemClick(selectedItem, isActionByUser = false)
                 children.firstOrNull()?.post {
                     scrollToPosition(selectedItem)
                 }
@@ -181,13 +181,13 @@ internal class PaymentMethodsFragment : BaseFragment(SCREEN_NAME), PaymentMethod
         return selectedItem
     }
 
-    override fun onItemClick(position: Int) {
+    override fun onItemClick(position: Int, isActionByUser: Boolean) {
         if (!isAdded) {
             return
         }
 
         paymentMethodsAdapter?.setSelectedPosition(position)
-        viewModel.onPaymentOptionClicked(position)
+        viewModel.onPaymentOptionClicked(position, isActionByUser)
         binding.paymentGatewaysRecyclerView.scrollToPosition(position)
     }
 

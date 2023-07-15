@@ -112,9 +112,13 @@ internal class PaymentMethodsViewModel : ViewModel() {
         payStateData.value = Resource.failed(failure = errorModel)
     }
 
-    fun onPaymentOptionClicked(selectedOptionPos: Int) {
+    fun onPaymentOptionClicked(selectedOptionPos: Int, isActionByUser: Boolean) {
         getPaymentInfo()?.paymentMethods?.getOrNull(selectedOptionPos)?.let { selectedMethod ->
-            Analytics.sendClickEvent(where = SCREEN_NAME, what = selectedMethod.methodTypeString)
+            Analytics.sendClickEvent(
+                where = SCREEN_NAME,
+                what = selectedMethod.methodTypeString,
+                extra = hashMapOf(IS_ACTION_BY_USER to isActionByUser)
+            )
             _paymentOptionViewLoaderLiveData.value = PaymentMethodViewLoader(
                 price = selectedMethod.priceString,
                 payButton = getPayButtonTextId(selectedMethod.methodType),
@@ -232,5 +236,10 @@ internal class PaymentMethodsViewModel : ViewModel() {
 
     private fun getMethodeTypes(): String {
         return getPaymentInfo()?.paymentMethods?.map { it.methodTypeString }.toString()
+    }
+
+    private companion object {
+
+        const val IS_ACTION_BY_USER = "is_action_by_user"
     }
 }
