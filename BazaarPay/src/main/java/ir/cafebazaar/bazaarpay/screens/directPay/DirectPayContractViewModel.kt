@@ -51,7 +51,7 @@ internal class DirectPayContractViewModel : ViewModel() {
             _contractActionLiveData.value = Resource(ResourceState.Success, Unit) to action
         } else {
             val error = makeErrorModelFromNetworkResponse(
-                response.errorBody().toString(),
+                response.errorBody()?.string().orEmpty(),
                 ServiceType.BAZAARPAY
             )
             onErrorFinalize(action, error)

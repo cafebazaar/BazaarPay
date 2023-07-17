@@ -7,6 +7,7 @@ import ir.cafebazaar.bazaarpay.data.bazaar.models.ErrorCode
 import ir.cafebazaar.bazaarpay.data.bazaar.models.ErrorModel
 import ir.cafebazaar.bazaarpay.models.BazaarErrorResponseDto
 import ir.cafebazaar.bazaarpay.models.BazaarPayErrorResponseDto
+import ir.cafebazaar.bazaarpay.models.ErrorDeserializer
 import retrofit2.HttpException
 import java.io.IOException
 
@@ -62,7 +63,12 @@ internal fun makeErrorModelFromNetworkResponse(
             }
 
             ServiceType.BAZAARPAY -> {
-                val bazaarPayErrorResponse = GsonBuilder().create().fromJson(
+                val gsonBuilder = GsonBuilder()
+                gsonBuilder.registerTypeAdapter(
+                    BazaarPayErrorResponseDto::class.java,
+                    ErrorDeserializer()
+                )
+                val bazaarPayErrorResponse = gsonBuilder.create().fromJson(
                     errorBody,
                     BazaarPayErrorResponseDto::class.java
                 )
