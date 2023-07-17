@@ -40,11 +40,13 @@
                     android:layout_width="12dp"
                     android:layout_height="12dp"
                     android:layout_marginHorizontal="@dimen/bazaarpay_default_margin"
+                    app:tint="@color/bazaarpay_grey_70"
                     android:src="@drawable/ic_arrows" />
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:layout_width="60dp"
                     android:layout_height="60dp"
+                    android:tint="@color/bazaarpay_color_primary"
                     android:layout_marginHorizontal="@dimen/bazaarpay_default_margin"
                     app:srcCompat="@drawable/ic_contract" />
 
@@ -52,6 +54,7 @@
                     android:layout_width="12dp"
                     android:layout_height="12dp"
                     android:layout_marginHorizontal="@dimen/bazaarpay_default_margin"
+                    app:tint="@color/bazaarpay_grey_70"
                     android:src="@drawable/ic_arrows" />
 
                 <ImageView
@@ -120,7 +123,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/bazaarpay_default_margin"
-                    android:textColor="@color/bazaarpay_black_primary"
+                    android:textColor="@color/bazaarpay_color_primary"
                     app:layout_constraintStart_toEndOf="@+id/imageMerchantInfo"
                     app:layout_constraintTop_toTopOf="parent"
                     tools:text="پیام مرچنت دیوار" />

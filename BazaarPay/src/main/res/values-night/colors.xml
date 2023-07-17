@@ -12,6 +12,8 @@
 
     <color name="bazaarpay_divider_0">#393939</color>
     <color name="bazaarpay_divider_1">#494949</color>
+    <color name="bazaarpay_info">#2671EC</color>
+    <color name="bazaarpay_info_background">#2B324D</color>
 
     <color name="bazaarpay_surface_color_0_transparent">@color/bazaarpay_grey_900_transparent</color>
 
