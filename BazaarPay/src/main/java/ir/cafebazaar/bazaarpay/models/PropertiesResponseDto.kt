@@ -22,7 +22,7 @@ data class BazaarPayErrorResponseDto(
     @Expose(serialize = false, deserialize = false) val detail: String
 )
 
-internal class ErrorDeserializer : JsonDeserializer<BazaarPayErrorResponseDto> {
+internal class BazaarPayErrorResponseDeserializer : JsonDeserializer<BazaarPayErrorResponseDto> {
 
     override fun deserialize(
         json: JsonElement?,
@@ -37,7 +37,7 @@ internal class ErrorDeserializer : JsonDeserializer<BazaarPayErrorResponseDto> {
         } else {
             ""
         }
-        return BazaarPayErrorResponseDto(null, errorMessage)
+        return BazaarPayErrorResponseDto(null, errorMessage.replace("\"", ""))
     }
 }
 
