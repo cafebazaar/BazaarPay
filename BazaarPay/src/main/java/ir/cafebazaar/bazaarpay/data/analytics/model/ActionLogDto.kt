@@ -5,9 +5,9 @@ import ir.cafebazaar.bazaarpay.analytics.model.EventType
 
 internal data class ActionLogDto(
     @SerializedName("id") val id: Long,
-    @SerializedName("source") val source: Int,
+    @SerializedName("source") val source: String,
     @SerializedName("type") val type: EventType,
-    @SerializedName("source") val traceId: String,
+    @SerializedName("trace_id") val traceId: String,
     @SerializedName("timestamp") val timestamp: Long,
     @SerializedName("account_id") val accountId: String,
     @SerializedName("device_id") val deviceId: String?,

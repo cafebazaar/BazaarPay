@@ -35,6 +35,6 @@ internal class AnalyticsRepository {
 
     companion object {
 
-        private const val ANDROID_SDK_SOURCE = 1
+        private const val ANDROID_SDK_SOURCE = "ANDROID_SDK"
     }
 }

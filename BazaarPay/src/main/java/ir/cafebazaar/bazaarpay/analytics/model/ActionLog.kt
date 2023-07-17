@@ -30,7 +30,7 @@ internal fun PaymentFlowDetails.toPaymentFlowDetailsDto(): PaymentFlowDetailsDto
 }
 
 internal fun ActionLog.toActionLogDto(
-    source: Int,
+    source: String,
     accountId: String,
     deviceId: String
 ): ActionLogDto {
