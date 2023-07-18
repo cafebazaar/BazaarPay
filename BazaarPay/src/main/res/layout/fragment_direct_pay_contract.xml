@@ -73,7 +73,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/bazaarpay_default_margin_double"
                 android:gravity="center"
-                android:textColor="@color/bazaarpay_black_primary"
+                android:textColor="@color/bazaarpay_color_primary"
                 tools:text="فعال‌سازی «پرداخت خودکار» در دیوار" />
 
             <View
