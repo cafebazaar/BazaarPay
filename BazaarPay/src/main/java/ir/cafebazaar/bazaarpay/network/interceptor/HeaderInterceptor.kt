@@ -13,12 +13,14 @@ object HeaderInterceptor : Interceptor {
     private const val USER_AGENT_HEADER_TITLE: String = "UserAgent"
     private const val ACTION_LOG_TRACE_ID: String = "x-action-log-trace-id"
 
+    private val userAgent by lazy { buildUserAgentHeaderValue() }
+
     override fun intercept(chain: Interceptor.Chain): Response {
         val request =
             chain.request().newBuilder()
                 .addHeader("Content-Type", "application/json")
                 .addHeader("Accept", "application/json")
-                .addHeader(USER_AGENT_HEADER_TITLE, buildUserAgentHeaderValue())
+                .addHeader(USER_AGENT_HEADER_TITLE, userAgent)
                 .header(ACTION_LOG_TRACE_ID, Analytics.getSessionId())
                 .build()
         return chain.proceed(request)
