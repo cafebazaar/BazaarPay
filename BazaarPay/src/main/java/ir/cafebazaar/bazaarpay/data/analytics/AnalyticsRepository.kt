@@ -16,8 +16,6 @@ internal class AnalyticsRepository {
     private val deviceRepository: DeviceRepository = ServiceLocator.get()
     private val accountRepository: AccountRepository = ServiceLocator.get()
 
-
-    //todo (fix accountId and deviceId)
     fun sendAnalyticsEvents() = GlobalScope.launch {
         val actionLogs = Analytics.getPendingActionLogs().also {
             if (it.isEmpty()) return@launch
