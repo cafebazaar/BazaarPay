@@ -6,7 +6,7 @@ import retrofit2.http.POST
 
 internal interface AnalyticsService {
 
-    @POST("analytics/action-log/batch-write")
+    @POST("analytics/action-log/v1/batch-write/")
     suspend fun sendEvents(
         @Body actionLogRequestDto: ActionLogRequestDto
     )

@@ -12,7 +12,7 @@ internal data class ActionLogDto(
     @SerializedName("account_id") val accountId: String,
     @SerializedName("device_id") val deviceId: String?,
     @SerializedName("where") val where: String?,
-    @SerializedName("what") val what: String?,
+    @SerializedName("action_details") val actionDetails: String?,
     @SerializedName("extra") val extra: String?,
     @SerializedName("payment_flow_details") val paymentFlowDetailsDto: PaymentFlowDetailsDto,
 )

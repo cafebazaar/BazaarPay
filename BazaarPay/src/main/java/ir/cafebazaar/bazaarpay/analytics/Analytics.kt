@@ -16,6 +16,8 @@ internal object Analytics {
 
     private const val TAG = "BazaarPayAnalytics"
 
+    private const val WHAT = "what"
+
     private val actionLogs = mutableListOf<ActionLog>()
 
     private val id = AtomicLong(0)
@@ -92,12 +94,12 @@ internal object Analytics {
     }
 
     @Synchronized
-    fun sendVisitEvent(
+    fun sendLoadEvent(
         where: String,
         extra: HashMap<String, Any> = hashMapOf(),
         pageDetails: HashMap<String, Any> = hashMapOf(),
     ) {
-        addAnalyticsEvent(EventType.VISIT, where, extra, pageDetails)
+        addAnalyticsEvent(EventType.LOAD, where, extra, pageDetails)
     }
 
     @Synchronized
@@ -118,6 +120,8 @@ internal object Analytics {
 
         val now = System.currentTimeMillis()
         val gson = Gson()
+        val actionDetails = hashMapOf(WHAT to what).takeIf { what != null }
+        val actionDetailsJson = gson.toJson(actionDetails).takeIf { actionDetails!=null }
         val extraInStringFormat = gson.toJson(extra).toString()
         val pageDetailsInStringFormat = gson.toJson(pageDetails).toString()
         val actionLog = ActionLog(
@@ -126,7 +130,7 @@ internal object Analytics {
             type = type,
             timestamp = now,
             where = where,
-            what = what,
+            actionDetails = actionDetailsJson,
             pageDetails = pageDetailsInStringFormat,
             extra = extraInStringFormat,
             paymentFlowDetails = PaymentFlowDetails(

@@ -10,14 +10,14 @@ internal class VisitEventPlugin(
 ) : ActivityPlugin, FragmentPlugin {
 
     override fun onCreate(owner: LifecycleOwner) {
-        Analytics.sendVisitEvent(
+        Analytics.sendLoadEvent(
             where = where,
             extra = hashMapOf(VISIT_TYPE to CREATION_EVENT)
         )
     }
 
     override fun onResume(owner: LifecycleOwner) {
-        Analytics.sendVisitEvent(where = where)
+        Analytics.sendLoadEvent(where = where)
     }
 
     private companion object {

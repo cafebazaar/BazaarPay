@@ -42,10 +42,6 @@ internal object ServiceLocator {
 
     val servicesMap = HashMap<String, Any?>()
 
-    fun isConfigInitiated(): Boolean {
-        return (servicesMap[getKeyOfClass<String>(CHECKOUT_TOKEN)]) != null
-    }
-
     fun initializeConfigs(
         checkoutToken: String,
         phoneNumber: String? = null,
@@ -237,7 +233,7 @@ internal object ServiceLocator {
 
     private fun provideRetrofit(
         okHttp: OkHttpClient,
-        baseUrl: String = DEFAULT_BASE_URL,
+        baseUrl: String,
         needUnWrapper: Boolean = false
     ): Retrofit {
         return Retrofit.Builder()
@@ -257,7 +253,8 @@ internal object ServiceLocator {
         val accountHttpClient = provideOkHttpClient()
         val accountRetrofit = provideRetrofit(
             okHttp = accountHttpClient,
-            needUnWrapper = true
+            needUnWrapper = true,
+            baseUrl = DEFAULT_BASE_URL
         )
         servicesMap[getKeyOfClass<AccountService>()] =
             accountRetrofit.create(AccountService::class.java)
@@ -281,7 +278,7 @@ internal object ServiceLocator {
             retrofit.create(BazaarPaymentService::class.java)
 
         servicesMap[getKeyOfClass<AnalyticsService>()] =
-            retrofit.create(BazaarPaymentService::class.java)
+            retrofit.create(AnalyticsService::class.java)
     }
 
     private fun initDeviceSharedDataSource() {
@@ -299,7 +296,7 @@ internal object ServiceLocator {
     }
 
     private const val DEFAULT_BASE_URL: String = "https://api.cafebazaar.ir/rest-v1/process/"
-    private const val PAYMENT_BASE_URL: String = "https://pardakht.cafebazaar.ir/pardakht/badje/v1/"
+    private const val PAYMENT_BASE_URL: String = "https://pardakht.cafebazaar.ir/"
 
     internal const val CHECKOUT_TOKEN: String = "checkout_token"
     internal const val PHONE_NUMBER: String = "phone_number"

@@ -209,8 +209,12 @@ class BazaarPayActivity : AppCompatActivity(), FinishCallbacks {
     }
 
     private fun finishActivity() {
-        ServiceLocator.clear()
         finish()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        ServiceLocator.clear()
     }
 
     private fun isIncreaseBalanceDoneIntent(intent: Intent?): Boolean {
