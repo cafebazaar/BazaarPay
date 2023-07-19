@@ -22,13 +22,16 @@ import ir.cafebazaar.bazaarpay.data.directPay.model.DirectPayContractResponse
 import ir.cafebazaar.bazaarpay.databinding.FragmentDirectPayContractBinding
 import ir.cafebazaar.bazaarpay.extensions.gone
 import ir.cafebazaar.bazaarpay.extensions.navigateSafe
+import ir.cafebazaar.bazaarpay.extensions.persianDigitsIfPersian
 import ir.cafebazaar.bazaarpay.extensions.setSafeOnClickListener
 import ir.cafebazaar.bazaarpay.extensions.visible
 import ir.cafebazaar.bazaarpay.models.Resource
 import ir.cafebazaar.bazaarpay.models.ResourceState
+import ir.cafebazaar.bazaarpay.screens.logout.LogoutFragmentDirections
 import ir.cafebazaar.bazaarpay.utils.bindWithRTLSupport
 import ir.cafebazaar.bazaarpay.utils.getErrorViewBasedOnErrorModel
 import ir.cafebazaar.bazaarpay.utils.imageloader.BazaarPayImageLoader
+import java.util.Locale
 
 class DirectPayContractFragment : Fragment() {
 
@@ -74,7 +77,6 @@ class DirectPayContractFragment : Fragment() {
     }
 
     private fun initViews() {
-        binding.backButton.setSafeOnClickListener { handleBackPress() }
         binding.cancelButton.setSafeOnClickListener {
             viewModel.finalizeContract(
                 contractToken = contractToken,
@@ -87,11 +89,27 @@ class DirectPayContractFragment : Fragment() {
                 action = DirectPayContractAction.Confirm
             )
         }
+        binding.changeAccountLayout.changeAccountAction.setSafeOnClickListener {
+            findNavController().navigate(LogoutFragmentDirections.openLogout())
+        }
+    }
+
+    private fun setAccountData(phone: String?) {
+        with(binding) {
+            if (phone.isNullOrBlank()) {
+                changeAccountLayout.changeAccountBox.gone()
+            } else {
+                changeAccountLayout.changeAccountBox.visible()
+                changeAccountLayout.userAccountPhone.text =
+                    phone.persianDigitsIfPersian(Locale.getDefault())
+            }
+        }
     }
 
     private fun registerObservers() {
         viewModel.contractLiveData.observe(viewLifecycleOwner, ::onContractLoaded)
         viewModel.contractActionLiveData.observe(viewLifecycleOwner, ::onFinalizeContractResponse)
+        viewModel.accountInfoLiveData.observe(viewLifecycleOwner, ::setAccountData)
     }
 
     private fun onFinalizeContractResponse(result: Pair<Resource<Unit>, DirectPayContractAction>) {
@@ -114,7 +132,8 @@ class DirectPayContractFragment : Fragment() {
             }
 
             ResourceState.Error -> {
-                Toast.makeText(requireContext(), response.failure?.message, Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), response.failure?.message, Toast.LENGTH_SHORT)
+                    .show()
             }
         }
     }
@@ -140,9 +159,7 @@ class DirectPayContractFragment : Fragment() {
                 }
 
                 ResourceState.Error -> {
-                    if (it.failure is ErrorModel.NetworkConnection) {
-                        showErrorView(it.failure)
-                    }
+                    showErrorView(it.failure)
                     with(binding) {
                         contentGroup.gone()
                         loading.gone()
@@ -182,7 +199,8 @@ class DirectPayContractFragment : Fragment() {
         binding.errorView.gone()
     }
 
-    private fun showErrorView(errorModel: ErrorModel) {
+    private fun showErrorView(errorModel: ErrorModel?) {
+        errorModel ?: return
         binding.errorView.apply {
             removeAllViews()
             addView(

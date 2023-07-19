@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import ir.cafebazaar.bazaarpay.ServiceLocator
+import ir.cafebazaar.bazaarpay.data.bazaar.account.AccountRepository
 import ir.cafebazaar.bazaarpay.data.bazaar.models.ErrorModel
 import ir.cafebazaar.bazaarpay.data.directPay.DirectPayRemoteDataSource
 import ir.cafebazaar.bazaarpay.data.directPay.model.DirectPayContractAction
@@ -14,21 +15,27 @@ import ir.cafebazaar.bazaarpay.extensions.fold
 import ir.cafebazaar.bazaarpay.extensions.makeErrorModelFromNetworkResponse
 import ir.cafebazaar.bazaarpay.models.Resource
 import ir.cafebazaar.bazaarpay.models.ResourceState
+import ir.cafebazaar.bazaarpay.utils.SingleLiveEvent
 import kotlinx.coroutines.launch
 import retrofit2.Response
 
 internal class DirectPayContractViewModel : ViewModel() {
 
     private val directPayRemoteDataSource: DirectPayRemoteDataSource = ServiceLocator.get()
+    private val accountRepository: AccountRepository by lazy { ServiceLocator.get() }
 
     private val _contractLiveData = MutableLiveData<Resource<DirectPayContractResponse>>()
     val contractLiveData: LiveData<Resource<DirectPayContractResponse>> = _contractLiveData
+
+    private val _accountInfoLiveData = SingleLiveEvent<String>()
+    val accountInfoLiveData: LiveData<String> = _accountInfoLiveData
 
     private val _contractActionLiveData = MutableLiveData<Pair<Resource<Unit>, DirectPayContractAction>>()
     val contractActionLiveData: LiveData<Pair<Resource<Unit>, DirectPayContractAction>> = _contractActionLiveData
 
     fun loadData(contractToken: String) {
         _contractLiveData.value = Resource.loading()
+        getAccountData()
         viewModelScope.launch {
             directPayRemoteDataSource.getDirectPayContract(contractToken).fold(::success, ::error)
         }
@@ -56,6 +63,10 @@ internal class DirectPayContractViewModel : ViewModel() {
             )
             onErrorFinalize(action, error)
         }
+    }
+
+    private fun getAccountData() {
+        _accountInfoLiveData.value = accountRepository.getPhone()
     }
 
     private fun onErrorFinalize(action: DirectPayContractAction, error: ErrorModel) {
