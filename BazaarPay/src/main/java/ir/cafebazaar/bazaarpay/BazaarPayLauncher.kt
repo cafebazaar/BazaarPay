@@ -14,7 +14,7 @@ import ir.cafebazaar.bazaarpay.arg.BazaarPayActivityArgs
  */
 @Deprecated(
     message = "Use the StartBazaarPay class instead",
-    level = DeprecationLevel.WARNING
+    level = DeprecationLevel.ERROR
 )
 object BazaarPayLauncher {
 
