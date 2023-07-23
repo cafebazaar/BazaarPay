@@ -11,11 +11,11 @@ import retrofit2.http.Query
 
 internal interface DirectPayService {
 
-    @GET("direct-pay/contract/info")
+    @GET("pardakht/badje/v1/direct-pay/contract/info")
     suspend fun getDirectPayContract(
         @Query("contract_token") contractToken: String,
     ): GetDirectPayContractResponseDto
 
-    @POST("direct-pay/contract/finalize")
+    @POST("pardakht/badje/v1/direct-pay/contract/finalize")
     suspend fun finalizeContract(@Body request: FinalizeDirectPayContractRequest):Response<Unit>
 }
