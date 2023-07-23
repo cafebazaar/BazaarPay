@@ -210,7 +210,9 @@ internal class VerifyOtpFragment : Fragment() {
 
         sendLoginBroadcast()
         hideKeyboardInLandscape()
-
+        checkSDKInitType {
+            return@handleVerifyCodeSuccess
+        }
         findNavController().navigate(getNavDirectionBasedOnArguments())
     }
 
@@ -311,6 +313,13 @@ internal class VerifyOtpFragment : Fragment() {
             else -> {
                 VerifyOtpFragmentDirections.actionVerifyOtpFragmentToPaymentMethodsFragment()
             }
+        }
+    }
+
+    private inline fun checkSDKInitType(onLoginType: () -> Unit) {
+        if (activityArgs is BazaarPayActivityArgs.Login) {
+            finishCallbacks?.onSuccess()
+            onLoginType.invoke()
         }
     }
 
