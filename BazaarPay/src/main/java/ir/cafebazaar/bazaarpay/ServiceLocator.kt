@@ -15,6 +15,8 @@ import ir.cafebazaar.bazaarpay.data.device.DeviceInterceptor
 import ir.cafebazaar.bazaarpay.data.device.DeviceLocalDataSource
 import ir.cafebazaar.bazaarpay.data.device.DeviceRepository
 import ir.cafebazaar.bazaarpay.data.device.DeviceSharedDataSource
+import ir.cafebazaar.bazaarpay.data.directPay.DirectPayRemoteDataSource
+import ir.cafebazaar.bazaarpay.data.directPay.api.DirectPayService
 import ir.cafebazaar.bazaarpay.data.payment.AuthenticatorInterceptor
 import ir.cafebazaar.bazaarpay.data.payment.PaymentRemoteDataSource
 import ir.cafebazaar.bazaarpay.data.payment.PaymentRepository
@@ -42,7 +44,7 @@ internal object ServiceLocator {
         return (servicesMap[getKeyOfClass<String>(CHECKOUT_TOKEN)]) != null
     }
 
-    fun initializeConfigs(
+    fun initializeConfigsForNormal(
         checkoutToken: String,
         phoneNumber: String? = null,
         isDark: Boolean?,
@@ -56,6 +58,18 @@ internal object ServiceLocator {
         servicesMap[getKeyOfClass<String>(LANGUAGE)] = "fa"
         servicesMap[getKeyOfClass<String>(AUTO_LOGIN_PHONE_NUMBER)] = autoLoginPhoneNumber
         servicesMap[getKeyOfClass<Boolean>(IS_AUTO_LOGIN_ENABLE)] = isAutoLoginEnable
+    }
+
+    fun initializeConfigsForDirectPayContract(
+        contractToken: String,
+        phoneNumber: String? = null,
+        message: String? = null,
+    ) {
+        servicesMap[getKeyOfClass<String?>(DIRECT_PAY_CONTRACT_TOKEN)] = contractToken
+        servicesMap[getKeyOfClass<String?>(PHONE_NUMBER)] = phoneNumber
+        servicesMap[getKeyOfClass<String?>(DIRECT_PAY_MERCHANT_MESSAGE)] = message
+        servicesMap[getKeyOfClass<Int>(LANGUAGE)] = FA_LANGUAGE
+        servicesMap[getKeyOfClass<String>(LANGUAGE)] = "fa"
     }
 
     fun initializeDependencies(
@@ -89,6 +103,9 @@ internal object ServiceLocator {
         initRetrofitServices()
         initPaymentRemoteDataSource()
         initPaymentRepository()
+
+        //directPay
+        initDirectPayDataSource()
 
         // Bazaar
         initBazaarRemoteDataSource()
@@ -160,6 +177,10 @@ internal object ServiceLocator {
 
     private fun initPaymentRemoteDataSource() {
         servicesMap[getKeyOfClass<PaymentRemoteDataSource>()] = PaymentRemoteDataSource()
+    }
+
+    private fun initDirectPayDataSource() {
+        servicesMap[getKeyOfClass<DirectPayRemoteDataSource>()] = DirectPayRemoteDataSource()
     }
 
     private fun initPaymentRepository() {
@@ -259,6 +280,9 @@ internal object ServiceLocator {
         servicesMap[getKeyOfClass<PaymentService>()] =
             retrofit.create(PaymentService::class.java)
 
+        servicesMap[getKeyOfClass<DirectPayService>()] =
+            retrofit.create(DirectPayService::class.java)
+
         servicesMap[getKeyOfClass<BazaarPaymentService>()] =
             retrofit.create(BazaarPaymentService::class.java)
     }
@@ -282,6 +306,8 @@ internal object ServiceLocator {
 
     internal const val CHECKOUT_TOKEN: String = "checkout_token"
     internal const val PHONE_NUMBER: String = "phone_number"
+    internal const val DIRECT_PAY_MERCHANT_MESSAGE: String = "direct_pay_merchant_message"
+    internal const val DIRECT_PAY_CONTRACT_TOKEN: String = "direct-debit-contract-token"
     internal const val IS_DARK: String = "is_dark"
     internal const val LANGUAGE: String = "language"
     internal const val AUTO_LOGIN_PHONE_NUMBER: String = "autoLoginPhoneNumber"

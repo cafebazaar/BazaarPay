@@ -1,14 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+<navigation
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/bazaarpay_nav_graph"
     app:startDestination="@id/startPaymentFragment">
 
-    <action android:id="@+id/open_signin"
-        app:destination="@id/registerFragment"/>
+    <action
+        android:id="@+id/open_signin"
+        app:destination="@id/registerFragment" />
 
-    <action android:id="@+id/open_logout"
-        app:destination="@id/logoutFragment"/>
+    <action
+        android:id="@+id/open_logout"
+        app:destination="@id/logoutFragment" />
 
     <action
         android:id="@+id/open_paymentThankYouPageFragment"
@@ -31,6 +34,9 @@
         <action
             android:id="@+id/action_startPaymentFragment_to_directDebitOnBoardingFragment"
             app:destination="@id/directDebitOnBoardingFragment" />
+        <action
+            android:id="@+id/action_startPaymentFragment_to_directPayContractFragment"
+            app:destination="@id/directPayContractFragment" />
     </fragment>
     <fragment
         android:id="@+id/registerFragment"
@@ -54,6 +60,9 @@
         <action
             android:id="@+id/action_verifyOtpFragment_to_paymentMethodsFragment"
             app:destination="@id/paymentMethodsFragment" />
+        <action
+            android:id="@+id/action_verifyOtpFragment_to_directPayContractFragment"
+            app:destination="@id/directPayContractFragment" />
     </fragment>
     <fragment
         android:id="@+id/paymentMethodsFragment"
@@ -72,7 +81,7 @@
     <fragment
         android:id="@+id/directDebitOnBoardingFragment"
         android:name="ir.cafebazaar.bazaarpay.screens.payment.directdebitonboarding.DirectDebitOnBoardingFragment"
-        android:label="DirectDebitOnBoardingFragment" >
+        android:label="DirectDebitOnBoardingFragment">
         <action
             android:id="@+id/action_directDebitOnBoardingFragment_to_nationalIdFragment"
             app:destination="@id/directDebitNationalIdFragment" />
@@ -80,7 +89,7 @@
     <fragment
         android:id="@+id/directDebitNationalIdFragment"
         android:name="ir.cafebazaar.bazaarpay.screens.payment.directdebitactivating.nationalid.DirectDebitNationalIdFragment"
-        android:label="NationalIdFragment" >
+        android:label="NationalIdFragment">
         <action
             android:id="@+id/action_nationalIdFragment_to_directDebitBankListFragment"
             app:destination="@id/directDebitBankListFragment" />
@@ -103,8 +112,8 @@
 
         <argument
             android:name="message"
-            app:argType="string"
             android:defaultValue="@null"
+            app:argType="string"
             app:nullable="true" />
     </fragment>
     <fragment
@@ -138,4 +147,13 @@
         android:id="@+id/logoutFragment"
         android:name="ir.cafebazaar.bazaarpay.screens.logout.LogoutFragment"
         android:label="LogoutFragment" />
+
+    <fragment
+        android:id="@+id/directPayContractFragment"
+        android:name="ir.cafebazaar.bazaarpay.screens.directPay.DirectPayContractFragment"
+        android:label="DirectPayContractFragment" >
+        <argument
+            android:name="contractToken"
+            app:argType="string" />
+    </fragment>
 </navigation>

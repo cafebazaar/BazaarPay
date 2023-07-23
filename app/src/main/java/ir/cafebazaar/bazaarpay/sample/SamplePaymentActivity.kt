@@ -49,6 +49,11 @@ class SamplePaymentActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
+        binding.directPayContractActivityButton.setSafeOnClickListener {
+            val intent = Intent(this, SampleDirectPayContractActivity::class.java)
+            startActivity(intent)
+        }
+
         binding.darkModeCheckbox.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
