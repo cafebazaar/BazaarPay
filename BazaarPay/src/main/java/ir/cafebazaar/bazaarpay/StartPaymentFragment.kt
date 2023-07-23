@@ -26,9 +26,7 @@ internal class StartPaymentFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         if (savedInstanceState == null) {
-            checkLoginStateBasedOnArgs {
-                return@onActivityCreated
-            }
+            checkSDKInitType(onLoginType = { return@onActivityCreated })
             findNavController().navigateSafe(getNavDirection())
         }
     }
@@ -41,10 +39,10 @@ internal class StartPaymentFragment : Fragment() {
         super.onAttach(context)
     }
 
-    private inline fun checkLoginStateBasedOnArgs(onPass: () -> Unit) {
+    private inline fun checkSDKInitType(onLoginType: () -> Unit) {
         if (accountRepository.needLogin().not() && args is BazaarPayActivityArgs.Login) {
             finishCallbacks?.onSuccess()
-            onPass.invoke()
+            onLoginType.invoke()
         }
     }
 

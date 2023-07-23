@@ -210,9 +210,7 @@ internal class VerifyOtpFragment : Fragment() {
 
         sendLoginBroadcast()
         hideKeyboardInLandscape()
-        checkSDKInitType {
-            return@handleVerifyCodeSuccess
-        }
+        checkSDKInitType(onLoginType = { return@handleVerifyCodeSuccess })
         findNavController().navigate(getNavDirectionBasedOnArguments())
     }
 
