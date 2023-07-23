@@ -13,7 +13,7 @@ fun initSDKForAPICall(
     autoLoginPhoneNumber: String? = null,
     isAutoLoginEnable: Boolean = false,
 ) {
-    ServiceLocator.initializeConfigs(
+    ServiceLocator.initializeConfigsForNormal(
         checkoutToken = checkoutToken,
         isDark = false,
         autoLoginPhoneNumber = autoLoginPhoneNumber,

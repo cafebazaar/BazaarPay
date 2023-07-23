@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.navigation.NavDirections
 import androidx.navigation.fragment.findNavController
 import ir.cafebazaar.bazaarpay.base.BaseFragment
+import ir.cafebazaar.bazaarpay.arg.BazaarPayActivityArgs
 import ir.cafebazaar.bazaarpay.data.bazaar.account.AccountRepository
 import ir.cafebazaar.bazaarpay.extensions.navigateSafe
 
@@ -11,6 +12,12 @@ internal class StartPaymentFragment : BaseFragment(PAGE_NAME) {
 
     private val accountRepository: AccountRepository by lazy {
         ServiceLocator.get()
+    }
+
+    private val args: BazaarPayActivityArgs? by lazy {
+        requireActivity().intent.getParcelableExtra(
+            BazaarPayActivity.BAZAARPAY_ACTIVITY_ARGS
+        )
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -23,11 +30,29 @@ internal class StartPaymentFragment : BaseFragment(PAGE_NAME) {
     private fun getNavDirection(): NavDirections {
         return when (accountRepository.needLogin().not()) {
             true -> {
-                StartPaymentFragmentDirections.actionStartPaymentFragmentToPaymentMethodsFragment()
+                getNavDirectionBasedOnArguments()
             }
 
             false -> {
                 StartPaymentFragmentDirections.actionStartPaymentFragmentToRegisterFragment()
+            }
+        }
+    }
+
+    private fun getNavDirectionBasedOnArguments(): NavDirections {
+        return when (val bazaarPayArgs = args) {
+            is BazaarPayActivityArgs.Normal -> {
+                StartPaymentFragmentDirections.actionStartPaymentFragmentToPaymentMethodsFragment()
+            }
+
+            is BazaarPayActivityArgs.DirectPayContract -> {
+                StartPaymentFragmentDirections.actionStartPaymentFragmentToDirectPayContractFragment(
+                    contractToken = bazaarPayArgs.contractToken
+                )
+            }
+
+            else -> {
+                StartPaymentFragmentDirections.actionStartPaymentFragmentToPaymentMethodsFragment()
             }
         }
     }

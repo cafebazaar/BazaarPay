@@ -77,7 +77,7 @@ class BazaarPayActivity : AppCompatActivity(), FinishCallbacks {
     }
 
     private fun handleIntent(intent: Intent?) {
-        if (ServiceLocator.getOrNull<String>(ServiceLocator.CHECKOUT_TOKEN).isNullOrEmpty()) {
+        validateArguments(args) {
             finishActivity()
             return
         }
@@ -97,6 +97,36 @@ class BazaarPayActivity : AppCompatActivity(), FinishCallbacks {
                     }
                 )
             }
+        }
+    }
+
+    private inline fun validateArguments(
+        args: BazaarPayActivityArgs?,
+        onInvalidInputs: () -> Unit
+    ) {
+        if (args == null) {
+            onInvalidInputs()
+            return
+        }
+        when (args) {
+            is BazaarPayActivityArgs.Normal -> {
+                if (ServiceLocator.getOrNull<String>(
+                        ServiceLocator.CHECKOUT_TOKEN
+                    ).isNullOrEmpty()
+                ) {
+                    onInvalidInputs()
+                }
+            }
+
+            is BazaarPayActivityArgs.DirectPayContract -> {
+                if (ServiceLocator.getOrNull<String>(
+                        ServiceLocator.DIRECT_PAY_CONTRACT_TOKEN
+                    ).isNullOrEmpty()
+                ) {
+                    onInvalidInputs()
+                }
+            }
+
         }
     }
 
@@ -186,15 +216,30 @@ class BazaarPayActivity : AppCompatActivity(), FinishCallbacks {
 
     private fun initServiceLocator(savedInstanceState: Bundle?) {
         val restoredArgs = savedInstanceState?.get(BAZAARPAY_ACTIVITY_ARGS) as? BazaarPayActivityArgs
-        restoredArgs?.let {
-            ServiceLocator.initializeConfigs(
-                checkoutToken = it.checkoutToken,
-                phoneNumber = it.phoneNumber,
-                isDark = it.isDarkMode,
-                isAutoLoginEnable = it.isAutoLoginEnable,
-                autoLoginPhoneNumber = it.autoLoginPhoneNumber
-            )
+        when (restoredArgs) {
+            is BazaarPayActivityArgs.Normal -> {
+                with(restoredArgs) {
+                    ServiceLocator.initializeConfigsForNormal(
+                        checkoutToken = checkoutToken,
+                        phoneNumber = phoneNumber,
+                        isDark = isDarkMode,
+                        isAutoLoginEnable = isAutoLoginEnable,
+                        autoLoginPhoneNumber = autoLoginPhoneNumber
+                    )
+                }
+            }
+
+            is BazaarPayActivityArgs.DirectPayContract -> {
+                with(restoredArgs) {
+                    ServiceLocator.initializeConfigsForDirectPayContract(
+                        contractToken = contractToken,
+                        phoneNumber = phoneNumber,
+                        message = message
+                    )
+                }
+            }
         }
+
         ServiceLocator.initializeDependencies(context = applicationContext)
     }
 
