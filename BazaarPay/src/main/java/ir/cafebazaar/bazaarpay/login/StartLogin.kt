@@ -35,7 +35,7 @@ class StartLogin : ActivityResultContract<LoginOptions, Boolean>() {
         initializeConfigsForLogin(
             phoneNumber = input.phoneNumber,
         )
-        val bazaarPayActivityArgs = BazaarPayActivityArgs.LoginContract(
+        val bazaarPayActivityArgs = BazaarPayActivityArgs.Login(
             phoneNumber = input.phoneNumber,
         )
         return Intent(context, BazaarPayActivity::class.java).apply {

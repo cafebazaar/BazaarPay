@@ -1,5 +1,6 @@
 package ir.cafebazaar.bazaarpay
 
+import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.navigation.NavDirections
@@ -20,22 +21,38 @@ internal class StartPaymentFragment : Fragment() {
         )
     }
 
+    private var finishCallbacks: FinishCallbacks? = null
+
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         if (savedInstanceState == null) {
+            checkLoginStateBasedOnArgs {
+                return@onActivityCreated
+            }
             findNavController().navigateSafe(getNavDirection())
         }
     }
 
-    private fun getNavDirection(): NavDirections {
-        return when (accountRepository.needLogin().not()) {
-            true -> {
-                getNavDirectionBasedOnArguments()
-            }
+    override fun onAttach(context: Context) {
+        finishCallbacks = context as? FinishCallbacks
+            ?: throw IllegalStateException(
+                "this activity must implement FinishPaymentCallbacks"
+            )
+        super.onAttach(context)
+    }
 
-            false -> {
-                StartPaymentFragmentDirections.actionStartPaymentFragmentToRegisterFragment()
-            }
+    private inline fun checkLoginStateBasedOnArgs(onPass: () -> Unit) {
+        if (accountRepository.needLogin().not() && args is BazaarPayActivityArgs.Login) {
+            finishCallbacks?.onSuccess()
+            onPass.invoke()
+        }
+    }
+
+    private fun getNavDirection(): NavDirections {
+        return if (accountRepository.needLogin().not()) {
+            getNavDirectionBasedOnArguments()
+        } else {
+            StartPaymentFragmentDirections.actionStartPaymentFragmentToRegisterFragment()
         }
     }
 
@@ -55,5 +72,10 @@ internal class StartPaymentFragment : Fragment() {
                 StartPaymentFragmentDirections.actionStartPaymentFragmentToPaymentMethodsFragment()
             }
         }
+    }
+
+    override fun onDetach() {
+        finishCallbacks = null
+        super.onDetach()
     }
 }
