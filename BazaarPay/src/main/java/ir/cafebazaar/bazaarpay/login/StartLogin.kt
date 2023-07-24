@@ -11,7 +11,7 @@ import ir.cafebazaar.bazaarpay.arg.BazaarPayActivityArgs
 /**
  * An [ActivityResultContract] to start Login and get the result.
  *
- * The input is a [LoginOptions] that configures the payment flow.
+ * The input is a [BazaarPayLoginOptions] that configures the payment flow.
  *
  * Returns `true` if the login was successful.
  *
@@ -29,9 +29,9 @@ import ir.cafebazaar.bazaarpay.arg.BazaarPayActivityArgs
  * val options = LoginOptions(phoneNumber = "PHONE_NUMBER")
  * bazaarPayLoginLauncher.launch(options)
  */
-class StartLogin : ActivityResultContract<LoginOptions, Boolean>() {
+class StartLogin : ActivityResultContract<BazaarPayLoginOptions, Boolean>() {
 
-    override fun createIntent(context: Context, input: LoginOptions): Intent {
+    override fun createIntent(context: Context, input: BazaarPayLoginOptions): Intent {
         initializeConfigsForLogin(
             phoneNumber = input.phoneNumber,
         )

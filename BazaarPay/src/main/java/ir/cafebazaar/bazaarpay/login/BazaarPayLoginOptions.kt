@@ -5,6 +5,6 @@ package ir.cafebazaar.bazaarpay.login
  *
  * @property phoneNumber the default phone number to pre-fill the login screen's input field. It uses a `null` value by default, resulting in no pre-filled input.
  */
-data class LoginOptions(
+data class BazaarPayLoginOptions(
     val phoneNumber: String? = null
 )
