@@ -12,6 +12,7 @@ import ir.cafebazaar.bazaarpay.BazaarPayOptions
 import ir.cafebazaar.bazaarpay.StartBazaarPay
 import ir.cafebazaar.bazaarpay.commit
 import ir.cafebazaar.bazaarpay.extensions.setSafeOnClickListener
+import ir.cafebazaar.bazaarpay.sample.balance.BalanceSampleActivity
 import ir.cafebazaar.bazaarpay.sample.databinding.ActivityPaymentBinding
 import ir.cafebazaar.bazaarpay.trace
 import kotlinx.coroutines.launch
@@ -46,6 +47,11 @@ class SamplePaymentActivity : AppCompatActivity() {
         }
         binding.initCheckoutActivityButton.setSafeOnClickListener {
             val intent = Intent(this, SampleInitCheckoutActivity::class.java)
+            startActivity(intent)
+        }
+
+        binding.balanceButton.setSafeOnClickListener {
+            val intent = Intent(this, BalanceSampleActivity::class.java)
             startActivity(intent)
         }
 

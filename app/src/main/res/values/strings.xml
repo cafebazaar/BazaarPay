@@ -10,6 +10,7 @@
     <string name="label_open_payment_fragment">Open Payment Fragment</string>
     <string name="label_open_init_checkout">Init Checkout Activity</string>
     <string name="label_open_direct_pay_contract">DirectPay Contract</string>
+    <string name="label_open_balance">Balance / Increase balance</string>
     <string name="label_optional_phone_number">Phone Number (optional)</string>
     <string name="label_payment_activity">Payment Activity</string>
     <string name="label_payment_fragment">Payment Fragment</string>
