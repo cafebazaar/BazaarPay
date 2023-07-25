@@ -117,7 +117,10 @@ internal class PaymentMethodsViewModel : ViewModel() {
             Analytics.sendClickEvent(
                 where = SCREEN_NAME,
                 what = selectedMethod.methodTypeString,
-                extra = hashMapOf(IS_ACTION_BY_USER to isActionByUser)
+                extra = hashMapOf(
+                    IS_ACTION_BY_USER to isActionByUser,
+                    IS_METHODE_ENABLE to selectedMethod.enabled
+                )
             )
             _paymentOptionViewLoaderLiveData.value = PaymentMethodViewLoader(
                 price = selectedMethod.priceString,
@@ -241,5 +244,6 @@ internal class PaymentMethodsViewModel : ViewModel() {
     private companion object {
 
         const val IS_ACTION_BY_USER = "is_action_by_user"
+        const val IS_METHODE_ENABLE = "is_enable"
     }
 }
