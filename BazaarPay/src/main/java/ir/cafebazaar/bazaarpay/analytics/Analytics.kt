@@ -10,6 +10,7 @@ import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow
 import java.util.UUID
+import java.util.concurrent.TimeUnit
 import java.util.concurrent.atomic.AtomicLong
 
 internal object Analytics {
@@ -118,10 +119,10 @@ internal object Analytics {
 
         extra[IS_AUTO_LOGIN_ENABLE] = isAutoLoginEnable
 
-        val now = System.currentTimeMillis()
+        val now = TimeUnit.MILLISECONDS.toSeconds(System.currentTimeMillis())
         val gson = Gson()
         val actionDetails = hashMapOf(WHAT to what).takeIf { what != null }
-        val actionDetailsJson = gson.toJson(actionDetails).takeIf { actionDetails!=null }
+        val actionDetailsJson = gson.toJson(actionDetails).takeIf { actionDetails != null }
         val extraInStringFormat = gson.toJson(extra).toString()
         val pageDetailsInStringFormat = gson.toJson(pageDetails).toString()
         val actionLog = ActionLog(
