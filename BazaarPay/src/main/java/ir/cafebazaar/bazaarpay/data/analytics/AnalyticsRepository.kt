@@ -7,8 +7,6 @@ import ir.cafebazaar.bazaarpay.data.analytics.model.ActionLogRequestDto
 import ir.cafebazaar.bazaarpay.data.bazaar.account.AccountRepository
 import ir.cafebazaar.bazaarpay.data.device.DeviceRepository
 import ir.cafebazaar.bazaarpay.utils.doOnSuccess
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
 
 internal class AnalyticsRepository {
 
@@ -16,9 +14,9 @@ internal class AnalyticsRepository {
     private val deviceRepository: DeviceRepository = ServiceLocator.get()
     private val accountRepository: AccountRepository = ServiceLocator.get()
 
-    fun sendAnalyticsEvents() = GlobalScope.launch {
+    suspend fun sendAnalyticsEvents() {
         val actionLogs = Analytics.getPendingActionLogs().also {
-            if (it.isEmpty()) return@launch
+            if (it.isEmpty()) return
         }.map {
             it.toActionLogDto(
                 source = ANDROID_SDK_SOURCE,

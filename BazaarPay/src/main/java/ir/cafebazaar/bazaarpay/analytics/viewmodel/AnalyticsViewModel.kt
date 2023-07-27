@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import ir.cafebazaar.bazaarpay.ServiceLocator
 import ir.cafebazaar.bazaarpay.analytics.Analytics
 import ir.cafebazaar.bazaarpay.data.analytics.AnalyticsRepository
+import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.launch
 
@@ -18,9 +19,9 @@ internal class AnalyticsViewModel : ViewModel() {
         }
     }
 
-    override fun onCleared() {
+    fun onFinish() = GlobalScope.launch {
         analyticsRepository?.sendAnalyticsEvents()
         Analytics.shutDownAnalytics()
-        super.onCleared()
+        ServiceLocator.clear()
     }
 }
