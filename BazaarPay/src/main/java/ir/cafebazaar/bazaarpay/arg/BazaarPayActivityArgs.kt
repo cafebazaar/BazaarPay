@@ -23,4 +23,6 @@ internal sealed class BazaarPayActivityArgs : Parcelable {
     data class Login(
         val phoneNumber: String? = null
     ) : BazaarPayActivityArgs()
+
+    object IncreaseBalance : BazaarPayActivityArgs()
 }

@@ -66,6 +66,10 @@ internal class StartPaymentFragment : Fragment() {
                 )
             }
 
+            is BazaarPayActivityArgs.IncreaseBalance -> {
+                StartPaymentFragmentDirections.actionStartPaymentFragmentToPaymentDynamicCreditFragment()
+            }
+
             else -> {
                 StartPaymentFragmentDirections.actionStartPaymentFragmentToPaymentMethodsFragment()
             }
