@@ -27,4 +27,6 @@
     <string name="message_successful_direct_pay_contract">DirectPay contract approved successfully</string>
     <string name="message_cancelled_direct_pay_contract">DirectPay contract canceled!</string>
     <string name="message_trace_result">Trace result here!</string>
+    <string name="balance_title">Balance:</string>
+    <string name="failure_login">Login failed</string>
 </resources>
