@@ -1,4 +1,4 @@
-package ir.cafebazaar.bazaarpay
+package ir.cafebazaar.bazaarpay.launcher.normal
 
 import androidx.core.net.toUri
 
@@ -37,12 +37,12 @@ class BazaarPayOptions private constructor(
             "checkoutToken is deprecated, use PaymentUrl",
             level = DeprecationLevel.WARNING
         )
-        fun checkoutToken(checkoutToken: String) = apply { this.checkoutToken = checkoutToken }
+        fun checkoutToken(checkoutToken: String) = apply { Builder.checkoutToken = checkoutToken }
 
-        fun phoneNumber(phoneNumber: String?) = apply { this.phoneNumber = phoneNumber }
+        fun phoneNumber(phoneNumber: String?) = apply { Builder.phoneNumber = phoneNumber }
 
         fun paymentUrl(paymentURL: String) = apply {
-            this.paymentUrlParser = PaymentURLParser(paymentURL)
+            paymentUrlParser = PaymentURLParser(paymentURL)
         }
 
         fun build() = BazaarPayOptions(

@@ -8,8 +8,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
-import ir.cafebazaar.bazaarpay.BazaarPayOptions
-import ir.cafebazaar.bazaarpay.StartBazaarPay
+import ir.cafebazaar.bazaarpay.launcher.normal.BazaarPayOptions
+import ir.cafebazaar.bazaarpay.launcher.normal.StartBazaarPay
 import ir.cafebazaar.bazaarpay.commit
 import ir.cafebazaar.bazaarpay.extensions.setSafeOnClickListener
 import ir.cafebazaar.bazaarpay.sample.balance.BalanceSampleActivity

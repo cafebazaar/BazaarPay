@@ -1,4 +1,4 @@
-package ir.cafebazaar.bazaarpay.login
+package ir.cafebazaar.bazaarpay.launcher.login
 
 import android.app.Activity
 import android.content.Context

@@ -8,6 +8,7 @@ import ir.cafebazaar.bazaarpay.data.payment.models.pay.BalanceResult
 import ir.cafebazaar.bazaarpay.data.payment.models.pay.InitCheckoutResult
 import ir.cafebazaar.bazaarpay.data.payment.models.pay.PurchaseStatus
 import ir.cafebazaar.bazaarpay.extensions.fold
+import ir.cafebazaar.bazaarpay.launcher.normal.PaymentURLParser
 
 fun initSDKForAPICall(
     context: Context,

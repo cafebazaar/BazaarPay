@@ -1,4 +1,4 @@
-package ir.cafebazaar.bazaarpay.directPay
+package ir.cafebazaar.bazaarpay.launcher.directPay
 
 import android.app.Activity
 import android.content.Context

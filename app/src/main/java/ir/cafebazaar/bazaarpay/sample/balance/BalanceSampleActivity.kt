@@ -6,8 +6,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
 import ir.cafebazaar.bazaarpay.getBazaarPayBalance
-import ir.cafebazaar.bazaarpay.login.BazaarPayLoginOptions
-import ir.cafebazaar.bazaarpay.login.StartLogin
+import ir.cafebazaar.bazaarpay.launcher.login.BazaarPayLoginOptions
+import ir.cafebazaar.bazaarpay.launcher.login.StartLogin
 import ir.cafebazaar.bazaarpay.sample.R
 import ir.cafebazaar.bazaarpay.sample.databinding.ActivityBalanceSampleBinding
 import kotlinx.coroutines.launch

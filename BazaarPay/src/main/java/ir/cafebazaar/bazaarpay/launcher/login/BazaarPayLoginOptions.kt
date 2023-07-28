@@ -1,4 +1,4 @@
-package ir.cafebazaar.bazaarpay.login
+package ir.cafebazaar.bazaarpay.launcher.login
 
 /**
  * The mandatory and optional parameters to configure the payment flow.
