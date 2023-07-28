@@ -8,6 +8,7 @@ import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.addCallback
+import androidx.core.view.isVisible
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -36,13 +37,7 @@ import ir.cafebazaar.bazaarpay.utils.getErrorViewBasedOnErrorModel
 
 internal class PaymentDynamicCreditFragment : Fragment() {
 
-    private var _creditOptionsArgs: DynamicCreditOption? = null
-    private val creditOptionsArgs: DynamicCreditOption
-        get() = requireNotNull(_creditOptionsArgs)
-
-    private var _dealerArgs: DynamicCreditOptionDealerArg? = null
-    private val dealerArgs: DynamicCreditOptionDealerArg
-        get() = requireNotNull(_dealerArgs)
+    private var dealerArgs: DynamicCreditOptionDealerArg? = null
 
     private val dynamicCreditViewModel: DynamicCreditViewModel by viewModels()
 
@@ -51,6 +46,8 @@ internal class PaymentDynamicCreditFragment : Fragment() {
     private var _binding: FragmentPaymentDynamicCreditBinding? = null
     private val binding: FragmentPaymentDynamicCreditBinding
         get() = requireNotNull(_binding)
+
+    private val args by lazy { PaymentDynamicCreditFragmentArgs.fromBundle(requireArguments()) }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -66,10 +63,10 @@ internal class PaymentDynamicCreditFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        _creditOptionsArgs =
-            PaymentDynamicCreditFragmentArgs.fromBundle(requireArguments()).creditOptions
-        _dealerArgs =
-            PaymentDynamicCreditFragmentArgs.fromBundle(requireArguments()).dealer
+        with(args) {
+            dealerArgs = dealer
+            dynamicCreditViewModel.initArgs(creditOptions)
+        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -109,13 +106,7 @@ internal class PaymentDynamicCreditFragment : Fragment() {
             dynamicCreditLiveData.observe(viewLifecycleOwner) {
                 handleDynamicCreditState(it)
             }
-
-            loadData()
         }
-    }
-
-    private fun loadData() {
-        dynamicCreditViewModel.onViewCreated(creditOptionsArgs)
     }
 
     private fun handleActionState(resource: Resource<String>) {
@@ -143,8 +134,7 @@ internal class PaymentDynamicCreditFragment : Fragment() {
 
             ResourceState.Success -> {
                 showContentContainer()
-                _creditOptionsArgs = requireNotNull(resource.data)
-                initView()
+                initView(resource.data)
             }
 
             else -> {
@@ -187,24 +177,27 @@ internal class PaymentDynamicCreditFragment : Fragment() {
         }
     }
 
-    private fun initView() {
-        setDealerInfo()
-        setCreditOptions()
+    private fun initView(creditOptionsArgs: DynamicCreditOption?) {
+        creditOptionsArgs ?: return
+        setDealerInfo(dealerArgs)
+        setCreditOptions(creditOptionsArgs)
         with(creditOptionsArgs) {
             binding.dynamicCreditSubTitle.setValueIfNotNullOrEmpty(description)
         }
     }
 
-    private fun setDealerInfo() {
+    private fun setDealerInfo(dealer: DynamicCreditOptionDealerArg?) {
+        binding.merchantInfo.isVisible = dealer != null
+        dealer ?: return
         with(binding.merchantInfo) {
-            setMerchantName(dealerArgs.name)
-            setPrice(dealerArgs.priceString)
-            setMerchantInfo(dealerArgs.info)
-            setMerchantIcon(dealerArgs.iconUrl)
+            setMerchantName(dealer.name)
+            setPrice(dealer.priceString)
+            setMerchantInfo(dealer.info)
+            setMerchantIcon(dealer.iconUrl)
         }
     }
 
-    private fun setCreditOptions() {
+    private fun setCreditOptions(creditOptionsArgs: DynamicCreditOption) {
         with(creditOptionsArgs) {
             binding.dynamicCreditBalance.setBalance(userBalance, userBalanceString)
             initRecyclerView(creditOptionsArgs.options)
@@ -288,7 +281,7 @@ internal class PaymentDynamicCreditFragment : Fragment() {
     }
 
     private fun onRetryClicked() {
-        loadData()
+        dynamicCreditViewModel.onRetryClick(args.creditOptions)
     }
 
     private fun onLoginClicked() {

@@ -16,7 +16,6 @@ import ir.cafebazaar.bazaarpay.models.Resource
 import ir.cafebazaar.bazaarpay.screens.payment.paymentmethods.PaymentMethodsType
 import ir.cafebazaar.bazaarpay.utils.SingleLiveEvent
 import kotlinx.coroutines.launch
-import java.lang.ref.WeakReference
 import java.util.Locale
 
 internal class DynamicCreditViewModel : ViewModel() {
@@ -39,9 +38,9 @@ internal class DynamicCreditViewModel : ViewModel() {
     val errorLiveData: LiveData<Pair<Int, Long?>> = _errorLiveData
 
     var preText: String? = null
-    private var creditOptionsRef: WeakReference<DynamicCreditOption>? = null
+    private var _creditOptions: DynamicCreditOption? = null
     private val creditOptions: DynamicCreditOption?
-        get() = creditOptionsRef?.get()
+        get() = _creditOptions
 
     fun onTextChanged(changeValue: String) {
         val currentValue = preText.orEmpty()
@@ -84,12 +83,7 @@ internal class DynamicCreditViewModel : ViewModel() {
         preText = textValue
     }
 
-    fun onViewCreated(options: DynamicCreditOption) {
-        showData(options)
-    }
-
     private fun showData(options: DynamicCreditOption) {
-        this.creditOptionsRef = WeakReference(options)
         _dynamicCreditLiveData.value = Resource.loaded(options)
         _editTextValueLiveData.value = getPriceFromString(
             (options.defaultAmount / TOMAN_TO_RIAL_FACTOR).toString()
@@ -217,6 +211,35 @@ internal class DynamicCreditViewModel : ViewModel() {
                 }
             )
         }
+    }
+
+    fun initArgs(creditOptionsArgs: DynamicCreditOption?) {
+        if (creditOptionsArgs != null) {
+            showData(options = creditOptionsArgs)
+            _creditOptions = creditOptionsArgs
+            _dynamicCreditLiveData.value = Resource.loaded(creditOptionsArgs)
+        } else {
+            fetchDynamicCreditOption()
+        }
+    }
+
+    fun onRetryClick(creditOptionsArgs: DynamicCreditOption?) {
+        initArgs(creditOptionsArgs)
+    }
+
+    private fun fetchDynamicCreditOption() = viewModelScope.launch {
+        _dynamicCreditLiveData.value = Resource.loading()
+        paymentRepository.getIncreaseBalanceOptions().fold(
+            ifSuccess = {
+                _creditOptions = it
+                _dynamicCreditLiveData.value = Resource.loaded(data = it)
+                showData(options = it)
+            },
+            ifFailure = {
+                _dynamicCreditLiveData.value = Resource.failed(failure = it)
+
+            }
+        )
     }
 
     private companion object {

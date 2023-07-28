@@ -136,11 +136,15 @@
 
         <argument
             android:name="creditOptions"
-            app:argType="ir.cafebazaar.bazaarpay.data.payment.models.getpaymentmethods.DynamicCreditOption" />
+            app:argType="ir.cafebazaar.bazaarpay.data.payment.models.getpaymentmethods.DynamicCreditOption"
+            app:nullable="true"
+            android:defaultValue="@null" />
 
         <argument
             android:name="dealer"
-            app:argType="ir.cafebazaar.bazaarpay.screens.payment.increasecredit.DynamicCreditOptionDealerArg" />
+            app:argType="ir.cafebazaar.bazaarpay.screens.payment.increasecredit.DynamicCreditOptionDealerArg"
+            app:nullable="true"
+            android:defaultValue="@null" />
     </fragment>
 
     <fragment

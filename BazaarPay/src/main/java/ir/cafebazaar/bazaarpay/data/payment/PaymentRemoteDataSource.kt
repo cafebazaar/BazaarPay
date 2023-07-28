@@ -3,6 +3,7 @@ package ir.cafebazaar.bazaarpay.data.payment
 import android.content.Context
 import ir.cafebazaar.bazaarpay.ServiceLocator
 import ir.cafebazaar.bazaarpay.data.payment.api.PaymentService
+import ir.cafebazaar.bazaarpay.data.payment.models.getpaymentmethods.DynamicCreditOption
 import ir.cafebazaar.bazaarpay.data.payment.models.getpaymentmethods.PaymentMethodsInfo
 import ir.cafebazaar.bazaarpay.data.payment.models.getpaymentmethods.request.GetPaymentMethodsRequest
 import ir.cafebazaar.bazaarpay.data.payment.models.merchantinfo.MerchantInfo
@@ -113,6 +114,14 @@ internal class PaymentRemoteDataSource {
         return withContext(globalDispatchers.iO) {
             return@withContext safeApiCall(ServiceType.BAZAARPAY) {
                 paymentService.getBalance().toBalanceResult()
+            }
+        }
+    }
+
+    suspend fun getIncreaseBalanceOptions(): Either<DynamicCreditOption> {
+        return withContext(globalDispatchers.iO) {
+            return@withContext safeApiCall(ServiceType.BAZAARPAY) {
+                paymentService.getIncreaseBalanceOptions().toDynamicCreditOption()
             }
         }
     }

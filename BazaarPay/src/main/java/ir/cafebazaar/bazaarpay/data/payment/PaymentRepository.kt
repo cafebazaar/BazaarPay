@@ -1,6 +1,7 @@
 package ir.cafebazaar.bazaarpay.data.payment
 
 import ir.cafebazaar.bazaarpay.ServiceLocator
+import ir.cafebazaar.bazaarpay.data.payment.models.getpaymentmethods.DynamicCreditOption
 import ir.cafebazaar.bazaarpay.data.payment.models.getpaymentmethods.PaymentMethodsInfo
 import ir.cafebazaar.bazaarpay.data.payment.models.merchantinfo.MerchantInfo
 import ir.cafebazaar.bazaarpay.data.payment.models.pay.BalanceResult
@@ -41,14 +42,7 @@ internal class PaymentRepository {
     }
 
     suspend fun trace(checkoutToken: String): Either<PurchaseStatus> {
-        return paymentRemoteDataSource.trace(checkoutToken).fold(
-            ifSuccess = {
-                Either.Success(it)
-            },
-            ifFailure = {
-                Either.Failure(it)
-            }
-        )
+        return paymentRemoteDataSource.trace(checkoutToken)
     }
 
     suspend fun initCheckout(
@@ -56,24 +50,14 @@ internal class PaymentRepository {
         destination: String,
         serviceName: String
     ): Either<InitCheckoutResult> {
-        return paymentRemoteDataSource.initCheckout(amount, destination, serviceName).fold(
-            ifSuccess = {
-                Either.Success(it)
-            },
-            ifFailure = {
-                Either.Failure(it)
-            }
-        )
+        return paymentRemoteDataSource.initCheckout(amount, destination, serviceName)
     }
 
     suspend fun getBalance(): Either<BalanceResult> {
-        return paymentRemoteDataSource.getBalance().fold(
-            ifSuccess = {
-                Either.Success(it)
-            },
-            ifFailure = {
-                Either.Failure(it)
-            }
-        )
+        return paymentRemoteDataSource.getBalance()
+    }
+
+    suspend fun getIncreaseBalanceOptions(): Either<DynamicCreditOption> {
+        return paymentRemoteDataSource.getIncreaseBalanceOptions()
     }
 }
