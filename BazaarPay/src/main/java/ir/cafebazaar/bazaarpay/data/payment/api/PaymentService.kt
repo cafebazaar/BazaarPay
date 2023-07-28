@@ -7,6 +7,7 @@ import ir.cafebazaar.bazaarpay.data.payment.models.pay.request.CommitRequest
 import ir.cafebazaar.bazaarpay.data.payment.models.pay.request.InitCheckoutRequest
 import ir.cafebazaar.bazaarpay.data.payment.models.pay.request.PayRequest
 import ir.cafebazaar.bazaarpay.data.payment.models.pay.request.TraceRequest
+import ir.cafebazaar.bazaarpay.data.payment.models.pay.response.BalanceResponseDto
 import ir.cafebazaar.bazaarpay.data.payment.models.pay.response.InitCheckoutResponse
 import ir.cafebazaar.bazaarpay.data.payment.models.pay.response.PayResponse
 import ir.cafebazaar.bazaarpay.data.payment.models.pay.response.TraceResponse
@@ -50,6 +51,9 @@ internal interface PaymentService {
     suspend fun initCheckout(
         @Body initCheckoutRequest: InitCheckoutRequest
     ): InitCheckoutResponse
+
+    @GET("get-balance/")
+    suspend fun getBalance(): BalanceResponseDto
 
     companion object {
 

@@ -6,6 +6,7 @@ import ir.cafebazaar.bazaarpay.data.payment.api.PaymentService
 import ir.cafebazaar.bazaarpay.data.payment.models.getpaymentmethods.PaymentMethodsInfo
 import ir.cafebazaar.bazaarpay.data.payment.models.getpaymentmethods.request.GetPaymentMethodsRequest
 import ir.cafebazaar.bazaarpay.data.payment.models.merchantinfo.MerchantInfo
+import ir.cafebazaar.bazaarpay.data.payment.models.pay.BalanceResult
 import ir.cafebazaar.bazaarpay.data.payment.models.pay.InitCheckoutResult
 import ir.cafebazaar.bazaarpay.data.payment.models.pay.PayResult
 import ir.cafebazaar.bazaarpay.data.payment.models.pay.PurchaseStatus
@@ -16,7 +17,6 @@ import ir.cafebazaar.bazaarpay.data.payment.models.pay.request.TraceRequest
 import ir.cafebazaar.bazaarpay.extensions.ServiceType
 import ir.cafebazaar.bazaarpay.extensions.safeApiCall
 import ir.cafebazaar.bazaarpay.models.GlobalDispatchers
-import ir.cafebazaar.bazaarpay.screens.payment.paymentmethods.PaymentMethodsType
 import ir.cafebazaar.bazaarpay.utils.Either
 import kotlinx.coroutines.withContext
 import okhttp3.ResponseBody
@@ -105,6 +105,14 @@ internal class PaymentRemoteDataSource {
                 paymentService.initCheckout(
                     InitCheckoutRequest(amount, destination, serviceName)
                 ).toInitCheckoutResult()
+            }
+        }
+    }
+
+    suspend fun getBalance(): Either<BalanceResult> {
+        return withContext(globalDispatchers.iO) {
+            return@withContext safeApiCall(ServiceType.BAZAARPAY) {
+                paymentService.getBalance().toBalanceResult()
             }
         }
     }

@@ -3,11 +3,11 @@ package ir.cafebazaar.bazaarpay.data.payment
 import ir.cafebazaar.bazaarpay.ServiceLocator
 import ir.cafebazaar.bazaarpay.data.payment.models.getpaymentmethods.PaymentMethodsInfo
 import ir.cafebazaar.bazaarpay.data.payment.models.merchantinfo.MerchantInfo
+import ir.cafebazaar.bazaarpay.data.payment.models.pay.BalanceResult
 import ir.cafebazaar.bazaarpay.data.payment.models.pay.InitCheckoutResult
 import ir.cafebazaar.bazaarpay.data.payment.models.pay.PayResult
 import ir.cafebazaar.bazaarpay.data.payment.models.pay.PurchaseStatus
 import ir.cafebazaar.bazaarpay.extensions.fold
-import ir.cafebazaar.bazaarpay.screens.payment.paymentmethods.PaymentMethodsType
 import ir.cafebazaar.bazaarpay.utils.Either
 
 internal class PaymentRepository {
@@ -57,6 +57,17 @@ internal class PaymentRepository {
         serviceName: String
     ): Either<InitCheckoutResult> {
         return paymentRemoteDataSource.initCheckout(amount, destination, serviceName).fold(
+            ifSuccess = {
+                Either.Success(it)
+            },
+            ifFailure = {
+                Either.Failure(it)
+            }
+        )
+    }
+
+    suspend fun getBalance(): Either<BalanceResult> {
+        return paymentRemoteDataSource.getBalance().fold(
             ifSuccess = {
                 Either.Success(it)
             },
