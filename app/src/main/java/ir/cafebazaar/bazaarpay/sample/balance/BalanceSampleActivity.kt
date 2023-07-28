@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
 import ir.cafebazaar.bazaarpay.getBazaarPayBalance
+import ir.cafebazaar.bazaarpay.launcher.increasebalance.StartIncreaseBalance
 import ir.cafebazaar.bazaarpay.launcher.login.BazaarPayLoginOptions
 import ir.cafebazaar.bazaarpay.launcher.login.StartLogin
 import ir.cafebazaar.bazaarpay.sample.R
@@ -26,12 +27,23 @@ class BalanceSampleActivity : AppCompatActivity() {
         }
     }
 
+    private val bazaarPayIncreaseBalanceLauncher = registerForActivityResult(
+        StartIncreaseBalance()
+    ) { isSuccessful ->
+        if (isSuccessful) {
+            loadUserBalance()
+        } else {
+            Toast.makeText(this, getString(R.string.failuer_increase_balance), Toast.LENGTH_SHORT).show()
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityBalanceSampleBinding.inflate(layoutInflater)
         setContentView(binding.root)
         loadUserBalance()
         binding.needLoginButton.setOnClickListener { startLogin() }
+        binding.increaseBalanceButton.setOnClickListener { startIncreaseBalance() }
     }
 
     private fun loadUserBalance() = lifecycleScope.launch {
@@ -59,5 +71,9 @@ class BalanceSampleActivity : AppCompatActivity() {
     private fun startLogin(phone: String? = null) {
         val options = BazaarPayLoginOptions(phoneNumber = phone)
         bazaarPayLoginLauncher.launch(options)
+    }
+
+    private fun startIncreaseBalance() {
+        bazaarPayIncreaseBalanceLauncher.launch(Unit)
     }
 }
