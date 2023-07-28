@@ -1,6 +1,7 @@
 package ir.cafebazaar.bazaarpay.screens.payment.increasecredit
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.os.Bundle
 import android.text.TextWatcher
 import android.view.LayoutInflater
@@ -15,7 +16,10 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import ir.cafebazaar.bazaarpay.BazaarPayActivity
+import ir.cafebazaar.bazaarpay.FinishCallbacks
 import ir.cafebazaar.bazaarpay.R
+import ir.cafebazaar.bazaarpay.arg.BazaarPayActivityArgs
 import ir.cafebazaar.bazaarpay.data.bazaar.models.ErrorModel
 import ir.cafebazaar.bazaarpay.data.payment.models.getpaymentmethods.DynamicCreditOption
 import ir.cafebazaar.bazaarpay.data.payment.models.getpaymentmethods.Option
@@ -47,7 +51,23 @@ internal class PaymentDynamicCreditFragment : Fragment() {
     private val binding: FragmentPaymentDynamicCreditBinding
         get() = requireNotNull(_binding)
 
+    private var finishCallbacks: FinishCallbacks? = null
+
+    private val activityArgs: BazaarPayActivityArgs? by lazy {
+        requireActivity().intent.getParcelableExtra(
+            BazaarPayActivity.BAZAARPAY_ACTIVITY_ARGS
+        )
+    }
+
     private val args by lazy { PaymentDynamicCreditFragmentArgs.fromBundle(requireArguments()) }
+
+    override fun onAttach(context: Context) {
+        finishCallbacks = context as? FinishCallbacks
+            ?: throw IllegalStateException(
+                "this activity must implement FinishPaymentCallbacks"
+            )
+        super.onAttach(context)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -262,7 +282,11 @@ internal class PaymentDynamicCreditFragment : Fragment() {
     private fun handleBackPress() {
         hideKeyboard()
         dynamicCreditViewModel.onBackClicked()
-        findNavController().popBackStack()
+        if (activityArgs is BazaarPayActivityArgs.IncreaseBalance) {
+            finishCallbacks?.onCanceled()
+        } else {
+            findNavController().popBackStack()
+        }
     }
 
     private fun showErrorView(errorModel: ErrorModel) {
@@ -292,6 +316,11 @@ internal class PaymentDynamicCreditFragment : Fragment() {
 
     private fun hideErrorView() {
         binding.errorView.gone()
+    }
+
+    override fun onDetach() {
+        finishCallbacks = null
+        super.onDetach()
     }
 
     companion object {
