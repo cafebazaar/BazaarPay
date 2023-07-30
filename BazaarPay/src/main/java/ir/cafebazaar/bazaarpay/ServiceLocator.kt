@@ -12,6 +12,7 @@ import ir.cafebazaar.bazaarpay.data.bazaar.account.AccountRemoteDataSource
 import ir.cafebazaar.bazaarpay.data.bazaar.account.AccountRepository
 import ir.cafebazaar.bazaarpay.data.bazaar.account.AccountService
 import ir.cafebazaar.bazaarpay.data.bazaar.account.AccountSharedDataSource
+import ir.cafebazaar.bazaarpay.data.bazaar.account.UserInfoService
 import ir.cafebazaar.bazaarpay.data.bazaar.payment.BazaarPaymentRemoteDataSource
 import ir.cafebazaar.bazaarpay.data.bazaar.payment.BazaarPaymentRepository
 import ir.cafebazaar.bazaarpay.data.bazaar.payment.api.BazaarPaymentService
@@ -100,6 +101,9 @@ internal object ServiceLocator {
         initUpdateRefreshTokenHelper()
         initAuthenticator()
         initTokenInterceptor()
+
+        //userInfo
+        initUserInfoService()
 
         // Payment
         initRetrofitServices()
@@ -279,6 +283,17 @@ internal object ServiceLocator {
         )
         servicesMap[getKeyOfClass<AccountService>()] =
             accountRetrofit.create(AccountService::class.java)
+    }
+
+    private fun initUserInfoService() {
+        val accountHttpClient = provideOkHttpClient(interceptors = listOf(get(TOKEN)))
+        val accountRetrofit = provideRetrofit(
+            okHttp = accountHttpClient,
+            needUnWrapper = true,
+            baseUrl = DEFAULT_BASE_URL
+        )
+        servicesMap[getKeyOfClass<UserInfoService>()] =
+            accountRetrofit.create(UserInfoService::class.java)
     }
 
     private fun initRetrofitServices() {

@@ -20,7 +20,7 @@ internal class AnalyticsRepository {
         }.map {
             it.toActionLogDto(
                 source = ANDROID_SDK_SOURCE,
-                accountId = accountRepository.getPhone(),
+                accountId = accountRepository.getAccountId(),
                 deviceId = deviceRepository.getClientId()
             )
         }

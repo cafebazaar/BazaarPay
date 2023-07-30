@@ -5,6 +5,7 @@ import ir.cafebazaar.bazaarpay.data.bazaar.account.models.getotptoken.WaitingTim
 import ir.cafebazaar.bazaarpay.data.bazaar.account.models.getotptoken.request.GetOtpTokenSingleRequest
 import ir.cafebazaar.bazaarpay.data.bazaar.account.models.getotptokenbycall.WaitingTime
 import ir.cafebazaar.bazaarpay.data.bazaar.account.models.getotptokenbycall.request.GetOtpTokenByCallSingleRequest
+import ir.cafebazaar.bazaarpay.data.bazaar.account.models.getuserinfo.GetUserInfoSingleRequest
 import ir.cafebazaar.bazaarpay.data.bazaar.account.models.refreshaccesstoken.request.GetAccessTokenSingleRequest
 import ir.cafebazaar.bazaarpay.data.bazaar.account.models.verifyotptoken.LoginResponse
 import ir.cafebazaar.bazaarpay.data.bazaar.account.models.verifyotptoken.request.VerifyOtpTokenSingleRequest
@@ -19,6 +20,10 @@ internal class AccountRemoteDataSource {
 
     private val accountService: AccountService by lazy {
         ServiceLocator.get()
+    }
+
+    private val userInfoService: UserInfoService? by lazy {
+        ServiceLocator.getOrNull()
     }
 
     private val globalDispatchers: GlobalDispatchers by lazy {
@@ -55,6 +60,14 @@ internal class AccountRemoteDataSource {
         }
     }
 
+    suspend fun getUserAccountId(): Either<String> {
+        return withContext(globalDispatchers.iO) {
+            return@withContext safeApiCall {
+                userInfoService?.getUserInfoRequest(GetUserInfoSingleRequest())?.accountID.orEmpty()
+            }
+        }
+    }
+
     fun getAccessToken(refreshToken: String): Either<String> {
         val authenticationRequestDto = GetAccessTokenSingleRequest(refreshToken)
         val response = accountService.getAccessToken(authenticationRequestDto).execute()
@@ -68,9 +81,11 @@ internal class AccountRemoteDataSource {
                     Either.Failure(ErrorModel.Error("token is empty"))
                 }
             }
+
             response.code() == HttpURLConnection.HTTP_UNAUTHORIZED -> {
                 Either.Failure(ErrorModel.AuthenticationError)
             }
+
             else -> {
                 Either.Failure(ErrorModel.Error(response.message()))
             }
