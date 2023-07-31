@@ -182,6 +182,66 @@ requires an instance of `DirectPayContractOptions` as its parameter:
 bazaarPayDirectPayContractLauncher.launch(options)
 ```
 
+# BazaarPay Login API
+
+Some functionalities in BazaarPay like getBalance, need BazaarPay login, for login in BazaarPay you
+need to make a login launcher:
+
+```kotlin
+val bazaarPayLoginLauncher = registerForActivityResult(StartLogin()) { isSuccessful ->
+    if (isSuccessful) {
+        // A successful login.
+    } else {
+        // An unsuccessful login.
+    }
+}
+```
+
+And then `launch()` the `bazaarPayLoginLauncher` like below:
+
+```kotlin
+ val options = BazaarPayLoginOptions(phoneNumber = phone)
+bazaarPayLoginLauncher.launch(options)
+```
+
+# BazaarPay Balance
+
+You can get user's balance from BazaarPay. There is a suspend `getBazaarPayBalance()`
+function for this purpose that you can call from a coroutine scope:
+
+```kotlin
+myScope.launch {
+    getBazaarPayBalance(
+        context = requireContext(),
+        onSuccess = { },
+        onFailure = { },
+        onLoginNeeded = {
+            // here you should use BazaarPay Login API
+        }
+    )
+}
+```
+
+# Open increase balance screen directly
+
+You can open increase balance screen directly and get the result like below:
+
+```kotlin
+ val bazaarPayIncreaseBalanceLauncher = registerForActivityResult(StartIncreaseBalance()) { isSuccessful ->
+    if (isSuccessful) {
+        // A successful increase balance.
+    } else {
+        // An unsuccessful increase balance.
+    }
+}
+```
+
+And then `launch()` the `bazaarPayIncreaseBalanceLauncher` like below:
+
+```kotlin
+bazaarPayIncreaseBalanceLauncher.launch(Unit)
+```
+
 License
 --------
 

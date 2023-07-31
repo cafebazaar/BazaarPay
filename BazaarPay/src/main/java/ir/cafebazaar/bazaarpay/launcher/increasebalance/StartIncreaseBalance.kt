@@ -17,9 +17,9 @@ import ir.cafebazaar.bazaarpay.arg.BazaarPayActivityArgs
  * ```
  * val bazaarPayIncreaseBalanceLauncher = registerForActivityResult(StartIncreaseBalance()) { isSuccessful ->
  *     if (isSuccessful) {
- *          // A successful login.
+ *          // A successful increase balance.
  *     } else {
- *          // An unsuccessful login.
+ *          // An unsuccessful increase balance.
  *     }
  * }
  *
