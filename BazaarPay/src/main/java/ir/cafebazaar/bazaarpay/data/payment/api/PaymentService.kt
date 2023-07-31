@@ -2,6 +2,7 @@ package ir.cafebazaar.bazaarpay.data.payment.api
 
 import ir.cafebazaar.bazaarpay.data.payment.models.getpaymentmethods.request.GetPaymentMethodsRequest
 import ir.cafebazaar.bazaarpay.data.payment.models.getpaymentmethods.response.PaymentMethodsInfoDto
+import ir.cafebazaar.bazaarpay.data.payment.models.increasebalance.IncreaseBalanceRequest
 import ir.cafebazaar.bazaarpay.data.payment.models.merchantinfo.response.MerchantInfoDto
 import ir.cafebazaar.bazaarpay.data.payment.models.pay.request.CommitRequest
 import ir.cafebazaar.bazaarpay.data.payment.models.pay.request.InitCheckoutRequest
@@ -36,6 +37,11 @@ internal interface PaymentService {
     suspend fun pay(
         @Body payRequest: PayRequest,
         @Query(PAY_ENDPOINT_LANG) lang: String
+    ): PayResponse
+
+    @POST("increase-balance/")
+    suspend fun increaseBalance(
+        @Body increaseBalanceRequest: IncreaseBalanceRequest
     ): PayResponse
 
     @POST("commit/")

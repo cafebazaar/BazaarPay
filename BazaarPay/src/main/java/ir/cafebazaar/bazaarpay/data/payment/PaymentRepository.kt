@@ -30,6 +30,10 @@ internal class PaymentRepository {
         return paymentRemoteDataSource.pay(paymentMethod, amount)
     }
 
+    suspend fun increaseBalance(amount: Long): Either<PayResult> {
+        return paymentRemoteDataSource.increaseBalance(amount)
+    }
+
     suspend fun commit(checkoutToken: String): Either<Unit> {
         return paymentRemoteDataSource.commit(checkoutToken).fold(
             ifSuccess = {

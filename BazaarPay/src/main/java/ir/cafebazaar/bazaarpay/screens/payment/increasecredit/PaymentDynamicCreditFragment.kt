@@ -248,7 +248,15 @@ internal class PaymentDynamicCreditFragment : Fragment() {
             }
 
             payButton.setSafeOnClickListener {
-                dynamicCreditViewModel.onPayButtonClicked(binding.priceEditText.text.toString())
+                val type = if (activityArgs is BazaarPayActivityArgs.IncreaseBalance) {
+                    IncreaseCreditType.INCREASE
+                } else {
+                    IncreaseCreditType.PAY
+                }
+                dynamicCreditViewModel.onPayButtonClicked(
+                    binding.priceEditText.text.toString(),
+                    type
+                )
             }
             textWatcher = priceEditText.doOnTextChanged { text, _, _, _ ->
                 dynamicCreditViewModel.onTextChanged(text.toString())

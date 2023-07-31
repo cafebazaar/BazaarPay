@@ -6,6 +6,7 @@ import ir.cafebazaar.bazaarpay.data.payment.api.PaymentService
 import ir.cafebazaar.bazaarpay.data.payment.models.getpaymentmethods.DynamicCreditOption
 import ir.cafebazaar.bazaarpay.data.payment.models.getpaymentmethods.PaymentMethodsInfo
 import ir.cafebazaar.bazaarpay.data.payment.models.getpaymentmethods.request.GetPaymentMethodsRequest
+import ir.cafebazaar.bazaarpay.data.payment.models.increasebalance.IncreaseBalanceRequest
 import ir.cafebazaar.bazaarpay.data.payment.models.merchantinfo.MerchantInfo
 import ir.cafebazaar.bazaarpay.data.payment.models.pay.BalanceResult
 import ir.cafebazaar.bazaarpay.data.payment.models.pay.InitCheckoutResult
@@ -67,6 +68,16 @@ internal class PaymentRemoteDataSource {
                         increaseBalanceRedirectUrl
                     ),
                     language
+                ).toPayResult()
+            }
+        }
+    }
+
+    suspend fun increaseBalance(amount: Long): Either<PayResult> {
+        return withContext(globalDispatchers.iO) {
+            return@withContext safeApiCall(ServiceType.BAZAARPAY) {
+                paymentService.increaseBalance(
+                    IncreaseBalanceRequest(amount, increaseBalanceRedirectUrl)
                 ).toPayResult()
             }
         }
