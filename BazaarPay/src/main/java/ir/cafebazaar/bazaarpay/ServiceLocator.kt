@@ -53,7 +53,6 @@ internal object ServiceLocator {
     ) {
         servicesMap[getKeyOfClass<String>(CHECKOUT_TOKEN)] = checkoutToken
         servicesMap[getKeyOfClass<String?>(PHONE_NUMBER)] = phoneNumber
-        servicesMap[getKeyOfClass<Boolean>(IS_DARK)] = isDark
         servicesMap[getKeyOfClass<String>(AUTO_LOGIN_PHONE_NUMBER)] = autoLoginPhoneNumber
         servicesMap[getKeyOfClass<Boolean>(IS_AUTO_LOGIN_ENABLE)] = isAutoLoginEnable
         initializeShareConfigs()
@@ -75,9 +74,10 @@ internal object ServiceLocator {
         initializeShareConfigs()
     }
 
-    private fun initializeShareConfigs(){
+    fun initializeShareConfigs() {
         servicesMap[getKeyOfClass<Int>(LANGUAGE)] = FA_LANGUAGE
         servicesMap[getKeyOfClass<String>(LANGUAGE)] = "fa"
+        servicesMap[getKeyOfClass<Boolean>(IS_DARK)] = null
     }
 
     fun initializeDependencies(

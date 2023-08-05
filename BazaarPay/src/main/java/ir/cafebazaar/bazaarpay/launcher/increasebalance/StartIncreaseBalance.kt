@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import androidx.activity.result.contract.ActivityResultContract
 import ir.cafebazaar.bazaarpay.BazaarPayActivity
+import ir.cafebazaar.bazaarpay.ServiceLocator.initializeShareConfigs
 import ir.cafebazaar.bazaarpay.arg.BazaarPayActivityArgs
 
 /**
@@ -28,7 +29,7 @@ import ir.cafebazaar.bazaarpay.arg.BazaarPayActivityArgs
 class StartIncreaseBalance : ActivityResultContract<Unit, Boolean>() {
 
     override fun createIntent(context: Context, input: Unit): Intent {
-
+        initializeShareConfigs()
         val bazaarPayActivityArgs = BazaarPayActivityArgs.IncreaseBalance
         return Intent(context, BazaarPayActivity::class.java).apply {
             putExtra(BazaarPayActivity.BAZAARPAY_ACTIVITY_ARGS, bazaarPayActivityArgs)
