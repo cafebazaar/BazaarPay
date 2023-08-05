@@ -8,10 +8,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
-import ir.cafebazaar.bazaarpay.launcher.normal.BazaarPayOptions
-import ir.cafebazaar.bazaarpay.launcher.normal.StartBazaarPay
 import ir.cafebazaar.bazaarpay.commit
 import ir.cafebazaar.bazaarpay.extensions.setSafeOnClickListener
+import ir.cafebazaar.bazaarpay.launcher.normal.BazaarPayOptions
+import ir.cafebazaar.bazaarpay.launcher.normal.StartBazaarPay
 import ir.cafebazaar.bazaarpay.sample.balance.BalanceSampleActivity
 import ir.cafebazaar.bazaarpay.sample.databinding.ActivityPaymentBinding
 import ir.cafebazaar.bazaarpay.trace
@@ -28,6 +28,10 @@ class SamplePaymentActivity : AppCompatActivity() {
         binding = ActivityPaymentBinding.inflate(layoutInflater)
         setContentView(binding.root)
         registerClickListeners(binding)
+
+        savedInstanceState?.let {
+            paymentURL = savedInstanceState.getString(KEY_PAYMENT_URL, "")
+        }
     }
 
     private fun registerClickListeners(binding: ActivityPaymentBinding) {
@@ -134,14 +138,9 @@ class SamplePaymentActivity : AppCompatActivity() {
         }
     }
 
-    override fun onSaveInstanceState(outState: Bundle, outPersistentState: PersistableBundle) {
-        super.onSaveInstanceState(outState, outPersistentState)
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
         outState.putString(KEY_PAYMENT_URL, paymentURL)
-    }
-
-    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
-        super.onRestoreInstanceState(savedInstanceState)
-        paymentURL = savedInstanceState.getString(KEY_PAYMENT_URL, "")
     }
 
     companion object {
