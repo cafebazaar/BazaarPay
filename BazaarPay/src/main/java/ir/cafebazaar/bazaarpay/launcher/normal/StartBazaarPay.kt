@@ -1,9 +1,11 @@
-package ir.cafebazaar.bazaarpay
+package ir.cafebazaar.bazaarpay.launcher.normal
 
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import androidx.activity.result.contract.ActivityResultContract
+import ir.cafebazaar.bazaarpay.BazaarPayActivity
+import ir.cafebazaar.bazaarpay.ServiceLocator
 import ir.cafebazaar.bazaarpay.arg.BazaarPayActivityArgs
 
 /**

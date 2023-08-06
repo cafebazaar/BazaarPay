@@ -1,10 +1,11 @@
 package ir.cafebazaar.bazaarpay
 
+import android.content.Context
 import android.os.Bundle
 import androidx.navigation.NavDirections
 import androidx.navigation.fragment.findNavController
-import ir.cafebazaar.bazaarpay.base.BaseFragment
 import ir.cafebazaar.bazaarpay.arg.BazaarPayActivityArgs
+import ir.cafebazaar.bazaarpay.base.BaseFragment
 import ir.cafebazaar.bazaarpay.data.bazaar.account.AccountRepository
 import ir.cafebazaar.bazaarpay.extensions.navigateSafe
 
@@ -20,22 +21,36 @@ internal class StartPaymentFragment : BaseFragment(PAGE_NAME) {
         )
     }
 
+    private var finishCallbacks: FinishCallbacks? = null
+
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         if (savedInstanceState == null) {
+            checkSDKInitType(onLoginType = { return@onActivityCreated })
             findNavController().navigateSafe(getNavDirection())
         }
     }
 
-    private fun getNavDirection(): NavDirections {
-        return when (accountRepository.needLogin().not()) {
-            true -> {
-                getNavDirectionBasedOnArguments()
-            }
+    override fun onAttach(context: Context) {
+        finishCallbacks = context as? FinishCallbacks
+            ?: throw IllegalStateException(
+                "this activity must implement FinishPaymentCallbacks"
+            )
+        super.onAttach(context)
+    }
 
-            false -> {
-                StartPaymentFragmentDirections.actionStartPaymentFragmentToRegisterFragment()
-            }
+    private inline fun checkSDKInitType(onLoginType: () -> Unit) {
+        if (accountRepository.needLogin().not() && args is BazaarPayActivityArgs.Login) {
+            finishCallbacks?.onSuccess()
+            onLoginType.invoke()
+        }
+    }
+
+    private fun getNavDirection(): NavDirections {
+        return if (accountRepository.needLogin().not()) {
+            getNavDirectionBasedOnArguments()
+        } else {
+            StartPaymentFragmentDirections.actionStartPaymentFragmentToRegisterFragment()
         }
     }
 
@@ -51,10 +66,19 @@ internal class StartPaymentFragment : BaseFragment(PAGE_NAME) {
                 )
             }
 
+            is BazaarPayActivityArgs.IncreaseBalance -> {
+                StartPaymentFragmentDirections.actionStartPaymentFragmentToPaymentDynamicCreditFragment()
+            }
+
             else -> {
                 StartPaymentFragmentDirections.actionStartPaymentFragmentToPaymentMethodsFragment()
             }
         }
+    }
+
+    override fun onDetach() {
+        finishCallbacks = null
+        super.onDetach()
     }
 
     private companion object {

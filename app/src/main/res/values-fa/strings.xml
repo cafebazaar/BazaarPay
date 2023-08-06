@@ -9,6 +9,7 @@
     <string name="label_open_payment_fragment">مشاهده نمونه پرداخت در فرگمنت</string>
     <string name="label_open_init_checkout">ایجاد توکن پرداخت</string>
     <string name="label_open_direct_pay_contract">قرارداد دایرکت پی</string>
+    <string name="label_open_balance">موجودی / افزایش موجودی</string>
     <string name="label_optional_phone_number">شماره همراه (اختیاری)</string>
     <string name="label_payment_activity">مشاهده نمونه پرداخت در اکتیویتی</string>
     <string name="label_payment_fragment">نمونه پرداخت در فرگمنت</string>
@@ -25,4 +26,9 @@
     <string name="message_successful_direct_pay_contract">قرارداد دایرکت پی با موفقیت تایید شد</string>
     <string name="message_cancelled_direct_pay_contract">فرآیند تایید دایرکت پی کنسل شد!</string>
     <string name="message_trace_result">Trace result here!</string>
+    <string name="balance_title">موجودی:</string>
+    <string name="failure_login">لاگین ناموفق بود</string>
+    <string name="increase_balance">افزایش موجودی</string>
+    <string name="login_needed_for_show_balance">برای مشاهده موجودی باید لاگین کنید</string>
+    <string name="failuer_increase_balance">خطا در افزایش موجودی</string>
 </resources>

@@ -2,11 +2,14 @@ package ir.cafebazaar.bazaarpay.data.payment.api
 
 import ir.cafebazaar.bazaarpay.data.payment.models.getpaymentmethods.request.GetPaymentMethodsRequest
 import ir.cafebazaar.bazaarpay.data.payment.models.getpaymentmethods.response.PaymentMethodsInfoDto
+import ir.cafebazaar.bazaarpay.data.payment.models.increasebalance.IncreaseBalanceRequest
 import ir.cafebazaar.bazaarpay.data.payment.models.merchantinfo.response.MerchantInfoDto
 import ir.cafebazaar.bazaarpay.data.payment.models.pay.request.CommitRequest
 import ir.cafebazaar.bazaarpay.data.payment.models.pay.request.InitCheckoutRequest
 import ir.cafebazaar.bazaarpay.data.payment.models.pay.request.PayRequest
 import ir.cafebazaar.bazaarpay.data.payment.models.pay.request.TraceRequest
+import ir.cafebazaar.bazaarpay.data.payment.models.pay.response.BalanceResponseDto
+import ir.cafebazaar.bazaarpay.data.payment.models.pay.response.IncreaseBalanceOptionsResponseDto
 import ir.cafebazaar.bazaarpay.data.payment.models.pay.response.InitCheckoutResponse
 import ir.cafebazaar.bazaarpay.data.payment.models.pay.response.PayResponse
 import ir.cafebazaar.bazaarpay.data.payment.models.pay.response.TraceResponse
@@ -36,6 +39,11 @@ internal interface PaymentService {
         @Query(PAY_ENDPOINT_LANG) lang: String
     ): PayResponse
 
+    @POST("pardakht/badje/v1/increase-balance/")
+    suspend fun increaseBalance(
+        @Body increaseBalanceRequest: IncreaseBalanceRequest
+    ): PayResponse
+
     @POST("pardakht/badje/v1/commit/")
     suspend fun commit(
         @Body commitRequest: CommitRequest
@@ -50,6 +58,12 @@ internal interface PaymentService {
     suspend fun initCheckout(
         @Body initCheckoutRequest: InitCheckoutRequest
     ): InitCheckoutResponse
+
+    @GET("pardakht/badje/v1/get-balance/")
+    suspend fun getBalance(): BalanceResponseDto
+
+    @GET("pardakht/badje/v1/get-increase-balance-options/")
+    suspend fun getIncreaseBalanceOptions(): IncreaseBalanceOptionsResponseDto
 
     companion object {
 

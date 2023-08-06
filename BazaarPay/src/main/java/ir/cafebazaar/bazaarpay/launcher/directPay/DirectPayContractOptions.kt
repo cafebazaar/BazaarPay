@@ -1,4 +1,4 @@
-package ir.cafebazaar.bazaarpay.directPay
+package ir.cafebazaar.bazaarpay.launcher.directPay
 
 /**
  * The mandatory and optional parameters to configure the payment flow.

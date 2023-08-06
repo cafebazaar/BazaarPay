@@ -6,9 +6,11 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import ir.cafebazaar.bazaarpay.R
 import ir.cafebazaar.bazaarpay.ServiceLocator
+import ir.cafebazaar.bazaarpay.data.bazaar.models.ErrorModel
 import ir.cafebazaar.bazaarpay.analytics.Analytics
 import ir.cafebazaar.bazaarpay.data.payment.PaymentRepository
 import ir.cafebazaar.bazaarpay.data.payment.models.getpaymentmethods.DynamicCreditOption
+import ir.cafebazaar.bazaarpay.data.payment.models.pay.PayResult
 import ir.cafebazaar.bazaarpay.extensions.digits
 import ir.cafebazaar.bazaarpay.extensions.fold
 import ir.cafebazaar.bazaarpay.extensions.toPriceFormat
@@ -20,7 +22,6 @@ import ir.cafebazaar.bazaarpay.screens.payment.increasecredit.PaymentDynamicCred
 import ir.cafebazaar.bazaarpay.screens.payment.paymentmethods.PaymentMethodsType
 import ir.cafebazaar.bazaarpay.utils.SingleLiveEvent
 import kotlinx.coroutines.launch
-import java.lang.ref.WeakReference
 import java.util.Locale
 
 internal class DynamicCreditViewModel : ViewModel() {
@@ -43,9 +44,9 @@ internal class DynamicCreditViewModel : ViewModel() {
     val errorLiveData: LiveData<Pair<Int, Long?>> = _errorLiveData
 
     var preText: String? = null
-    private var creditOptionsRef: WeakReference<DynamicCreditOption>? = null
+    private var _creditOptions: DynamicCreditOption? = null
     private val creditOptions: DynamicCreditOption?
-        get() = creditOptionsRef?.get()
+        get() = _creditOptions
 
     fun onTextChanged(changeValue: String) {
         val currentValue = preText.orEmpty()
@@ -88,12 +89,7 @@ internal class DynamicCreditViewModel : ViewModel() {
         preText = textValue
     }
 
-    fun onViewCreated(options: DynamicCreditOption) {
-        showData(options)
-    }
-
     private fun showData(options: DynamicCreditOption) {
-        this.creditOptionsRef = WeakReference(options)
         _dynamicCreditLiveData.value = Resource.loaded(options)
         _editTextValueLiveData.value = getPriceFromString(
             (options.defaultAmount / TOMAN_TO_RIAL_FACTOR).toString()
@@ -106,7 +102,7 @@ internal class DynamicCreditViewModel : ViewModel() {
         creditOptions?.options?.forEach { it.isSelected = false }
     }
 
-    fun onPayButtonClicked(priceString: String) {
+    fun onPayButtonClicked(priceString: String, type: IncreaseCreditType) {
         if (priceString.isEmpty()) {
             return
         }
@@ -119,7 +115,7 @@ internal class DynamicCreditViewModel : ViewModel() {
             return
         }
 
-        increaseCredit(priceString)
+        increaseCredit(priceString, type)
     }
 
     fun onDynamicItemClicked(position: Int) {
@@ -194,7 +190,7 @@ internal class DynamicCreditViewModel : ViewModel() {
         return if (price == 0L) {
             null
         } else {
-            price.toPriceFormat(Locale(ServiceLocator.get(ServiceLocator.LANGUAGE)))
+            price.toPriceFormat(Locale("fa"))
         }
     }
 
@@ -208,29 +204,77 @@ internal class DynamicCreditViewModel : ViewModel() {
         return amount >= neededChargeAmount
     }
 
-    private fun increaseCredit(priceString: String) {
+    private fun increaseCredit(priceString: String, type: IncreaseCreditType) {
         check(creditOptions != null) {
             "invalid state"
         }
 
         _actionLiveData.value = Resource.loading()
         viewModelScope.launch {
-            paymentRepository.pay(
-                PaymentMethodsType.INCREASE_BALANCE.value,
-                (priceString.digits() * TOMAN_TO_RIAL_FACTOR)
-            ).fold(
-                {
-                    _actionLiveData.value = Resource.loaded(it.redirectUrl)
-                },
-                {
-                    _actionLiveData.value = Resource.failed(failure = it)
-                }
-            )
+            if (type == IncreaseCreditType.INCREASE) {
+                increaseBalance(priceString)
+            } else {
+                pay(priceString)
+            }
         }
+    }
+
+    private suspend fun pay(priceString: String) {
+        paymentRepository.pay(
+            PaymentMethodsType.INCREASE_BALANCE.value,
+            (priceString.digits() * TOMAN_TO_RIAL_FACTOR)
+        ).fold(ifSuccess = ::onIncreaseBalanceSuccess, ifFailure = ::onIncreaseBalanceFailed)
+    }
+
+    private suspend fun increaseBalance(priceString: String) {
+        paymentRepository.increaseBalance(
+            (priceString.digits() * TOMAN_TO_RIAL_FACTOR)
+        ).fold(ifSuccess = ::onIncreaseBalanceSuccess, ifFailure = ::onIncreaseBalanceFailed)
+    }
+
+    private fun onIncreaseBalanceSuccess(result: PayResult) {
+        _actionLiveData.value = Resource.loaded(result.redirectUrl)
+    }
+
+    private fun onIncreaseBalanceFailed(error: ErrorModel) {
+        _actionLiveData.value = Resource.failed(failure = error)
+    }
+
+    fun initArgs(creditOptionsArgs: DynamicCreditOption?) {
+        if (creditOptionsArgs != null) {
+            showData(options = creditOptionsArgs)
+            _creditOptions = creditOptionsArgs
+            _dynamicCreditLiveData.value = Resource.loaded(creditOptionsArgs)
+        } else {
+            fetchDynamicCreditOption()
+        }
+    }
+
+    fun onRetryClick(creditOptionsArgs: DynamicCreditOption?) {
+        initArgs(creditOptionsArgs)
+    }
+
+    private fun fetchDynamicCreditOption() = viewModelScope.launch {
+        _dynamicCreditLiveData.value = Resource.loading()
+        paymentRepository.getIncreaseBalanceOptions().fold(
+            ifSuccess = {
+                _creditOptions = it
+                _dynamicCreditLiveData.value = Resource.loaded(data = it)
+                showData(options = it)
+            },
+            ifFailure = {
+                _dynamicCreditLiveData.value = Resource.failed(failure = it)
+
+            }
+        )
     }
 
     private companion object {
 
         const val TOMAN_TO_RIAL_FACTOR = 10
     }
+}
+
+internal enum class IncreaseCreditType {
+    PAY, INCREASE
 }

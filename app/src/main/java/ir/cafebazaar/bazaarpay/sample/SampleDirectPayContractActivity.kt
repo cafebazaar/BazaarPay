@@ -4,8 +4,8 @@ import android.os.Bundle
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import ir.cafebazaar.bazaarpay.directPay.DirectPayContractOptions
-import ir.cafebazaar.bazaarpay.directPay.StartDirectPayFinalizeContract
+import ir.cafebazaar.bazaarpay.launcher.directPay.DirectPayContractOptions
+import ir.cafebazaar.bazaarpay.launcher.directPay.StartDirectPayFinalizeContract
 import ir.cafebazaar.bazaarpay.sample.databinding.ActivitySampleDirectPayContractActivityBinding
 
 class SampleDirectPayContractActivity : AppCompatActivity() {

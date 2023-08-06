@@ -11,6 +11,9 @@
         android:supportsRtl="true"
         android:theme="@style/BazaarPaySampleTheme">
         <activity
+            android:name=".balance.BalanceSampleActivity"
+            android:exported="false" />
+        <activity
             android:name=".SampleDirectPayContractActivity"
             android:exported="false" />
         <activity
@@ -22,11 +25,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".SampleFragmentContainer"
             android:exported="true" />
-
         <activity
             android:name=".SampleInitCheckoutActivity"
             android:exported="true" />

@@ -54,13 +54,11 @@ internal object ServiceLocator {
     ) {
         servicesMap[getKeyOfClass<String>(CHECKOUT_TOKEN)] = checkoutToken
         servicesMap[getKeyOfClass<String?>(PHONE_NUMBER)] = phoneNumber
-        servicesMap[getKeyOfClass<Boolean>(IS_DARK)] = isDark
-        servicesMap[getKeyOfClass<Int>(LANGUAGE)] = FA_LANGUAGE
-        servicesMap[getKeyOfClass<String>(LANGUAGE)] = "fa"
         servicesMap[getKeyOfClass<String>(AUTO_LOGIN_PHONE_NUMBER)] = autoLoginPhoneNumber
         servicesMap[getKeyOfClass<Boolean>(IS_AUTO_LOGIN_ENABLE)] = isAutoLoginEnable
         Analytics.setCheckOutToken(checkoutToken)
         Analytics.setAutoLoginState(isAutoLoginEnable)
+        initializeShareConfigs()
     }
 
     fun initializeConfigsForDirectPayContract(
@@ -71,8 +69,18 @@ internal object ServiceLocator {
         servicesMap[getKeyOfClass<String?>(DIRECT_PAY_CONTRACT_TOKEN)] = contractToken
         servicesMap[getKeyOfClass<String?>(PHONE_NUMBER)] = phoneNumber
         servicesMap[getKeyOfClass<String?>(DIRECT_PAY_MERCHANT_MESSAGE)] = message
+        initializeShareConfigs()
+    }
+
+    fun initializeConfigsForLogin(phoneNumber: String? = null) {
+        servicesMap[getKeyOfClass<String?>(PHONE_NUMBER)] = phoneNumber
+        initializeShareConfigs()
+    }
+
+    fun initializeShareConfigs() {
         servicesMap[getKeyOfClass<Int>(LANGUAGE)] = FA_LANGUAGE
         servicesMap[getKeyOfClass<String>(LANGUAGE)] = "fa"
+        servicesMap[getKeyOfClass<Boolean>(IS_DARK)] = null
     }
 
     fun initializeDependencies(

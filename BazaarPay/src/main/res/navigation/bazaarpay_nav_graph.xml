@@ -37,6 +37,9 @@
         <action
             android:id="@+id/action_startPaymentFragment_to_directPayContractFragment"
             app:destination="@id/directPayContractFragment" />
+        <action
+            android:id="@+id/action_startPaymentFragment_to_paymentDynamicCreditFragment"
+            app:destination="@id/paymentDynamicCreditFragment" />
     </fragment>
     <fragment
         android:id="@+id/registerFragment"
@@ -136,11 +139,15 @@
 
         <argument
             android:name="creditOptions"
-            app:argType="ir.cafebazaar.bazaarpay.data.payment.models.getpaymentmethods.DynamicCreditOption" />
+            app:argType="ir.cafebazaar.bazaarpay.data.payment.models.getpaymentmethods.DynamicCreditOption"
+            app:nullable="true"
+            android:defaultValue="@null" />
 
         <argument
             android:name="dealer"
-            app:argType="ir.cafebazaar.bazaarpay.screens.payment.increasecredit.DynamicCreditOptionDealerArg" />
+            app:argType="ir.cafebazaar.bazaarpay.screens.payment.increasecredit.DynamicCreditOptionDealerArg"
+            app:nullable="true"
+            android:defaultValue="@null" />
     </fragment>
 
     <fragment

@@ -1,6 +1,7 @@
 package ir.cafebazaar.bazaarpay.screens.payment.increasecredit
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.os.Bundle
 import android.text.TextWatcher
 import android.view.LayoutInflater
@@ -8,12 +9,16 @@ import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.addCallback
+import androidx.core.view.isVisible
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import ir.cafebazaar.bazaarpay.BazaarPayActivity
+import ir.cafebazaar.bazaarpay.FinishCallbacks
 import ir.cafebazaar.bazaarpay.R
+import ir.cafebazaar.bazaarpay.arg.BazaarPayActivityArgs
 import ir.cafebazaar.bazaarpay.base.BaseFragment
 import ir.cafebazaar.bazaarpay.data.bazaar.models.ErrorModel
 import ir.cafebazaar.bazaarpay.data.payment.models.getpaymentmethods.DynamicCreditOption
@@ -36,13 +41,7 @@ import ir.cafebazaar.bazaarpay.utils.getErrorViewBasedOnErrorModel
 
 internal class PaymentDynamicCreditFragment : BaseFragment(SCREEN_NAME) {
 
-    private var _creditOptionsArgs: DynamicCreditOption? = null
-    private val creditOptionsArgs: DynamicCreditOption
-        get() = requireNotNull(_creditOptionsArgs)
-
-    private var _dealerArgs: DynamicCreditOptionDealerArg? = null
-    private val dealerArgs: DynamicCreditOptionDealerArg
-        get() = requireNotNull(_dealerArgs)
+    private var dealerArgs: DynamicCreditOptionDealerArg? = null
 
     private val dynamicCreditViewModel: DynamicCreditViewModel by viewModels()
 
@@ -51,6 +50,24 @@ internal class PaymentDynamicCreditFragment : BaseFragment(SCREEN_NAME) {
     private var _binding: FragmentPaymentDynamicCreditBinding? = null
     private val binding: FragmentPaymentDynamicCreditBinding
         get() = requireNotNull(_binding)
+
+    private var finishCallbacks: FinishCallbacks? = null
+
+    private val activityArgs: BazaarPayActivityArgs? by lazy {
+        requireActivity().intent.getParcelableExtra(
+            BazaarPayActivity.BAZAARPAY_ACTIVITY_ARGS
+        )
+    }
+
+    private val args by lazy { PaymentDynamicCreditFragmentArgs.fromBundle(requireArguments()) }
+
+    override fun onAttach(context: Context) {
+        finishCallbacks = context as? FinishCallbacks
+            ?: throw IllegalStateException(
+                "this activity must implement FinishPaymentCallbacks"
+            )
+        super.onAttach(context)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -66,10 +83,10 @@ internal class PaymentDynamicCreditFragment : BaseFragment(SCREEN_NAME) {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        _creditOptionsArgs =
-            PaymentDynamicCreditFragmentArgs.fromBundle(requireArguments()).creditOptions
-        _dealerArgs =
-            PaymentDynamicCreditFragmentArgs.fromBundle(requireArguments()).dealer
+        with(args) {
+            dealerArgs = dealer
+            dynamicCreditViewModel.initArgs(creditOptions)
+        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -109,13 +126,7 @@ internal class PaymentDynamicCreditFragment : BaseFragment(SCREEN_NAME) {
             dynamicCreditLiveData.observe(viewLifecycleOwner) {
                 handleDynamicCreditState(it)
             }
-
-            loadData()
         }
-    }
-
-    private fun loadData() {
-        dynamicCreditViewModel.onViewCreated(creditOptionsArgs)
     }
 
     private fun handleActionState(resource: Resource<String>) {
@@ -143,8 +154,7 @@ internal class PaymentDynamicCreditFragment : BaseFragment(SCREEN_NAME) {
 
             ResourceState.Success -> {
                 showContentContainer()
-                _creditOptionsArgs = requireNotNull(resource.data)
-                initView()
+                initView(resource.data)
             }
 
             else -> {
@@ -187,24 +197,27 @@ internal class PaymentDynamicCreditFragment : BaseFragment(SCREEN_NAME) {
         }
     }
 
-    private fun initView() {
-        setDealerInfo()
-        setCreditOptions()
+    private fun initView(creditOptionsArgs: DynamicCreditOption?) {
+        creditOptionsArgs ?: return
+        setDealerInfo(dealerArgs)
+        setCreditOptions(creditOptionsArgs)
         with(creditOptionsArgs) {
             binding.dynamicCreditSubTitle.setValueIfNotNullOrEmpty(description)
         }
     }
 
-    private fun setDealerInfo() {
+    private fun setDealerInfo(dealer: DynamicCreditOptionDealerArg?) {
+        binding.merchantInfo.isVisible = dealer != null
+        dealer ?: return
         with(binding.merchantInfo) {
-            setMerchantName(dealerArgs.name)
-            setPrice(dealerArgs.priceString)
-            setMerchantInfo(dealerArgs.info)
-            setMerchantIcon(dealerArgs.iconUrl)
+            setMerchantName(dealer.name)
+            setPrice(dealer.priceString)
+            setMerchantInfo(dealer.info)
+            setMerchantIcon(dealer.iconUrl)
         }
     }
 
-    private fun setCreditOptions() {
+    private fun setCreditOptions(creditOptionsArgs: DynamicCreditOption) {
         with(creditOptionsArgs) {
             binding.dynamicCreditBalance.setBalance(userBalance, userBalanceString)
             initRecyclerView(creditOptionsArgs.options)
@@ -235,7 +248,15 @@ internal class PaymentDynamicCreditFragment : BaseFragment(SCREEN_NAME) {
             }
 
             payButton.setSafeOnClickListener {
-                dynamicCreditViewModel.onPayButtonClicked(binding.priceEditText.text.toString())
+                val type = if (activityArgs is BazaarPayActivityArgs.IncreaseBalance) {
+                    IncreaseCreditType.INCREASE
+                } else {
+                    IncreaseCreditType.PAY
+                }
+                dynamicCreditViewModel.onPayButtonClicked(
+                    binding.priceEditText.text.toString(),
+                    type
+                )
             }
             textWatcher = priceEditText.doOnTextChanged { text, _, _, _ ->
                 dynamicCreditViewModel.onTextChanged(text.toString())
@@ -269,7 +290,11 @@ internal class PaymentDynamicCreditFragment : BaseFragment(SCREEN_NAME) {
     private fun handleBackPress() {
         hideKeyboard()
         dynamicCreditViewModel.onBackClicked()
-        findNavController().popBackStack()
+        if (activityArgs is BazaarPayActivityArgs.IncreaseBalance) {
+            finishCallbacks?.onCanceled()
+        } else {
+            findNavController().popBackStack()
+        }
     }
 
     private fun showErrorView(errorModel: ErrorModel) {
@@ -288,7 +313,7 @@ internal class PaymentDynamicCreditFragment : BaseFragment(SCREEN_NAME) {
     }
 
     private fun onRetryClicked() {
-        loadData()
+        dynamicCreditViewModel.onRetryClick(args.creditOptions)
     }
 
     private fun onLoginClicked() {
@@ -299,6 +324,11 @@ internal class PaymentDynamicCreditFragment : BaseFragment(SCREEN_NAME) {
 
     private fun hideErrorView() {
         binding.errorView.gone()
+    }
+
+    override fun onDetach() {
+        finishCallbacks = null
+        super.onDetach()
     }
 
     companion object {
