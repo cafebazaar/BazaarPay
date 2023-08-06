@@ -1,6 +1,7 @@
 package ir.cafebazaar.bazaarpay.data.payment
 
 import ir.cafebazaar.bazaarpay.ServiceLocator
+import ir.cafebazaar.bazaarpay.analytics.Analytics
 import ir.cafebazaar.bazaarpay.data.payment.models.getpaymentmethods.DynamicCreditOption
 import ir.cafebazaar.bazaarpay.data.payment.models.getpaymentmethods.PaymentMethodsInfo
 import ir.cafebazaar.bazaarpay.data.payment.models.merchantinfo.MerchantInfo
@@ -10,17 +11,22 @@ import ir.cafebazaar.bazaarpay.data.payment.models.pay.PayResult
 import ir.cafebazaar.bazaarpay.data.payment.models.pay.PurchaseStatus
 import ir.cafebazaar.bazaarpay.extensions.fold
 import ir.cafebazaar.bazaarpay.utils.Either
+import ir.cafebazaar.bazaarpay.utils.doOnSuccess
 
 internal class PaymentRepository {
 
     private val paymentRemoteDataSource: PaymentRemoteDataSource = ServiceLocator.get()
 
     suspend fun getPaymentMethods(): Either<PaymentMethodsInfo> {
-        return paymentRemoteDataSource.getPaymentMethods()
+        return paymentRemoteDataSource.getPaymentMethods().doOnSuccess {
+            Analytics.setAmount(it.amount.toString())
+        }
     }
 
     suspend fun getMerchantInfo(): Either<MerchantInfo> {
-        return paymentRemoteDataSource.getMerchantInfo()
+        return paymentRemoteDataSource.getMerchantInfo().doOnSuccess {
+            Analytics.setMerchantName(it.accountName.orEmpty())
+        }
     }
 
     suspend fun pay(

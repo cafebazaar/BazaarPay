@@ -11,7 +11,6 @@ import android.view.ViewGroup
 import androidx.activity.addCallback
 import androidx.core.view.isVisible
 import androidx.core.widget.doOnTextChanged
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -20,6 +19,7 @@ import ir.cafebazaar.bazaarpay.BazaarPayActivity
 import ir.cafebazaar.bazaarpay.FinishCallbacks
 import ir.cafebazaar.bazaarpay.R
 import ir.cafebazaar.bazaarpay.arg.BazaarPayActivityArgs
+import ir.cafebazaar.bazaarpay.base.BaseFragment
 import ir.cafebazaar.bazaarpay.data.bazaar.models.ErrorModel
 import ir.cafebazaar.bazaarpay.data.payment.models.getpaymentmethods.DynamicCreditOption
 import ir.cafebazaar.bazaarpay.data.payment.models.getpaymentmethods.Option
@@ -39,7 +39,7 @@ import ir.cafebazaar.bazaarpay.models.ResourceState
 import ir.cafebazaar.bazaarpay.utils.bindWithRTLSupport
 import ir.cafebazaar.bazaarpay.utils.getErrorViewBasedOnErrorModel
 
-internal class PaymentDynamicCreditFragment : Fragment() {
+internal class PaymentDynamicCreditFragment : BaseFragment(SCREEN_NAME) {
 
     private var dealerArgs: DynamicCreditOptionDealerArg? = null
 
@@ -334,5 +334,8 @@ internal class PaymentDynamicCreditFragment : Fragment() {
     companion object {
 
         private const val SCROLL_DELAY = 300L
+        internal const val SCREEN_NAME = "PaymentDynamicCredit"
+        internal val CLICK_AMOUNT_OPTION = "clickAmountOption"
+        internal val AMOUNT_OPTION = "amountOption"
     }
 }

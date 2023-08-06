@@ -101,15 +101,7 @@ internal class VerifyOtpViewModel : ViewModel() {
     fun verifyCode(phoneNumber: String, code: String) {
         _verifyCodeStateLiveData.value = Resource.loading()
         viewModelScope.launch {
-            accountRepository.verifyOtpToken(
-                phoneNumber,
-                code
-            ).let { response ->
-                handleVerifyCodeResponse(
-                    response,
-                    phoneNumber
-                )
-            }
+            handleVerifyCodeResponse(accountRepository.verifyOtpToken(phoneNumber, code), phoneNumber)
         }
     }
 

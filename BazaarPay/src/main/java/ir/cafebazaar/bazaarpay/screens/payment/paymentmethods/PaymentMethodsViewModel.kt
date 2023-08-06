@@ -6,6 +6,7 @@ import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavDirections
 import ir.cafebazaar.bazaarpay.R
 import ir.cafebazaar.bazaarpay.ServiceLocator
+import ir.cafebazaar.bazaarpay.analytics.Analytics
 import ir.cafebazaar.bazaarpay.data.bazaar.account.AccountRepository
 import ir.cafebazaar.bazaarpay.data.bazaar.models.ErrorModel
 import ir.cafebazaar.bazaarpay.data.payment.PaymentRepository
@@ -16,6 +17,10 @@ import ir.cafebazaar.bazaarpay.extensions.fold
 import ir.cafebazaar.bazaarpay.models.PaymentFlowState
 import ir.cafebazaar.bazaarpay.models.Resource
 import ir.cafebazaar.bazaarpay.screens.payment.increasecredit.DynamicCreditOptionDealerArg
+import ir.cafebazaar.bazaarpay.screens.payment.paymentmethods.PaymentMethodsFragment.Companion.CLICK_PAY_PUTTON
+import ir.cafebazaar.bazaarpay.screens.payment.paymentmethods.PaymentMethodsFragment.Companion.PAYMENT_METHODES
+import ir.cafebazaar.bazaarpay.screens.payment.paymentmethods.PaymentMethodsFragment.Companion.SCREEN_NAME
+import ir.cafebazaar.bazaarpay.screens.payment.paymentmethods.PaymentMethodsFragment.Companion.SELECTED_METHODE
 import ir.cafebazaar.bazaarpay.utils.SingleLiveEvent
 import kotlinx.coroutines.launch
 
@@ -56,6 +61,9 @@ internal class PaymentMethodsViewModel : ViewModel() {
 
     private fun getAccountData() {
         _accountInfoLiveData.value = accountRepository.getPhone()
+        viewModelScope.launch {
+            accountRepository.getUserInfoIfNeeded()
+        }
     }
 
     private fun getPaymentMethods() {
@@ -107,8 +115,16 @@ internal class PaymentMethodsViewModel : ViewModel() {
         payStateData.value = Resource.failed(failure = errorModel)
     }
 
-    fun onPaymentOptionClicked(selectedOptionPos: Int) {
+    fun onPaymentOptionClicked(selectedOptionPos: Int, isActionByUser: Boolean) {
         getPaymentInfo()?.paymentMethods?.getOrNull(selectedOptionPos)?.let { selectedMethod ->
+            Analytics.sendClickEvent(
+                where = SCREEN_NAME,
+                what = selectedMethod.methodTypeString,
+                extra = hashMapOf(
+                    IS_ACTION_BY_USER to isActionByUser,
+                    IS_METHODE_ENABLE to selectedMethod.enabled
+                )
+            )
             _paymentOptionViewLoaderLiveData.value = PaymentMethodViewLoader(
                 price = selectedMethod.priceString,
                 payButton = getPayButtonTextId(selectedMethod.methodType),
@@ -151,6 +167,14 @@ internal class PaymentMethodsViewModel : ViewModel() {
     ) {
         val paymentInfo = getPaymentInfo() ?: return
         val selectedOption = paymentInfo.paymentMethods[selectedPosition]
+        Analytics.sendClickEvent(
+            where = SCREEN_NAME,
+            what = CLICK_PAY_PUTTON,
+            extra = hashMapOf(
+                SELECTED_METHODE to selectedOption.methodTypeString,
+                PAYMENT_METHODES to getMethodeTypes()
+            )
+        )
         when (selectedOption.methodType) {
             PaymentMethodsType.INCREASE_BALANCE -> {
                 openIncreaseBalancePage()
@@ -214,5 +238,15 @@ internal class PaymentMethodsViewModel : ViewModel() {
     private fun openDirectDebitOnBoarding() {
         _navigationLiveData.value =
             PaymentMethodsFragmentDirections.actionPaymentMethodsFragmentToDirectDebitOnBoardingFragment()
+    }
+
+    private fun getMethodeTypes(): String {
+        return getPaymentInfo()?.paymentMethods?.map { it.methodTypeString }.toString()
+    }
+
+    private companion object {
+
+        const val IS_ACTION_BY_USER = "is_action_by_user"
+        const val IS_METHODE_ENABLE = "is_enable"
     }
 }

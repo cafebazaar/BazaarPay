@@ -8,7 +8,6 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.addCallback
 import androidx.core.view.isVisible
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import ir.cafebazaar.bazaarpay.FinishCallbacks
@@ -16,6 +15,7 @@ import ir.cafebazaar.bazaarpay.R
 import ir.cafebazaar.bazaarpay.ServiceLocator
 import ir.cafebazaar.bazaarpay.ServiceLocator.DIRECT_PAY_CONTRACT_TOKEN
 import ir.cafebazaar.bazaarpay.ServiceLocator.DIRECT_PAY_MERCHANT_MESSAGE
+import ir.cafebazaar.bazaarpay.base.BaseFragment
 import ir.cafebazaar.bazaarpay.data.bazaar.models.ErrorModel
 import ir.cafebazaar.bazaarpay.data.directPay.model.DirectPayContractAction
 import ir.cafebazaar.bazaarpay.data.directPay.model.DirectPayContractResponse
@@ -33,7 +33,7 @@ import ir.cafebazaar.bazaarpay.utils.getErrorViewBasedOnErrorModel
 import ir.cafebazaar.bazaarpay.utils.imageloader.BazaarPayImageLoader
 import java.util.Locale
 
-class DirectPayContractFragment : Fragment() {
+internal class DirectPayContractFragment : BaseFragment(where = DIRECT_PAY_CONTRACT_SCREEN_NAME) {
 
     private var _binding: FragmentDirectPayContractBinding? = null
     private val binding: FragmentDirectPayContractBinding
@@ -241,5 +241,10 @@ class DirectPayContractFragment : Fragment() {
     override fun onDetach() {
         finishCallbacks = null
         super.onDetach()
+    }
+
+    companion object {
+
+        const val DIRECT_PAY_CONTRACT_SCREEN_NAME = "directPayContract"
     }
 }

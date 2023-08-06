@@ -6,13 +6,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
 import androidx.core.view.isVisible
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.SimpleItemAnimator
 import com.google.android.material.snackbar.Snackbar
 import ir.cafebazaar.bazaarpay.R
+import ir.cafebazaar.bazaarpay.base.BaseFragment
 import ir.cafebazaar.bazaarpay.data.bazaar.models.ErrorModel
 import ir.cafebazaar.bazaarpay.databinding.FragmentDirectDebitBankListBinding
 import ir.cafebazaar.bazaarpay.extensions.getReadableErrorMessage
@@ -26,7 +26,7 @@ import ir.cafebazaar.bazaarpay.models.ResourceState
 import ir.cafebazaar.bazaarpay.utils.bindWithRTLSupport
 import ir.cafebazaar.bazaarpay.utils.getErrorViewBasedOnErrorModel
 
-internal class DirectDebitBankListFragment : Fragment() {
+internal class DirectDebitBankListFragment : BaseFragment(SCREEN_NAME) {
 
     private var adapter: BankListAdapter? = null
 
@@ -181,5 +181,10 @@ internal class DirectDebitBankListFragment : Fragment() {
     private fun hideErrorView() {
         binding.errorView.gone()
         binding.actionButton.isVisible = true
+    }
+
+    private companion object {
+
+        const val SCREEN_NAME = "DirectDebitBankList"
     }
 }

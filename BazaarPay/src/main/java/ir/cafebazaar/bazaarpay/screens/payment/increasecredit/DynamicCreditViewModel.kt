@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import ir.cafebazaar.bazaarpay.R
 import ir.cafebazaar.bazaarpay.ServiceLocator
 import ir.cafebazaar.bazaarpay.data.bazaar.models.ErrorModel
+import ir.cafebazaar.bazaarpay.analytics.Analytics
 import ir.cafebazaar.bazaarpay.data.payment.PaymentRepository
 import ir.cafebazaar.bazaarpay.data.payment.models.getpaymentmethods.DynamicCreditOption
 import ir.cafebazaar.bazaarpay.data.payment.models.pay.PayResult
@@ -15,6 +16,9 @@ import ir.cafebazaar.bazaarpay.extensions.fold
 import ir.cafebazaar.bazaarpay.extensions.toPriceFormat
 import ir.cafebazaar.bazaarpay.extensions.toToman
 import ir.cafebazaar.bazaarpay.models.Resource
+import ir.cafebazaar.bazaarpay.screens.payment.increasecredit.PaymentDynamicCreditFragment.Companion.AMOUNT_OPTION
+import ir.cafebazaar.bazaarpay.screens.payment.increasecredit.PaymentDynamicCreditFragment.Companion.CLICK_AMOUNT_OPTION
+import ir.cafebazaar.bazaarpay.screens.payment.increasecredit.PaymentDynamicCreditFragment.Companion.SCREEN_NAME
 import ir.cafebazaar.bazaarpay.screens.payment.paymentmethods.PaymentMethodsType
 import ir.cafebazaar.bazaarpay.utils.SingleLiveEvent
 import kotlinx.coroutines.launch
@@ -129,6 +133,12 @@ internal class DynamicCreditViewModel : ViewModel() {
             ?.get(position)
             ?.amount ?: 0
         _editTextValueLiveData.value = getPriceFromString((amount.toToman()).toString())
+
+        Analytics.sendClickEvent(
+            where = SCREEN_NAME,
+            what = CLICK_AMOUNT_OPTION,
+            extra = hashMapOf(AMOUNT_OPTION to amount)
+        )
     }
 
     private fun selectDynamicItemBasedOnInputValue(newValue: String) {

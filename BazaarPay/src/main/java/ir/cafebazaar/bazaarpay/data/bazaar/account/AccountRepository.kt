@@ -12,6 +12,7 @@ import ir.cafebazaar.bazaarpay.data.bazaar.account.models.verifyotptoken.LoginRe
 import ir.cafebazaar.bazaarpay.extensions.fold
 import ir.cafebazaar.bazaarpay.models.GlobalDispatchers
 import ir.cafebazaar.bazaarpay.utils.Either
+import ir.cafebazaar.bazaarpay.utils.doOnSuccess
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.withContext
@@ -65,7 +66,17 @@ internal class AccountRepository {
     }
 
     suspend fun verifyOtpToken(phoneNumber: String, code: String): Either<LoginResponse> {
-        return accountRemoteDataSource.verifyOtpToken(phoneNumber, code)
+        return accountRemoteDataSource.verifyOtpToken(phoneNumber, code).doOnSuccess {
+            getUserInfoIfNeeded()
+        }
+    }
+
+    suspend fun getUserInfoIfNeeded() {
+        if (accountLocalDataSource.accountId.isEmpty()) {
+            accountRemoteDataSource.getUserAccountId().doOnSuccess {
+                accountLocalDataSource.accountId = it
+            }
+        }
     }
 
     suspend fun setSmsPermissionObservable(intent: Intent) {
@@ -88,6 +99,10 @@ internal class AccountRepository {
         return accountLocalDataSource.accessToken
     }
 
+    fun getAccountId(): String {
+        return accountLocalDataSource.accountId
+    }
+
     fun refreshAccessToken(): Either<String> {
         accountRemoteDataSource.getAccessToken(accountLocalDataSource.refreshToken)
             .fold(
@@ -108,6 +123,7 @@ internal class AccountRepository {
         accountLocalDataSource.removeAccessToken()
         accountLocalDataSource.removeRefreshToken()
         accountLocalDataSource.removePhoneNumber()
+        accountLocalDataSource.removeAccountId()
         servicesMap[getKeyOfClass<String>(AUTO_LOGIN_PHONE_NUMBER)] = null
         servicesMap[getKeyOfClass<Boolean>(IS_AUTO_LOGIN_ENABLE)] = false
     }
