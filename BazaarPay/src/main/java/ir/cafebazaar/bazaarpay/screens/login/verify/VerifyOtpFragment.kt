@@ -308,6 +308,10 @@ internal class VerifyOtpFragment : Fragment() {
                 )
             }
 
+            is BazaarPayActivityArgs.IncreaseBalance -> {
+                VerifyOtpFragmentDirections.actionVerifyOtpFragmentToPaymentDynamicCreditFragment()
+            }
+
             else -> {
                 VerifyOtpFragmentDirections.actionVerifyOtpFragmentToPaymentMethodsFragment()
             }
