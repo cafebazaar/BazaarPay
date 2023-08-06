@@ -66,7 +66,10 @@ internal class AccountRepository {
     }
 
     suspend fun verifyOtpToken(phoneNumber: String, code: String): Either<LoginResponse> {
-        return accountRemoteDataSource.verifyOtpToken(phoneNumber, code).doOnSuccess {
+        return accountRemoteDataSource.verifyOtpToken(phoneNumber, code).doOnSuccess { response ->
+            saveRefreshToken(response.refreshToken)
+            saveAccessToken(response.accessToken)
+            savePhone(phoneNumber)
             getUserInfoIfNeeded()
         }
     }

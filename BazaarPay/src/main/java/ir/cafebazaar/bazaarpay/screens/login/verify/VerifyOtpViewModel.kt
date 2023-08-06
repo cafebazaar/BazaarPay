@@ -101,23 +101,15 @@ internal class VerifyOtpViewModel : ViewModel() {
     fun verifyCode(phoneNumber: String, code: String) {
         _verifyCodeStateLiveData.value = Resource.loading()
         viewModelScope.launch {
-            handleVerifyCodeResponse(accountRepository.verifyOtpToken(phoneNumber, code), phoneNumber)
+            handleVerifyCodeResponse(accountRepository.verifyOtpToken(phoneNumber, code))
         }
     }
 
-    private fun handleVerifyCodeResponse(
-        response: Either<LoginResponse>,
-        phoneNumber: String
-    ) {
-        response.getOrNull()?.let { token ->
-            accountRepository.saveRefreshToken(token.refreshToken)
-            accountRepository.saveAccessToken(token.accessToken)
-            accountRepository.savePhone(phoneNumber)
+    private fun handleVerifyCodeResponse(response: Either<LoginResponse>) {
+        response.getOrNull()?.let {
             _verifyCodeStateLiveData.value = Resource.loaded()
         } ?: run {
-            verifyCodeError(
-                response.getFailureOrNull() ?: ErrorModel.UnExpected
-            )
+            verifyCodeError(response.getFailureOrNull() ?: ErrorModel.UnExpected)
         }
     }
 
