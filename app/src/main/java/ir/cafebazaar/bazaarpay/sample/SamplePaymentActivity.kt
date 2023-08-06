@@ -2,7 +2,6 @@ package ir.cafebazaar.bazaarpay.sample
 
 import android.content.Intent
 import android.os.Bundle
-import android.os.PersistableBundle
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
@@ -21,7 +20,7 @@ import ir.cafebazaar.bazaarpay.R as BazaarPayR
 class SamplePaymentActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityPaymentBinding
-    private lateinit var paymentURL: String
+    private var paymentURL: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
