@@ -5,16 +5,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.addCallback
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import ir.cafebazaar.bazaarpay.base.BaseFragment
 import ir.cafebazaar.bazaarpay.databinding.FragmentPostpaidTermsBinding
 import ir.cafebazaar.bazaarpay.extensions.getReadableErrorMessage
 import ir.cafebazaar.bazaarpay.extensions.setSafeOnClickListener
 import ir.cafebazaar.bazaarpay.extensions.toastMessage
 import ir.cafebazaar.bazaarpay.utils.bindWithRTLSupport
 
-internal class PostpaidTermsFragment : Fragment() {
+internal class PostpaidTermsFragment : BaseFragment(SCREEN_NAME) {
 
     private val postpaidTermsViewModel: PostpaidTermsViewModel by viewModels()
 
@@ -66,5 +66,10 @@ internal class PostpaidTermsFragment : Fragment() {
 
     private fun onBackPressedClicked() {
         findNavController().popBackStack()
+    }
+
+    private companion object {
+
+        const val SCREEN_NAME = "PostpaidTerms"
     }
 }

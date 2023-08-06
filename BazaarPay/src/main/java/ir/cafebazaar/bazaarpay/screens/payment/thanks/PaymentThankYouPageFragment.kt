@@ -6,10 +6,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.addCallback
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import ir.cafebazaar.bazaarpay.FinishCallbacks
 import ir.cafebazaar.bazaarpay.R
+import ir.cafebazaar.bazaarpay.base.BaseFragment
 import ir.cafebazaar.bazaarpay.data.bazaar.models.ErrorModel
 import ir.cafebazaar.bazaarpay.databinding.FragmentThankYouPageBinding
 import ir.cafebazaar.bazaarpay.extensions.getReadableErrorMessage
@@ -22,7 +22,7 @@ import ir.cafebazaar.bazaarpay.models.ResourceState
 import ir.cafebazaar.bazaarpay.utils.bindWithRTLSupport
 import java.util.Locale
 
-internal class PaymentThankYouPageFragment : Fragment() {
+internal class PaymentThankYouPageFragment : BaseFragment(SCREEN_NAME) {
 
     private var finishCallbacks: FinishCallbacks? = null
 
@@ -130,5 +130,10 @@ internal class PaymentThankYouPageFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    private companion object {
+
+        const val SCREEN_NAME = "PaymentThankYouPage"
     }
 }

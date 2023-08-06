@@ -38,6 +38,12 @@ internal class AccountLocalDataSource {
         rejectValue = ""
     )
 
+    var accountId: String by DataSourceValueHolder(
+        accountSharedDataSource,
+        ACCOUNT_ID,
+        rejectValue = ""
+    )
+
     fun getAutoFillPhones(): List<String> {
         return autoFillPhones.split(JOIN_STRING_SEPARATOR)
     }
@@ -66,6 +72,10 @@ internal class AccountLocalDataSource {
         accountSharedDataSource.remove(LOGIN_PHONE, commit = true)
     }
 
+    fun removeAccountId() {
+        accountSharedDataSource.remove(ACCOUNT_ID, commit = true)
+    }
+
     fun removeRefreshToken() {
         accountSharedDataSource.remove(REFRESH_TOKEN, commit = true)
     }
@@ -74,6 +84,7 @@ internal class AccountLocalDataSource {
 
         const val REFRESH_TOKEN = "refresh_token"
         const val ACCESS_TOKEN = "access_token"
+        const val ACCOUNT_ID = "account_id"
         const val LOGIN_PHONE = "login_phone"
         const val ACCESS_TOKEN_TIMESTAMP = "access_token_timestamp"
         const val KEY_AUTO_FILL_PHONES = "auto_fill_phones"

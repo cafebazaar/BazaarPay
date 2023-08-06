@@ -7,18 +7,18 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
 import androidx.core.widget.doAfterTextChanged
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.NavDirections
 import androidx.navigation.fragment.findNavController
 import ir.cafebazaar.bazaarpay.R
+import ir.cafebazaar.bazaarpay.base.BaseFragment
 import ir.cafebazaar.bazaarpay.databinding.FragmentNationalIdBinding
 import ir.cafebazaar.bazaarpay.extensions.NATIONAL_ID_LENGTH
 import ir.cafebazaar.bazaarpay.extensions.hideKeyboard
 import ir.cafebazaar.bazaarpay.extensions.setSafeOnClickListener
 import ir.cafebazaar.bazaarpay.utils.bindWithRTLSupport
 
-internal class DirectDebitNationalIdFragment : Fragment() {
+internal class DirectDebitNationalIdFragment : BaseFragment(SCREEN_NAME) {
 
     private var _binding: FragmentNationalIdBinding? = null
     private val binding: FragmentNationalIdBinding
@@ -89,5 +89,10 @@ internal class DirectDebitNationalIdFragment : Fragment() {
         requireActivity().window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
         super.onDestroyView()
         _binding = null
+    }
+
+    private companion object {
+
+        const val SCREEN_NAME = "DirectDebitNationalId"
     }
 }
