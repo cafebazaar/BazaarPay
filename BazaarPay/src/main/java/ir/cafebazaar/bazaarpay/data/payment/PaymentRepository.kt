@@ -25,7 +25,7 @@ internal class PaymentRepository {
 
     suspend fun getMerchantInfo(): Either<MerchantInfo> {
         return paymentRemoteDataSource.getMerchantInfo().doOnSuccess {
-            Analytics.setMerchantName(it.accountName.orEmpty())
+            Analytics.setMerchantName(it.englishAccountName.orEmpty())
         }
     }
 
