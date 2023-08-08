@@ -146,7 +146,7 @@ internal class PaymentMethodsFragment : BaseFragment(SCREEN_NAME), PaymentMethod
 
         with(binding.viewMerchantInfo) {
             setMerchantIcon(merchantInfo.logoUrl)
-            setMerchantInfo(merchantInfo.englishAccountName)
+            setMerchantInfo(merchantInfo.accountName)
         }
     }
 
