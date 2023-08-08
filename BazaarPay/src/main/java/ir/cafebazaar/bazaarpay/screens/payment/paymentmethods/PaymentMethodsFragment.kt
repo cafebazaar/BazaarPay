@@ -146,7 +146,7 @@ internal class PaymentMethodsFragment : BaseFragment(SCREEN_NAME), PaymentMethod
 
         with(binding.viewMerchantInfo) {
             setMerchantIcon(merchantInfo.logoUrl)
-            setMerchantInfo(merchantInfo.accountName)
+            setMerchantName(merchantInfo.accountName)
         }
     }
 
@@ -251,7 +251,6 @@ internal class PaymentMethodsFragment : BaseFragment(SCREEN_NAME), PaymentMethod
                 }
 
                 PaymentFlowState.PaymentMethodsInfo -> {
-                    binding.viewMerchantInfo.setMerchantName(resource.data?.destinationTitle.orEmpty())
                     handlePaymentMethods((resource.data as PaymentMethodsInfo).paymentMethods)
                 }
 
