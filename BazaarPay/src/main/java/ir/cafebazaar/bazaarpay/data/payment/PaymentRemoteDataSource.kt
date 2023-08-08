@@ -30,7 +30,7 @@ internal class PaymentRemoteDataSource {
     private val globalDispatchers: GlobalDispatchers by lazy { ServiceLocator.get() }
 
     suspend fun getPaymentMethods(): Either<PaymentMethodsInfo> {
-        val language = ServiceLocator.get<String>(ServiceLocator.LANGUAGE)
+        val language = ServiceLocator.getOrNull<String>(ServiceLocator.LANGUAGE) ?: "fa"
         return withContext(globalDispatchers.iO) {
             return@withContext safeApiCall(ServiceType.BAZAARPAY) {
                 paymentService.getPaymentMethods(
@@ -42,13 +42,10 @@ internal class PaymentRemoteDataSource {
     }
 
     suspend fun getMerchantInfo(): Either<MerchantInfo> {
-        val language = ServiceLocator.get<String>(ServiceLocator.LANGUAGE)
+        val language = ServiceLocator.getOrNull<String>(ServiceLocator.LANGUAGE) ?: "fa"
         return withContext(globalDispatchers.iO) {
             return@withContext safeApiCall(ServiceType.BAZAARPAY) {
-                paymentService.getMerchantInfo(
-                    checkoutToken,
-                    language
-                ).toMerchantInfo()
+                paymentService.getMerchantInfo(checkoutToken, language).toMerchantInfo()
             }
         }
     }
@@ -57,7 +54,7 @@ internal class PaymentRemoteDataSource {
         paymentMethod: String,
         amount: Long?
     ): Either<PayResult> {
-        val language = ServiceLocator.get<String>(ServiceLocator.LANGUAGE)
+        val language = ServiceLocator.getOrNull<String>(ServiceLocator.LANGUAGE) ?: "fa"
         return withContext(globalDispatchers.iO) {
             return@withContext safeApiCall(ServiceType.BAZAARPAY) {
                 paymentService.pay(
