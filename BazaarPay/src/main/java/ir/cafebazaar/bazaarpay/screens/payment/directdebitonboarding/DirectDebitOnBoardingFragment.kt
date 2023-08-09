@@ -12,6 +12,7 @@ import ir.cafebazaar.bazaarpay.R
 import ir.cafebazaar.bazaarpay.base.BaseFragment
 import ir.cafebazaar.bazaarpay.data.bazaar.models.ErrorModel
 import ir.cafebazaar.bazaarpay.data.bazaar.payment.models.directdebit.onboarding.DirectDebitOnBoardingDetails
+import ir.cafebazaar.bazaarpay.data.bazaar.payment.models.directdebit.onboarding.DirectDebitOnBoardingHeader
 import ir.cafebazaar.bazaarpay.databinding.FragmentDirectDebitOnBoardingBinding
 import ir.cafebazaar.bazaarpay.extensions.gone
 import ir.cafebazaar.bazaarpay.extensions.navigateSafe
@@ -22,6 +23,7 @@ import ir.cafebazaar.bazaarpay.models.Resource
 import ir.cafebazaar.bazaarpay.models.ResourceState
 import ir.cafebazaar.bazaarpay.utils.bindWithRTLSupport
 import ir.cafebazaar.bazaarpay.utils.getErrorViewBasedOnErrorModel
+import ir.cafebazaar.bazaarpay.utils.imageloader.BazaarPayImageLoader
 
 internal class DirectDebitOnBoardingFragment : BaseFragment(SCREEN_NAME) {
 
@@ -94,6 +96,7 @@ internal class DirectDebitOnBoardingFragment : BaseFragment(SCREEN_NAME) {
                         contentGroup.visible()
                         loading.gone()
                     }
+                    initHeader(it.data?.header)
                     adapter.setItems(it.data?.onBoardingDetails)
                     adapter.notifyDataSetChanged()
                 }
@@ -109,6 +112,18 @@ internal class DirectDebitOnBoardingFragment : BaseFragment(SCREEN_NAME) {
                 }
             }
         }
+    }
+
+    private fun initHeader(header: DirectDebitOnBoardingHeader?) {
+        header ?: return
+        header.icon?.getImageUriFromThemedIcon(requireContext())?.let { image ->
+            BazaarPayImageLoader.loadImage(
+                imageView = binding.directDebitIcon,
+                imageURI = image
+            )
+        }
+        binding.directDebitOnboardingTitle.text = header.title
+        binding.directDebitOnboardingSubtitle.text = header.description
     }
 
     private fun showErrorView(errorModel: ErrorModel) {
