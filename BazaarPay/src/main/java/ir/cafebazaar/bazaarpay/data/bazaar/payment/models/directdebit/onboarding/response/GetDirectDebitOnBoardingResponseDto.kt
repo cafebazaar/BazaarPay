@@ -20,8 +20,8 @@ internal class GetDirectDebitOnBoardingResponseDto(
 }
 
 internal class DirectDebitOnBoardingHeaderDto(
-    @SerializedName("description") val title: String,
-    @SerializedName("title") val description: String,
+    @SerializedName("title") val title: String,
+    @SerializedName("description") val description: String,
     @SerializedName("icon") val icon: ThemedIconDto?
 ) {
 
