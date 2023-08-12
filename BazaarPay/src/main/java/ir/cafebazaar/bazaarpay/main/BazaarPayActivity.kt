@@ -1,4 +1,4 @@
-package ir.cafebazaar.bazaarpay
+package ir.cafebazaar.bazaarpay.main
 
 import android.content.Context
 import android.content.Intent
@@ -12,6 +12,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.navigation.findNavController
 import androidx.navigation.navOptions
+import ir.cafebazaar.bazaarpay.FinishCallbacks
+import ir.cafebazaar.bazaarpay.R
+import ir.cafebazaar.bazaarpay.ServiceLocator
 import ir.cafebazaar.bazaarpay.analytics.viewmodel.AnalyticsViewModel
 import ir.cafebazaar.bazaarpay.arg.BazaarPayActivityArgs
 import ir.cafebazaar.bazaarpay.databinding.ActivityBazaarPayBinding
@@ -25,6 +28,7 @@ class BazaarPayActivity : AppCompatActivity(), FinishCallbacks {
     private var currentUiMode: Number? = null
 
     private val analyticsViewModel: AnalyticsViewModel by viewModels()
+    private val mainViewModel: BazaarPayViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         initNightMode()
@@ -40,6 +44,14 @@ class BazaarPayActivity : AppCompatActivity(), FinishCallbacks {
         startFadeInAnimation()
 
         analyticsViewModel.listenThreshold()
+
+        registerObservers()
+    }
+
+    private fun registerObservers() {
+        mainViewModel.paymentSuccessLiveData.observe(this) {
+            navigateToThankYouPageIfIsNotShowingNow()
+        }
     }
 
     override fun onStart() {
@@ -83,9 +95,7 @@ class BazaarPayActivity : AppCompatActivity(), FinishCallbacks {
         }
         when {
             isIncreaseBalanceDoneIntent(intent) -> {
-                findNavController(R.id.nav_host_fragment_bazaar_pay).navigate(
-                    R.id.open_paymentThankYouPageFragment
-                )
+                navigateToThankYouPageIfIsNotShowingNow()
             }
 
             isDirectDebitActivationIntent(intent) -> {
@@ -97,6 +107,15 @@ class BazaarPayActivity : AppCompatActivity(), FinishCallbacks {
                     }
                 )
             }
+        }
+    }
+
+    private fun navigateToThankYouPageIfIsNotShowingNow() {
+        val currentFragment = findNavController(R.id.nav_host_fragment_bazaar_pay).currentDestination?.id
+        if (currentFragment != R.id.paymentThankYouPageFragment) {
+            findNavController(R.id.nav_host_fragment_bazaar_pay).navigate(
+                R.id.open_paymentThankYouPageFragment
+            )
         }
     }
 
@@ -251,6 +270,11 @@ class BazaarPayActivity : AppCompatActivity(), FinishCallbacks {
     override fun onCanceled() {
         setResult(RESULT_CANCELED)
         finishActivity()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        mainViewModel.onActivityResumed()
     }
 
     private fun finishActivity() {

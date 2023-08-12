@@ -8,6 +8,7 @@ import ir.cafebazaar.bazaarpay.arg.BazaarPayActivityArgs
 import ir.cafebazaar.bazaarpay.base.BaseFragment
 import ir.cafebazaar.bazaarpay.data.bazaar.account.AccountRepository
 import ir.cafebazaar.bazaarpay.extensions.navigateSafe
+import ir.cafebazaar.bazaarpay.main.BazaarPayActivity
 
 internal class StartPaymentFragment : BaseFragment(PAGE_NAME) {
 
