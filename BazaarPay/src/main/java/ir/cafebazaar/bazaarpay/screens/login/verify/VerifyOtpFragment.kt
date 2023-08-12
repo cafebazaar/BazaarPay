@@ -17,7 +17,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.NavDirections
 import androidx.navigation.fragment.findNavController
 import com.google.android.gms.auth.api.phone.SmsRetriever
-import ir.cafebazaar.bazaarpay.BazaarPayActivity
+import ir.cafebazaar.bazaarpay.main.BazaarPayActivity
 import ir.cafebazaar.bazaarpay.FinishCallbacks
 import ir.cafebazaar.bazaarpay.R
 import ir.cafebazaar.bazaarpay.arg.BazaarPayActivityArgs
