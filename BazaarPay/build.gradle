@@ -7,8 +7,8 @@ plugins {
     id 'maven-publish'
 }
 
-final VERSION_NAME = "4.1.0"
-final VERSION_CODE = 20
+final VERSION_NAME = "5.0.0"
+final VERSION_CODE = 21
 
 android {
     compileSdk libs.versions.androidCompileSdk.get() as int

@@ -1,9 +1,11 @@
-package ir.cafebazaar.bazaarpay
+package ir.cafebazaar.bazaarpay.launcher.normal
 
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import androidx.activity.result.contract.ActivityResultContract
+import ir.cafebazaar.bazaarpay.main.BazaarPayActivity
+import ir.cafebazaar.bazaarpay.ServiceLocator
 import ir.cafebazaar.bazaarpay.arg.BazaarPayActivityArgs
 
 /**
@@ -30,14 +32,14 @@ import ir.cafebazaar.bazaarpay.arg.BazaarPayActivityArgs
 class StartBazaarPay : ActivityResultContract<BazaarPayOptions, Boolean>() {
 
     override fun createIntent(context: Context, input: BazaarPayOptions): Intent {
-        ServiceLocator.initializeConfigs(
+        ServiceLocator.initializeConfigsForNormal(
             checkoutToken = input.checkoutToken,
             phoneNumber = input.phoneNumber,
             isDark = input.isInDarkMode,
             isAutoLoginEnable = input.isAutoLoginEnable,
             autoLoginPhoneNumber = input.autoLoginPhoneNumber
         )
-        val bazaarPayActivityArgs = BazaarPayActivityArgs(
+        val bazaarPayActivityArgs = BazaarPayActivityArgs.Normal(
             checkoutToken = input.checkoutToken,
             phoneNumber = input.phoneNumber,
             isDarkMode = input.isInDarkMode,

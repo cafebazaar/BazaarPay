@@ -1,16 +1,18 @@
 package ir.cafebazaar.bazaarpay.screens.payment.directdebitonboarding
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.NavDirections
 import androidx.navigation.fragment.findNavController
 import ir.cafebazaar.bazaarpay.R
+import ir.cafebazaar.bazaarpay.base.BaseFragment
 import ir.cafebazaar.bazaarpay.data.bazaar.models.ErrorModel
 import ir.cafebazaar.bazaarpay.data.bazaar.payment.models.directdebit.onboarding.DirectDebitOnBoardingDetails
+import ir.cafebazaar.bazaarpay.data.bazaar.payment.models.directdebit.onboarding.DirectDebitOnBoardingHeader
 import ir.cafebazaar.bazaarpay.databinding.FragmentDirectDebitOnBoardingBinding
 import ir.cafebazaar.bazaarpay.extensions.gone
 import ir.cafebazaar.bazaarpay.extensions.navigateSafe
@@ -21,12 +23,15 @@ import ir.cafebazaar.bazaarpay.models.Resource
 import ir.cafebazaar.bazaarpay.models.ResourceState
 import ir.cafebazaar.bazaarpay.utils.bindWithRTLSupport
 import ir.cafebazaar.bazaarpay.utils.getErrorViewBasedOnErrorModel
+import ir.cafebazaar.bazaarpay.utils.imageloader.BazaarPayImageLoader
 
-internal class DirectDebitOnBoardingFragment : Fragment() {
+internal class DirectDebitOnBoardingFragment : BaseFragment(SCREEN_NAME) {
 
     private var _binding: FragmentDirectDebitOnBoardingBinding? = null
     private val binding: FragmentDirectDebitOnBoardingBinding
         get() = requireNotNull(_binding)
+
+    private val adapter by lazy { DirectDebitOnBoardingAdapter() }
 
     private val onBoardingViewModel: DirectDebitOnBoardingViewModel by viewModels()
 
@@ -57,6 +62,8 @@ internal class DirectDebitOnBoardingFragment : Fragment() {
             nextButton.setSafeOnClickListener {
                 onBoardingViewModel.onNextButtonClicked()
             }
+
+            directDebitOnBoardingList.adapter = adapter
         }
     }
 
@@ -71,6 +78,7 @@ internal class DirectDebitOnBoardingFragment : Fragment() {
         }
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     private fun handleDirectDebitOnBoardingStates(resource: Resource<DirectDebitOnBoardingDetails>?) {
         resource?.let {
             when (it.resourceState) {
@@ -88,6 +96,9 @@ internal class DirectDebitOnBoardingFragment : Fragment() {
                         contentGroup.visible()
                         loading.gone()
                     }
+                    initHeader(it.data?.header)
+                    adapter.setItems(it.data?.onBoardingDetails)
+                    adapter.notifyDataSetChanged()
                 }
 
                 ResourceState.Error -> {
@@ -101,6 +112,18 @@ internal class DirectDebitOnBoardingFragment : Fragment() {
                 }
             }
         }
+    }
+
+    private fun initHeader(header: DirectDebitOnBoardingHeader?) {
+        header ?: return
+        header.icon?.getImageUriFromThemedIcon(requireContext())?.let { image ->
+            BazaarPayImageLoader.loadImage(
+                imageView = binding.directDebitIcon,
+                imageURI = image
+            )
+        }
+        binding.directDebitOnboardingTitle.text = header.title
+        binding.directDebitOnboardingSubtitle.text = header.description
     }
 
     private fun showErrorView(errorModel: ErrorModel) {
@@ -139,5 +162,10 @@ internal class DirectDebitOnBoardingFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    private companion object {
+
+        const val SCREEN_NAME = "DirectDebitOnBoarding"
     }
 }

@@ -7,13 +7,14 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.activity.addCallback
 import androidx.core.view.children
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.NavDirections
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.SimpleItemAnimator
 import ir.cafebazaar.bazaarpay.FinishCallbacks
 import ir.cafebazaar.bazaarpay.R
+import ir.cafebazaar.bazaarpay.analytics.Analytics
+import ir.cafebazaar.bazaarpay.base.BaseFragment
 import ir.cafebazaar.bazaarpay.data.bazaar.models.ErrorModel
 import ir.cafebazaar.bazaarpay.data.payment.models.getpaymentmethods.PaymentMethod
 import ir.cafebazaar.bazaarpay.data.payment.models.getpaymentmethods.PaymentMethodItems
@@ -38,7 +39,7 @@ import ir.cafebazaar.bazaarpay.utils.bindWithRTLSupport
 import ir.cafebazaar.bazaarpay.utils.getErrorViewBasedOnErrorModel
 import java.util.Locale
 
-internal class PaymentMethodsFragment : Fragment(), PaymentMethodsClickListener {
+internal class PaymentMethodsFragment : BaseFragment(SCREEN_NAME), PaymentMethodsClickListener {
 
     private val viewModel: PaymentMethodsViewModel by viewModels()
 
@@ -109,7 +110,8 @@ internal class PaymentMethodsFragment : Fragment(), PaymentMethodsClickListener 
 
             initPaymentGatewayRecyclerView()
 
-            changeAccountLayout.changeAccountAction?.setSafeOnClickListener {
+            changeAccountLayout.changeAccountAction.setSafeOnClickListener {
+                Analytics.sendClickEvent(where, what = CHANGE_ACCOUNT)
                 handleNavigation(LogoutFragmentDirections.openLogout())
             }
         }
@@ -144,7 +146,7 @@ internal class PaymentMethodsFragment : Fragment(), PaymentMethodsClickListener 
 
         with(binding.viewMerchantInfo) {
             setMerchantIcon(merchantInfo.logoUrl)
-            setMerchantInfo(merchantInfo.accountName)
+            setMerchantName(merchantInfo.accountName)
         }
     }
 
@@ -160,7 +162,7 @@ internal class PaymentMethodsFragment : Fragment(), PaymentMethodsClickListener 
         with(binding.paymentGatewaysRecyclerView) {
             post {
                 val selectedItem = getSavedSelectedItemPosition()
-                onItemClick(selectedItem)
+                onItemClick(selectedItem, isActionByUser = false)
                 children.firstOrNull()?.post {
                     scrollToPosition(selectedItem)
                 }
@@ -179,13 +181,13 @@ internal class PaymentMethodsFragment : Fragment(), PaymentMethodsClickListener 
         return selectedItem
     }
 
-    override fun onItemClick(position: Int) {
+    override fun onItemClick(position: Int, isActionByUser: Boolean) {
         if (!isAdded) {
             return
         }
 
         paymentMethodsAdapter?.setSelectedPosition(position)
-        viewModel.onPaymentOptionClicked(position)
+        viewModel.onPaymentOptionClicked(position, isActionByUser)
         binding.paymentGatewaysRecyclerView.scrollToPosition(position)
     }
 
@@ -249,7 +251,6 @@ internal class PaymentMethodsFragment : Fragment(), PaymentMethodsClickListener 
                 }
 
                 PaymentFlowState.PaymentMethodsInfo -> {
-                    binding.viewMerchantInfo.setMerchantName(resource.data?.destinationTitle.orEmpty())
                     handlePaymentMethods((resource.data as PaymentMethodsInfo).paymentMethods)
                 }
 
@@ -364,6 +365,13 @@ internal class PaymentMethodsFragment : Fragment(), PaymentMethodsClickListener 
 
     companion object {
 
+        internal const val SCREEN_NAME = "PaymentMethods"
         private const val KEY_SELECTED_ITEM_POSITION = "selectedItemPos"
+
+        //analytics
+        internal val CHANGE_ACCOUNT = "changeAccount"
+        internal val CLICK_PAY_PUTTON = "clickPayButton"
+        internal val SELECTED_METHODE = "selectedMethode"
+        internal val PAYMENT_METHODES = "paymentMethodes"
     }
 }

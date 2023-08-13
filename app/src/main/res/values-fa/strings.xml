@@ -1,16 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="label_payment_url">لینک خرید</string>
+    <string name="label_contract_token">توکن قرارداد</string>
     <string name="label_commit_payment">تایید پرداخت</string>
     <string name="label_dark_mode">حالت تاریک</string>
+    <string name="label_description">پیام(اختیاری)</string>
     <string name="label_english">انگلیسی</string>
     <string name="label_open_payment_fragment">مشاهده نمونه پرداخت در فرگمنت</string>
     <string name="label_open_init_checkout">ایجاد توکن پرداخت</string>
+    <string name="label_open_direct_pay_contract">قرارداد دایرکت پی</string>
+    <string name="label_open_balance">موجودی / افزایش موجودی</string>
     <string name="label_optional_phone_number">شماره همراه (اختیاری)</string>
     <string name="label_payment_activity">مشاهده نمونه پرداخت در اکتیویتی</string>
     <string name="label_payment_fragment">نمونه پرداخت در فرگمنت</string>
     <string name="label_persian">فارسی</string>
     <string name="label_start_payment">شروع پرداخت</string>
+    <string name="label_start_contract_direct_pay">شروع امضای قرارداد</string>
     <string name="label_trace">پیگیری خرید</string>
     <string name="label_amount">مقدار خرید</string>
     <string name="label_destination">مقصد</string>
@@ -18,5 +23,12 @@
     <string name="label_init_checkout_token">دریافت چک‌اوت توکن</string>
     <string name="message_payment_cancelled">پرداخت لغو شد!</string>
     <string name="message_successful_payment">پرداخت با موفقیت انجام شد!</string>
+    <string name="message_successful_direct_pay_contract">قرارداد دایرکت پی با موفقیت تایید شد</string>
+    <string name="message_cancelled_direct_pay_contract">فرآیند تایید دایرکت پی کنسل شد!</string>
     <string name="message_trace_result">Trace result here!</string>
+    <string name="balance_title">موجودی:</string>
+    <string name="failure_login">لاگین ناموفق بود</string>
+    <string name="increase_balance">افزایش موجودی</string>
+    <string name="login_needed_for_show_balance">برای مشاهده موجودی باید لاگین کنید</string>
+    <string name="failuer_increase_balance">خطا در افزایش موجودی</string>
 </resources>

@@ -2,12 +2,17 @@ package ir.cafebazaar.bazaarpay
 
 import android.content.Context
 import com.google.gson.GsonBuilder
+import ir.cafebazaar.bazaarpay.analytics.Analytics
 import ir.cafebazaar.bazaarpay.data.SharedDataSource
+import ir.cafebazaar.bazaarpay.data.analytics.AnalyticsRemoteDataSource
+import ir.cafebazaar.bazaarpay.data.analytics.AnalyticsRepository
+import ir.cafebazaar.bazaarpay.data.analytics.api.AnalyticsService
 import ir.cafebazaar.bazaarpay.data.bazaar.account.AccountLocalDataSource
 import ir.cafebazaar.bazaarpay.data.bazaar.account.AccountRemoteDataSource
 import ir.cafebazaar.bazaarpay.data.bazaar.account.AccountRepository
 import ir.cafebazaar.bazaarpay.data.bazaar.account.AccountService
 import ir.cafebazaar.bazaarpay.data.bazaar.account.AccountSharedDataSource
+import ir.cafebazaar.bazaarpay.data.bazaar.account.UserInfoService
 import ir.cafebazaar.bazaarpay.data.bazaar.payment.BazaarPaymentRemoteDataSource
 import ir.cafebazaar.bazaarpay.data.bazaar.payment.BazaarPaymentRepository
 import ir.cafebazaar.bazaarpay.data.bazaar.payment.api.BazaarPaymentService
@@ -15,6 +20,8 @@ import ir.cafebazaar.bazaarpay.data.device.DeviceInterceptor
 import ir.cafebazaar.bazaarpay.data.device.DeviceLocalDataSource
 import ir.cafebazaar.bazaarpay.data.device.DeviceRepository
 import ir.cafebazaar.bazaarpay.data.device.DeviceSharedDataSource
+import ir.cafebazaar.bazaarpay.data.directPay.DirectPayRemoteDataSource
+import ir.cafebazaar.bazaarpay.data.directPay.api.DirectPayService
 import ir.cafebazaar.bazaarpay.data.payment.AuthenticatorInterceptor
 import ir.cafebazaar.bazaarpay.data.payment.PaymentRemoteDataSource
 import ir.cafebazaar.bazaarpay.data.payment.PaymentRepository
@@ -23,7 +30,7 @@ import ir.cafebazaar.bazaarpay.data.payment.UpdateRefreshTokenHelper
 import ir.cafebazaar.bazaarpay.data.payment.api.PaymentService
 import ir.cafebazaar.bazaarpay.models.GlobalDispatchers
 import ir.cafebazaar.bazaarpay.network.gsonConverterFactory
-import ir.cafebazaar.bazaarpay.network.interceptor.AgentInterceptor
+import ir.cafebazaar.bazaarpay.network.interceptor.HeaderInterceptor
 import kotlinx.coroutines.Dispatchers
 import okhttp3.Authenticator
 import okhttp3.Interceptor
@@ -38,11 +45,7 @@ internal object ServiceLocator {
 
     val servicesMap = HashMap<String, Any?>()
 
-    fun isConfigInitiated(): Boolean {
-        return (servicesMap[getKeyOfClass<String>(CHECKOUT_TOKEN)]) != null
-    }
-
-    fun initializeConfigs(
+    fun initializeConfigsForNormal(
         checkoutToken: String,
         phoneNumber: String? = null,
         isDark: Boolean?,
@@ -51,11 +54,33 @@ internal object ServiceLocator {
     ) {
         servicesMap[getKeyOfClass<String>(CHECKOUT_TOKEN)] = checkoutToken
         servicesMap[getKeyOfClass<String?>(PHONE_NUMBER)] = phoneNumber
-        servicesMap[getKeyOfClass<Boolean>(IS_DARK)] = isDark
-        servicesMap[getKeyOfClass<Int>(LANGUAGE)] = FA_LANGUAGE
-        servicesMap[getKeyOfClass<String>(LANGUAGE)] = "fa"
         servicesMap[getKeyOfClass<String>(AUTO_LOGIN_PHONE_NUMBER)] = autoLoginPhoneNumber
         servicesMap[getKeyOfClass<Boolean>(IS_AUTO_LOGIN_ENABLE)] = isAutoLoginEnable
+        Analytics.setCheckOutToken(checkoutToken)
+        Analytics.setAutoLoginState(isAutoLoginEnable)
+        initializeShareConfigs()
+    }
+
+    fun initializeConfigsForDirectPayContract(
+        contractToken: String,
+        phoneNumber: String? = null,
+        message: String? = null,
+    ) {
+        servicesMap[getKeyOfClass<String?>(DIRECT_PAY_CONTRACT_TOKEN)] = contractToken
+        servicesMap[getKeyOfClass<String?>(PHONE_NUMBER)] = phoneNumber
+        servicesMap[getKeyOfClass<String?>(DIRECT_PAY_MERCHANT_MESSAGE)] = message
+        initializeShareConfigs()
+    }
+
+    fun initializeConfigsForLogin(phoneNumber: String? = null) {
+        servicesMap[getKeyOfClass<String?>(PHONE_NUMBER)] = phoneNumber
+        initializeShareConfigs()
+    }
+
+    fun initializeShareConfigs() {
+        servicesMap[getKeyOfClass<Int>(LANGUAGE)] = FA_LANGUAGE
+        servicesMap[getKeyOfClass<String>(LANGUAGE)] = "fa"
+        servicesMap[getKeyOfClass<Boolean>(IS_DARK)] = null
     }
 
     fun initializeDependencies(
@@ -85,14 +110,24 @@ internal object ServiceLocator {
         initAuthenticator()
         initTokenInterceptor()
 
+        //userInfo
+        initUserInfoService()
+
         // Payment
         initRetrofitServices()
         initPaymentRemoteDataSource()
         initPaymentRepository()
 
+        //directPay
+        initDirectPayDataSource()
+
         // Bazaar
         initBazaarRemoteDataSource()
         initBazaarRepository()
+
+        //analytics
+        initAnalyticsRemoteDataSource()
+        initAnalyticsRepository()
     }
 
     fun clear() {
@@ -122,6 +157,14 @@ internal object ServiceLocator {
 
     private fun initAccountRemoteDataSource() {
         servicesMap[getKeyOfClass<AccountRemoteDataSource>()] = AccountRemoteDataSource()
+    }
+
+    private fun initAnalyticsRemoteDataSource() {
+        servicesMap[getKeyOfClass<AnalyticsRemoteDataSource>()] = AnalyticsRemoteDataSource()
+    }
+
+    private fun initAnalyticsRepository() {
+        servicesMap[getKeyOfClass<AnalyticsRepository>()] = AnalyticsRepository()
     }
 
     private fun initAccountRepository() {
@@ -162,6 +205,10 @@ internal object ServiceLocator {
         servicesMap[getKeyOfClass<PaymentRemoteDataSource>()] = PaymentRemoteDataSource()
     }
 
+    private fun initDirectPayDataSource() {
+        servicesMap[getKeyOfClass<DirectPayRemoteDataSource>()] = DirectPayRemoteDataSource()
+    }
+
     private fun initPaymentRepository() {
         servicesMap[getKeyOfClass<PaymentRepository>()] = PaymentRepository()
     }
@@ -197,7 +244,7 @@ internal object ServiceLocator {
             builder.authenticator(it)
         }
         builder
-            .addInterceptor(AgentInterceptor)
+            .addInterceptor(HeaderInterceptor)
             .addInterceptor(get<DeviceInterceptor>())
 
         interceptors.forEach {
@@ -219,7 +266,7 @@ internal object ServiceLocator {
 
     private fun provideRetrofit(
         okHttp: OkHttpClient,
-        baseUrl: String = DEFAULT_BASE_URL,
+        baseUrl: String,
         needUnWrapper: Boolean = false
     ): Retrofit {
         return Retrofit.Builder()
@@ -239,10 +286,22 @@ internal object ServiceLocator {
         val accountHttpClient = provideOkHttpClient()
         val accountRetrofit = provideRetrofit(
             okHttp = accountHttpClient,
-            needUnWrapper = true
+            needUnWrapper = true,
+            baseUrl = DEFAULT_BASE_URL
         )
         servicesMap[getKeyOfClass<AccountService>()] =
             accountRetrofit.create(AccountService::class.java)
+    }
+
+    private fun initUserInfoService() {
+        val accountHttpClient = provideOkHttpClient(interceptors = listOf(get(TOKEN)))
+        val accountRetrofit = provideRetrofit(
+            okHttp = accountHttpClient,
+            needUnWrapper = true,
+            baseUrl = DEFAULT_BASE_URL
+        )
+        servicesMap[getKeyOfClass<UserInfoService>()] =
+            accountRetrofit.create(UserInfoService::class.java)
     }
 
     private fun initRetrofitServices() {
@@ -259,8 +318,14 @@ internal object ServiceLocator {
         servicesMap[getKeyOfClass<PaymentService>()] =
             retrofit.create(PaymentService::class.java)
 
+        servicesMap[getKeyOfClass<DirectPayService>()] =
+            retrofit.create(DirectPayService::class.java)
+
         servicesMap[getKeyOfClass<BazaarPaymentService>()] =
             retrofit.create(BazaarPaymentService::class.java)
+
+        servicesMap[getKeyOfClass<AnalyticsService>()] =
+            retrofit.create(AnalyticsService::class.java)
     }
 
     private fun initDeviceSharedDataSource() {
@@ -278,10 +343,12 @@ internal object ServiceLocator {
     }
 
     private const val DEFAULT_BASE_URL: String = "https://api.cafebazaar.ir/rest-v1/process/"
-    private const val PAYMENT_BASE_URL: String = "https://pardakht.cafebazaar.ir/pardakht/badje/v1/"
+    private const val PAYMENT_BASE_URL: String = "https://pardakht.cafebazaar.ir/"
 
     internal const val CHECKOUT_TOKEN: String = "checkout_token"
     internal const val PHONE_NUMBER: String = "phone_number"
+    internal const val DIRECT_PAY_MERCHANT_MESSAGE: String = "direct_pay_merchant_message"
+    internal const val DIRECT_PAY_CONTRACT_TOKEN: String = "direct-debit-contract-token"
     internal const val IS_DARK: String = "is_dark"
     internal const val LANGUAGE: String = "language"
     internal const val AUTO_LOGIN_PHONE_NUMBER: String = "autoLoginPhoneNumber"

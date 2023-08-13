@@ -42,6 +42,7 @@
         android:ellipsize="end"
         android:maxLines="2"
         android:textColor="@color/bazaarpay_text_secondary"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/paymentPriceView"
         app:layout_constraintStart_toEndOf="@id/dealerIconImageView"

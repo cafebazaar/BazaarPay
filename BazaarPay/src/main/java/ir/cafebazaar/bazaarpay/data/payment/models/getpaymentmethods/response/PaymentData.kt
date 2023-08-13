@@ -2,11 +2,11 @@ package ir.cafebazaar.bazaarpay.data.payment.models.getpaymentmethods.response
 
 import com.google.gson.annotations.SerializedName
 import ir.cafebazaar.bazaarpay.data.payment.models.PaymentBaseResponse
-import ir.cafebazaar.bazaarpay.screens.payment.paymentmethods.PaymentMethodsType
 import ir.cafebazaar.bazaarpay.data.payment.models.getpaymentmethods.DynamicCreditOption
 import ir.cafebazaar.bazaarpay.data.payment.models.getpaymentmethods.Option
 import ir.cafebazaar.bazaarpay.data.payment.models.getpaymentmethods.PaymentMethod
 import ir.cafebazaar.bazaarpay.data.payment.models.getpaymentmethods.PaymentMethodsInfo
+import ir.cafebazaar.bazaarpay.screens.payment.paymentmethods.PaymentMethodsType
 
 internal data class PaymentMethodsInfoDto(
     @SerializedName("destination_title") val destinationTitle: String,
@@ -14,7 +14,7 @@ internal data class PaymentMethodsInfoDto(
     @SerializedName("payment_methods") val paymentMethodDtos: List<PaymentMethodDto>,
     @SerializedName("dynamic_credit_option") val dynamicCreditOptionDto: DynamicCreditOptionDto?
 
-): PaymentBaseResponse() {
+) : PaymentBaseResponse() {
 
     fun toPaymentMethodInfo(): PaymentMethodsInfo {
         return PaymentMethodsInfo(
@@ -51,12 +51,12 @@ internal data class PaymentMethodDto(
 }
 
 internal data class DynamicCreditOptionDto(
-    @SerializedName("default_amount") val defaultAmount: Long ,
-    @SerializedName("min_available_amount") val minAvailableAmount: Long ,
-    @SerializedName("max_available_amount") val maxAvailableAmount: Long ,
-    @SerializedName("description") val description: String ,
-    @SerializedName("user_balance_string") val userBalanceString: String ,
-    @SerializedName("user_balance") val userBalance: Long ,
+    @SerializedName("default_amount") val defaultAmount: Long,
+    @SerializedName("min_available_amount") val minAvailableAmount: Long,
+    @SerializedName("max_available_amount") val maxAvailableAmount: Long,
+    @SerializedName("description") val description: String,
+    @SerializedName("user_balance_string") val userBalanceString: String,
+    @SerializedName("user_balance") val userBalance: Long,
     @SerializedName("options") val optionDtos: List<OptionDto>
 ) {
 
@@ -74,7 +74,7 @@ internal data class DynamicCreditOptionDto(
 }
 
 internal data class OptionDto(
-    @SerializedName("label") val label: String ,
+    @SerializedName("label") val label: String,
     @SerializedName("amount") val amount: Long
 ) {
 

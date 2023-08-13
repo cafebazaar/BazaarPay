@@ -6,8 +6,8 @@ import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import ir.cafebazaar.bazaarpay.BazaarPayOptions
-import ir.cafebazaar.bazaarpay.StartBazaarPay
+import ir.cafebazaar.bazaarpay.launcher.normal.BazaarPayOptions
+import ir.cafebazaar.bazaarpay.launcher.normal.StartBazaarPay
 import ir.cafebazaar.bazaarpay.extensions.setSafeOnClickListener
 import ir.cafebazaar.bazaarpay.sample.databinding.FragmentPaymentBinding
 import ir.cafebazaar.bazaarpay.R as BazaarPayR

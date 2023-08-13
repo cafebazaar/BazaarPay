@@ -6,7 +6,7 @@
     android:layout_gravity="bottom"
     android:animateLayoutChanges="true"
     android:minHeight="256dp"
-    tools:context=".BazaarPayActivity"
+    tools:context=".main.BazaarPayActivity"
     tools:elevation="24dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout

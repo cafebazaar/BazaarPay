@@ -15,28 +15,28 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_round_arrow_back_icon_secondary_24dp_old" />
-    
+
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/directDebitIcon"
         android:layout_width="130dp"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/backButton"
-        app:srcCompat="@drawable/ic_direct_debit_onboarding_image" />
+        tools:srcCompat="@drawable/ic_direct_debit_onboarding_image" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/directDebitOnboardingTitle"
         style="@style/Bazaar.Text.Headline1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="-8dp"
         android:layout_marginHorizontal="@dimen/bazaarpay_default_margin_double"
-        android:text="@string/bazaarpay_dd_guide_title"
+        android:layout_marginTop="-8dp"
         android:textColor="@color/bazaarpay_grey_90"
-        app:layout_constraintTop_toBottomOf="@id/directDebitIcon"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"/>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/directDebitIcon"
+        tools:text="@string/bazaarpay_dd_guide_title" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/directDebitOnboardingSubtitle"
@@ -45,24 +45,26 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/bazaarpay_default_margin_double"
         android:layout_marginVertical="@dimen/bazaarpay_default_margin"
-        android:text="@string/bazaarpay_dd_subtitle"
-        android:textColor="@color/bazaarpay_grey_90"
         android:gravity="center"
         android:textAlignment="center"
-        app:layout_constraintTop_toBottomOf="@id/directDebitOnboardingTitle"
+        android:textColor="@color/bazaarpay_grey_90"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"/>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/directDebitOnboardingTitle"
+        tools:text="@string/bazaarpay_dd_subtitle" />
 
-    <include
-        android:id="@+id/directDebitOnBoardingItems"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/directDebitOnBoardingList"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginVertical="@dimen/bazaarpay_default_margin_double"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toTopOf="@id/nextButton"
-        app:layout_constraintTop_toBottomOf="@id/directDebitOnboardingSubtitle"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        layout="@layout/view_direct_debit_onboarding_items" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/directDebitOnboardingSubtitle"
+        tools:itemCount="3"
+        tools:listitem="@layout/item_direct_debit_onboarding" />
 
     <ir.cafebazaar.bazaarpay.widget.button.BazaarPayButton
         android:id="@+id/nextButton"
@@ -83,7 +85,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:visibility="gone"
-        app:constraint_referenced_ids="nextButton,directDebitOnBoardingItems,directDebitIcon,directDebitOnboardingTitle,directDebitOnboardingSubtitle"
+        app:constraint_referenced_ids="nextButton,directDebitOnBoardingList,directDebitIcon,directDebitOnboardingTitle,directDebitOnboardingSubtitle"
         tools:visibility="visible" />
 
     <ir.cafebazaar.bazaarpay.widget.loading.SpinKitView

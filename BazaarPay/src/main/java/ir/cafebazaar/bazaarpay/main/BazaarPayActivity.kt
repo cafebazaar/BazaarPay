@@ -1,4 +1,4 @@
-package ir.cafebazaar.bazaarpay
+package ir.cafebazaar.bazaarpay.main
 
 import android.content.Context
 import android.content.Intent
@@ -7,10 +7,15 @@ import android.os.Build
 import android.os.Bundle
 import android.os.LocaleList
 import android.view.animation.AnimationUtils
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.navigation.findNavController
 import androidx.navigation.navOptions
+import ir.cafebazaar.bazaarpay.FinishCallbacks
+import ir.cafebazaar.bazaarpay.R
+import ir.cafebazaar.bazaarpay.ServiceLocator
+import ir.cafebazaar.bazaarpay.analytics.viewmodel.AnalyticsViewModel
 import ir.cafebazaar.bazaarpay.arg.BazaarPayActivityArgs
 import ir.cafebazaar.bazaarpay.databinding.ActivityBazaarPayBinding
 import ir.cafebazaar.bazaarpay.utils.bindWithRTLSupport
@@ -21,6 +26,9 @@ class BazaarPayActivity : AppCompatActivity(), FinishCallbacks {
     private lateinit var binding: ActivityBazaarPayBinding
     private var args: BazaarPayActivityArgs? = null
     private var currentUiMode: Number? = null
+
+    private val analyticsViewModel: AnalyticsViewModel by viewModels()
+    private val mainViewModel: BazaarPayViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         initNightMode()
@@ -34,6 +42,16 @@ class BazaarPayActivity : AppCompatActivity(), FinishCallbacks {
         handleIntent(intent)
 
         startFadeInAnimation()
+
+        analyticsViewModel.listenThreshold()
+
+        registerObservers()
+    }
+
+    private fun registerObservers() {
+        mainViewModel.paymentSuccessLiveData.observe(this) {
+            navigateToThankYouPageIfIsNotShowingNow()
+        }
     }
 
     override fun onStart() {
@@ -71,15 +89,13 @@ class BazaarPayActivity : AppCompatActivity(), FinishCallbacks {
     }
 
     private fun handleIntent(intent: Intent?) {
-        if (ServiceLocator.getOrNull<String>(ServiceLocator.CHECKOUT_TOKEN).isNullOrEmpty()) {
+        validateArguments(args) {
             finishActivity()
             return
         }
         when {
             isIncreaseBalanceDoneIntent(intent) -> {
-                findNavController(R.id.nav_host_fragment_bazaar_pay).navigate(
-                    R.id.open_paymentThankYouPageFragment
-                )
+                navigateToThankYouPageIfIsNotShowingNow()
             }
 
             isDirectDebitActivationIntent(intent) -> {
@@ -91,6 +107,45 @@ class BazaarPayActivity : AppCompatActivity(), FinishCallbacks {
                     }
                 )
             }
+        }
+    }
+
+    private fun navigateToThankYouPageIfIsNotShowingNow() {
+        val currentFragment = findNavController(R.id.nav_host_fragment_bazaar_pay).currentDestination?.id
+        if (currentFragment != R.id.paymentThankYouPageFragment) {
+            findNavController(R.id.nav_host_fragment_bazaar_pay).navigate(
+                R.id.open_paymentThankYouPageFragment
+            )
+        }
+    }
+
+    private inline fun validateArguments(
+        args: BazaarPayActivityArgs?,
+        onInvalidInputs: () -> Unit
+    ) {
+        if (args == null) {
+            onInvalidInputs()
+            return
+        }
+        when (args) {
+            is BazaarPayActivityArgs.Normal -> {
+                if (ServiceLocator.getOrNull<String>(
+                        ServiceLocator.CHECKOUT_TOKEN
+                    ).isNullOrEmpty()
+                ) {
+                    onInvalidInputs()
+                }
+            }
+
+            is BazaarPayActivityArgs.DirectPayContract -> {
+                if (ServiceLocator.getOrNull<String>(
+                        ServiceLocator.DIRECT_PAY_CONTRACT_TOKEN
+                    ).isNullOrEmpty()
+                ) {
+                    onInvalidInputs()
+                }
+            }
+
         }
     }
 
@@ -180,15 +235,30 @@ class BazaarPayActivity : AppCompatActivity(), FinishCallbacks {
 
     private fun initServiceLocator(savedInstanceState: Bundle?) {
         val restoredArgs = savedInstanceState?.get(BAZAARPAY_ACTIVITY_ARGS) as? BazaarPayActivityArgs
-        restoredArgs?.let {
-            ServiceLocator.initializeConfigs(
-                checkoutToken = it.checkoutToken,
-                phoneNumber = it.phoneNumber,
-                isDark = it.isDarkMode,
-                isAutoLoginEnable = it.isAutoLoginEnable,
-                autoLoginPhoneNumber = it.autoLoginPhoneNumber
-            )
+        when (restoredArgs) {
+            is BazaarPayActivityArgs.Normal -> {
+                with(restoredArgs) {
+                    ServiceLocator.initializeConfigsForNormal(
+                        checkoutToken = checkoutToken,
+                        phoneNumber = phoneNumber,
+                        isDark = isDarkMode,
+                        isAutoLoginEnable = isAutoLoginEnable,
+                        autoLoginPhoneNumber = autoLoginPhoneNumber
+                    )
+                }
+            }
+
+            is BazaarPayActivityArgs.DirectPayContract -> {
+                with(restoredArgs) {
+                    ServiceLocator.initializeConfigsForDirectPayContract(
+                        contractToken = contractToken,
+                        phoneNumber = phoneNumber,
+                        message = message
+                    )
+                }
+            }
         }
+
         ServiceLocator.initializeDependencies(context = applicationContext)
     }
 
@@ -202,8 +272,13 @@ class BazaarPayActivity : AppCompatActivity(), FinishCallbacks {
         finishActivity()
     }
 
+    override fun onResume() {
+        super.onResume()
+        mainViewModel.onActivityResumed()
+    }
+
     private fun finishActivity() {
-        ServiceLocator.clear()
+        analyticsViewModel.onFinish()
         finish()
     }
 

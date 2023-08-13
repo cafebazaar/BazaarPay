@@ -1,10 +1,8 @@
 package ir.cafebazaar.bazaarpay.data.bazaar.payment.api
 
-import ir.cafebazaar.bazaarpay.data.bazaar.payment.models.directdebit.banklist.request.GetAvailableBanksSingleRequestDto
 import ir.cafebazaar.bazaarpay.data.bazaar.payment.models.directdebit.banklist.response.GetAvailableBanksResponseDto
 import ir.cafebazaar.bazaarpay.data.bazaar.payment.models.directdebit.contractcreation.request.GetDirectDebitContractCreationUrlSingleRequest
 import ir.cafebazaar.bazaarpay.data.bazaar.payment.models.directdebit.contractcreation.response.GetDirectDebitContractCreationUrlResponseDto
-import ir.cafebazaar.bazaarpay.data.bazaar.payment.models.directdebit.onboarding.request.GetDirectDebitOnBoardingSingleRequest
 import ir.cafebazaar.bazaarpay.data.bazaar.payment.models.directdebit.onboarding.response.GetDirectDebitOnBoardingResponseDto
 import ir.cafebazaar.bazaarpay.data.bazaar.payment.models.postpaid.activate.request.ActivatePostpaidCreditSingleRequest
 import ir.cafebazaar.bazaarpay.data.bazaar.payment.models.postpaid.activate.response.ActivatePostpaidCreditResponseDto
@@ -16,23 +14,23 @@ import retrofit2.http.Query
 
 internal interface BazaarPaymentService {
 
-    @GET("direct-debit/get-onboarding/")
+    @GET("pardakht/badje/v1/direct-debit/get-onboarding/")
     suspend fun getDirectDebitOnBoarding(
         @Query(PaymentService.CHECKOUT_TOKEN_LABEL) checkoutLabel: String,
     ): GetDirectDebitOnBoardingResponseDto
 
-    @POST("direct-debit/get-contract-creation-url/")
+    @POST("pardakht/badje/v1/direct-debit/get-contract-creation-url/")
     suspend fun getCreateContractUrl(
         @Body getDirectDebitContractCreationUrlSingleRequest:
         GetDirectDebitContractCreationUrlSingleRequest
     ): GetDirectDebitContractCreationUrlResponseDto
 
-    @GET("direct-debit/get-available-banks/")
+    @GET("pardakht/badje/v1/direct-debit/get-available-banks/")
     suspend fun getAvailableBanks(
         @Query(PaymentService.CHECKOUT_TOKEN_LABEL) checkoutLabel: String,
     ): GetAvailableBanksResponseDto
 
-    @POST("ActivatePostpaidCreditRequest/")
+    @POST("pardakht/badje/v1/ActivatePostpaidCreditRequest/")
     suspend fun activatePostPaid(
         @Body activatePostpaidCreditSingleRequest: ActivatePostpaidCreditSingleRequest
     ): ActivatePostpaidCreditResponseDto

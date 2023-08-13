@@ -3,9 +3,12 @@ package ir.cafebazaar.bazaarpay.data.payment
 import android.content.Context
 import ir.cafebazaar.bazaarpay.ServiceLocator
 import ir.cafebazaar.bazaarpay.data.payment.api.PaymentService
+import ir.cafebazaar.bazaarpay.data.payment.models.getpaymentmethods.DynamicCreditOption
 import ir.cafebazaar.bazaarpay.data.payment.models.getpaymentmethods.PaymentMethodsInfo
 import ir.cafebazaar.bazaarpay.data.payment.models.getpaymentmethods.request.GetPaymentMethodsRequest
+import ir.cafebazaar.bazaarpay.data.payment.models.increasebalance.IncreaseBalanceRequest
 import ir.cafebazaar.bazaarpay.data.payment.models.merchantinfo.MerchantInfo
+import ir.cafebazaar.bazaarpay.data.payment.models.pay.BalanceResult
 import ir.cafebazaar.bazaarpay.data.payment.models.pay.InitCheckoutResult
 import ir.cafebazaar.bazaarpay.data.payment.models.pay.PayResult
 import ir.cafebazaar.bazaarpay.data.payment.models.pay.PurchaseStatus
@@ -16,7 +19,6 @@ import ir.cafebazaar.bazaarpay.data.payment.models.pay.request.TraceRequest
 import ir.cafebazaar.bazaarpay.extensions.ServiceType
 import ir.cafebazaar.bazaarpay.extensions.safeApiCall
 import ir.cafebazaar.bazaarpay.models.GlobalDispatchers
-import ir.cafebazaar.bazaarpay.screens.payment.paymentmethods.PaymentMethodsType
 import ir.cafebazaar.bazaarpay.utils.Either
 import kotlinx.coroutines.withContext
 import okhttp3.ResponseBody
@@ -28,7 +30,7 @@ internal class PaymentRemoteDataSource {
     private val globalDispatchers: GlobalDispatchers by lazy { ServiceLocator.get() }
 
     suspend fun getPaymentMethods(): Either<PaymentMethodsInfo> {
-        val language = ServiceLocator.get<String>(ServiceLocator.LANGUAGE)
+        val language = ServiceLocator.getOrNull<String>(ServiceLocator.LANGUAGE) ?: "fa"
         return withContext(globalDispatchers.iO) {
             return@withContext safeApiCall(ServiceType.BAZAARPAY) {
                 paymentService.getPaymentMethods(
@@ -40,13 +42,10 @@ internal class PaymentRemoteDataSource {
     }
 
     suspend fun getMerchantInfo(): Either<MerchantInfo> {
-        val language = ServiceLocator.get<String>(ServiceLocator.LANGUAGE)
+        val language = ServiceLocator.getOrNull<String>(ServiceLocator.LANGUAGE) ?: "fa"
         return withContext(globalDispatchers.iO) {
             return@withContext safeApiCall(ServiceType.BAZAARPAY) {
-                paymentService.getMerchantInfo(
-                    checkoutToken,
-                    language
-                ).toMerchantInfo()
+                paymentService.getMerchantInfo(checkoutToken, language).toMerchantInfo()
             }
         }
     }
@@ -55,7 +54,7 @@ internal class PaymentRemoteDataSource {
         paymentMethod: String,
         amount: Long?
     ): Either<PayResult> {
-        val language = ServiceLocator.get<String>(ServiceLocator.LANGUAGE)
+        val language = ServiceLocator.getOrNull<String>(ServiceLocator.LANGUAGE) ?: "fa"
         return withContext(globalDispatchers.iO) {
             return@withContext safeApiCall(ServiceType.BAZAARPAY) {
                 paymentService.pay(
@@ -66,6 +65,16 @@ internal class PaymentRemoteDataSource {
                         increaseBalanceRedirectUrl
                     ),
                     language
+                ).toPayResult()
+            }
+        }
+    }
+
+    suspend fun increaseBalance(amount: Long): Either<PayResult> {
+        return withContext(globalDispatchers.iO) {
+            return@withContext safeApiCall(ServiceType.BAZAARPAY) {
+                paymentService.increaseBalance(
+                    IncreaseBalanceRequest(amount, increaseBalanceRedirectUrl)
                 ).toPayResult()
             }
         }
@@ -105,6 +114,22 @@ internal class PaymentRemoteDataSource {
                 paymentService.initCheckout(
                     InitCheckoutRequest(amount, destination, serviceName)
                 ).toInitCheckoutResult()
+            }
+        }
+    }
+
+    suspend fun getBalance(): Either<BalanceResult> {
+        return withContext(globalDispatchers.iO) {
+            return@withContext safeApiCall(ServiceType.BAZAARPAY) {
+                paymentService.getBalance().toBalanceResult()
+            }
+        }
+    }
+
+    suspend fun getIncreaseBalanceOptions(): Either<DynamicCreditOption> {
+        return withContext(globalDispatchers.iO) {
+            return@withContext safeApiCall(ServiceType.BAZAARPAY) {
+                paymentService.getIncreaseBalanceOptions().toDynamicCreditOption()
             }
         }
     }

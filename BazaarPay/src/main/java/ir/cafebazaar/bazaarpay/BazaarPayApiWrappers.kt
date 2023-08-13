@@ -1,11 +1,14 @@
 package ir.cafebazaar.bazaarpay
 
 import android.content.Context
+import ir.cafebazaar.bazaarpay.data.bazaar.account.AccountRepository
 import ir.cafebazaar.bazaarpay.data.bazaar.models.ErrorModel
 import ir.cafebazaar.bazaarpay.data.payment.PaymentRepository
+import ir.cafebazaar.bazaarpay.data.payment.models.pay.BalanceResult
 import ir.cafebazaar.bazaarpay.data.payment.models.pay.InitCheckoutResult
 import ir.cafebazaar.bazaarpay.data.payment.models.pay.PurchaseStatus
 import ir.cafebazaar.bazaarpay.extensions.fold
+import ir.cafebazaar.bazaarpay.launcher.normal.PaymentURLParser
 
 fun initSDKForAPICall(
     context: Context,
@@ -13,7 +16,7 @@ fun initSDKForAPICall(
     autoLoginPhoneNumber: String? = null,
     isAutoLoginEnable: Boolean = false,
 ) {
-    ServiceLocator.initializeConfigs(
+    ServiceLocator.initializeConfigsForNormal(
         checkoutToken = checkoutToken,
         isDark = false,
         autoLoginPhoneNumber = autoLoginPhoneNumber,
@@ -89,6 +92,37 @@ suspend fun initCheckout(
         ifSuccess = {
             onSuccess.invoke(it)
         },
+        ifFailure = onFailure
+    )
+}
+
+/**
+ * Get user balance
+ *
+ * @param context the context in which tracing happens.
+ * @param onSuccess the callback when get balance is successfully fetched [BalanceResult].
+ * @param onFailure the callback for an unsuccessful get balance with [ErrorModel] to reason about the cause.
+ * @param onLoginNeeded the callback for a login issue, users should be logged in for fetching their balance.
+ */
+suspend fun getBazaarPayBalance(
+    context: Context,
+    onSuccess: (BalanceResult) -> Unit,
+    onFailure: (ErrorModel) -> Unit,
+    onLoginNeeded: () -> Unit = {},
+) {
+    initSDKForAPICall(
+        context = context,
+        checkoutToken = ""
+    )
+    val payRepository: PaymentRepository = ServiceLocator.get()
+    val accountRepository: AccountRepository = ServiceLocator.get()
+
+    if (accountRepository.needLogin()) {
+        onLoginNeeded.invoke()
+        return
+    }
+    payRepository.getBalance().fold(
+        ifSuccess = onSuccess,
         ifFailure = onFailure
     )
 }

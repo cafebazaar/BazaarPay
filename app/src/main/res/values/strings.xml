@@ -2,16 +2,21 @@
 <resources>
     <string name="app_name" translatable="false">BazaarPay</string>
     <string name="label_payment_url">Payment URL</string>
+    <string name="label_contract_token">Contract Token</string>
+    <string name="label_description">Message (optional)</string>
     <string name="label_commit_payment">Commit Payment</string>
     <string name="label_dark_mode">Dark Mode</string>
     <string name="label_english">English</string>
     <string name="label_open_payment_fragment">Open Payment Fragment</string>
     <string name="label_open_init_checkout">Init Checkout Activity</string>
+    <string name="label_open_direct_pay_contract">DirectPay Contract</string>
+    <string name="label_open_balance">Balance / Increase balance</string>
     <string name="label_optional_phone_number">Phone Number (optional)</string>
     <string name="label_payment_activity">Payment Activity</string>
     <string name="label_payment_fragment">Payment Fragment</string>
     <string name="label_persian">Persian</string>
     <string name="label_start_payment">Start Payment</string>
+    <string name="label_start_contract_direct_pay">Start Contract DirectPay</string>
     <string name="label_trace">Trace</string>
     <string name="label_amount">Amount</string>
     <string name="label_destination">Destination</string>
@@ -19,5 +24,12 @@
     <string name="label_init_checkout_token">Init Checkout Token</string>
     <string name="message_payment_cancelled">Payment canceled!</string>
     <string name="message_successful_payment">Payment finished successfully</string>
+    <string name="message_successful_direct_pay_contract">DirectPay contract approved successfully</string>
+    <string name="message_cancelled_direct_pay_contract">DirectPay contract canceled!</string>
     <string name="message_trace_result">Trace result here!</string>
+    <string name="balance_title">Balance:</string>
+    <string name="failure_login">Login failed</string>
+    <string name="increase_balance">Increase Balance</string>
+    <string name="login_needed_for_show_balance">Login needed</string>
+    <string name="failuer_increase_balance">Increase balance failed</string>
 </resources>

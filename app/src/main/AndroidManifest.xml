@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+<manifest
+    xmlns:android="http://schemas.android.com/apk/res/android"
     package="ir.cafebazaar.bazaarpay.sample">
 
     <application
@@ -10,6 +11,12 @@
         android:supportsRtl="true"
         android:theme="@style/BazaarPaySampleTheme">
         <activity
+            android:name=".balance.BalanceSampleActivity"
+            android:exported="false" />
+        <activity
+            android:name=".SampleDirectPayContractActivity"
+            android:exported="false" />
+        <activity
             android:name=".SamplePaymentActivity"
             android:exported="true">
             <intent-filter>
@@ -18,14 +25,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".SampleFragmentContainer"
-            android:exported="true"/>
-
+            android:exported="true" />
         <activity
             android:name=".SampleInitCheckoutActivity"
-            android:exported="true"/>
+            android:exported="true" />
     </application>
 
 </manifest>

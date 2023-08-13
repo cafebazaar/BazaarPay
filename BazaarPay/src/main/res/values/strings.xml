@@ -86,4 +86,10 @@
     <string name="bazaarpay_dd_start">شروع فعال‌سازی</string>
     <string name="bazaarpay_edit">ویرایش</string>
 
+    //directPay
+    <string name="bazaarpay_enable_direct_pay">فعال‌سازی و ادامه</string>
+    <string name="bazaarpay_cancel_direct_pay">عدم فعال‌سازی</string>
+    <string name="bazaarpay_merchant_message">پیام %s </string>
+    <string name="bazaarpay_direct_pay_title">فعال‌سازی «پرداخت خودکار» در %s </string>
+
 </resources>
