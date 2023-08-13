@@ -2,7 +2,6 @@ package ir.cafebazaar.bazaarpay.screens.payment.thanks
 
 import android.os.CountDownTimer
 import android.text.format.DateUtils.SECOND_IN_MILLIS
-import androidx.databinding.adapters.SeekBarBindingAdapter.setProgress
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import ir.cafebazaar.bazaarpay.R
