@@ -12,17 +12,17 @@ internal sealed class BazaarPayActivityArgs : Parcelable {
         val isDarkMode: Boolean? = null,
         val autoLoginPhoneNumber: String? = null,
         val isAutoLoginEnable: Boolean = false,
+        val authToken: String? = null,
     ) : BazaarPayActivityArgs()
 
     data class DirectPayContract(
         val contractToken: String,
         val phoneNumber: String? = null,
-        val message: String? = null
+        val message: String? = null,
+        val authToken: String? = null,
     ) : BazaarPayActivityArgs()
 
-    data class Login(
-        val phoneNumber: String? = null
-    ) : BazaarPayActivityArgs()
+    data class Login(val phoneNumber: String? = null) : BazaarPayActivityArgs()
 
-    object IncreaseBalance : BazaarPayActivityArgs()
+    data class IncreaseBalance(val authToken: String? = null) : BazaarPayActivityArgs()
 }

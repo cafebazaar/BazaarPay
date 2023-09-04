@@ -8,6 +8,8 @@ import androidx.core.net.toUri
  * @property checkoutToken the unique identifier that provides essential payment information.
  * @property isInDarkMode enables *Dark Mode* for the UI elements of the payment flow, which are in *Light Mode* by default.
  * @property phoneNumber the default phone number to pre-fill the login screen's input field. It uses a `null` value by default, resulting in no pre-filled input.
+ * @property authToken Optional token for autoLogin
+ *
  */
 class BazaarPayOptions private constructor(
     val checkoutToken: String,
@@ -15,6 +17,7 @@ class BazaarPayOptions private constructor(
     val phoneNumber: String? = null,
     val autoLoginPhoneNumber: String? = null,
     val isAutoLoginEnable: Boolean = false,
+    val authToken: String? = null,
 ) {
 
     @Deprecated(
@@ -31,6 +34,7 @@ class BazaarPayOptions private constructor(
 
         private var checkoutToken: String = ""
         private var phoneNumber: String? = null
+        private var authToken: String? = null
         private var paymentUrlParser: PaymentURLParser? = null
 
         @Deprecated(
@@ -45,12 +49,21 @@ class BazaarPayOptions private constructor(
             paymentUrlParser = PaymentURLParser(paymentURL)
         }
 
+        fun authToken(authToken: String) = apply {
+            this.authToken = authToken
+        }
+
         fun build() = BazaarPayOptions(
             checkoutToken = paymentUrlParser?.getCheckoutToken() ?: checkoutToken,
             phoneNumber = phoneNumber,
             autoLoginPhoneNumber = paymentUrlParser?.getAutoLoginPhoneNumber(),
-            isAutoLoginEnable = paymentUrlParser?.isAutoLoginEnable() ?: false
+            authToken = authToken,
+            isAutoLoginEnable = isAutoLoginEnable()
         )
+
+        private fun isAutoLoginEnable(): Boolean {
+            return paymentUrlParser?.isAutoLoginEnable() ?: authToken.isNullOrEmpty().not()
+        }
     }
 }
 

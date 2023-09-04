@@ -40,7 +40,8 @@ class StartDirectPayFinalizeContract : ActivityResultContract<DirectPayContractO
         val bazaarPayActivityArgs = BazaarPayActivityArgs.DirectPayContract(
             phoneNumber = input.phoneNumber,
             contractToken = input.contractToken,
-            message = input.message
+            message = input.message,
+            authToken = input.authToken
         )
         return Intent(context, BazaarPayActivity::class.java).apply {
             putExtra(BazaarPayActivity.BAZAARPAY_ACTIVITY_ARGS, bazaarPayActivityArgs)
