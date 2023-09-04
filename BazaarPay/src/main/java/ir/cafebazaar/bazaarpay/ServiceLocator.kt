@@ -48,9 +48,9 @@ internal object ServiceLocator {
     fun initializeConfigsForNormal(
         checkoutToken: String,
         phoneNumber: String? = null,
-        isDark: Boolean?,
         autoLoginPhoneNumber: String? = null,
         isAutoLoginEnable: Boolean = false,
+        authToken: String? = null,
     ) {
         servicesMap[getKeyOfClass<String>(CHECKOUT_TOKEN)] = checkoutToken
         servicesMap[getKeyOfClass<String?>(PHONE_NUMBER)] = phoneNumber
@@ -58,18 +58,19 @@ internal object ServiceLocator {
         servicesMap[getKeyOfClass<Boolean>(IS_AUTO_LOGIN_ENABLE)] = isAutoLoginEnable
         Analytics.setCheckOutToken(checkoutToken)
         Analytics.setAutoLoginState(isAutoLoginEnable)
-        initializeShareConfigs()
+        initializeShareConfigs(authToken)
     }
 
     fun initializeConfigsForDirectPayContract(
         contractToken: String,
         phoneNumber: String? = null,
         message: String? = null,
+        authToken: String? = null,
     ) {
         servicesMap[getKeyOfClass<String?>(DIRECT_PAY_CONTRACT_TOKEN)] = contractToken
         servicesMap[getKeyOfClass<String?>(PHONE_NUMBER)] = phoneNumber
         servicesMap[getKeyOfClass<String?>(DIRECT_PAY_MERCHANT_MESSAGE)] = message
-        initializeShareConfigs()
+        initializeShareConfigs(authToken)
     }
 
     fun initializeConfigsForLogin(phoneNumber: String? = null) {
@@ -77,10 +78,14 @@ internal object ServiceLocator {
         initializeShareConfigs()
     }
 
-    fun initializeShareConfigs() {
+    fun initializeShareConfigs(authToken: String? = null) {
         servicesMap[getKeyOfClass<Int>(LANGUAGE)] = FA_LANGUAGE
         servicesMap[getKeyOfClass<String>(LANGUAGE)] = "fa"
         servicesMap[getKeyOfClass<Boolean>(IS_DARK)] = null
+        servicesMap[getKeyOfClass<Boolean>(IS_DARK)] = null
+        authToken?.let { token ->
+            servicesMap[getKeyOfClass<String>(AUTO_LOGIN_TOKEN)] = token
+        }
     }
 
     fun initializeDependencies(
@@ -350,6 +355,7 @@ internal object ServiceLocator {
     internal const val DIRECT_PAY_MERCHANT_MESSAGE: String = "direct_pay_merchant_message"
     internal const val DIRECT_PAY_CONTRACT_TOKEN: String = "direct-debit-contract-token"
     internal const val IS_DARK: String = "is_dark"
+    internal const val AUTO_LOGIN_TOKEN: String = "auto_login_token"
     internal const val LANGUAGE: String = "language"
     internal const val AUTO_LOGIN_PHONE_NUMBER: String = "autoLoginPhoneNumber"
     internal const val IS_AUTO_LOGIN_ENABLE: String = "isAutoLoginEnable"

@@ -241,7 +241,6 @@ class BazaarPayActivity : AppCompatActivity(), FinishCallbacks {
                     ServiceLocator.initializeConfigsForNormal(
                         checkoutToken = checkoutToken,
                         phoneNumber = phoneNumber,
-                        isDark = isDarkMode,
                         isAutoLoginEnable = isAutoLoginEnable,
                         autoLoginPhoneNumber = autoLoginPhoneNumber
                     )

@@ -4,9 +4,9 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import androidx.activity.result.contract.ActivityResultContract
-import ir.cafebazaar.bazaarpay.main.BazaarPayActivity
 import ir.cafebazaar.bazaarpay.ServiceLocator
 import ir.cafebazaar.bazaarpay.arg.BazaarPayActivityArgs
+import ir.cafebazaar.bazaarpay.main.BazaarPayActivity
 
 /**
  * An [ActivityResultContract] to start a payment.
@@ -35,16 +35,17 @@ class StartBazaarPay : ActivityResultContract<BazaarPayOptions, Boolean>() {
         ServiceLocator.initializeConfigsForNormal(
             checkoutToken = input.checkoutToken,
             phoneNumber = input.phoneNumber,
-            isDark = input.isInDarkMode,
             isAutoLoginEnable = input.isAutoLoginEnable,
-            autoLoginPhoneNumber = input.autoLoginPhoneNumber
+            autoLoginPhoneNumber = input.autoLoginPhoneNumber,
+            authToken = input.authToken
         )
         val bazaarPayActivityArgs = BazaarPayActivityArgs.Normal(
             checkoutToken = input.checkoutToken,
             phoneNumber = input.phoneNumber,
             isDarkMode = input.isInDarkMode,
             autoLoginPhoneNumber = input.autoLoginPhoneNumber,
-            isAutoLoginEnable = input.isAutoLoginEnable
+            isAutoLoginEnable = input.isAutoLoginEnable,
+            authToken = input.authToken
         )
         return Intent(context, BazaarPayActivity::class.java).apply {
             putExtra(BazaarPayActivity.BAZAARPAY_ACTIVITY_ARGS, bazaarPayActivityArgs)
