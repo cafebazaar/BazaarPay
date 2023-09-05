@@ -49,15 +49,27 @@ class SampleDirectPayContractActivity : AppCompatActivity() {
             val contractToken = binding.contractTokenInput.text.toString()
             val message = binding.messageInput.text.toString()
             val phone = binding.phoneInput.text.toString()
-            startDirectPayContract(contractToken = contractToken, message = message, phone = phone)
+            val authToken = binding.tokenInput.text.toString()
+            startDirectPayContract(
+                contractToken = contractToken,
+                message = message,
+                phone = phone,
+                authToken = authToken
+            )
         }
     }
 
-    private fun startDirectPayContract(contractToken: String, message: String, phone: String) {
+    private fun startDirectPayContract(
+        contractToken: String,
+        message: String,
+        phone: String,
+        authToken: String? = null
+    ) {
         val options = DirectPayContractOptions(
             contractToken = contractToken,
             message = message,
-            phoneNumber = phone
+            phoneNumber = phone,
+            authToken = authToken
         )
         bazaarPayDirectPayContractLauncher.launch(options)
     }

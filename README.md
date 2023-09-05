@@ -213,14 +213,16 @@ function for this purpose that you can call from a coroutine scope:
 myScope.launch {
     getBazaarPayBalance(
         context = requireContext(),
+        authToken = AUTO_LOGIN_TOKEN,
         onSuccess = { },
         onFailure = { },
         onLoginNeeded = {
-            // here you should use BazaarPay Login API
+            // here you should use BazaarPay Login API, or use autoLogin
         }
     )
 }
 ```
+> authToken is an optional parameter that helps you get user balance without login
 
 # Open increase balance screen directly
 
