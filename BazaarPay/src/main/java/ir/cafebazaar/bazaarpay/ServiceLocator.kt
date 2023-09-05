@@ -340,7 +340,10 @@ internal object ServiceLocator {
 
     private fun isUserLogOutAndAutoLoginEnable(): Boolean {
         val accountLocalDataSource: AccountLocalDataSource = get()
-        val isAutoLoginEnable = getOrNull<Boolean>(IS_AUTO_LOGIN_ENABLE) ?: false
+        val isOldAutoLoginEnable = getOrNull<Boolean>(IS_AUTO_LOGIN_ENABLE) ?: false
+        val isNewAutoLoginEnable = getOrNull<String>(AUTO_LOGIN_TOKEN).isNullOrEmpty().not()
+        val isAutoLoginEnable = isOldAutoLoginEnable || isNewAutoLoginEnable
+
         fun isLoggedIn(): Boolean {
             return accountLocalDataSource.accessToken.isNotEmpty()
         }
