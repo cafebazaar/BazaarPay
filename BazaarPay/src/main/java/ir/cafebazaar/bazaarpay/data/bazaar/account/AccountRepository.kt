@@ -33,11 +33,22 @@ internal class AccountRepository {
     }
 
     fun needLogin(): Boolean {
-        return if (isLoggedIn()) {
-            false
-        } else {
-            ServiceLocator.getOrNull<Boolean>(IS_AUTO_LOGIN_ENABLE)?.not() ?: true
+        return when {
+            isLoggedIn() -> false
+            isNewAutoLoginEnable() -> false
+            isOldAutoLoginEnable() -> false
+            else -> true
         }
+    }
+
+    private fun isOldAutoLoginEnable(): Boolean {
+        return ServiceLocator.getOrNull<Boolean>(IS_AUTO_LOGIN_ENABLE) ?: false
+    }
+
+    private fun isNewAutoLoginEnable(): Boolean {
+        return ServiceLocator.getOrNull<String>(ServiceLocator.AUTO_LOGIN_TOKEN)
+            .isNullOrEmpty()
+            .not()
     }
 
     suspend fun getAutoFillPhones(): List<String> {
