@@ -7,6 +7,8 @@ import ir.cafebazaar.bazaarpay.data.bazaar.account.models.getotptokenbycall.Wait
 import ir.cafebazaar.bazaarpay.data.bazaar.account.models.getotptokenbycall.request.GetOtpTokenByCallSingleRequest
 import ir.cafebazaar.bazaarpay.data.bazaar.account.models.getuserinfo.GetUserInfoSingleRequest
 import ir.cafebazaar.bazaarpay.data.bazaar.account.models.refreshaccesstoken.request.GetAccessTokenSingleRequest
+import ir.cafebazaar.bazaarpay.data.bazaar.account.models.userinfo.AutoLoginUserInfo
+import ir.cafebazaar.bazaarpay.data.bazaar.account.models.userinfo.toAutoLoginUserInfo
 import ir.cafebazaar.bazaarpay.data.bazaar.account.models.verifyotptoken.LoginResponse
 import ir.cafebazaar.bazaarpay.data.bazaar.account.models.verifyotptoken.request.VerifyOtpTokenSingleRequest
 import ir.cafebazaar.bazaarpay.data.bazaar.models.ErrorModel
@@ -23,6 +25,10 @@ internal class AccountRemoteDataSource {
     }
 
     private val userInfoService: UserInfoService? by lazy {
+        ServiceLocator.getOrNull()
+    }
+
+    private val autoLoginUserInfoService: AutoLoginUserInfoService? by lazy {
         ServiceLocator.getOrNull()
     }
 
@@ -64,6 +70,15 @@ internal class AccountRemoteDataSource {
         return withContext(globalDispatchers.iO) {
             return@withContext safeApiCall {
                 userInfoService?.getUserInfoRequest(GetUserInfoSingleRequest())?.accountID.orEmpty()
+            }
+        }
+    }
+
+    suspend fun getAutoLoginUserInfo(): Either<AutoLoginUserInfo> {
+        return withContext(globalDispatchers.iO) {
+            return@withContext safeApiCall {
+                autoLoginUserInfoService?.getUserInfoRequest()?.toAutoLoginUserInfo()
+                    ?: AutoLoginUserInfo("", "")
             }
         }
     }

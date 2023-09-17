@@ -50,15 +50,15 @@ internal object ServiceLocator {
         phoneNumber: String? = null,
         autoLoginPhoneNumber: String? = null,
         isAutoLoginEnable: Boolean = false,
-        authToken: String? = null,
+        autoLoginAuthToken: String? = null,
     ) {
         servicesMap[getKeyOfClass<String>(CHECKOUT_TOKEN)] = checkoutToken
         servicesMap[getKeyOfClass<String?>(PHONE_NUMBER)] = phoneNumber
         servicesMap[getKeyOfClass<String>(AUTO_LOGIN_PHONE_NUMBER)] = autoLoginPhoneNumber
         servicesMap[getKeyOfClass<Boolean>(IS_AUTO_LOGIN_ENABLE)] = isAutoLoginEnable
         Analytics.setCheckOutToken(checkoutToken)
-        Analytics.setAutoLoginState(isAutoLoginEnable)
-        initializeShareConfigs(authToken)
+        Analytics.setAutoLoginState(isAutoLoginEnable || autoLoginAuthToken.isNullOrEmpty().not())
+        initializeShareConfigs(autoLoginAuthToken)
     }
 
     fun initializeConfigsForDirectPayContract(
@@ -299,14 +299,14 @@ internal object ServiceLocator {
     }
 
     private fun initUserInfoService() {
-        val accountHttpClient = provideOkHttpClient(interceptors = listOf(get(TOKEN)))
-        val accountRetrofit = provideRetrofit(
-            okHttp = accountHttpClient,
+        val httpClient = provideOkHttpClient(interceptors = listOf(get(TOKEN)))
+        val retrofit = provideRetrofit(
+            okHttp = httpClient,
             needUnWrapper = true,
             baseUrl = DEFAULT_BASE_URL
         )
         servicesMap[getKeyOfClass<UserInfoService>()] =
-            accountRetrofit.create(UserInfoService::class.java)
+            retrofit.create(UserInfoService::class.java)
     }
 
     private fun initRetrofitServices() {

@@ -10,6 +10,7 @@ import ir.cafebazaar.bazaarpay.data.bazaar.account.models.getotptoken.WaitingTim
 import ir.cafebazaar.bazaarpay.data.bazaar.account.models.getotptokenbycall.WaitingTime
 import ir.cafebazaar.bazaarpay.data.bazaar.account.models.verifyotptoken.LoginResponse
 import ir.cafebazaar.bazaarpay.extensions.fold
+import ir.cafebazaar.bazaarpay.extensions.getOrNull
 import ir.cafebazaar.bazaarpay.models.GlobalDispatchers
 import ir.cafebazaar.bazaarpay.utils.Either
 import ir.cafebazaar.bazaarpay.utils.doOnSuccess
@@ -61,9 +62,13 @@ internal class AccountRepository {
         accountLocalDataSource.putAutoFillPhones(phone)
     }
 
-    fun getPhone(): String {
+    suspend fun getPhone(): String {
         return accountLocalDataSource.loginPhone.ifEmpty {
-            ServiceLocator.get<String?>(AUTO_LOGIN_PHONE_NUMBER).orEmpty()
+            if (isNewAutoLoginEnable()) {
+                accountRemoteDataSource.getAutoLoginUserInfo().getOrNull()?.phoneNumber.orEmpty()
+            } else {
+                ServiceLocator.get<String?>(AUTO_LOGIN_PHONE_NUMBER).orEmpty()
+            }
         }
     }
 

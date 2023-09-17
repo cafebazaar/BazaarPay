@@ -37,7 +37,7 @@ class StartBazaarPay : ActivityResultContract<BazaarPayOptions, Boolean>() {
             phoneNumber = input.phoneNumber,
             isAutoLoginEnable = input.isAutoLoginEnable,
             autoLoginPhoneNumber = input.autoLoginPhoneNumber,
-            authToken = input.authToken
+            autoLoginAuthToken = input.authToken
         )
         val bazaarPayActivityArgs = BazaarPayActivityArgs.Normal(
             checkoutToken = input.checkoutToken,
