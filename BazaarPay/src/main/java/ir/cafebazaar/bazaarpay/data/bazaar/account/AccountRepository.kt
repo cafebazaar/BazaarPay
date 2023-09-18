@@ -42,11 +42,11 @@ internal class AccountRepository {
         }
     }
 
-    fun isOldAutoLoginEnable(): Boolean {
+    private fun isOldAutoLoginEnable(): Boolean {
         return ServiceLocator.getOrNull<Boolean>(IS_AUTO_LOGIN_ENABLE) ?: false
     }
 
-    fun isNewAutoLoginEnable(): Boolean {
+    private fun isNewAutoLoginEnable(): Boolean {
         return ServiceLocator.getOrNull<String>(ServiceLocator.AUTO_LOGIN_TOKEN)
             .isNullOrEmpty()
             .not()
@@ -119,7 +119,11 @@ internal class AccountRepository {
     }
 
     fun getAccessToken(): String {
-        return accountLocalDataSource.accessToken
+        return if (isNewAutoLoginEnable()) {
+            ServiceLocator.getOrNull<String>(ServiceLocator.AUTO_LOGIN_TOKEN).orEmpty()
+        } else {
+            accountLocalDataSource.accessToken
+        }
     }
 
     fun getAccountId(): String {
