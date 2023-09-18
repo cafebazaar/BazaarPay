@@ -1,14 +1,11 @@
 package ir.cafebazaar.bazaarpay.data.bazaar.account
 
-import ir.cafebazaar.bazaarpay.data.bazaar.account.models.getuserinfo.GetUserInfoSingleRequest
-import ir.cafebazaar.bazaarpay.data.bazaar.account.models.userinfo.GetUserInfoReplyDto
-import retrofit2.http.Body
+import ir.cafebazaar.bazaarpay.data.bazaar.account.models.userinfo.AutoLoginUserInfoReplyDto
+import retrofit2.http.GET
 import retrofit2.http.POST
 
 internal interface UserInfoService {
 
-    @POST("GetUserInfoRequest")
-    suspend fun getUserInfoRequest(
-        @Body getUserInfoSingleRequest: GetUserInfoSingleRequest
-    ): GetUserInfoReplyDto
+    @GET("pardakht/badje/v1/get-user-info/")
+    suspend fun getUserInfoRequest(): AutoLoginUserInfoReplyDto
 }

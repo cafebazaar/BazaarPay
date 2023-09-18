@@ -5,7 +5,6 @@ import ir.cafebazaar.bazaarpay.data.bazaar.account.models.getotptoken.WaitingTim
 import ir.cafebazaar.bazaarpay.data.bazaar.account.models.getotptoken.request.GetOtpTokenSingleRequest
 import ir.cafebazaar.bazaarpay.data.bazaar.account.models.getotptokenbycall.WaitingTime
 import ir.cafebazaar.bazaarpay.data.bazaar.account.models.getotptokenbycall.request.GetOtpTokenByCallSingleRequest
-import ir.cafebazaar.bazaarpay.data.bazaar.account.models.getuserinfo.GetUserInfoSingleRequest
 import ir.cafebazaar.bazaarpay.data.bazaar.account.models.refreshaccesstoken.request.GetAccessTokenSingleRequest
 import ir.cafebazaar.bazaarpay.data.bazaar.account.models.userinfo.AutoLoginUserInfo
 import ir.cafebazaar.bazaarpay.data.bazaar.account.models.userinfo.toAutoLoginUserInfo
@@ -28,7 +27,7 @@ internal class AccountRemoteDataSource {
         ServiceLocator.getOrNull()
     }
 
-    private val autoLoginUserInfoService: AutoLoginUserInfoService? by lazy {
+    private val autoLoginUserInfoService: UserInfoService? by lazy {
         ServiceLocator.getOrNull()
     }
 
@@ -69,7 +68,7 @@ internal class AccountRemoteDataSource {
     suspend fun getUserAccountId(): Either<String> {
         return withContext(globalDispatchers.iO) {
             return@withContext safeApiCall {
-                userInfoService?.getUserInfoRequest(GetUserInfoSingleRequest())?.accountID.orEmpty()
+                userInfoService?.getUserInfoRequest()?.accountID.orEmpty()
             }
         }
     }

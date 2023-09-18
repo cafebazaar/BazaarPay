@@ -42,14 +42,18 @@ internal class AccountRepository {
         }
     }
 
-    private fun isOldAutoLoginEnable(): Boolean {
+    fun isOldAutoLoginEnable(): Boolean {
         return ServiceLocator.getOrNull<Boolean>(IS_AUTO_LOGIN_ENABLE) ?: false
     }
 
-    private fun isNewAutoLoginEnable(): Boolean {
+    fun isNewAutoLoginEnable(): Boolean {
         return ServiceLocator.getOrNull<String>(ServiceLocator.AUTO_LOGIN_TOKEN)
             .isNullOrEmpty()
             .not()
+    }
+
+    fun isAutoLoginEnable(): Boolean {
+        return isOldAutoLoginEnable() || isNewAutoLoginEnable()
     }
 
     suspend fun getAutoFillPhones(): List<String> {
@@ -91,7 +95,7 @@ internal class AccountRepository {
     }
 
     suspend fun getUserInfoIfNeeded() {
-        if (accountLocalDataSource.accountId.isEmpty()) {
+        if (accountLocalDataSource.accountId.isEmpty() && isAutoLoginEnable().not()) {
             accountRemoteDataSource.getUserAccountId().doOnSuccess {
                 accountLocalDataSource.accountId = it
             }
