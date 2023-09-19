@@ -115,9 +115,6 @@ internal object ServiceLocator {
         initAuthenticator()
         initTokenInterceptor()
 
-        //userInfo
-        initUserInfoService()
-
         // Payment
         initRetrofitServices()
         initPaymentRemoteDataSource()
@@ -298,17 +295,6 @@ internal object ServiceLocator {
             accountRetrofit.create(AccountService::class.java)
     }
 
-    private fun initUserInfoService() {
-        val httpClient = provideOkHttpClient(interceptors = listOf(get(TOKEN)))
-        val retrofit = provideRetrofit(
-            okHttp = httpClient,
-            needUnWrapper = true,
-            baseUrl = DEFAULT_BASE_URL
-        )
-        servicesMap[getKeyOfClass<UserInfoService>()] =
-            retrofit.create(UserInfoService::class.java)
-    }
-
     private fun initRetrofitServices() {
         val paymentHttpClient = provideOkHttpClient(
             interceptors = listOf(get(TOKEN)),
@@ -331,6 +317,9 @@ internal object ServiceLocator {
 
         servicesMap[getKeyOfClass<AnalyticsService>()] =
             retrofit.create(AnalyticsService::class.java)
+
+        servicesMap[getKeyOfClass<UserInfoService>()] =
+            retrofit.create(UserInfoService::class.java)
     }
 
     private fun initDeviceSharedDataSource() {
