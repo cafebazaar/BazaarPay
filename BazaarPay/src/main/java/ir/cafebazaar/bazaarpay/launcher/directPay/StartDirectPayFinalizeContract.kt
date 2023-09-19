@@ -36,6 +36,7 @@ class StartDirectPayFinalizeContract : ActivityResultContract<DirectPayContractO
             phoneNumber = input.phoneNumber,
             contractToken = input.contractToken,
             message = input.message,
+            authToken = input.authToken
         )
         val bazaarPayActivityArgs = BazaarPayActivityArgs.DirectPayContract(
             phoneNumber = input.phoneNumber,
