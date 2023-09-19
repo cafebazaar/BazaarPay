@@ -23,10 +23,6 @@ internal class AccountRemoteDataSource {
         ServiceLocator.get()
     }
 
-    private val userInfoService: UserInfoService? by lazy {
-        ServiceLocator.getOrNull()
-    }
-
     private val autoLoginUserInfoService: UserInfoService? by lazy {
         ServiceLocator.getOrNull()
     }
