@@ -6,7 +6,7 @@ import ir.cafebazaar.bazaarpay.data.bazaar.account.models.getotptoken.request.Ge
 import ir.cafebazaar.bazaarpay.data.bazaar.account.models.getotptokenbycall.WaitingTime
 import ir.cafebazaar.bazaarpay.data.bazaar.account.models.getotptokenbycall.request.GetOtpTokenByCallSingleRequest
 import ir.cafebazaar.bazaarpay.data.bazaar.account.models.refreshaccesstoken.request.GetAccessTokenSingleRequest
-import ir.cafebazaar.bazaarpay.data.bazaar.account.models.userinfo.AutoLoginUserInfo
+import ir.cafebazaar.bazaarpay.data.bazaar.account.models.userinfo.UserInfo
 import ir.cafebazaar.bazaarpay.data.bazaar.account.models.userinfo.toAutoLoginUserInfo
 import ir.cafebazaar.bazaarpay.data.bazaar.account.models.verifyotptoken.LoginResponse
 import ir.cafebazaar.bazaarpay.data.bazaar.account.models.verifyotptoken.request.VerifyOtpTokenSingleRequest
@@ -65,19 +65,11 @@ internal class AccountRemoteDataSource {
         }
     }
 
-    suspend fun getUserAccountId(): Either<String> {
-        return withContext(globalDispatchers.iO) {
-            return@withContext safeApiCall {
-                userInfoService?.getUserInfoRequest()?.accountID.orEmpty()
-            }
-        }
-    }
-
-    suspend fun getAutoLoginUserInfo(): Either<AutoLoginUserInfo> {
+    suspend fun getAutoLoginUserInfo(): Either<UserInfo> {
         return withContext(globalDispatchers.iO) {
             return@withContext safeApiCall {
                 autoLoginUserInfoService?.getUserInfoRequest()?.toAutoLoginUserInfo()
-                    ?: AutoLoginUserInfo("", "")
+                    ?: UserInfo(phoneNumber = "")
             }
         }
     }

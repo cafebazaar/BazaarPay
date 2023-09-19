@@ -1,6 +1,5 @@
 package ir.cafebazaar.bazaarpay.data.bazaar.account.models.userinfo
 
-internal class AutoLoginUserInfo(
-    val accountID: String,
+internal class UserInfo(
     val phoneNumber: String,
 )

@@ -90,15 +90,6 @@ internal class AccountRepository {
             saveRefreshToken(response.refreshToken)
             saveAccessToken(response.accessToken)
             savePhone(phoneNumber)
-            getUserInfoIfNeeded()
-        }
-    }
-
-    suspend fun getUserInfoIfNeeded() {
-        if (accountLocalDataSource.accountId.isEmpty() && isAutoLoginEnable().not()) {
-            accountRemoteDataSource.getUserAccountId().doOnSuccess {
-                accountLocalDataSource.accountId = it
-            }
         }
     }
 
@@ -126,10 +117,6 @@ internal class AccountRepository {
         }
     }
 
-    fun getAccountId(): String {
-        return accountLocalDataSource.accountId
-    }
-
     fun refreshAccessToken(): Either<String> {
         accountRemoteDataSource.getAccessToken(accountLocalDataSource.refreshToken)
             .fold(
@@ -150,13 +137,8 @@ internal class AccountRepository {
         accountLocalDataSource.removeAccessToken()
         accountLocalDataSource.removeRefreshToken()
         accountLocalDataSource.removePhoneNumber()
-        accountLocalDataSource.removeAccountId()
         servicesMap[getKeyOfClass<String>(AUTO_LOGIN_PHONE_NUMBER)] = null
         servicesMap[getKeyOfClass<Boolean>(IS_AUTO_LOGIN_ENABLE)] = false
-    }
-
-    fun needToUpdateRefreshToken(): Boolean {
-        return System.currentTimeMillis() - accountLocalDataSource.accessTokenTimestamp > EXPIRE_TIME
     }
 
     private companion object {

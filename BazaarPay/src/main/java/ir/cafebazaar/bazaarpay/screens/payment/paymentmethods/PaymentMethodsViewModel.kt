@@ -66,7 +66,6 @@ internal class PaymentMethodsViewModel : ViewModel() {
         withContext(Dispatchers.Main) {
             _accountInfoLiveData.value = phone
         }
-        accountRepository.getUserInfoIfNeeded()
     }
 
     private fun getPaymentMethods() {
