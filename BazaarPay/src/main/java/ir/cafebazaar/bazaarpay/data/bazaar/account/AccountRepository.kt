@@ -69,7 +69,7 @@ internal class AccountRepository {
     suspend fun getPhone(): String {
         return accountLocalDataSource.loginPhone.ifEmpty {
             if (isNewAutoLoginEnable()) {
-                accountRemoteDataSource.getAutoLoginUserInfo().getOrNull()?.phoneNumber.orEmpty()
+                accountRemoteDataSource.getUserInfo().getOrNull()?.phoneNumber.orEmpty()
             } else {
                 ServiceLocator.get<String?>(AUTO_LOGIN_PHONE_NUMBER).orEmpty()
             }

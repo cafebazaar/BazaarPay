@@ -23,7 +23,7 @@ internal class AccountRemoteDataSource {
         ServiceLocator.get()
     }
 
-    private val autoLoginUserInfoService: UserInfoService? by lazy {
+    private val userInfoService: UserInfoService? by lazy {
         ServiceLocator.getOrNull()
     }
 
@@ -61,10 +61,10 @@ internal class AccountRemoteDataSource {
         }
     }
 
-    suspend fun getAutoLoginUserInfo(): Either<UserInfo> {
+    suspend fun getUserInfo(): Either<UserInfo> {
         return withContext(globalDispatchers.iO) {
             return@withContext safeApiCall {
-                autoLoginUserInfoService?.getUserInfoRequest()?.toAutoLoginUserInfo()
+                userInfoService?.getUserInfoRequest()?.toAutoLoginUserInfo()
                     ?: UserInfo(phoneNumber = "")
             }
         }
