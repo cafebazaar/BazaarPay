@@ -46,11 +46,15 @@ class BalanceSampleActivity : AppCompatActivity() {
         loadUserBalance()
         binding.needLoginButton.setOnClickListener { startLogin() }
         binding.increaseBalanceButton.setOnClickListener { startIncreaseBalance() }
+        binding.retryWithAutologinButton.setOnClickListener {
+            loadUserBalance(binding.tokenInput.text.toString())
+        }
     }
 
-    private fun loadUserBalance() = lifecycleScope.launch {
+    private fun loadUserBalance(autoLoginToken: String? = null) = lifecycleScope.launch {
         getBazaarPayBalance(
-            this@BalanceSampleActivity,
+            context = this@BalanceSampleActivity,
+            authToken = autoLoginToken,
             onSuccess = {
                 updateVisibilityBasedOnLoginState(false)
                 binding.txtBalance.text = it.humanReadableAmount

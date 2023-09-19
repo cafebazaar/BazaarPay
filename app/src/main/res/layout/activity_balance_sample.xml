@@ -39,7 +39,8 @@
         android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:visibility="visible" />
 
     <androidx.constraintlayout.widget.Group
         android:id="@+id/balanceGroup"
@@ -56,15 +57,30 @@
         android:layout_marginTop="@dimen/bazaarpay_default_margin_quadruple"
         android:layout_marginEnd="@dimen/bazaarpay_default_margin_quadruple"
         android:hint="@string/label_auth_token"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtBalance">
+        app:layout_constraintTop_toBottomOf="@+id/txtBalance"
+        app:layout_constraintVertical_bias="0.17000002">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/token_input"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
     </com.google.android.material.textfield.TextInputLayout>
+
+    <Button
+        android:id="@+id/retry_with_autologin_button"
+        style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:minWidth="240dp"
+        android:text="@string/retry_with_autologin"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/auth_token_layout"
+        app:layout_constraintVertical_bias="0.120000005" />
 
     <Button
         android:id="@+id/increase_balance_button"
@@ -76,6 +92,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/auth_token_layout"
+        app:layout_constraintTop_toBottomOf="@+id/retry_with_autologin_button"
         app:layout_constraintVertical_bias="0.120000005" />
 </androidx.constraintlayout.widget.ConstraintLayout>

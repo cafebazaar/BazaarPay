@@ -31,6 +31,7 @@
     <string name="balance_title">Balance:</string>
     <string name="failure_login">Login failed</string>
     <string name="increase_balance">Increase Balance</string>
+    <string name="retry_with_autologin">retry with autoLogin</string>
     <string name="login_needed_for_show_balance">Login needed</string>
     <string name="failuer_increase_balance">Increase balance failed</string>
 </resources>

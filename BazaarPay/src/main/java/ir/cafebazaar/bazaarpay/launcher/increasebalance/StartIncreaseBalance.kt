@@ -29,7 +29,7 @@ import ir.cafebazaar.bazaarpay.main.BazaarPayActivity
 class StartIncreaseBalance : ActivityResultContract<IncreaseBalanceOptions, Boolean>() {
 
     override fun createIntent(context: Context, input: IncreaseBalanceOptions): Intent {
-        initializeShareConfigs()
+        initializeShareConfigs(authToken = input.authToken)
         val bazaarPayActivityArgs = BazaarPayActivityArgs.IncreaseBalance(authToken = input.authToken)
         return Intent(context, BazaarPayActivity::class.java).apply {
             putExtra(BazaarPayActivity.BAZAARPAY_ACTIVITY_ARGS, bazaarPayActivityArgs)

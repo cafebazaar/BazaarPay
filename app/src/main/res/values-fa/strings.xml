@@ -30,6 +30,7 @@
     <string name="balance_title">موجودی:</string>
     <string name="failure_login">لاگین ناموفق بود</string>
     <string name="increase_balance">افزایش موجودی</string>
+    <string name="retry_with_autologin">تلاش مجدد با اتولاگین</string>
     <string name="login_needed_for_show_balance">برای مشاهده موجودی باید لاگین کنید</string>
     <string name="failuer_increase_balance">خطا در افزایش موجودی</string>
 </resources>
