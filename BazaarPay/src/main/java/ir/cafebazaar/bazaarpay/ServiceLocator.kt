@@ -82,7 +82,6 @@ internal object ServiceLocator {
         servicesMap[getKeyOfClass<Int>(LANGUAGE)] = FA_LANGUAGE
         servicesMap[getKeyOfClass<String>(LANGUAGE)] = "fa"
         servicesMap[getKeyOfClass<Boolean>(IS_DARK)] = null
-        servicesMap[getKeyOfClass<Boolean>(IS_DARK)] = null
         authToken?.let { token ->
             servicesMap[getKeyOfClass<String>(AUTO_LOGIN_TOKEN)] = token
         }
