@@ -15,14 +15,15 @@
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/notFoundText"
         style="@style/Bazaar.Text.Body2"
-        android:textColor="@color/bazaarpay_text_secondary"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/bazaarpay_default_margin"
         android:layout_marginStart="@dimen/bazaarpay_default_margin_triple"
         android:layout_marginTop="@dimen/bazaarpay_default_margin_triple"
         android:layout_marginEnd="@dimen/bazaarpay_default_margin_triple"
         android:gravity="center"
         android:lineSpacingExtra="4dp"
-        android:text="@string/bazaarpay_data_not_found" />
+        android:text="@string/bazaarpay_data_not_found"
+        android:textColor="@color/bazaarpay_text_secondary" />
 
 </merge>
