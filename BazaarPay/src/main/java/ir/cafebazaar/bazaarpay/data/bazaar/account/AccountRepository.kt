@@ -110,10 +110,8 @@ internal class AccountRepository {
     }
 
     fun getAccessToken(): String {
-        return if (isNewAutoLoginEnable()) {
+        return accountLocalDataSource.accessToken.ifEmpty {
             ServiceLocator.getOrNull<String>(ServiceLocator.AUTO_LOGIN_TOKEN).orEmpty()
-        } else {
-            accountLocalDataSource.accessToken
         }
     }
 
