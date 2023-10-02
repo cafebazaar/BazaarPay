@@ -6,6 +6,6 @@ import retrofit2.http.POST
 
 internal interface UserInfoService {
 
-    @GET("pardakht/badje/v1/get-user-info/")
+    @GET("pardakht/badje/v1/user/info//")
     suspend fun getUserInfoRequest(): AutoLoginUserInfoReplyDto
 }
