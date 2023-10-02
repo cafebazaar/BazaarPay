@@ -19,17 +19,10 @@ import java.net.HttpURLConnection
 
 internal class AccountRemoteDataSource {
 
-    private val accountService: AccountService by lazy {
-        ServiceLocator.get()
-    }
-
-    private val userInfoService: UserInfoService? by lazy {
-        ServiceLocator.getOrNull()
-    }
-
-    private val globalDispatchers: GlobalDispatchers by lazy {
-        ServiceLocator.get()
-    }
+    private val checkoutToken: String by lazy { ServiceLocator.get(ServiceLocator.CHECKOUT_TOKEN) }
+    private val accountService: AccountService by lazy { ServiceLocator.get() }
+    private val userInfoService: UserInfoService? by lazy { ServiceLocator.getOrNull() }
+    private val globalDispatchers: GlobalDispatchers by lazy { ServiceLocator.get() }
 
     suspend fun getOtpToken(phoneNumber: String): Either<WaitingTimeWithEnableCall> {
         return withContext(globalDispatchers.iO) {
@@ -64,7 +57,7 @@ internal class AccountRemoteDataSource {
     suspend fun getUserInfo(): Either<UserInfo> {
         return withContext(globalDispatchers.iO) {
             return@withContext safeApiCall {
-                userInfoService?.getUserInfoRequest()?.toAutoLoginUserInfo()
+                userInfoService?.getUserInfoRequest(checkoutToken)?.toAutoLoginUserInfo()
                     ?: UserInfo(phoneNumber = "")
             }
         }
