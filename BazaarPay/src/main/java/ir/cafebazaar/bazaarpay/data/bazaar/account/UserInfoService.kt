@@ -8,7 +8,7 @@ internal interface UserInfoService {
 
     @GET("pardakht/badje/v1/user/info/")
     suspend fun getUserInfoRequest(
-        @Query(CHECKOUT_TOKEN_LABEL) checkoutLabel: String
+        @Query(CHECKOUT_TOKEN_LABEL) checkoutLabel: String?
     ): AutoLoginUserInfoReplyDto
 
 

@@ -19,7 +19,7 @@ import java.net.HttpURLConnection
 
 internal class AccountRemoteDataSource {
 
-    private val checkoutToken: String by lazy { ServiceLocator.get(ServiceLocator.CHECKOUT_TOKEN) }
+    private val checkoutToken: String? by lazy { ServiceLocator.getOrNull(ServiceLocator.CHECKOUT_TOKEN) }
     private val accountService: AccountService by lazy { ServiceLocator.get() }
     private val userInfoService: UserInfoService? by lazy { ServiceLocator.getOrNull() }
     private val globalDispatchers: GlobalDispatchers by lazy { ServiceLocator.get() }
