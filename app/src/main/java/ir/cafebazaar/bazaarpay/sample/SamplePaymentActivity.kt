@@ -77,6 +77,7 @@ class SamplePaymentActivity : AppCompatActivity() {
         val options = BazaarPayOptions
             .paymentUrl(paymentURL = paymentURL)
             .phoneNumber(phoneNumber = binding.phoneNumberInput.text.toString())
+            .authToken(authToken = binding.tokenInput.text.toString())
             .build()
         bazaarPayLauncher.launch(options)
     }

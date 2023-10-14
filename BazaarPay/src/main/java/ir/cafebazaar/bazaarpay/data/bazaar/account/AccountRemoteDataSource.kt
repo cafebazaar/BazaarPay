@@ -5,8 +5,9 @@ import ir.cafebazaar.bazaarpay.data.bazaar.account.models.getotptoken.WaitingTim
 import ir.cafebazaar.bazaarpay.data.bazaar.account.models.getotptoken.request.GetOtpTokenSingleRequest
 import ir.cafebazaar.bazaarpay.data.bazaar.account.models.getotptokenbycall.WaitingTime
 import ir.cafebazaar.bazaarpay.data.bazaar.account.models.getotptokenbycall.request.GetOtpTokenByCallSingleRequest
-import ir.cafebazaar.bazaarpay.data.bazaar.account.models.getuserinfo.GetUserInfoSingleRequest
 import ir.cafebazaar.bazaarpay.data.bazaar.account.models.refreshaccesstoken.request.GetAccessTokenSingleRequest
+import ir.cafebazaar.bazaarpay.data.bazaar.account.models.userinfo.UserInfo
+import ir.cafebazaar.bazaarpay.data.bazaar.account.models.userinfo.toAutoLoginUserInfo
 import ir.cafebazaar.bazaarpay.data.bazaar.account.models.verifyotptoken.LoginResponse
 import ir.cafebazaar.bazaarpay.data.bazaar.account.models.verifyotptoken.request.VerifyOtpTokenSingleRequest
 import ir.cafebazaar.bazaarpay.data.bazaar.models.ErrorModel
@@ -18,17 +19,10 @@ import java.net.HttpURLConnection
 
 internal class AccountRemoteDataSource {
 
-    private val accountService: AccountService by lazy {
-        ServiceLocator.get()
-    }
-
-    private val userInfoService: UserInfoService? by lazy {
-        ServiceLocator.getOrNull()
-    }
-
-    private val globalDispatchers: GlobalDispatchers by lazy {
-        ServiceLocator.get()
-    }
+    private val checkoutToken: String? by lazy { ServiceLocator.getOrNull(ServiceLocator.CHECKOUT_TOKEN) }
+    private val accountService: AccountService by lazy { ServiceLocator.get() }
+    private val userInfoService: UserInfoService? by lazy { ServiceLocator.getOrNull() }
+    private val globalDispatchers: GlobalDispatchers by lazy { ServiceLocator.get() }
 
     suspend fun getOtpToken(phoneNumber: String): Either<WaitingTimeWithEnableCall> {
         return withContext(globalDispatchers.iO) {
@@ -60,10 +54,11 @@ internal class AccountRemoteDataSource {
         }
     }
 
-    suspend fun getUserAccountId(): Either<String> {
+    suspend fun getUserInfo(): Either<UserInfo> {
         return withContext(globalDispatchers.iO) {
             return@withContext safeApiCall {
-                userInfoService?.getUserInfoRequest(GetUserInfoSingleRequest())?.accountID.orEmpty()
+                userInfoService?.getUserInfoRequest(checkoutToken)?.toAutoLoginUserInfo()
+                    ?: UserInfo(phoneNumber = "")
             }
         }
     }

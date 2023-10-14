@@ -48,28 +48,29 @@ internal object ServiceLocator {
     fun initializeConfigsForNormal(
         checkoutToken: String,
         phoneNumber: String? = null,
-        isDark: Boolean?,
         autoLoginPhoneNumber: String? = null,
         isAutoLoginEnable: Boolean = false,
+        autoLoginAuthToken: String? = null,
     ) {
         servicesMap[getKeyOfClass<String>(CHECKOUT_TOKEN)] = checkoutToken
         servicesMap[getKeyOfClass<String?>(PHONE_NUMBER)] = phoneNumber
         servicesMap[getKeyOfClass<String>(AUTO_LOGIN_PHONE_NUMBER)] = autoLoginPhoneNumber
         servicesMap[getKeyOfClass<Boolean>(IS_AUTO_LOGIN_ENABLE)] = isAutoLoginEnable
         Analytics.setCheckOutToken(checkoutToken)
-        Analytics.setAutoLoginState(isAutoLoginEnable)
-        initializeShareConfigs()
+        Analytics.setAutoLoginState(isAutoLoginEnable || autoLoginAuthToken.isNullOrEmpty().not())
+        initializeShareConfigs(autoLoginAuthToken)
     }
 
     fun initializeConfigsForDirectPayContract(
         contractToken: String,
         phoneNumber: String? = null,
         message: String? = null,
+        authToken: String? = null,
     ) {
         servicesMap[getKeyOfClass<String?>(DIRECT_PAY_CONTRACT_TOKEN)] = contractToken
         servicesMap[getKeyOfClass<String?>(PHONE_NUMBER)] = phoneNumber
         servicesMap[getKeyOfClass<String?>(DIRECT_PAY_MERCHANT_MESSAGE)] = message
-        initializeShareConfigs()
+        initializeShareConfigs(authToken)
     }
 
     fun initializeConfigsForLogin(phoneNumber: String? = null) {
@@ -77,10 +78,13 @@ internal object ServiceLocator {
         initializeShareConfigs()
     }
 
-    fun initializeShareConfigs() {
+    fun initializeShareConfigs(authToken: String? = null) {
         servicesMap[getKeyOfClass<Int>(LANGUAGE)] = FA_LANGUAGE
         servicesMap[getKeyOfClass<String>(LANGUAGE)] = "fa"
         servicesMap[getKeyOfClass<Boolean>(IS_DARK)] = null
+        authToken?.let { token ->
+            servicesMap[getKeyOfClass<String>(AUTO_LOGIN_TOKEN)] = token
+        }
     }
 
     fun initializeDependencies(
@@ -109,9 +113,6 @@ internal object ServiceLocator {
         initUpdateRefreshTokenHelper()
         initAuthenticator()
         initTokenInterceptor()
-
-        //userInfo
-        initUserInfoService()
 
         // Payment
         initRetrofitServices()
@@ -293,17 +294,6 @@ internal object ServiceLocator {
             accountRetrofit.create(AccountService::class.java)
     }
 
-    private fun initUserInfoService() {
-        val accountHttpClient = provideOkHttpClient(interceptors = listOf(get(TOKEN)))
-        val accountRetrofit = provideRetrofit(
-            okHttp = accountHttpClient,
-            needUnWrapper = true,
-            baseUrl = DEFAULT_BASE_URL
-        )
-        servicesMap[getKeyOfClass<UserInfoService>()] =
-            accountRetrofit.create(UserInfoService::class.java)
-    }
-
     private fun initRetrofitServices() {
         val paymentHttpClient = provideOkHttpClient(
             interceptors = listOf(get(TOKEN)),
@@ -326,6 +316,9 @@ internal object ServiceLocator {
 
         servicesMap[getKeyOfClass<AnalyticsService>()] =
             retrofit.create(AnalyticsService::class.java)
+
+        servicesMap[getKeyOfClass<UserInfoService>()] =
+            retrofit.create(UserInfoService::class.java)
     }
 
     private fun initDeviceSharedDataSource() {
@@ -335,7 +328,10 @@ internal object ServiceLocator {
 
     private fun isUserLogOutAndAutoLoginEnable(): Boolean {
         val accountLocalDataSource: AccountLocalDataSource = get()
-        val isAutoLoginEnable = getOrNull<Boolean>(IS_AUTO_LOGIN_ENABLE) ?: false
+        val isOldAutoLoginEnable = getOrNull<Boolean>(IS_AUTO_LOGIN_ENABLE) ?: false
+        val isNewAutoLoginEnable = getOrNull<String>(AUTO_LOGIN_TOKEN).isNullOrEmpty().not()
+        val isAutoLoginEnable = isOldAutoLoginEnable || isNewAutoLoginEnable
+
         fun isLoggedIn(): Boolean {
             return accountLocalDataSource.accessToken.isNotEmpty()
         }
@@ -350,6 +346,7 @@ internal object ServiceLocator {
     internal const val DIRECT_PAY_MERCHANT_MESSAGE: String = "direct_pay_merchant_message"
     internal const val DIRECT_PAY_CONTRACT_TOKEN: String = "direct-debit-contract-token"
     internal const val IS_DARK: String = "is_dark"
+    internal const val AUTO_LOGIN_TOKEN: String = "auto_login_token"
     internal const val LANGUAGE: String = "language"
     internal const val AUTO_LOGIN_PHONE_NUMBER: String = "autoLoginPhoneNumber"
     internal const val IS_AUTO_LOGIN_ENABLE: String = "isAutoLoginEnable"

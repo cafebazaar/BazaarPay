@@ -18,6 +18,7 @@
         style="@style/Bazaar.Text.Body1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/bazaarpay_default_margin"
         android:layout_marginTop="@dimen/bazaarpay_default_margin_triple"
         android:text="@string/bazaarpay_error_server_connection_failure"
         android:textColor="@color/bazaarpay_text_primary" />

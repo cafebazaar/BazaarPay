@@ -241,9 +241,9 @@ class BazaarPayActivity : AppCompatActivity(), FinishCallbacks {
                     ServiceLocator.initializeConfigsForNormal(
                         checkoutToken = checkoutToken,
                         phoneNumber = phoneNumber,
-                        isDark = isDarkMode,
                         isAutoLoginEnable = isAutoLoginEnable,
-                        autoLoginPhoneNumber = autoLoginPhoneNumber
+                        autoLoginPhoneNumber = autoLoginPhoneNumber,
+                        autoLoginAuthToken = authToken
                     )
                 }
             }
@@ -253,7 +253,8 @@ class BazaarPayActivity : AppCompatActivity(), FinishCallbacks {
                     ServiceLocator.initializeConfigsForDirectPayContract(
                         contractToken = contractToken,
                         phoneNumber = phoneNumber,
-                        message = message
+                        message = message,
+                        authToken = authToken
                     )
                 }
             }

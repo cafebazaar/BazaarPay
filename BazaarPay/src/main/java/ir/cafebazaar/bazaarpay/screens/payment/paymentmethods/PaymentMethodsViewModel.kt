@@ -22,7 +22,9 @@ import ir.cafebazaar.bazaarpay.screens.payment.paymentmethods.PaymentMethodsFrag
 import ir.cafebazaar.bazaarpay.screens.payment.paymentmethods.PaymentMethodsFragment.Companion.SCREEN_NAME
 import ir.cafebazaar.bazaarpay.screens.payment.paymentmethods.PaymentMethodsFragment.Companion.SELECTED_METHODE
 import ir.cafebazaar.bazaarpay.utils.SingleLiveEvent
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 internal class PaymentMethodsViewModel : ViewModel() {
 
@@ -59,10 +61,10 @@ internal class PaymentMethodsViewModel : ViewModel() {
         getAccountData()
     }
 
-    private fun getAccountData() {
-        _accountInfoLiveData.value = accountRepository.getPhone()
-        viewModelScope.launch {
-            accountRepository.getUserInfoIfNeeded()
+    private fun getAccountData() = viewModelScope.launch {
+        val phone = accountRepository.getPhone()
+        withContext(Dispatchers.Main) {
+            _accountInfoLiveData.value = phone
         }
     }
 

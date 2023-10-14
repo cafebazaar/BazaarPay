@@ -2,6 +2,7 @@
 <resources>
     <string name="app_name" translatable="false">BazaarPay</string>
     <string name="label_payment_url">Payment URL</string>
+    <string name="label_auth_token">Auth token (optional)</string>
     <string name="label_contract_token">Contract Token</string>
     <string name="label_description">Message (optional)</string>
     <string name="label_commit_payment">Commit Payment</string>
@@ -30,6 +31,7 @@
     <string name="balance_title">Balance:</string>
     <string name="failure_login">Login failed</string>
     <string name="increase_balance">Increase Balance</string>
+    <string name="retry_with_autologin">Retry with autoLogin</string>
     <string name="login_needed_for_show_balance">Login needed</string>
     <string name="failuer_increase_balance">Increase balance failed</string>
 </resources>

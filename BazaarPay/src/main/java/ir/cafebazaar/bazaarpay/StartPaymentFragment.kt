@@ -12,9 +12,7 @@ import ir.cafebazaar.bazaarpay.main.BazaarPayActivity
 
 internal class StartPaymentFragment : BaseFragment(PAGE_NAME) {
 
-    private val accountRepository: AccountRepository by lazy {
-        ServiceLocator.get()
-    }
+    private val accountRepository: AccountRepository? by lazy { ServiceLocator.getOrNull() }
 
     private val args: BazaarPayActivityArgs? by lazy {
         requireActivity().intent.getParcelableExtra(
@@ -41,14 +39,14 @@ internal class StartPaymentFragment : BaseFragment(PAGE_NAME) {
     }
 
     private inline fun checkSDKInitType(onLoginType: () -> Unit) {
-        if (accountRepository.needLogin().not() && args is BazaarPayActivityArgs.Login) {
+        if (accountRepository?.needLogin()?.not() == true && args is BazaarPayActivityArgs.Login) {
             finishCallbacks?.onSuccess()
             onLoginType.invoke()
         }
     }
 
     private fun getNavDirection(): NavDirections {
-        return if (accountRepository.needLogin().not()) {
+        return if (accountRepository?.needLogin()?.not() == true) {
             getNavDirectionBasedOnArguments()
         } else {
             StartPaymentFragmentDirections.actionStartPaymentFragmentToRegisterFragment()
