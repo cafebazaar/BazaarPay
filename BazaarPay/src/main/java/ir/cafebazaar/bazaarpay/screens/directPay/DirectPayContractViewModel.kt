@@ -16,7 +16,9 @@ import ir.cafebazaar.bazaarpay.extensions.makeErrorModelFromNetworkResponse
 import ir.cafebazaar.bazaarpay.models.Resource
 import ir.cafebazaar.bazaarpay.models.ResourceState
 import ir.cafebazaar.bazaarpay.utils.SingleLiveEvent
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import retrofit2.Response
 
 internal class DirectPayContractViewModel : ViewModel() {
@@ -65,8 +67,11 @@ internal class DirectPayContractViewModel : ViewModel() {
         }
     }
 
-    private fun getAccountData() {
-        _accountInfoLiveData.value = accountRepository.getPhone()
+    private fun getAccountData() = viewModelScope.launch {
+        val phone = accountRepository.getPhone()
+        withContext(Dispatchers.Main) {
+            _accountInfoLiveData.value = phone
+        }
     }
 
     private fun onErrorFinalize(action: DirectPayContractAction, error: ErrorModel) {

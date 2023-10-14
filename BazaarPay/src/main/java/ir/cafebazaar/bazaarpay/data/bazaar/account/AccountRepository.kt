@@ -10,6 +10,7 @@ import ir.cafebazaar.bazaarpay.data.bazaar.account.models.getotptoken.WaitingTim
 import ir.cafebazaar.bazaarpay.data.bazaar.account.models.getotptokenbycall.WaitingTime
 import ir.cafebazaar.bazaarpay.data.bazaar.account.models.verifyotptoken.LoginResponse
 import ir.cafebazaar.bazaarpay.extensions.fold
+import ir.cafebazaar.bazaarpay.extensions.getOrNull
 import ir.cafebazaar.bazaarpay.models.GlobalDispatchers
 import ir.cafebazaar.bazaarpay.utils.Either
 import ir.cafebazaar.bazaarpay.utils.doOnSuccess
@@ -33,11 +34,26 @@ internal class AccountRepository {
     }
 
     fun needLogin(): Boolean {
-        return if (isLoggedIn()) {
-            false
-        } else {
-            ServiceLocator.getOrNull<Boolean>(IS_AUTO_LOGIN_ENABLE)?.not() ?: true
+        return when {
+            isLoggedIn() -> false
+            isNewAutoLoginEnable() -> false
+            isOldAutoLoginEnable() -> false
+            else -> true
         }
+    }
+
+    private fun isOldAutoLoginEnable(): Boolean {
+        return ServiceLocator.getOrNull<Boolean>(IS_AUTO_LOGIN_ENABLE) ?: false
+    }
+
+    private fun isNewAutoLoginEnable(): Boolean {
+        return ServiceLocator.getOrNull<String>(ServiceLocator.AUTO_LOGIN_TOKEN)
+            .isNullOrEmpty()
+            .not()
+    }
+
+    fun isAutoLoginEnable(): Boolean {
+        return isOldAutoLoginEnable() || isNewAutoLoginEnable()
     }
 
     suspend fun getAutoFillPhones(): List<String> {
@@ -50,9 +66,13 @@ internal class AccountRepository {
         accountLocalDataSource.putAutoFillPhones(phone)
     }
 
-    fun getPhone(): String {
+    suspend fun getPhone(): String {
         return accountLocalDataSource.loginPhone.ifEmpty {
-            ServiceLocator.get<String?>(AUTO_LOGIN_PHONE_NUMBER).orEmpty()
+            if (isNewAutoLoginEnable()) {
+                accountRemoteDataSource.getUserInfo().getOrNull()?.phoneNumber.orEmpty()
+            } else {
+                ServiceLocator.get<String?>(AUTO_LOGIN_PHONE_NUMBER).orEmpty()
+            }
         }
     }
 
@@ -70,15 +90,6 @@ internal class AccountRepository {
             saveRefreshToken(response.refreshToken)
             saveAccessToken(response.accessToken)
             savePhone(phoneNumber)
-            getUserInfoIfNeeded()
-        }
-    }
-
-    suspend fun getUserInfoIfNeeded() {
-        if (accountLocalDataSource.accountId.isEmpty()) {
-            accountRemoteDataSource.getUserAccountId().doOnSuccess {
-                accountLocalDataSource.accountId = it
-            }
         }
     }
 
@@ -99,11 +110,9 @@ internal class AccountRepository {
     }
 
     fun getAccessToken(): String {
-        return accountLocalDataSource.accessToken
-    }
-
-    fun getAccountId(): String {
-        return accountLocalDataSource.accountId
+        return accountLocalDataSource.accessToken.ifEmpty {
+            ServiceLocator.getOrNull<String>(ServiceLocator.AUTO_LOGIN_TOKEN).orEmpty()
+        }
     }
 
     fun refreshAccessToken(): Either<String> {
@@ -126,13 +135,8 @@ internal class AccountRepository {
         accountLocalDataSource.removeAccessToken()
         accountLocalDataSource.removeRefreshToken()
         accountLocalDataSource.removePhoneNumber()
-        accountLocalDataSource.removeAccountId()
         servicesMap[getKeyOfClass<String>(AUTO_LOGIN_PHONE_NUMBER)] = null
         servicesMap[getKeyOfClass<Boolean>(IS_AUTO_LOGIN_ENABLE)] = false
-    }
-
-    fun needToUpdateRefreshToken(): Boolean {
-        return System.currentTimeMillis() - accountLocalDataSource.accessTokenTimestamp > EXPIRE_TIME
     }
 
     private companion object {

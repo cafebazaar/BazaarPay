@@ -15,12 +15,13 @@ fun initSDKForAPICall(
     checkoutToken: String,
     autoLoginPhoneNumber: String? = null,
     isAutoLoginEnable: Boolean = false,
+    authToken: String? = null
 ) {
     ServiceLocator.initializeConfigsForNormal(
         checkoutToken = checkoutToken,
-        isDark = false,
         autoLoginPhoneNumber = autoLoginPhoneNumber,
-        isAutoLoginEnable = isAutoLoginEnable
+        isAutoLoginEnable = isAutoLoginEnable,
+        autoLoginAuthToken = authToken
     )
     ServiceLocator.initializeDependencies(context.applicationContext)
 }
@@ -100,19 +101,22 @@ suspend fun initCheckout(
  * Get user balance
  *
  * @param context the context in which tracing happens.
+ * @param authToken Optional token for autoLogin
  * @param onSuccess the callback when get balance is successfully fetched [BalanceResult].
  * @param onFailure the callback for an unsuccessful get balance with [ErrorModel] to reason about the cause.
  * @param onLoginNeeded the callback for a login issue, users should be logged in for fetching their balance.
  */
 suspend fun getBazaarPayBalance(
     context: Context,
+    authToken: String? = null,
     onSuccess: (BalanceResult) -> Unit,
     onFailure: (ErrorModel) -> Unit,
     onLoginNeeded: () -> Unit = {},
 ) {
     initSDKForAPICall(
         context = context,
-        checkoutToken = ""
+        checkoutToken = "",
+        authToken = authToken
     )
     val payRepository: PaymentRepository = ServiceLocator.get()
     val accountRepository: AccountRepository = ServiceLocator.get()
