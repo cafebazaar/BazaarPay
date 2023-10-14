@@ -9,7 +9,6 @@ internal data class ActionLogDto(
     @SerializedName("type") val type: EventType,
     @SerializedName("trace_id") val traceId: String,
     @SerializedName("timestamp") val timestamp: Long,
-    @SerializedName("account_id") val accountId: String,
     @SerializedName("device_id") val deviceId: String?,
     @SerializedName("where") val where: String?,
     @SerializedName("action_details") val actionDetails: String?,

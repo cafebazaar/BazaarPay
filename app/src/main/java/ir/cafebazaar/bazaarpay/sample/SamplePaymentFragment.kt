@@ -6,9 +6,9 @@ import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import ir.cafebazaar.bazaarpay.extensions.setSafeOnClickListener
 import ir.cafebazaar.bazaarpay.launcher.normal.BazaarPayOptions
 import ir.cafebazaar.bazaarpay.launcher.normal.StartBazaarPay
-import ir.cafebazaar.bazaarpay.extensions.setSafeOnClickListener
 import ir.cafebazaar.bazaarpay.sample.databinding.FragmentPaymentBinding
 import ir.cafebazaar.bazaarpay.R as BazaarPayR
 
@@ -36,9 +36,8 @@ class SamplePaymentFragment : Fragment(R.layout.fragment_payment) {
     private fun startPayment() {
         val options = BazaarPayOptions
             .paymentUrl(paymentURL = binding.paymentUrlInput.text.toString())
-            .phoneNumber(
-                phoneNumber = binding.phoneNumberInput.text.toString()
-            )
+            .phoneNumber(phoneNumber = binding.phoneNumberInput.text.toString())
+            .authToken(authToken = binding.tokenInput.text.toString())
             .build()
         bazaarPayLauncher.launch(options)
     }

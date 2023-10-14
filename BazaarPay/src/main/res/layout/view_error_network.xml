@@ -16,6 +16,7 @@
         style="@style/Bazaar.Text.Body1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/bazaarpay_default_margin"
         android:layout_marginStart="@dimen/bazaarpay_default_margin_double_half"
         android:layout_marginTop="@dimen/bazaarpay_default_margin_triple"
         android:layout_marginEnd="@dimen/bazaarpay_default_margin_double_half"
@@ -29,7 +30,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/bazaarpay_default_margin_triple"
-        android:textColor="@color/selector_primary_button_white"
-        android:text="@string/bazaarpay_try_again" />
+        android:text="@string/bazaarpay_try_again"
+        android:textColor="@color/selector_primary_button_white" />
 
 </merge>

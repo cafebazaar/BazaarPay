@@ -31,7 +31,6 @@ internal fun PaymentFlowDetails.toPaymentFlowDetailsDto(): PaymentFlowDetailsDto
 
 internal fun ActionLog.toActionLogDto(
     source: String,
-    accountId: String,
     deviceId: String
 ): ActionLogDto {
     return ActionLogDto(
@@ -40,7 +39,6 @@ internal fun ActionLog.toActionLogDto(
         type = type,
         traceId = sessionId,
         timestamp = timestamp,
-        accountId = accountId,
         deviceId = deviceId,
         where = where,
         actionDetails = actionDetails,

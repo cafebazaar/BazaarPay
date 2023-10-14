@@ -109,6 +109,7 @@ the `BazaarPayOptions` as its parameter:
 ```kotlin
 val options = BazaarPayOptions
     .paymentUrl(paymentURL = paymentURL)
+    .authToken(authToken = AUTO_LOGIN_TOKEN) //optional (autoLogin)
     .build()
 bazaarPayLauncher.launch(options)
 ```
@@ -118,6 +119,7 @@ you [generated before](#requirements). But there are also other optional paramet
 configure to your needs:
 
 * `phoneNumber` - pre-fills the input field of the login screen with this number.
+* `authToken` - Optional input for autoLogin
 
 ### 3. Commit paymentURL
 
@@ -176,15 +178,17 @@ requires an instance of `DirectPayContractOptions` as its parameter:
 ```kotlin
  val options = DirectPayContractOptions(
     contractToken = contractToken,
-    message = message,
-    phoneNumber = phone
+    message = message, //optional
+    phoneNumber = phone, //optional
+    authToken = AUTO_LOGIN_TOKEN //optional (autoLogin)
 )
 bazaarPayDirectPayContractLauncher.launch(options)
 ```
 
 # BazaarPay Login API
 
-Some functionalities in BazaarPay like getBalance, need BazaarPay login, for login in BazaarPay you
+Some functionalities in BazaarPay like getBalance, need BazaarPay login (in case you don't want to
+use autoLogin), for login in BazaarPay you
 need to make a login launcher:
 
 ```kotlin
@@ -213,14 +217,17 @@ function for this purpose that you can call from a coroutine scope:
 myScope.launch {
     getBazaarPayBalance(
         context = requireContext(),
+        authToken = AUTO_LOGIN_TOKEN, //optional
         onSuccess = { },
         onFailure = { },
         onLoginNeeded = {
-            // here you should use BazaarPay Login API
+            // here you should use BazaarPay Login API, or use autoLogin
         }
     )
 }
 ```
+
+> authToken is an optional parameter that helps you get user balance without login
 
 # Open increase balance screen directly
 
@@ -239,7 +246,10 @@ You can open increase balance screen directly and get the result like below:
 And then `launch()` the `bazaarPayIncreaseBalanceLauncher` like below:
 
 ```kotlin
-bazaarPayIncreaseBalanceLauncher.launch(Unit)
+ val options = IncreaseBalanceOptions(
+    authToken = AUTO_LOGIN_TOKEN, //optional 
+)
+bazaarPayIncreaseBalanceLauncher.launch(options)
 ```
 
 License

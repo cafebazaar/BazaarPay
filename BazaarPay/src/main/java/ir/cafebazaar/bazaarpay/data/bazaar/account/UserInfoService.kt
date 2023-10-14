@@ -1,14 +1,18 @@
 package ir.cafebazaar.bazaarpay.data.bazaar.account
 
-import ir.cafebazaar.bazaarpay.data.bazaar.account.models.getuserinfo.GetUserInfoSingleRequest
-import ir.cafebazaar.bazaarpay.data.bazaar.account.models.verifyotptoken.response.GetUserInfoReplyDto
-import retrofit2.http.Body
-import retrofit2.http.POST
+import ir.cafebazaar.bazaarpay.data.bazaar.account.models.userinfo.AutoLoginUserInfoReplyDto
+import retrofit2.http.GET
+import retrofit2.http.Query
 
 internal interface UserInfoService {
 
-    @POST("GetUserInfoRequest")
+    @GET("pardakht/badje/v1/user/info/")
     suspend fun getUserInfoRequest(
-        @Body getUserInfoSingleRequest: GetUserInfoSingleRequest
-    ): GetUserInfoReplyDto
+        @Query(CHECKOUT_TOKEN_LABEL) checkoutLabel: String?
+    ): AutoLoginUserInfoReplyDto
+
+
+    companion object {
+        const val CHECKOUT_TOKEN_LABEL = "checkout_token"
+    }
 }

@@ -13,9 +13,8 @@ internal class TokenInterceptor : Interceptor {
     override fun intercept(chain: Interceptor.Chain): Response {
         val originalRequest = chain.request()
         val accessToken = accountRepository.getAccessToken()
-        val isLoggedIn = accountRepository.isLoggedIn()
 
-        if (alreadyHasAuthorizationHeader(originalRequest) || !isLoggedIn) {
+        if (alreadyHasAuthorizationHeader(originalRequest)) {
             return chain.proceed(originalRequest)
         }
 
