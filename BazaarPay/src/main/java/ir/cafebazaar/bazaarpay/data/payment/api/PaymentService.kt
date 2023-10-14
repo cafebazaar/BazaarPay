@@ -13,7 +13,7 @@ import ir.cafebazaar.bazaarpay.data.payment.models.pay.response.IncreaseBalanceO
 import ir.cafebazaar.bazaarpay.data.payment.models.pay.response.InitCheckoutResponse
 import ir.cafebazaar.bazaarpay.data.payment.models.pay.response.PayResponse
 import ir.cafebazaar.bazaarpay.data.payment.models.pay.response.TraceResponse
-import okhttp3.ResponseBody
+import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
@@ -47,7 +47,7 @@ internal interface PaymentService {
     @POST("pardakht/badje/v1/commit/")
     suspend fun commit(
         @Body commitRequest: CommitRequest
-    ): ResponseBody
+    ): Response<Unit>
 
     @POST("pardakht/badje/v1/trace/")
     suspend fun trace(

@@ -21,7 +21,7 @@ import ir.cafebazaar.bazaarpay.extensions.safeApiCall
 import ir.cafebazaar.bazaarpay.models.GlobalDispatchers
 import ir.cafebazaar.bazaarpay.utils.Either
 import kotlinx.coroutines.withContext
-import okhttp3.ResponseBody
+import retrofit2.Response
 
 internal class PaymentRemoteDataSource {
 
@@ -82,7 +82,7 @@ internal class PaymentRemoteDataSource {
 
     suspend fun commit(
         checkoutToken: String
-    ): Either<ResponseBody> {
+    ): Either<Response<Unit>> {
         return withContext(globalDispatchers.iO) {
             return@withContext safeApiCall(ServiceType.BAZAARPAY) {
                 paymentService.commit(
