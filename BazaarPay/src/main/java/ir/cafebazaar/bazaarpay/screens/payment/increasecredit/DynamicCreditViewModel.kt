@@ -6,8 +6,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import ir.cafebazaar.bazaarpay.R
 import ir.cafebazaar.bazaarpay.ServiceLocator
-import ir.cafebazaar.bazaarpay.data.bazaar.models.ErrorModel
 import ir.cafebazaar.bazaarpay.analytics.Analytics
+import ir.cafebazaar.bazaarpay.analytics.Analytics.WHAT_KEY
+import ir.cafebazaar.bazaarpay.data.bazaar.models.ErrorModel
 import ir.cafebazaar.bazaarpay.data.payment.PaymentRepository
 import ir.cafebazaar.bazaarpay.data.payment.models.getpaymentmethods.DynamicCreditOption
 import ir.cafebazaar.bazaarpay.data.payment.models.pay.PayResult
@@ -136,7 +137,7 @@ internal class DynamicCreditViewModel : ViewModel() {
 
         Analytics.sendClickEvent(
             where = SCREEN_NAME,
-            what = CLICK_AMOUNT_OPTION,
+            what = hashMapOf(WHAT_KEY to CLICK_AMOUNT_OPTION),
             extra = hashMapOf(AMOUNT_OPTION to amount)
         )
     }

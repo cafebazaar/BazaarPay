@@ -82,6 +82,6 @@ internal class StartPaymentFragment : BaseFragment(PAGE_NAME) {
 
     private companion object {
 
-        const val PAGE_NAME = "StartPayment"
+        const val PAGE_NAME = "start_payment"
     }
 }

@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.SimpleItemAnimator
 import ir.cafebazaar.bazaarpay.FinishCallbacks
 import ir.cafebazaar.bazaarpay.R
 import ir.cafebazaar.bazaarpay.analytics.Analytics
+import ir.cafebazaar.bazaarpay.analytics.Analytics.WHAT_KEY
 import ir.cafebazaar.bazaarpay.base.BaseFragment
 import ir.cafebazaar.bazaarpay.data.bazaar.models.ErrorModel
 import ir.cafebazaar.bazaarpay.data.payment.models.getpaymentmethods.PaymentMethod
@@ -111,7 +112,7 @@ internal class PaymentMethodsFragment : BaseFragment(SCREEN_NAME), PaymentMethod
             initPaymentGatewayRecyclerView()
 
             changeAccountLayout.changeAccountAction.setSafeOnClickListener {
-                Analytics.sendClickEvent(where, what = CHANGE_ACCOUNT)
+                Analytics.sendClickEvent(where, what = hashMapOf(WHAT_KEY to CHANGE_ACCOUNT))
                 handleNavigation(LogoutFragmentDirections.openLogout())
             }
         }
