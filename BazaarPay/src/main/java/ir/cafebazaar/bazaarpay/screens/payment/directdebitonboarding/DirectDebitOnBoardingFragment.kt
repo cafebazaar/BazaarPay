@@ -9,6 +9,8 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.NavDirections
 import androidx.navigation.fragment.findNavController
 import ir.cafebazaar.bazaarpay.R
+import ir.cafebazaar.bazaarpay.analytics.Analytics
+import ir.cafebazaar.bazaarpay.analytics.Analytics.WHAT_KEY
 import ir.cafebazaar.bazaarpay.base.BaseFragment
 import ir.cafebazaar.bazaarpay.data.bazaar.models.ErrorModel
 import ir.cafebazaar.bazaarpay.data.bazaar.payment.models.directdebit.onboarding.DirectDebitOnBoardingDetails
@@ -60,11 +62,19 @@ internal class DirectDebitOnBoardingFragment : BaseFragment(SCREEN_NAME) {
                 findNavController().popBackStack()
             }
             nextButton.setSafeOnClickListener {
+                sendActivationEvent()
                 onBoardingViewModel.onNextButtonClicked()
             }
 
             directDebitOnBoardingList.adapter = adapter
         }
+    }
+
+    private fun sendActivationEvent() {
+        Analytics.sendClickEvent(
+            where = SCREEN_NAME,
+            what = hashMapOf(WHAT_KEY to START_ACTIVATION_CLICK)
+        )
     }
 
     private fun observeOnBoardingViewModel() {
@@ -166,6 +176,7 @@ internal class DirectDebitOnBoardingFragment : BaseFragment(SCREEN_NAME) {
 
     private companion object {
 
-        const val SCREEN_NAME = "DirectDebitOnBoarding"
+        const val SCREEN_NAME = "direct_debit_onboarding"
+        const val START_ACTIVATION_CLICK = "start_activation_button"
     }
 }

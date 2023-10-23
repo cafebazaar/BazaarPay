@@ -11,6 +11,8 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.NavDirections
 import androidx.navigation.fragment.findNavController
 import ir.cafebazaar.bazaarpay.R
+import ir.cafebazaar.bazaarpay.analytics.Analytics
+import ir.cafebazaar.bazaarpay.analytics.Analytics.WHAT_KEY
 import ir.cafebazaar.bazaarpay.base.BaseFragment
 import ir.cafebazaar.bazaarpay.databinding.FragmentNationalIdBinding
 import ir.cafebazaar.bazaarpay.extensions.NATIONAL_ID_LENGTH
@@ -57,6 +59,7 @@ internal class DirectDebitNationalIdFragment : BaseFragment(SCREEN_NAME) {
                 acceptButton.isEnabled = it?.length == NATIONAL_ID_LENGTH
             }
             acceptButton.setSafeOnClickListener {
+                sendRegisterNationalIdEvent()
                 directDebitNationalIdViewModel.onAcceptClicked(
                     nationalIdEditText.text.toString()
                 )
@@ -66,6 +69,13 @@ internal class DirectDebitNationalIdFragment : BaseFragment(SCREEN_NAME) {
                 findNavController().popBackStack()
             }
         }
+    }
+
+    private fun sendRegisterNationalIdEvent() {
+        Analytics.sendClickEvent(
+            where = SCREEN_NAME,
+            what = hashMapOf(WHAT_KEY to CLICK_REGISTER_NATIONAL_ID)
+        )
     }
 
     private fun showError() {
@@ -93,6 +103,7 @@ internal class DirectDebitNationalIdFragment : BaseFragment(SCREEN_NAME) {
 
     private companion object {
 
-        const val SCREEN_NAME = "DirectDebitNationalId"
+        const val SCREEN_NAME = "direct_debit_national_id"
+        const val CLICK_REGISTER_NATIONAL_ID = "click_register_national_id"
     }
 }

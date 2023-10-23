@@ -183,8 +183,10 @@ internal class DirectDebitBankListFragment : BaseFragment(SCREEN_NAME) {
         binding.actionButton.isVisible = true
     }
 
-    private companion object {
+    internal companion object {
 
         const val SCREEN_NAME = "DirectDebitBankList"
+        const val CLICK_DIRECT_DEBIT_BANK = "click_direct_debit_bank"
+        const val SELECTED_BANK = "selected_bank"
     }
 }
