@@ -6,6 +6,7 @@ import ir.cafebazaar.bazaarpay.ServiceLocator.AUTO_LOGIN_PHONE_NUMBER
 import ir.cafebazaar.bazaarpay.ServiceLocator.IS_AUTO_LOGIN_ENABLE
 import ir.cafebazaar.bazaarpay.ServiceLocator.getKeyOfClass
 import ir.cafebazaar.bazaarpay.ServiceLocator.servicesMap
+import ir.cafebazaar.bazaarpay.analytics.Analytics
 import ir.cafebazaar.bazaarpay.data.bazaar.account.models.getotptoken.WaitingTimeWithEnableCall
 import ir.cafebazaar.bazaarpay.data.bazaar.account.models.getotptokenbycall.WaitingTime
 import ir.cafebazaar.bazaarpay.data.bazaar.account.models.verifyotptoken.LoginResponse
@@ -70,6 +71,9 @@ internal class AccountRepository {
         return accountLocalDataSource.loginPhone.ifEmpty {
             if (isNewAutoLoginEnable()) {
                 accountRemoteDataSource.getUserInfo().getOrNull()?.phoneNumber.orEmpty()
+                    .also { phone ->
+                        Analytics.setPhoneNumber(phone)
+                    }
             } else {
                 ServiceLocator.get<String?>(AUTO_LOGIN_PHONE_NUMBER).orEmpty()
             }

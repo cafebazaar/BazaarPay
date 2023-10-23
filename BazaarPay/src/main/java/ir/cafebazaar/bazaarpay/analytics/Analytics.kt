@@ -27,9 +27,11 @@ internal object Analytics {
     private var checkOutToken: String? = null
     private var merchantName: String? = null
     private var amount: String? = null
+    private var autoLoginPhoneNumber: String? = null
     private var isAutoLoginEnable = false
 
     private const val IS_AUTO_LOGIN_ENABLE = "is_auto_login_enable"
+    private const val AUTO_LOGIN_PHONE_NUMBER = "auto_login_requested_phone"
 
     private const val ACTION_LOG_THRESHOLD = 40
     private const val ACTION_LOG_RETRY = 3
@@ -52,6 +54,10 @@ internal object Analytics {
 
     fun setCheckOutToken(checkOutToken: String) {
         this.checkOutToken = checkOutToken
+    }
+
+    fun setPhoneNumber(phone: String) {
+        this.autoLoginPhoneNumber = phone
     }
 
     fun setMerchantName(merchantName: String) {
@@ -118,6 +124,9 @@ internal object Analytics {
         checkActionLogThreshold()
 
         extra[IS_AUTO_LOGIN_ENABLE] = isAutoLoginEnable
+        autoLoginPhoneNumber?.let { phone ->
+            extra[AUTO_LOGIN_PHONE_NUMBER] = phone
+        }
 
         val now = TimeUnit.MILLISECONDS.toSeconds(System.currentTimeMillis())
         val gson = Gson()
