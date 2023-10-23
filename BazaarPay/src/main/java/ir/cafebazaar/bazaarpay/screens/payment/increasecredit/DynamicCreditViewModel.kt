@@ -137,8 +137,10 @@ internal class DynamicCreditViewModel : ViewModel() {
 
         Analytics.sendClickEvent(
             where = SCREEN_NAME,
-            what = hashMapOf(WHAT_KEY to CLICK_AMOUNT_OPTION),
-            extra = hashMapOf(AMOUNT_OPTION to amount)
+            what = hashMapOf(
+                WHAT_KEY to CLICK_AMOUNT_OPTION,
+                AMOUNT_OPTION to amount.toString()
+            )
         )
     }
 

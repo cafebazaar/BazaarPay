@@ -334,8 +334,8 @@ internal class PaymentDynamicCreditFragment : BaseFragment(SCREEN_NAME) {
     companion object {
 
         private const val SCROLL_DELAY = 300L
-        internal const val SCREEN_NAME = "PaymentDynamicCredit"
-        internal val CLICK_AMOUNT_OPTION = "clickAmountOption"
-        internal val AMOUNT_OPTION = "amountOption"
+        internal const val SCREEN_NAME = "increase_balance"
+        internal val CLICK_AMOUNT_OPTION = "click_amount_option"
+        internal val AMOUNT_OPTION = "amount_option"
     }
 }
