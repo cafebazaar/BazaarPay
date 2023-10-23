@@ -366,13 +366,13 @@ internal class PaymentMethodsFragment : BaseFragment(SCREEN_NAME), PaymentMethod
 
     companion object {
 
-        internal const val SCREEN_NAME = "PaymentMethods"
+        internal const val SCREEN_NAME = "payment_methods"
         private const val KEY_SELECTED_ITEM_POSITION = "selectedItemPos"
 
         //analytics
-        internal val CHANGE_ACCOUNT = "changeAccount"
-        internal val CLICK_PAY_PUTTON = "clickPayButton"
-        internal val SELECTED_METHODE = "selectedMethode"
-        internal val PAYMENT_METHODES = "paymentMethodes"
+        internal const val CHANGE_ACCOUNT = "changeAccount"
+        internal const val CLICK_PAY_BUTTON = "click_pay_button"
+        internal const val SELECTED_METHOD = "selected_method"
+        internal const val PAYMENT_METHOD = "payment_method"
     }
 }
