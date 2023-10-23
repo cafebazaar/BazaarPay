@@ -17,6 +17,8 @@ import ir.cafebazaar.bazaarpay.FinishCallbacks
 import ir.cafebazaar.bazaarpay.R
 import ir.cafebazaar.bazaarpay.ServiceLocator
 import ir.cafebazaar.bazaarpay.ServiceLocator.PHONE_NUMBER
+import ir.cafebazaar.bazaarpay.analytics.Analytics
+import ir.cafebazaar.bazaarpay.analytics.Analytics.WHAT_KEY
 import ir.cafebazaar.bazaarpay.base.BaseFragment
 import ir.cafebazaar.bazaarpay.data.bazaar.account.models.getotptoken.WaitingTimeWithEnableCall
 import ir.cafebazaar.bazaarpay.data.bazaar.models.InvalidPhoneNumberException
@@ -138,11 +140,22 @@ internal class RegisterFragment : BaseFragment(SCREEN_NAME) {
 
     private fun register(): Boolean {
         return if (phoneNumber.isValidPhoneNumber()) {
+            sendRegisterEvent(phoneNumber)
             viewModel.register(phoneNumber)
             true
         } else {
             false
         }
+    }
+
+    private fun sendRegisterEvent(phoneNumber: String) {
+        Analytics.sendClickEvent(
+            where = SCREEN_NAME,
+            what = hashMapOf(
+                WHAT_KEY to REGISTER_PHONE_BUTTON,
+                ENTERED_PHONE_NUMBER to phoneNumber
+            )
+        )
     }
 
     private fun preFillPhoneByDeveloperData() {
@@ -238,5 +251,7 @@ internal class RegisterFragment : BaseFragment(SCREEN_NAME) {
     private companion object {
 
         const val SCREEN_NAME = "Register"
+        const val REGISTER_PHONE_BUTTON = "register-phone"
+        const val ENTERED_PHONE_NUMBER = "entered_phone_number"
     }
 }
