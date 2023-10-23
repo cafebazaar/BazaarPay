@@ -15,6 +15,8 @@ import ir.cafebazaar.bazaarpay.R
 import ir.cafebazaar.bazaarpay.ServiceLocator
 import ir.cafebazaar.bazaarpay.ServiceLocator.DIRECT_PAY_CONTRACT_TOKEN
 import ir.cafebazaar.bazaarpay.ServiceLocator.DIRECT_PAY_MERCHANT_MESSAGE
+import ir.cafebazaar.bazaarpay.analytics.Analytics
+import ir.cafebazaar.bazaarpay.analytics.Analytics.WHAT_KEY
 import ir.cafebazaar.bazaarpay.base.BaseFragment
 import ir.cafebazaar.bazaarpay.data.bazaar.models.ErrorModel
 import ir.cafebazaar.bazaarpay.data.directPay.model.DirectPayContractAction
@@ -84,6 +86,7 @@ internal class DirectPayContractFragment : BaseFragment(where = DIRECT_PAY_CONTR
             )
         }
         binding.approveButton.setSafeOnClickListener {
+            sendApproveEvent()
             viewModel.finalizeContract(
                 contractToken = contractToken,
                 action = DirectPayContractAction.Confirm
@@ -92,6 +95,13 @@ internal class DirectPayContractFragment : BaseFragment(where = DIRECT_PAY_CONTR
         binding.changeAccountLayout.changeAccountAction.setSafeOnClickListener {
             findNavController().navigate(LogoutFragmentDirections.openLogout())
         }
+    }
+
+    private fun sendApproveEvent() {
+        Analytics.sendClickEvent(
+            where = DIRECT_PAY_CONTRACT_SCREEN_NAME,
+            what = hashMapOf(WHAT_KEY to APPROVE_CLICKED)
+        )
     }
 
     private fun setAccountData(phone: String?) {
@@ -245,6 +255,7 @@ internal class DirectPayContractFragment : BaseFragment(where = DIRECT_PAY_CONTR
 
     companion object {
 
-        const val DIRECT_PAY_CONTRACT_SCREEN_NAME = "directPayContract"
+        const val DIRECT_PAY_CONTRACT_SCREEN_NAME = "direct_pay_contract"
+        const val APPROVE_CLICKED = "confirm_direct_pay_contract"
     }
 }
