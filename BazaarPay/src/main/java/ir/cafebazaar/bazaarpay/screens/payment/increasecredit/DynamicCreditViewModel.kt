@@ -6,8 +6,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import ir.cafebazaar.bazaarpay.R
 import ir.cafebazaar.bazaarpay.ServiceLocator
-import ir.cafebazaar.bazaarpay.data.bazaar.models.ErrorModel
 import ir.cafebazaar.bazaarpay.analytics.Analytics
+import ir.cafebazaar.bazaarpay.data.bazaar.models.ErrorModel
 import ir.cafebazaar.bazaarpay.data.payment.PaymentRepository
 import ir.cafebazaar.bazaarpay.data.payment.models.getpaymentmethods.DynamicCreditOption
 import ir.cafebazaar.bazaarpay.data.payment.models.pay.PayResult
@@ -154,7 +154,7 @@ internal class DynamicCreditViewModel : ViewModel() {
 
     private fun priceIsBiggerThanMaximum(priceString: String?): Boolean {
         val priceDigit = priceString?.digits() ?: 0
-        val maximumValue = creditOptions?.maxAvailableAmount ?: Long.MAX_VALUE
+        val maximumValue = (creditOptions?.maxAvailableAmount ?: Long.MAX_VALUE).toToman()
         return priceDigit > maximumValue
     }
 
