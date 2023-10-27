@@ -15,7 +15,6 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import ir.cafebazaar.bazaarpay.main.BazaarPayActivity
 import ir.cafebazaar.bazaarpay.FinishCallbacks
 import ir.cafebazaar.bazaarpay.R
 import ir.cafebazaar.bazaarpay.arg.BazaarPayActivityArgs
@@ -34,6 +33,7 @@ import ir.cafebazaar.bazaarpay.extensions.setSafeOnClickListener
 import ir.cafebazaar.bazaarpay.extensions.setValueIfNotNullOrEmpty
 import ir.cafebazaar.bazaarpay.extensions.toastMessage
 import ir.cafebazaar.bazaarpay.extensions.visible
+import ir.cafebazaar.bazaarpay.main.BazaarPayActivity
 import ir.cafebazaar.bazaarpay.models.Resource
 import ir.cafebazaar.bazaarpay.models.ResourceState
 import ir.cafebazaar.bazaarpay.utils.bindWithRTLSupport
@@ -190,11 +190,8 @@ internal class PaymentDynamicCreditFragment : BaseFragment(SCREEN_NAME) {
     }
 
     private fun handleErrorState(errorModel: ErrorModel?) {
-        if (errorModel is ErrorModel.NetworkConnection) {
-            showErrorContainer(errorModel)
-        } else {
-            binding.dynamicCreditWarning.text = errorModel?.message
-        }
+        errorModel ?: return
+        showErrorContainer(errorModel)
     }
 
     private fun initView(creditOptionsArgs: DynamicCreditOption?) {
