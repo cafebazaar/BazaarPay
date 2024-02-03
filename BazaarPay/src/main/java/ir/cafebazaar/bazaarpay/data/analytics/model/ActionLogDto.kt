@@ -14,6 +14,7 @@ internal data class ActionLogDto(
     @SerializedName("action_details") val actionDetails: String?,
     @SerializedName("extra") val extra: String?,
     @SerializedName("payment_flow_details") val paymentFlowDetailsDto: PaymentFlowDetailsDto,
+    @SerializedName("phone") val phone: String?,
 )
 
 internal data class PaymentFlowDetailsDto(

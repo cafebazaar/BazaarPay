@@ -134,6 +134,6 @@ internal class PaymentThankYouPageFragment : BaseFragment(SCREEN_NAME) {
 
     private companion object {
 
-        const val SCREEN_NAME = "PaymentThankYouPage"
+        const val SCREEN_NAME = "payment_thank_you_page"
     }
 }

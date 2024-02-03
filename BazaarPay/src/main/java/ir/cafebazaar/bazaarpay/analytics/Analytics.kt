@@ -17,7 +17,7 @@ internal object Analytics {
 
     private const val TAG = "BazaarPayAnalytics"
 
-    private const val WHAT = "what"
+    const val WHAT_KEY = "what"
 
     private val actionLogs = mutableListOf<ActionLog>()
 
@@ -27,9 +27,11 @@ internal object Analytics {
     private var checkOutToken: String? = null
     private var merchantName: String? = null
     private var amount: String? = null
+    private var autoLoginPhoneNumber: String? = null
     private var isAutoLoginEnable = false
 
-    private const val IS_AUTO_LOGIN_ENABLE = "isAutoLoginEnable"
+    private const val IS_AUTO_LOGIN_ENABLE = "is_auto_login_enable"
+    private const val AUTO_LOGIN_PHONE_NUMBER = "auto_login_requested_phone"
 
     private const val ACTION_LOG_THRESHOLD = 40
     private const val ACTION_LOG_RETRY = 3
@@ -54,6 +56,10 @@ internal object Analytics {
         this.checkOutToken = checkOutToken
     }
 
+    fun setPhoneNumber(phone: String) {
+        this.autoLoginPhoneNumber = phone
+    }
+
     fun setMerchantName(merchantName: String) {
         this.merchantName = merchantName
     }
@@ -69,7 +75,7 @@ internal object Analytics {
     @Synchronized
     fun sendClickEvent(
         where: String,
-        what: String,
+        what: HashMap<String, String>,
         extra: HashMap<String, Any> = hashMapOf(),
         pageDetails: HashMap<String, Any> = hashMapOf(),
     ) {
@@ -109,7 +115,7 @@ internal object Analytics {
         where: String,
         extra: HashMap<String, Any>,
         pageDetails: HashMap<String, Any>,
-        what: String? = null,
+        what: HashMap<String, String>? = null,
     ) {
 
         actionLogs.takeIf { (it.firstOrNull()?.id ?: 0) <= (lastSyncedId ?: -1L) }
@@ -118,10 +124,13 @@ internal object Analytics {
         checkActionLogThreshold()
 
         extra[IS_AUTO_LOGIN_ENABLE] = isAutoLoginEnable
+        autoLoginPhoneNumber?.let { phone ->
+            extra[AUTO_LOGIN_PHONE_NUMBER] = phone
+        }
 
         val now = TimeUnit.MILLISECONDS.toSeconds(System.currentTimeMillis())
         val gson = Gson()
-        val actionDetails = hashMapOf(WHAT to what).takeIf { what != null }
+        val actionDetails = what.takeIf { what != null }
         val actionDetailsJson = gson.toJson(actionDetails).takeIf { actionDetails != null }
         val extraInStringFormat = gson.toJson(extra).toString()
         val pageDetailsInStringFormat = gson.toJson(pageDetails).toString()

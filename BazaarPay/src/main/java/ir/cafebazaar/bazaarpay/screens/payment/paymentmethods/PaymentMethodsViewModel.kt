@@ -7,6 +7,7 @@ import androidx.navigation.NavDirections
 import ir.cafebazaar.bazaarpay.R
 import ir.cafebazaar.bazaarpay.ServiceLocator
 import ir.cafebazaar.bazaarpay.analytics.Analytics
+import ir.cafebazaar.bazaarpay.analytics.Analytics.WHAT_KEY
 import ir.cafebazaar.bazaarpay.data.bazaar.account.AccountRepository
 import ir.cafebazaar.bazaarpay.data.bazaar.models.ErrorModel
 import ir.cafebazaar.bazaarpay.data.payment.PaymentRepository
@@ -17,10 +18,10 @@ import ir.cafebazaar.bazaarpay.extensions.fold
 import ir.cafebazaar.bazaarpay.models.PaymentFlowState
 import ir.cafebazaar.bazaarpay.models.Resource
 import ir.cafebazaar.bazaarpay.screens.payment.increasecredit.DynamicCreditOptionDealerArg
-import ir.cafebazaar.bazaarpay.screens.payment.paymentmethods.PaymentMethodsFragment.Companion.CLICK_PAY_PUTTON
-import ir.cafebazaar.bazaarpay.screens.payment.paymentmethods.PaymentMethodsFragment.Companion.PAYMENT_METHODES
+import ir.cafebazaar.bazaarpay.screens.payment.paymentmethods.PaymentMethodsFragment.Companion.CLICK_PAY_BUTTON
+import ir.cafebazaar.bazaarpay.screens.payment.paymentmethods.PaymentMethodsFragment.Companion.PAYMENT_METHOD
 import ir.cafebazaar.bazaarpay.screens.payment.paymentmethods.PaymentMethodsFragment.Companion.SCREEN_NAME
-import ir.cafebazaar.bazaarpay.screens.payment.paymentmethods.PaymentMethodsFragment.Companion.SELECTED_METHODE
+import ir.cafebazaar.bazaarpay.screens.payment.paymentmethods.PaymentMethodsFragment.Companion.SELECTED_METHOD
 import ir.cafebazaar.bazaarpay.utils.SingleLiveEvent
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -121,7 +122,7 @@ internal class PaymentMethodsViewModel : ViewModel() {
         getPaymentInfo()?.paymentMethods?.getOrNull(selectedOptionPos)?.let { selectedMethod ->
             Analytics.sendClickEvent(
                 where = SCREEN_NAME,
-                what = selectedMethod.methodTypeString,
+                what = hashMapOf(WHAT_KEY to selectedMethod.methodTypeString),
                 extra = hashMapOf(
                     IS_ACTION_BY_USER to isActionByUser,
                     IS_METHODE_ENABLE to selectedMethod.enabled
@@ -171,10 +172,10 @@ internal class PaymentMethodsViewModel : ViewModel() {
         val selectedOption = paymentInfo.paymentMethods[selectedPosition]
         Analytics.sendClickEvent(
             where = SCREEN_NAME,
-            what = CLICK_PAY_PUTTON,
+            what = hashMapOf(WHAT_KEY to CLICK_PAY_BUTTON),
             extra = hashMapOf(
-                SELECTED_METHODE to selectedOption.methodTypeString,
-                PAYMENT_METHODES to getMethodeTypes()
+                SELECTED_METHOD to selectedOption.methodTypeString,
+                PAYMENT_METHOD to getMethodeTypes()
             )
         )
         when (selectedOption.methodType) {

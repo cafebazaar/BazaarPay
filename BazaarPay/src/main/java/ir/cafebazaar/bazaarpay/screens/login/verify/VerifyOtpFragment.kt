@@ -12,15 +12,16 @@ import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import androidx.activity.addCallback
 import androidx.core.widget.doAfterTextChanged
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.NavDirections
 import androidx.navigation.fragment.findNavController
 import com.google.android.gms.auth.api.phone.SmsRetriever
-import ir.cafebazaar.bazaarpay.main.BazaarPayActivity
 import ir.cafebazaar.bazaarpay.FinishCallbacks
 import ir.cafebazaar.bazaarpay.R
+import ir.cafebazaar.bazaarpay.analytics.Analytics
+import ir.cafebazaar.bazaarpay.analytics.Analytics.WHAT_KEY
 import ir.cafebazaar.bazaarpay.arg.BazaarPayActivityArgs
+import ir.cafebazaar.bazaarpay.base.BaseFragment
 import ir.cafebazaar.bazaarpay.databinding.FragmentVerifyOtpBinding
 import ir.cafebazaar.bazaarpay.extensions.getReadableErrorMessage
 import ir.cafebazaar.bazaarpay.extensions.gone
@@ -32,6 +33,7 @@ import ir.cafebazaar.bazaarpay.extensions.localizeNumber
 import ir.cafebazaar.bazaarpay.extensions.observe
 import ir.cafebazaar.bazaarpay.extensions.setSafeOnClickListener
 import ir.cafebazaar.bazaarpay.extensions.visible
+import ir.cafebazaar.bazaarpay.main.BazaarPayActivity
 import ir.cafebazaar.bazaarpay.models.Resource
 import ir.cafebazaar.bazaarpay.models.ResourceState
 import ir.cafebazaar.bazaarpay.models.VerificationState
@@ -42,7 +44,7 @@ import ir.cafebazaar.bazaarpay.utils.Second
 import ir.cafebazaar.bazaarpay.utils.bindWithRTLSupport
 import ir.cafebazaar.bazaarpay.utils.secondsToStringTime
 
-internal class VerifyOtpFragment : Fragment() {
+internal class VerifyOtpFragment : BaseFragment(SCREEN_NAME) {
 
     private val viewModel: VerifyOtpViewModel by viewModels()
     private var finishCallbacks: FinishCallbacks? = null
@@ -108,7 +110,10 @@ internal class VerifyOtpFragment : Fragment() {
         binding.callButton.setSafeOnClickListener {
             viewModel.onCallButtonClicked(phoneNumber)
         }
-        binding.proceedBtn.setSafeOnClickListener { handleProceedClick(false) }
+        binding.proceedBtn.setSafeOnClickListener {
+            handleProceedClick(false)
+            sendRegisterClickEvent()
+        }
         // disable when initialized, because there is no text in the input.
         binding.proceedBtn.isEnabled = false
         binding.verificationCodeEditText.setOnEditorActionListener { _, actionId, _ ->
@@ -133,6 +138,10 @@ internal class VerifyOtpFragment : Fragment() {
         }
 
         binding.verificationCodeEditText.requestFocus()
+    }
+
+    private fun sendRegisterClickEvent() {
+        Analytics.sendClickEvent(where = SCREEN_NAME, what = hashMapOf(WHAT_KEY to REGISTER_CLICK))
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -362,5 +371,8 @@ internal class VerifyOtpFragment : Fragment() {
         const val SMS_CONSENT_REQUEST = 2
         const val OTP_TOKEN_START_POSITION = 10
         const val OTP_TOKEN_END_POSITION = 14
+
+        const val SCREEN_NAME = "RegisterOTP"
+        const val REGISTER_CLICK = "register-otp"
     }
 }

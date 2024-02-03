@@ -5,19 +5,23 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import ir.cafebazaar.bazaarpay.ServiceLocator
+import ir.cafebazaar.bazaarpay.analytics.Analytics
+import ir.cafebazaar.bazaarpay.analytics.Analytics.WHAT_KEY
 import ir.cafebazaar.bazaarpay.data.bazaar.models.ErrorModel
-import ir.cafebazaar.bazaarpay.extensions.fold
-import ir.cafebazaar.bazaarpay.models.GlobalDispatchers
-import ir.cafebazaar.bazaarpay.models.Resource
 import ir.cafebazaar.bazaarpay.data.bazaar.payment.BazaarPaymentRepository
 import ir.cafebazaar.bazaarpay.data.bazaar.payment.models.directdebit.banklist.AvailableBanks
 import ir.cafebazaar.bazaarpay.data.bazaar.payment.models.directdebit.banklist.Bank
 import ir.cafebazaar.bazaarpay.data.bazaar.payment.models.directdebit.contractcreation.ContractCreation
+import ir.cafebazaar.bazaarpay.extensions.fold
+import ir.cafebazaar.bazaarpay.models.GlobalDispatchers
+import ir.cafebazaar.bazaarpay.models.Resource
+import ir.cafebazaar.bazaarpay.screens.payment.directdebitactivating.banklist.DirectDebitBankListFragment.Companion.CLICK_DIRECT_DEBIT_BANK
+import ir.cafebazaar.bazaarpay.screens.payment.directdebitactivating.banklist.DirectDebitBankListFragment.Companion.SCREEN_NAME
+import ir.cafebazaar.bazaarpay.screens.payment.directdebitactivating.banklist.DirectDebitBankListFragment.Companion.SELECTED_BANK
 import ir.cafebazaar.bazaarpay.utils.SingleLiveEvent
 import kotlinx.coroutines.launch
 
 internal open class DirectDebitBankListViewModel : ViewModel() {
-
 
     private val data: MutableList<BankList> = mutableListOf()
     private val bazaarPaymentRepository: BazaarPaymentRepository = ServiceLocator.get()
@@ -91,11 +95,22 @@ internal open class DirectDebitBankListViewModel : ViewModel() {
 
     fun onRegisterClicked(nationalId: String) {
         getSelectedBankItem()?.let { selectedItem ->
+            sendRegisterBankEvent(selectedItem)
             viewModelScope.launch {
                 _registerDirectDebitLiveData.value = Resource.loading()
                 startRegistering(selectedItem, nationalId)
             }
         }
+    }
+
+    private fun sendRegisterBankEvent(selectedItem: BankList.BankListRowItem) {
+        Analytics.sendClickEvent(
+            where = SCREEN_NAME,
+            what = hashMapOf(
+                WHAT_KEY to CLICK_DIRECT_DEBIT_BANK,
+                SELECTED_BANK to selectedItem.model.name,
+            )
+        )
     }
 
     private fun startRegistering(

@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.SimpleItemAnimator
 import ir.cafebazaar.bazaarpay.FinishCallbacks
 import ir.cafebazaar.bazaarpay.R
 import ir.cafebazaar.bazaarpay.analytics.Analytics
+import ir.cafebazaar.bazaarpay.analytics.Analytics.WHAT_KEY
 import ir.cafebazaar.bazaarpay.base.BaseFragment
 import ir.cafebazaar.bazaarpay.data.bazaar.models.ErrorModel
 import ir.cafebazaar.bazaarpay.data.payment.models.getpaymentmethods.PaymentMethod
@@ -111,7 +112,7 @@ internal class PaymentMethodsFragment : BaseFragment(SCREEN_NAME), PaymentMethod
             initPaymentGatewayRecyclerView()
 
             changeAccountLayout.changeAccountAction.setSafeOnClickListener {
-                Analytics.sendClickEvent(where, what = CHANGE_ACCOUNT)
+                Analytics.sendClickEvent(where, what = hashMapOf(WHAT_KEY to CHANGE_ACCOUNT))
                 handleNavigation(LogoutFragmentDirections.openLogout())
             }
         }
@@ -365,13 +366,13 @@ internal class PaymentMethodsFragment : BaseFragment(SCREEN_NAME), PaymentMethod
 
     companion object {
 
-        internal const val SCREEN_NAME = "PaymentMethods"
+        internal const val SCREEN_NAME = "payment_methods"
         private const val KEY_SELECTED_ITEM_POSITION = "selectedItemPos"
 
         //analytics
-        internal val CHANGE_ACCOUNT = "changeAccount"
-        internal val CLICK_PAY_PUTTON = "clickPayButton"
-        internal val SELECTED_METHODE = "selectedMethode"
-        internal val PAYMENT_METHODES = "paymentMethodes"
+        internal const val CHANGE_ACCOUNT = "changeAccount"
+        internal const val CLICK_PAY_BUTTON = "click_pay_button"
+        internal const val SELECTED_METHOD = "selected_method"
+        internal const val PAYMENT_METHOD = "payment_method"
     }
 }
