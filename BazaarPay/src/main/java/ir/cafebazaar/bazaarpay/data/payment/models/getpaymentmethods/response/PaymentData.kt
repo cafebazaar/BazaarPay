@@ -6,14 +6,15 @@ import ir.cafebazaar.bazaarpay.data.payment.models.getpaymentmethods.DynamicCred
 import ir.cafebazaar.bazaarpay.data.payment.models.getpaymentmethods.Option
 import ir.cafebazaar.bazaarpay.data.payment.models.getpaymentmethods.PaymentMethod
 import ir.cafebazaar.bazaarpay.data.payment.models.getpaymentmethods.PaymentMethodsInfo
+import ir.cafebazaar.bazaarpay.data.payment.models.warning.WarningDto
+import ir.cafebazaar.bazaarpay.data.payment.models.warning.toWarning
 import ir.cafebazaar.bazaarpay.screens.payment.paymentmethods.PaymentMethodsType
 
 internal data class PaymentMethodsInfoDto(
     @SerializedName("destination_title") val destinationTitle: String,
     @SerializedName("amount") val amount: Long?,
     @SerializedName("payment_methods") val paymentMethodDtos: List<PaymentMethodDto>,
-    @SerializedName("dynamic_credit_option") val dynamicCreditOptionDto: DynamicCreditOptionDto?
-
+    @SerializedName("dynamic_credit_option") val dynamicCreditOptionDto: DynamicCreditOptionDto?,
 ) : PaymentBaseResponse() {
 
     fun toPaymentMethodInfo(): PaymentMethodsInfo {
@@ -33,7 +34,8 @@ internal data class PaymentMethodDto(
     @SerializedName("method_type") val methodType: String,
     @SerializedName("icon_url") val iconUrl: String?,
     @SerializedName("price_string") val priceString: String?,
-    @SerializedName("enabled") val enabled: Boolean?
+    @SerializedName("enabled") val enabled: Boolean?,
+    @SerializedName("warning") val warningDto: WarningDto?
 ) {
 
     fun toPaymentMethodItem(): PaymentMethod {
@@ -45,7 +47,8 @@ internal data class PaymentMethodDto(
             methodType,
             iconUrl,
             priceString,
-            enabled = enabled ?: true
+            enabled = enabled ?: true,
+            warning = warningDto?.toWarning()
         )
     }
 }
