@@ -1,8 +1,9 @@
 package ir.cafebazaar.bazaarpay.data.payment.models.warning
 
-data class Warning(
+import ir.cafebazaar.bazaarpay.data.bazaar.payment.models.directdebit.onboarding.ThemedIcon
+
+internal data class Warning(
     val text: String,
-    val lightIcon: String,
-    val darkIcon: String,
+    val icon: ThemedIcon,
     val actionText: String,
 )
