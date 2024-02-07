@@ -1,6 +1,7 @@
 package ir.cafebazaar.bazaarpay.data.payment.models.getpaymentmethods
 
 import android.os.Parcelable
+import ir.cafebazaar.bazaarpay.data.payment.models.warning.Warning
 import ir.cafebazaar.bazaarpay.screens.payment.paymentmethods.PaymentMethodsType
 import kotlinx.parcelize.Parcelize
 
@@ -21,8 +22,10 @@ internal data class PaymentMethod(
     val methodTypeString: String,
     val iconUrl: String?,
     val priceString: String?,
-    val enabled: Boolean = true
-)
+    val enabled: Boolean = true,
+    val warning: Warning? = null,
+
+    )
 
 @Parcelize
 data class DynamicCreditOption(

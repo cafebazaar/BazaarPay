@@ -91,5 +91,6 @@
     <string name="bazaarpay_cancel_direct_pay">عدم فعال‌سازی</string>
     <string name="bazaarpay_merchant_message">پیام %s </string>
     <string name="bazaarpay_direct_pay_title">فعال‌سازی «پرداخت خودکار» در %s </string>
+    <string name="bazaarpay_warning_error_title">خطای اتصال</string>
 
 </resources>

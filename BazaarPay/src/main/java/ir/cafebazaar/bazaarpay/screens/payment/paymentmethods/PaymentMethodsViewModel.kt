@@ -11,6 +11,7 @@ import ir.cafebazaar.bazaarpay.analytics.Analytics.WHAT_KEY
 import ir.cafebazaar.bazaarpay.data.bazaar.account.AccountRepository
 import ir.cafebazaar.bazaarpay.data.bazaar.models.ErrorModel
 import ir.cafebazaar.bazaarpay.data.payment.PaymentRepository
+import ir.cafebazaar.bazaarpay.data.payment.models.getpaymentmethods.PaymentMethod
 import ir.cafebazaar.bazaarpay.data.payment.models.getpaymentmethods.PaymentMethodsInfo
 import ir.cafebazaar.bazaarpay.data.payment.models.merchantinfo.MerchantInfo
 import ir.cafebazaar.bazaarpay.data.payment.models.pay.PayResult
@@ -165,11 +166,16 @@ internal class PaymentMethodsViewModel : ViewModel() {
         return paymentMethodsStateData.value?.data
     }
 
+    fun getSelectedPaymentInfo(position: Int): PaymentMethod? {
+        val paymentInfo = getPaymentInfo()
+        return paymentInfo?.paymentMethods?.get(position)
+    }
+
     fun onPayButtonClicked(
         selectedPosition: Int
     ) {
-        val paymentInfo = getPaymentInfo() ?: return
-        val selectedOption = paymentInfo.paymentMethods[selectedPosition]
+        val selectedOption = getSelectedPaymentInfo(selectedPosition)
+        selectedOption ?: return
         Analytics.sendClickEvent(
             where = SCREEN_NAME,
             what = hashMapOf(WHAT_KEY to CLICK_PAY_BUTTON),
