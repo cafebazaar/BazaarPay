@@ -21,48 +21,48 @@ import retrofit2.http.Query
 
 internal interface PaymentService {
 
-    @POST("pardakht/badje/v1/get-payment-methods/")
+    @POST("badje/v1/get-payment-methods/")
     suspend fun getPaymentMethods(
         @Body getPaymentMethodsRequest: GetPaymentMethodsRequest,
         @Query(PAY_ENDPOINT_LANG) lang: String
     ): PaymentMethodsInfoDto
 
-    @GET("pardakht/badje/v1/merchant-info")
+    @GET("badje/v1/merchant-info")
     suspend fun getMerchantInfo(
         @Query(CHECKOUT_TOKEN_LABEL) checkoutLabel: String,
         @Query(PAY_ENDPOINT_LANG) lang: String
     ): MerchantInfoDto
 
-    @POST("pardakht/badje/v1/pay/")
+    @POST("badje/v1/pay/")
     suspend fun pay(
         @Body payRequest: PayRequest,
         @Query(PAY_ENDPOINT_LANG) lang: String
     ): PayResponse
 
-    @POST("pardakht/badje/v1/increase-balance/")
+    @POST("badje/v1/increase-balance/")
     suspend fun increaseBalance(
         @Body increaseBalanceRequest: IncreaseBalanceRequest
     ): PayResponse
 
-    @POST("pardakht/badje/v1/commit/")
+    @POST("badje/v1/commit/")
     suspend fun commit(
         @Body commitRequest: CommitRequest
     ): Response<Unit>
 
-    @POST("pardakht/badje/v1/trace/")
+    @POST("badje/v1/trace/")
     suspend fun trace(
         @Body traceRequest: TraceRequest
     ): TraceResponse
 
-    @POST("pardakht/badje/v1/checkout/init/")
+    @POST("badje/v1/checkout/init/")
     suspend fun initCheckout(
         @Body initCheckoutRequest: InitCheckoutRequest
     ): InitCheckoutResponse
 
-    @GET("pardakht/badje/v1/get-balance/")
+    @GET("badje/v1/get-balance/")
     suspend fun getBalance(): BalanceResponseDto
 
-    @GET("pardakht/badje/v1/get-increase-balance-options/")
+    @GET("badje/v1/get-increase-balance-options/")
     suspend fun getIncreaseBalanceOptions(): IncreaseBalanceOptionsResponseDto
 
     companion object {

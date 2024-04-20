@@ -4,7 +4,7 @@ import com.google.gson.annotations.SerializedName
 import ir.cafebazaar.bazaarpay.data.bazaar.account.models.getotptokenbycall.WaitingTime
 
 internal class GetOtpTokenByCallResponseDto(
-    @SerializedName("waitingSeconds") val waitingSeconds: Long
+    @SerializedName("waiting_seconds") val waitingSeconds: Long
 ) {
 
     fun toWaitingTime(): WaitingTime {

@@ -1,17 +1,8 @@
 package ir.cafebazaar.bazaarpay.data.bazaar.account.models.getotptokenbycall.request
 
-import ir.cafebazaar.bazaarpay.data.bazaar.models.BazaarBaseRequest
+import com.google.gson.annotations.SerializedName
 
-internal class GetOtpTokenByCallSingleRequest(
-    username: String
-) : BazaarBaseRequest() {
-
-    val singleRequest: GetOtpTokenByCallRequest =
-        GetOtpTokenByCallRequest(GetOtpTokenByCallRequestBody(username))
-}
-
-internal class GetOtpTokenByCallRequest(
-    val getOtpTokenByCallRequest : GetOtpTokenByCallRequestBody
+internal data class GetOtpTokenByCallSingleRequest(
+    @SerializedName("phone")
+    val phone: String
 )
-
-internal class GetOtpTokenByCallRequestBody(val username: String)
