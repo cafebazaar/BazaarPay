@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/imgLogo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/bazaarpay_default_margin"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:srcCompat="@drawable/ic_logo_with_border" />
+
+    <TextView
+        android:id="@+id/txtTitle"
+        style="@style/Bazaar.Text.Headline2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/bazaarpay_default_margin"
+        android:layout_marginTop="@dimen/bazaarpay_default_margin_double"
+        android:layout_marginEnd="@dimen/bazaarpay_default_margin"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imgLogo"
+        android:text="@string/bazaarpay_warning_error_title" />
+
+    <TextView
+        android:id="@+id/txtBody"
+        style="@style/Bazaar.Text.Body1"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/bazaarpay_default_margin_double"
+        android:layout_marginHorizontal="@dimen/bazaarpay_default_margin"
+        android:gravity="center"
+        app:layout_constraintEnd_toEndOf="@+id/continueButton"
+        app:layout_constraintStart_toStartOf="@+id/continueButton"
+        app:layout_constraintTop_toBottomOf="@+id/txtTitle"
+        tools:text="هنگامی که VPN شما روشن است، درگاه‌های بانکی سرویسی ارائه نمی‌کنند. در صورت تمایل به ادامه لطفاً پس از خاموش‌کردن آن، با فشردن دکمه زیر وارد درگاه بانک شوید." />
+
+    <ir.cafebazaar.bazaarpay.widget.button.BazaarPayButton
+        android:id="@+id/continueButton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/bazaarpay_default_margin_double"
+        android:layout_marginTop="@dimen/bazaarpay_default_margin_double"
+        android:layout_marginEnd="@dimen/bazaarpay_default_margin_double"
+        android:layout_marginBottom="@dimen/bazaarpay_default_margin"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtBody"
+        app:sizeMode="large"
+        tools:text="ورود به درگاه"
+        tools:visibility="visible" />
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -22,6 +22,7 @@ import ir.cafebazaar.bazaarpay.data.payment.models.getpaymentmethods.PaymentMeth
 import ir.cafebazaar.bazaarpay.data.payment.models.getpaymentmethods.PaymentMethodsInfo
 import ir.cafebazaar.bazaarpay.data.payment.models.merchantinfo.MerchantInfo
 import ir.cafebazaar.bazaarpay.data.payment.models.pay.PayResult
+import ir.cafebazaar.bazaarpay.data.payment.models.warning.Warning
 import ir.cafebazaar.bazaarpay.databinding.FragmentPaymentOptionsBinding
 import ir.cafebazaar.bazaarpay.extensions.getReadableErrorMessage
 import ir.cafebazaar.bazaarpay.extensions.gone
@@ -36,6 +37,7 @@ import ir.cafebazaar.bazaarpay.models.Resource
 import ir.cafebazaar.bazaarpay.models.ResourceState
 import ir.cafebazaar.bazaarpay.screens.logout.LogoutFragmentDirections
 import ir.cafebazaar.bazaarpay.screens.payment.paymentmethods.PaymentMethodsAdapter.Companion.DEFAULT_SELECTED_OPTION
+import ir.cafebazaar.bazaarpay.screens.warning.WarningDialog
 import ir.cafebazaar.bazaarpay.utils.bindWithRTLSupport
 import ir.cafebazaar.bazaarpay.utils.getErrorViewBasedOnErrorModel
 import java.util.Locale
@@ -229,9 +231,22 @@ internal class PaymentMethodsFragment : BaseFragment(SCREEN_NAME), PaymentMethod
     }
 
     private fun onPayButtonClicked() {
-        viewModel.onPayButtonClicked(
-            requireNotNull(paymentMethodsAdapter).selectedPosition
-        )
+        val selectedPosition = requireNotNull(paymentMethodsAdapter).selectedPosition
+        val selectedPaymentInfo = viewModel.getSelectedPaymentInfo(selectedPosition)
+        selectedPaymentInfo?.let { paymentMethode ->
+            if (paymentMethode.warning != null) {
+                showWarning(warning = paymentMethode.warning) {
+                    viewModel.onPayButtonClicked(selectedPosition)
+                }
+            } else {
+                viewModel.onPayButtonClicked(selectedPosition)
+            }
+        }
+    }
+
+    private fun showWarning(warning: Warning, onContinue: () -> Unit) {
+        val dialog = WarningDialog(warning = warning, onContinue = onContinue)
+        dialog.show(parentFragmentManager, "WarningDialogInPayment")
     }
 
     private fun handleMerchantInfoStates(resource: Resource<MerchantInfo>?) {
