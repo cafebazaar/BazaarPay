@@ -32,11 +32,10 @@ internal class PaymentRemoteDataSource {
     suspend fun getPaymentMethods(): Either<PaymentMethodsInfo> {
         return withContext(globalDispatchers.iO) {
             return@withContext safeApiCall(ServiceType.BAZAARPAY) {
-                val isAccessibilityEnable = isAccessibilityEnable()
                 paymentService.getPaymentMethods(
                     GetPaymentMethodsRequest(checkoutToken),
                     getLanguage(),
-                    isAccessibilityEnable,
+                    isAccessibilityEnable(),
                 ).toPaymentMethodInfo()
             }
         }
