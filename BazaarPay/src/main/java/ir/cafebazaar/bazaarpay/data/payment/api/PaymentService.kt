@@ -2,6 +2,7 @@ package ir.cafebazaar.bazaarpay.data.payment.api
 
 import ir.cafebazaar.bazaarpay.data.payment.models.getpaymentmethods.request.GetPaymentMethodsRequest
 import ir.cafebazaar.bazaarpay.data.payment.models.getpaymentmethods.response.PaymentMethodsInfoDto
+import ir.cafebazaar.bazaarpay.data.payment.models.increasebalance.GetIncreaseBalanceOptionsRequest
 import ir.cafebazaar.bazaarpay.data.payment.models.increasebalance.IncreaseBalanceRequest
 import ir.cafebazaar.bazaarpay.data.payment.models.merchantinfo.response.MerchantInfoDto
 import ir.cafebazaar.bazaarpay.data.payment.models.pay.request.CommitRequest
@@ -25,7 +26,6 @@ internal interface PaymentService {
     suspend fun getPaymentMethods(
         @Body getPaymentMethodsRequest: GetPaymentMethodsRequest,
         @Query(PAY_ENDPOINT_LANG) lang: String,
-        @Query(PAY_ENDPOINT_ACCESSIBILITY) accessibility: Boolean,
     ): PaymentMethodsInfoDto
 
     @GET("pardakht/badje/v1/merchant-info")
@@ -38,7 +38,6 @@ internal interface PaymentService {
     suspend fun pay(
         @Body payRequest: PayRequest,
         @Query(PAY_ENDPOINT_LANG) lang: String,
-        @Query(PAY_ENDPOINT_ACCESSIBILITY) accessibility: Boolean,
     ): PayResponse
 
     @POST("pardakht/badje/v1/increase-balance/")
@@ -66,13 +65,12 @@ internal interface PaymentService {
 
     @GET("pardakht/badje/v1/get-increase-balance-options/")
     suspend fun getIncreaseBalanceOptions(
-        @Query(PAY_ENDPOINT_ACCESSIBILITY) accessibility: Boolean,
+        @Body getIncreaseBalanceOptionsRequest: GetIncreaseBalanceOptionsRequest,
     ): IncreaseBalanceOptionsResponseDto
 
     companion object {
 
         const val PAY_ENDPOINT_LANG = "lang"
-        const val PAY_ENDPOINT_ACCESSIBILITY = "accessibility"
         const val CHECKOUT_TOKEN_LABEL = "checkout_token"
     }
 }
