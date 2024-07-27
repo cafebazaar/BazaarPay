@@ -220,7 +220,13 @@ internal class PaymentDynamicCreditFragment : BaseFragment(SCREEN_NAME) {
     private fun setCreditOptions(creditOptionsArgs: DynamicCreditOption) {
         with(creditOptionsArgs) {
             binding.dynamicCreditBalance.setBalance(userBalance, userBalanceString)
-            initRecyclerView(creditOptionsArgs.options)
+            if (options.isEmpty()) {
+                binding.dynamicCreditRecyclerView.gone()
+                binding.dynamicCreditPayOrEnterTitle.text =
+                    getString(R.string.bazaarpay_enter_dynamic_credit_title)
+            } else {
+                initRecyclerView(options)
+            }
         }
     }
 

@@ -24,6 +24,7 @@
             android:gravity="center"
             android:padding="@dimen/bazaarpay_default_margin_double"
             android:text="@string/bazaarpay_payment_option_title"
+            android:contentDescription="@string/bazaarpay_content_description_payment_option_title"
             android:textColor="@color/bazaarpay_text_primary"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -32,6 +33,7 @@
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/paymentOptionClose"
             style="@style/Bazaar.Image.Toolbar"
+            android:contentDescription="@string/bazaarpay_content_description_close"
             android:layout_marginEnd="@dimen/bazaarpay_default_margin_double"
             app:layout_constraintBottom_toTopOf="@id/paymentOptionTitleDivider"
             app:layout_constraintEnd_toEndOf="parent"

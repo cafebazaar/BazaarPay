@@ -23,6 +23,7 @@
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/close"
         style="@style/Bazaar.Image.Toolbar"
+        android:contentDescription="@string/bazaarpay_content_description_close"
         android:layout_marginEnd="@dimen/bazaarpay_default_margin_double"
         app:layout_constraintBottom_toBottomOf="@id/bazaarLogo"
         app:layout_constraintEnd_toEndOf="parent"
@@ -63,6 +64,7 @@
         android:gravity="center"
         android:textColor="@color/bazaarpay_text_hint"
         android:text="@string/bazaarpay_enter_otp_message"
+        android:labelFor="@id/verificationCodeEditText"
         app:layout_constraintBottom_toTopOf="@id/verificationCodeEditText"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -70,6 +72,7 @@
 
     <ir.cafebazaar.bazaarpay.screens.login.verify.OtpEditText
         android:id="@+id/verificationCodeEditText"
+        android:contentDescription="@string/bazaarpay_content_description_otp_code"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:cursorVisible="false"

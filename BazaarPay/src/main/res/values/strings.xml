@@ -63,6 +63,7 @@
     <string name="bazaarpay_price_placeholder">%d تومان</string>
     <string name="bazaarpay_dynamic_text_price_placeholder">مبلغ</string>
     <string name="bazaarpay_select_enter_dynamic_credit_title">مبلغ را انتخاب یا وارد کنید.</string>
+    <string name="bazaarpay_enter_dynamic_credit_title">مبلغ را وارد کنید.</string>
     <string name="bazaarpay_change_account">تغییر حساب کاربری</string>
     <string name="bazaaarpay_change_account_title">تغییر حساب کاربری در بازارپی</string>
     <string name="bazaarpay_logout_message">آیا می‌خواهید از حساب کاربری فعلی بازارپی خارج شوید و پرداخت را با حساب دیگری انجام دهید؟</string>
@@ -92,4 +93,13 @@
     <string name="bazaarpay_merchant_message">پیام %s </string>
     <string name="bazaarpay_direct_pay_title">فعال‌سازی «پرداخت خودکار» در %s </string>
 
+    //contentDescriptions
+    <string name="bazaarpay_content_description_close">خروج</string>
+    <string name="bazaarpay_content_description_back">برگشت</string>
+    <string name="bazaarpay_content_description_enter_bazaar_pay">به صفحه پرداخت بازارپی خوش آمدید. بازارپی یک سیستم پرداخت هوشمند و یکپارچه‌است. برای ورود شماره تلفن همراه خود را وارد کنید</string>
+    <string name="bazaarpay_content_description_privacy_and_terms_login">مشاهده قوانین استفاده</string>
+    <string name="bazaarpay_content_description_register_proceed">با زدن دکمه ادامه قوانین استفاده از بازارپی را می‌پذیرم</string>
+    <string name="bazaarpay_content_description_otp_edit">شماره وارد شده: %s . ویرایش شماره تلفن وارد شده</string>
+    <string name="bazaarpay_content_description_otp_code">کد تایید به شماره همراهی که وارد کردید ارسال شد. کد را وارد کنید. برای وارد کردن کد ۲ دقیقه فرصت دارید</string>
+    <string name="bazaarpay_content_description_payment_option_title">شما به صفحه پرداخت بازارپی وارد شدید</string>
 </resources>

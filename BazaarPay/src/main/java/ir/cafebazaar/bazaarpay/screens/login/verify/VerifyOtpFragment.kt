@@ -97,8 +97,11 @@ internal class VerifyOtpFragment : Fragment() {
             findNavController().popBackStack()
         }
 
-        binding.editPhoneContainer.userAccountPhone.text =
-            phoneNumber.localizeNumber(requireContext())
+        val phoneNumberText = phoneNumber.localizeNumber(requireContext())
+        binding.editPhoneContainer.userAccountPhone.text = phoneNumberText
+
+        binding.editPhoneContainer.root.contentDescription =
+            getString(R.string.bazaarpay_content_description_otp_edit, phoneNumberText)
 
         binding.editPhoneContainer.changeAccountAction.setSafeOnClickListener {
             findNavController().popBackStack()
