@@ -63,9 +63,9 @@ internal class PaymentRemoteDataSource {
                         method = paymentMethod,
                         amount = amount,
                         redirectUrl = increaseBalanceRedirectUrl,
+                        accessibility = isAccessibilityEnable(),
                     ),
                     lang = getLanguage(),
-                    accessibility = isAccessibilityEnable(),
                 ).toPayResult()
             }
         }

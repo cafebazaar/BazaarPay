@@ -37,7 +37,6 @@ internal interface PaymentService {
     suspend fun pay(
         @Body payRequest: PayRequest,
         @Query(PAY_ENDPOINT_LANG) lang: String,
-        @Query(PAY_ENDPOINT_ACCESSIBILITY) accessibility: Boolean,
     ): PayResponse
 
     @POST("pardakht/badje/v1/increase-balance/")
@@ -65,13 +64,13 @@ internal interface PaymentService {
 
     @GET("pardakht/badje/v1/get-increase-balance-options/")
     suspend fun getIncreaseBalanceOptions(
-        @Query(PAY_ENDPOINT_ACCESSIBILITY) accessibility: Boolean,
+        @Query(QUERY_ACCESSIBILITY) accessibility: Boolean,
     ): IncreaseBalanceOptionsResponseDto
 
     companion object {
 
         const val PAY_ENDPOINT_LANG = "lang"
-        const val PAY_ENDPOINT_ACCESSIBILITY = "accessibility"
+        const val QUERY_ACCESSIBILITY = "accessibility"
         const val CHECKOUT_TOKEN_LABEL = "checkout_token"
     }
 }
