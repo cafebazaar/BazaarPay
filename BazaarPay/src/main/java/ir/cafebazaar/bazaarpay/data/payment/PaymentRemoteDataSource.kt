@@ -6,7 +6,6 @@ import ir.cafebazaar.bazaarpay.data.payment.api.PaymentService
 import ir.cafebazaar.bazaarpay.data.payment.models.getpaymentmethods.DynamicCreditOption
 import ir.cafebazaar.bazaarpay.data.payment.models.getpaymentmethods.PaymentMethodsInfo
 import ir.cafebazaar.bazaarpay.data.payment.models.getpaymentmethods.request.GetPaymentMethodsRequest
-import ir.cafebazaar.bazaarpay.data.payment.models.increasebalance.GetIncreaseBalanceOptionsRequest
 import ir.cafebazaar.bazaarpay.data.payment.models.increasebalance.IncreaseBalanceRequest
 import ir.cafebazaar.bazaarpay.data.payment.models.merchantinfo.MerchantInfo
 import ir.cafebazaar.bazaarpay.data.payment.models.pay.BalanceResult
@@ -34,11 +33,9 @@ internal class PaymentRemoteDataSource {
         return withContext(globalDispatchers.iO) {
             return@withContext safeApiCall(ServiceType.BAZAARPAY) {
                 paymentService.getPaymentMethods(
-                    GetPaymentMethodsRequest(
-                        checkoutToken = checkoutToken,
-                        accessibility = isAccessibilityEnable(),
-                    ),
+                    GetPaymentMethodsRequest(checkoutToken),
                     getLanguage(),
+                    isAccessibilityEnable(),
                 ).toPaymentMethodInfo()
             }
         }
@@ -64,9 +61,9 @@ internal class PaymentRemoteDataSource {
                         method = paymentMethod,
                         amount = amount,
                         redirectUrl = increaseBalanceRedirectUrl,
-                        accessibility = isAccessibilityEnable(),
                     ),
                     lang = getLanguage(),
+                    accessibility = isAccessibilityEnable(),
                 ).toPayResult()
             }
         }
@@ -132,9 +129,7 @@ internal class PaymentRemoteDataSource {
         return withContext(globalDispatchers.iO) {
             return@withContext safeApiCall(ServiceType.BAZAARPAY) {
                 paymentService.getIncreaseBalanceOptions(
-                    GetIncreaseBalanceOptionsRequest(
-                        accessibility = isAccessibilityEnable(),
-                    )
+                    accessibility = isAccessibilityEnable(),
                 ).toDynamicCreditOption()
             }
         }
