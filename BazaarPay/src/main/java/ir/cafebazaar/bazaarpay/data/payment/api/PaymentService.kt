@@ -25,7 +25,6 @@ internal interface PaymentService {
     suspend fun getPaymentMethods(
         @Body getPaymentMethodsRequest: GetPaymentMethodsRequest,
         @Query(PAY_ENDPOINT_LANG) lang: String,
-        @Query(PAY_ENDPOINT_ACCESSIBILITY) accessibility: Boolean,
     ): PaymentMethodsInfoDto
 
     @GET("pardakht/badje/v1/merchant-info")

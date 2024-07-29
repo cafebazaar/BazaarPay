@@ -33,9 +33,11 @@ internal class PaymentRemoteDataSource {
         return withContext(globalDispatchers.iO) {
             return@withContext safeApiCall(ServiceType.BAZAARPAY) {
                 paymentService.getPaymentMethods(
-                    GetPaymentMethodsRequest(checkoutToken),
+                    GetPaymentMethodsRequest(
+                        checkoutToken = checkoutToken,
+                        accessibility = isAccessibilityEnable(),
+                    ),
                     getLanguage(),
-                    isAccessibilityEnable(),
                 ).toPaymentMethodInfo()
             }
         }
