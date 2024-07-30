@@ -37,7 +37,8 @@ class StartBazaarPay : ActivityResultContract<BazaarPayOptions, Boolean>() {
             phoneNumber = input.phoneNumber,
             isAutoLoginEnable = input.isAutoLoginEnable,
             autoLoginPhoneNumber = input.autoLoginPhoneNumber,
-            autoLoginAuthToken = input.authToken
+            autoLoginAuthToken = input.authToken,
+            isAccessibilityEnable = input.isAccessibilityEnable,
         )
         val bazaarPayActivityArgs = BazaarPayActivityArgs.Normal(
             checkoutToken = input.checkoutToken,
@@ -45,7 +46,8 @@ class StartBazaarPay : ActivityResultContract<BazaarPayOptions, Boolean>() {
             isDarkMode = input.isInDarkMode,
             autoLoginPhoneNumber = input.autoLoginPhoneNumber,
             isAutoLoginEnable = input.isAutoLoginEnable,
-            authToken = input.authToken
+            authToken = input.authToken,
+            isAccessibilityEnable = input.isAccessibilityEnable,
         )
         return Intent(context, BazaarPayActivity::class.java).apply {
             putExtra(BazaarPayActivity.BAZAARPAY_ACTIVITY_ARGS, bazaarPayActivityArgs)

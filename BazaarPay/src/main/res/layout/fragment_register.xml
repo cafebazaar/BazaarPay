@@ -14,6 +14,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/bazaarpay_enter_bazaar_pay"
+        android:contentDescription="@string/bazaarpay_content_description_enter_bazaar_pay"
         android:textColor="@color/bazaarpay_grey_90"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -23,6 +24,7 @@
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/close"
         style="@style/Bazaar.Image.Toolbar"
+        android:contentDescription="@string/bazaarpay_content_description_close"
         android:layout_marginEnd="@dimen/bazaarpay_default_margin_double"
         app:layout_constraintBottom_toBottomOf="@id/topImageView"
         app:layout_constraintEnd_toEndOf="parent"
@@ -117,6 +119,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/phoneInputLayout"
+        android:contentDescription="@string/bazaarpay_content_description_privacy_and_terms_login"
         tools:text="@string/bazaarpay_privacy_and_terms_login" />
 
     <ir.cafebazaar.bazaarpay.widget.button.BazaarPayButton
@@ -127,6 +130,7 @@
         android:layout_marginTop="@dimen/bazaarpay_default_margin_double"
         android:layout_marginBottom="@dimen/bazaarpay_default_margin_double_half"
         android:textColor="@color/selector_primary_button"
+        android:contentDescription="@string/bazaarpay_content_description_register_proceed"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

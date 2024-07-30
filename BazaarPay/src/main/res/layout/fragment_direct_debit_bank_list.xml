@@ -34,6 +34,7 @@
                 <ir.cafebazaar.bazaarpay.widget.RTLImageView
                     android:id="@+id/backButton"
                     style="@style/Bazaar.Image.Toolbar.Icon"
+                    android:contentDescription="@string/bazaarpay_content_description_back"
                     app:srcCompat="@drawable/ic_round_arrow_back_icon_secondary_24dp_old" />
 
                 <ir.cafebazaar.bazaarpay.widget.LocalAwareTextView

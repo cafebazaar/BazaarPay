@@ -97,8 +97,8 @@ internal class VerifyOtpFragment : Fragment() {
             findNavController().popBackStack()
         }
 
-        binding.editPhoneContainer.userAccountPhone.text =
-            phoneNumber.localizeNumber(requireContext())
+        val phoneNumberText = phoneNumber.localizeNumber(requireContext())
+        binding.editPhoneContainer.userAccountPhone.text = phoneNumberText
 
         binding.editPhoneContainer.changeAccountAction.setSafeOnClickListener {
             findNavController().popBackStack()
@@ -130,6 +130,9 @@ internal class VerifyOtpFragment : Fragment() {
             hideError()
             binding.proceedBtn.isEnabled = it?.length == 4 &&
                     viewModel.verifyCodeStateLiveData.value?.resourceState != ResourceState.Loading
+            if (binding.proceedBtn.isEnabled) {
+                handleProceedClick(true)
+            }
         }
 
         binding.verificationCodeEditText.requestFocus()

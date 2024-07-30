@@ -30,22 +30,23 @@ internal class PaymentRemoteDataSource {
     private val globalDispatchers: GlobalDispatchers by lazy { ServiceLocator.get() }
 
     suspend fun getPaymentMethods(): Either<PaymentMethodsInfo> {
-        val language = ServiceLocator.getOrNull<String>(ServiceLocator.LANGUAGE) ?: "fa"
         return withContext(globalDispatchers.iO) {
             return@withContext safeApiCall(ServiceType.BAZAARPAY) {
                 paymentService.getPaymentMethods(
-                    GetPaymentMethodsRequest(checkoutToken),
-                    language
+                    GetPaymentMethodsRequest(
+                        checkoutToken = checkoutToken,
+                        accessibility = isAccessibilityEnable(),
+                    ),
+                    getLanguage(),
                 ).toPaymentMethodInfo()
             }
         }
     }
 
     suspend fun getMerchantInfo(): Either<MerchantInfo> {
-        val language = ServiceLocator.getOrNull<String>(ServiceLocator.LANGUAGE) ?: "fa"
         return withContext(globalDispatchers.iO) {
             return@withContext safeApiCall(ServiceType.BAZAARPAY) {
-                paymentService.getMerchantInfo(checkoutToken, language).toMerchantInfo()
+                paymentService.getMerchantInfo(checkoutToken, getLanguage()).toMerchantInfo()
             }
         }
     }
@@ -54,17 +55,17 @@ internal class PaymentRemoteDataSource {
         paymentMethod: String,
         amount: Long?
     ): Either<PayResult> {
-        val language = ServiceLocator.getOrNull<String>(ServiceLocator.LANGUAGE) ?: "fa"
         return withContext(globalDispatchers.iO) {
             return@withContext safeApiCall(ServiceType.BAZAARPAY) {
                 paymentService.pay(
-                    PayRequest(
-                        checkoutToken,
-                        paymentMethod,
-                        amount,
-                        increaseBalanceRedirectUrl
+                    payRequest = PayRequest(
+                        checkoutToken = checkoutToken,
+                        method = paymentMethod,
+                        amount = amount,
+                        redirectUrl = increaseBalanceRedirectUrl,
+                        accessibility = isAccessibilityEnable(),
                     ),
-                    language
+                    lang = getLanguage(),
                 ).toPayResult()
             }
         }
@@ -129,9 +130,19 @@ internal class PaymentRemoteDataSource {
     suspend fun getIncreaseBalanceOptions(): Either<DynamicCreditOption> {
         return withContext(globalDispatchers.iO) {
             return@withContext safeApiCall(ServiceType.BAZAARPAY) {
-                paymentService.getIncreaseBalanceOptions().toDynamicCreditOption()
+                paymentService.getIncreaseBalanceOptions(
+                    accessibility = isAccessibilityEnable(),
+                ).toDynamicCreditOption()
             }
         }
+    }
+
+    private fun getLanguage(): String {
+        return ServiceLocator.getOrNull<String>(ServiceLocator.LANGUAGE) ?: "fa"
+    }
+
+    private fun isAccessibilityEnable(): Boolean {
+        return ServiceLocator.getOrNull<Boolean>(ServiceLocator.IS_ACCESSIBILITY_ENABLE) ?: false
     }
 
     private companion object {

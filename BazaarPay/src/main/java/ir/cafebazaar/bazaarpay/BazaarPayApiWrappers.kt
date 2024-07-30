@@ -15,13 +15,15 @@ fun initSDKForAPICall(
     checkoutToken: String,
     autoLoginPhoneNumber: String? = null,
     isAutoLoginEnable: Boolean = false,
-    authToken: String? = null
+    authToken: String? = null,
+    isAccessibilityEnable: Boolean = false,
 ) {
     ServiceLocator.initializeConfigsForNormal(
         checkoutToken = checkoutToken,
         autoLoginPhoneNumber = autoLoginPhoneNumber,
         isAutoLoginEnable = isAutoLoginEnable,
-        autoLoginAuthToken = authToken
+        autoLoginAuthToken = authToken,
+        isAccessibilityEnable = isAccessibilityEnable,
     )
     ServiceLocator.initializeDependencies(context.applicationContext)
 }
@@ -34,9 +36,13 @@ suspend fun commit(
 ) {
     val paymentURLParser = PaymentURLParser(paymentURL)
     val checkoutToken = paymentURLParser.getCheckoutToken() ?: paymentURL
-    val autoLoginPhoneNumber = paymentURLParser.getAutoLoginPhoneNumber()
-    val isAutoLoginEnable = paymentURLParser.isAutoLoginEnable()
-    initSDKForAPICall(context, checkoutToken, autoLoginPhoneNumber, isAutoLoginEnable)
+    initSDKForAPICall(
+        context = context,
+        checkoutToken = checkoutToken,
+        autoLoginPhoneNumber = paymentURLParser.getAutoLoginPhoneNumber(),
+        isAutoLoginEnable = paymentURLParser.isAutoLoginEnable(),
+        isAccessibilityEnable = paymentURLParser.isAccessibilityEnable(),
+    )
     val payRepository: PaymentRepository = ServiceLocator.get()
     payRepository.commit(checkoutToken).fold(
         ifSuccess = {
@@ -54,9 +60,13 @@ suspend fun trace(
 ) {
     val paymentURLParser = PaymentURLParser(paymentURL)
     val checkoutToken = paymentURLParser.getCheckoutToken() ?: paymentURL
-    val autoLoginPhoneNumber = paymentURLParser.getAutoLoginPhoneNumber()
-    val isAutoLoginEnable = paymentURLParser.isAutoLoginEnable()
-    initSDKForAPICall(context, checkoutToken, autoLoginPhoneNumber, isAutoLoginEnable)
+    initSDKForAPICall(
+        context = context,
+        checkoutToken = checkoutToken,
+        autoLoginPhoneNumber = paymentURLParser.getAutoLoginPhoneNumber(),
+        isAutoLoginEnable = paymentURLParser.isAutoLoginEnable(),
+        isAccessibilityEnable = paymentURLParser.isAccessibilityEnable(),
+    )
     val payRepository: PaymentRepository = ServiceLocator.get()
     payRepository.trace(checkoutToken).fold(
         ifSuccess = {

@@ -155,6 +155,7 @@ internal class PaymentMethodsFragment : BaseFragment(SCREEN_NAME), PaymentMethod
             items.clear()
             items.addAll(paymentMethods)
             notifyDataSetChanged()
+            setSelectedOptionAccessibility()
         }
     }
 
@@ -189,6 +190,14 @@ internal class PaymentMethodsFragment : BaseFragment(SCREEN_NAME), PaymentMethod
         paymentMethodsAdapter?.setSelectedPosition(position)
         viewModel.onPaymentOptionClicked(position, isActionByUser)
         binding.paymentGatewaysRecyclerView.scrollToPosition(position)
+        setSelectedOptionAccessibility()
+    }
+
+    private fun setSelectedOptionAccessibility() {
+        binding.selectOptionTitle.contentDescription = getString(
+            R.string.bazaarpay_content_description_payment_option_selection,
+            paymentMethodsAdapter?.getSelectedOptionTitle(),
+        )
     }
 
     private fun loadPaymentOptionView(viewLoader: PaymentMethodViewLoader) {

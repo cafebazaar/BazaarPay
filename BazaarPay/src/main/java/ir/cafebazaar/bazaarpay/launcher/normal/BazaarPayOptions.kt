@@ -18,6 +18,7 @@ class BazaarPayOptions private constructor(
     val autoLoginPhoneNumber: String? = null,
     val isAutoLoginEnable: Boolean = false,
     val authToken: String? = null,
+    val isAccessibilityEnable: Boolean = false,
 ) {
 
     @Deprecated(
@@ -36,6 +37,7 @@ class BazaarPayOptions private constructor(
         private var phoneNumber: String? = null
         private var authToken: String? = null
         private var paymentUrlParser: PaymentURLParser? = null
+        private var accessibility: Boolean = false
 
         @Deprecated(
             "checkoutToken is deprecated, use PaymentUrl",
@@ -53,16 +55,29 @@ class BazaarPayOptions private constructor(
             this.authToken = authToken
         }
 
+        fun accessibility(accessibility: Boolean) = apply {
+            Builder.accessibility = accessibility
+        }
+
         fun build() = BazaarPayOptions(
             checkoutToken = paymentUrlParser?.getCheckoutToken() ?: checkoutToken,
             phoneNumber = phoneNumber,
             autoLoginPhoneNumber = paymentUrlParser?.getAutoLoginPhoneNumber(),
             authToken = authToken,
-            isAutoLoginEnable = isAutoLoginEnable()
+            isAutoLoginEnable = isAutoLoginEnable(),
+            isAccessibilityEnable = isAccessibilityEnable(),
         )
 
         private fun isAutoLoginEnable(): Boolean {
             return paymentUrlParser?.isAutoLoginEnable() ?: authToken.isNullOrEmpty().not()
+        }
+
+        private fun isAccessibilityEnable(): Boolean {
+            return if (accessibility) {
+                true
+            } else {
+                paymentUrlParser?.isAccessibilityEnable() ?: false
+            }
         }
     }
 }
@@ -73,6 +88,7 @@ internal class PaymentURLParser(val paymentUrl: String) {
         const val CHECKOUT_TOKEN = "token"
         const val AUTO_LOGIN = "can_request_without_login"
         const val AUTO_LOGIN_PHONE_NUMBER = "phone"
+        const val ACCESSIBILITY = "accessibility"
     }
 
     fun getCheckoutToken(): String? {
@@ -87,10 +103,17 @@ internal class PaymentURLParser(val paymentUrl: String) {
         }.getOrNull()
     }
 
-    fun isAutoLoginEnable(): Boolean {
+    fun isAutoLoginEnable(): Boolean = getBooleanQueryParameter(AUTO_LOGIN)
+
+    fun isAccessibilityEnable(): Boolean = getBooleanQueryParameter(ACCESSIBILITY)
+
+    private fun getBooleanQueryParameter(
+        key: String,
+        defaultValue: Boolean = false
+    ): Boolean {
         return runCatching {
             paymentUrl.toUri()
-                .getBooleanQueryParameter(AUTO_LOGIN, false)
-        }.getOrElse { false }
+                .getBooleanQueryParameter(key, defaultValue)
+        }.getOrElse { defaultValue }
     }
 }

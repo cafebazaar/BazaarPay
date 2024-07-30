@@ -243,7 +243,8 @@ class BazaarPayActivity : AppCompatActivity(), FinishCallbacks {
                         phoneNumber = phoneNumber,
                         isAutoLoginEnable = isAutoLoginEnable,
                         autoLoginPhoneNumber = autoLoginPhoneNumber,
-                        autoLoginAuthToken = authToken
+                        autoLoginAuthToken = authToken,
+                        isAccessibilityEnable = isAccessibilityEnable,
                     )
                 }
             }

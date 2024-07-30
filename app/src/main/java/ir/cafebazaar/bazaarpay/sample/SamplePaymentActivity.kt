@@ -78,6 +78,7 @@ class SamplePaymentActivity : AppCompatActivity() {
             .paymentUrl(paymentURL = paymentURL)
             .phoneNumber(phoneNumber = binding.phoneNumberInput.text.toString())
             .authToken(authToken = binding.tokenInput.text.toString())
+            .accessibility(accessibility = binding.accessibilityCheckbox.isChecked)
             .build()
         bazaarPayLauncher.launch(options)
     }

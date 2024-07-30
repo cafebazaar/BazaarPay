@@ -44,6 +44,10 @@ internal class PaymentMethodsAdapter(private val paymentOptionClickListener: Pay
         }
     }
 
+    fun getSelectedOptionTitle(): String {
+        return items.getOrNull(selectedPosition)?.title.orEmpty()
+    }
+
     companion object {
 
         const val DEFAULT_SELECTED_OPTION = 0

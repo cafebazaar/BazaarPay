@@ -49,11 +49,13 @@ internal object ServiceLocator {
         autoLoginPhoneNumber: String? = null,
         isAutoLoginEnable: Boolean = false,
         autoLoginAuthToken: String? = null,
+        isAccessibilityEnable: Boolean = false,
     ) {
         servicesMap[getKeyOfClass<String>(CHECKOUT_TOKEN)] = checkoutToken
         servicesMap[getKeyOfClass<String?>(PHONE_NUMBER)] = phoneNumber
         servicesMap[getKeyOfClass<String>(AUTO_LOGIN_PHONE_NUMBER)] = autoLoginPhoneNumber
         servicesMap[getKeyOfClass<Boolean>(IS_AUTO_LOGIN_ENABLE)] = isAutoLoginEnable
+        servicesMap[getKeyOfClass<Boolean>(IS_ACCESSIBILITY_ENABLE)] = isAccessibilityEnable
         Analytics.setCheckOutToken(checkoutToken)
         Analytics.setAutoLoginState(isAutoLoginEnable || autoLoginAuthToken.isNullOrEmpty().not())
         initializeShareConfigs(autoLoginAuthToken)
@@ -336,6 +338,7 @@ internal object ServiceLocator {
     internal const val LANGUAGE: String = "language"
     internal const val AUTO_LOGIN_PHONE_NUMBER: String = "autoLoginPhoneNumber"
     internal const val IS_AUTO_LOGIN_ENABLE: String = "isAutoLoginEnable"
+    internal const val IS_ACCESSIBILITY_ENABLE: String = "isAccessibilityEnable"
     internal const val ACCOUNT: String = "account"
     internal const val DEVICE: String = "device"
     private const val AUTHENTICATOR: String = "authenticator"
