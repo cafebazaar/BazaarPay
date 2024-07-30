@@ -99,7 +99,7 @@
     <string name="bazaarpay_content_description_enter_bazaar_pay">به صفحه پرداخت بازارپی خوش آمدید. بازارپی یک سیستم پرداخت هوشمند و یکپارچه‌است. برای ورود شماره تلفن همراه خود را وارد کنید</string>
     <string name="bazaarpay_content_description_privacy_and_terms_login">مشاهده قوانین استفاده</string>
     <string name="bazaarpay_content_description_register_proceed">با زدن دکمه ادامه قوانین استفاده از بازارپی را می‌پذیرم</string>
-    <string name="bazaarpay_content_description_otp_edit">شماره وارد شده: %s . ویرایش شماره تلفن وارد شده</string>
     <string name="bazaarpay_content_description_otp_code">کد تایید به شماره همراهی که وارد کردید ارسال شد. کد را وارد کنید. برای وارد کردن کد ۲ دقیقه فرصت دارید</string>
     <string name="bazaarpay_content_description_payment_option_title">شما به صفحه پرداخت بازارپی وارد شدید</string>
+    <string name="bazaarpay_content_description_payment_option_selection">روش پرداخت را انتخاب کنید. روش انتخاب شده %s</string>
 </resources>
