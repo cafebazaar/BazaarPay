@@ -202,7 +202,13 @@ internal class PaymentDynamicCreditFragment : BaseFragment(SCREEN_NAME) {
         setDealerInfo(dealerArgs)
         setCreditOptions(creditOptionsArgs)
         with(creditOptionsArgs) {
-            binding.dynamicCreditSubTitle.setValueIfNotNullOrEmpty(description)
+            if (description == binding.dynamicCreditPayOrEnterTitle.text) {
+                binding.dynamicCreditSubTitle.gone()
+                val padding = binding.root.resources.getDimension(R.dimen.bazaarpay_default_margin_double)
+                binding.dynamicCreditPayOrEnterTitle.setPadding(0, padding.toInt(), 0, 0)
+            } else {
+                binding.dynamicCreditSubTitle.setValueIfNotNullOrEmpty(description)
+            }
         }
     }
 
