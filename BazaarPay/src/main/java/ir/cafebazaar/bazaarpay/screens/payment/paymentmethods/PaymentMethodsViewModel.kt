@@ -215,7 +215,7 @@ internal class PaymentMethodsViewModel : ViewModel() {
                 val merchantAccountName = merchantInfoStateData.value?.data?.accountName
                 val dynamicCreditOptionDealerArg = DynamicCreditOptionDealerArg(
                     iconUrl = merchantLogo,
-                    name = paymentMethodsStateData.destinationTitle,
+                    name = merchantAccountName ?: paymentMethodsStateData.destinationTitle,
                     info = merchantAccountName,
                     priceString = priceString
                 )

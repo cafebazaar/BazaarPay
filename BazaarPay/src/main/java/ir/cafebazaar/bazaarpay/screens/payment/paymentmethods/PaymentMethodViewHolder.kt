@@ -3,6 +3,7 @@ package ir.cafebazaar.bazaarpay.screens.payment.paymentmethods
 import android.animation.ValueAnimator
 import android.content.Context
 import android.graphics.drawable.Drawable
+import android.view.accessibility.AccessibilityEvent
 import androidx.core.content.ContextCompat
 import androidx.core.view.updateLayoutParams
 import androidx.recyclerview.widget.RecyclerView
@@ -31,6 +32,7 @@ internal class PaymentMethodViewHolder(
             description.text = item.description
             optionDescription?.let {
                 it.text = item.subDescription
+                it.contentDescription = item.subDescription
                 optionRoot.post {
                     animateDescription(
                         item.subDescription?.isNotEmpty()?.and(
@@ -60,6 +62,10 @@ internal class PaymentMethodViewHolder(
                 }
                 duration = ANIMATION_DURATION
                 start()
+            }
+
+            if (isDescriptionVisible) {
+                optionDescription.sendAccessibilityEvent(AccessibilityEvent.TYPE_VIEW_FOCUSED)
             }
         }
     }
