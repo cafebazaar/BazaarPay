@@ -9,6 +9,7 @@
     android:layout_margin="@dimen/bazaarpay_default_margin_double"
     android:padding="@dimen/bazaarpay_default_margin"
     android:gravity="center_vertical"
+    android:contentDescription=""
     android:background="@drawable/shape_gray_round_radius_small"
     android:visibility="visible">
 

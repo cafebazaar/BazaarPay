@@ -73,7 +73,7 @@ private fun String.persianDigits(): String {
         char = toCharArray()[index]
         when (char) {
             in '0'..'9' -> result += (DIGIT_DIFF.code + char.code).toChar().toString()
-            ',' -> result += '٬'.toString()
+            '٬' -> result += ',' // for accessibility
             else -> result += char
         }
         index++
