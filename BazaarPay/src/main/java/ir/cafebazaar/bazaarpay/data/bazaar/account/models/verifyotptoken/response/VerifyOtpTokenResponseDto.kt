@@ -4,9 +4,8 @@ import com.google.gson.annotations.SerializedName
 import ir.cafebazaar.bazaarpay.data.bazaar.account.models.verifyotptoken.LoginResponse
 
 internal class VerifyOtpTokenResponseDto(
-    @SerializedName("accessToken") val accessToken: String,
-    @SerializedName("refreshToken") val refreshToken: String,
-    @SerializedName("waitingSeconds") val waitingSeconds: Int
+    @SerializedName("access_token") val accessToken: String,
+    @SerializedName("refresh_token") val refreshToken: String
 ) {
 
     fun toLoginResponse(): LoginResponse {

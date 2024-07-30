@@ -3,5 +3,5 @@ package ir.cafebazaar.bazaarpay.data.bazaar.account.models.refreshaccesstoken.re
 import com.google.gson.annotations.SerializedName
 
 internal class GetAccessTokenResponseDto(
-    @SerializedName("accessToken") val accessToken: String
+    @SerializedName("access_token") val accessToken: String
 )

@@ -1,21 +1,10 @@
 package ir.cafebazaar.bazaarpay.data.bazaar.account.models.verifyotptoken.request
 
-import ir.cafebazaar.bazaarpay.data.bazaar.models.BazaarBaseRequest
+import com.google.gson.annotations.SerializedName
 
-internal class VerifyOtpTokenSingleRequest(
-    username: String,
-    token: String
-) : BazaarBaseRequest() {
-
-    val singleRequest: VerifyOtpTokenRequest =
-        VerifyOtpTokenRequest(VerifyOtpTokenRequestBody(username, token))
-}
-
-internal class VerifyOtpTokenRequest(
-    val verifyOtpTokenRequest: VerifyOtpTokenRequestBody
-)
-
-internal class VerifyOtpTokenRequestBody(
-    val username: String,
+internal data class VerifyOtpTokenSingleRequest(
+    @SerializedName("phone")
+    val phone: String,
+    @SerializedName("token")
     val token: String
 )

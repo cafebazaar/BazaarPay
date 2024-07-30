@@ -1,17 +1,8 @@
 package ir.cafebazaar.bazaarpay.data.bazaar.account.models.refreshaccesstoken.request
 
-import ir.cafebazaar.bazaarpay.data.bazaar.models.BazaarBaseRequest
+import com.google.gson.annotations.SerializedName
 
-internal class GetAccessTokenSingleRequest(
-    refreshToken: String
-) : BazaarBaseRequest() {
-
-    val singleRequest: GetAccessTokenRequest =
-        GetAccessTokenRequest(GetAccessTokenRequestBody(refreshToken))
-}
-
-internal class GetAccessTokenRequest(
-    val getAccessTokenRequest : GetAccessTokenRequestBody
+internal data class GetAccessTokenSingleRequest(
+    @SerializedName("refresh_token")
+    val refreshToken: String
 )
-
-internal class GetAccessTokenRequestBody(val refreshToken: String)

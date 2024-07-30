@@ -14,22 +14,22 @@ import retrofit2.http.POST
 
 internal interface AccountService {
 
-    @POST("GetOtpTokenRequest")
+    @POST("auth/v1/get-otp-token/")
     suspend fun getOtpToken(
         @Body getOtpTokenSingleRequest: GetOtpTokenSingleRequest
     ): GetOtpTokenResponseDto
 
-    @POST("GetOtpTokenByCallRequest")
+    @POST("auth/v1/get-otp-token-by-call/")
     suspend fun getOtpTokenByCall(
         @Body getOtpTokenByCallSingleRequest: GetOtpTokenByCallSingleRequest
     ): GetOtpTokenByCallResponseDto
 
-    @POST("VerifyOtpTokenRequest")
+    @POST("auth/v1/verify-otp-token/")
     suspend fun verifyOtpToken(
         @Body verifyOtpTokenSingleRequest: VerifyOtpTokenSingleRequest
     ): VerifyOtpTokenResponseDto
 
-    @POST("getAccessTokenRequest")
+    @POST("auth/v1/get-access-token/")
     fun getAccessToken(
         @Body getAccessTokenSingleRequest: GetAccessTokenSingleRequest
     ): Call<GetAccessTokenResponseDto>

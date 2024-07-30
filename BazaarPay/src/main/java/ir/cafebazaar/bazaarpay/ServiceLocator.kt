@@ -29,14 +29,12 @@ import ir.cafebazaar.bazaarpay.data.payment.TokenInterceptor
 import ir.cafebazaar.bazaarpay.data.payment.UpdateRefreshTokenHelper
 import ir.cafebazaar.bazaarpay.data.payment.api.PaymentService
 import ir.cafebazaar.bazaarpay.models.GlobalDispatchers
-import ir.cafebazaar.bazaarpay.network.gsonConverterFactory
 import ir.cafebazaar.bazaarpay.network.interceptor.HeaderInterceptor
 import kotlinx.coroutines.Dispatchers
 import okhttp3.Authenticator
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
-import retrofit2.Converter
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
@@ -101,7 +99,6 @@ internal object ServiceLocator {
 
         initDeviceInterceptor()
         initGlobalDispatchers()
-        initJsonConvertorFactory()
         initHttpLoggingInterceptor()
 
         // Account
@@ -143,10 +140,6 @@ internal object ServiceLocator {
             Dispatchers.IO,
             Dispatchers.Default
         )
-    }
-
-    private fun initJsonConvertorFactory() {
-        servicesMap[getKeyOfClass<Converter.Factory>()] = gsonConverterFactory()
     }
 
     private fun initAccountSharedDataSource() {
@@ -270,16 +263,11 @@ internal object ServiceLocator {
     private fun provideRetrofit(
         okHttp: OkHttpClient,
         baseUrl: String,
-        needUnWrapper: Boolean = false
     ): Retrofit {
         return Retrofit.Builder()
             .baseUrl(baseUrl)
             .addConverterFactory(
-                if (needUnWrapper) {
-                    gsonConverterFactory()
-                } else {
-                    GsonConverterFactory.create(GsonBuilder().create())
-                }
+                GsonConverterFactory.create(GsonBuilder().create())
             )
             .client(okHttp)
             .build()
@@ -289,23 +277,22 @@ internal object ServiceLocator {
         val accountHttpClient = provideOkHttpClient()
         val accountRetrofit = provideRetrofit(
             okHttp = accountHttpClient,
-            needUnWrapper = true,
-            baseUrl = DEFAULT_BASE_URL
+            baseUrl = BASE_URL
         )
         servicesMap[getKeyOfClass<AccountService>()] =
             accountRetrofit.create(AccountService::class.java)
     }
 
     private fun initRetrofitServices() {
-        val paymentHttpClient = provideOkHttpClient(
+        val okHttpClient = provideOkHttpClient(
             interceptors = listOf(get(TOKEN)),
             authenticator = get<Authenticator?>(AUTHENTICATOR).takeIf {
                 isUserLogOutAndAutoLoginEnable().not()
             }
         )
         val retrofit = provideRetrofit(
-            okHttp = paymentHttpClient,
-            baseUrl = PAYMENT_BASE_URL
+            okHttp = okHttpClient,
+            baseUrl = BASE_URL
         )
         servicesMap[getKeyOfClass<PaymentService>()] =
             retrofit.create(PaymentService::class.java)
@@ -340,8 +327,7 @@ internal object ServiceLocator {
         return isAutoLoginEnable && isLoggedIn().not()
     }
 
-    private const val DEFAULT_BASE_URL: String = "https://api.cafebazaar.ir/rest-v1/process/"
-    private const val PAYMENT_BASE_URL: String = "https://pardakht.cafebazaar.ir/"
+    private const val BASE_URL: String = "https://api.bazaar-pay.ir/"
 
     internal const val CHECKOUT_TOKEN: String = "checkout_token"
     internal const val PHONE_NUMBER: String = "phone_number"

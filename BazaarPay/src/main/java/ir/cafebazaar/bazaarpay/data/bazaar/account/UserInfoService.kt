@@ -6,7 +6,7 @@ import retrofit2.http.Query
 
 internal interface UserInfoService {
 
-    @GET("pardakht/badje/v1/user/info/")
+    @GET("badje/v1/user/info/")
     suspend fun getUserInfoRequest(
         @Query(CHECKOUT_TOKEN_LABEL) checkoutLabel: String?
     ): AutoLoginUserInfoReplyDto
