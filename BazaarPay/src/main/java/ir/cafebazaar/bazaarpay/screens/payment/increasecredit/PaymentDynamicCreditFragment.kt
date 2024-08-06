@@ -42,7 +42,6 @@ import ir.cafebazaar.bazaarpay.models.Resource
 import ir.cafebazaar.bazaarpay.models.ResourceState
 import ir.cafebazaar.bazaarpay.utils.bindWithRTLSupport
 import ir.cafebazaar.bazaarpay.utils.getErrorViewBasedOnErrorModel
-import kotlin.random.Random
 
 internal class PaymentDynamicCreditFragment : BaseFragment(SCREEN_NAME) {
 
