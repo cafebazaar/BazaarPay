@@ -278,7 +278,7 @@ internal class PaymentDynamicCreditFragment : BaseFragment(SCREEN_NAME) {
                 dynamicCreditViewModel.onTextChanged(text.toString())
             }
             priceEditText.setOnEditorActionListener { _, actionId, _ ->
-                if (actionId == EditorInfo.IME_ACTION_DONE) {
+                if (priceEditText.text.isNullOrEmpty().not() && actionId == EditorInfo.IME_ACTION_DONE) {
                     priceEditText.clearFocus()
                     payButton.requestFocus()
                     payButton.performAccessibilityAction(AccessibilityNodeInfo.ACTION_ACCESSIBILITY_FOCUS, null)
