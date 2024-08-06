@@ -142,7 +142,7 @@ internal class PaymentRemoteDataSource {
     }
 
     private fun isAccessibilityEnable(): Boolean {
-        return ServiceLocator.getOrNull<Boolean>(ServiceLocator.IS_ACCESSIBILITY_ENABLE) ?: false
+        return ServiceLocator.isAccessibilityEnable()
     }
 
     private companion object {

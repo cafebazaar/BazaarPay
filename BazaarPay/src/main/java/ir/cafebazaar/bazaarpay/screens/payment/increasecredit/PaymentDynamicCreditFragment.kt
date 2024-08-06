@@ -8,6 +8,9 @@ import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
+import android.view.accessibility.AccessibilityEvent
+import android.view.accessibility.AccessibilityNodeInfo
+import android.view.inputmethod.EditorInfo
 import androidx.activity.addCallback
 import androidx.core.view.isVisible
 import androidx.core.widget.doOnTextChanged
@@ -24,6 +27,7 @@ import ir.cafebazaar.bazaarpay.data.bazaar.models.ErrorModel
 import ir.cafebazaar.bazaarpay.data.payment.models.getpaymentmethods.DynamicCreditOption
 import ir.cafebazaar.bazaarpay.data.payment.models.getpaymentmethods.Option
 import ir.cafebazaar.bazaarpay.databinding.FragmentPaymentDynamicCreditBinding
+import ir.cafebazaar.bazaarpay.extensions.fixAccessibility
 import ir.cafebazaar.bazaarpay.extensions.getReadableErrorMessage
 import ir.cafebazaar.bazaarpay.extensions.gone
 import ir.cafebazaar.bazaarpay.extensions.hideKeyboard
@@ -116,7 +120,7 @@ internal class PaymentDynamicCreditFragment : BaseFragment(SCREEN_NAME) {
 
             errorLiveData.observe(viewLifecycleOwner) {
                 val errorMessage = requireContext().getString(it.first, it.second)
-                toastMessage(errorMessage)
+                toastMessage(errorMessage.fixAccessibility())
             }
 
             actionLiveData.observe(viewLifecycleOwner) {
@@ -272,6 +276,15 @@ internal class PaymentDynamicCreditFragment : BaseFragment(SCREEN_NAME) {
             }
             textWatcher = priceEditText.doOnTextChanged { text, _, _, _ ->
                 dynamicCreditViewModel.onTextChanged(text.toString())
+            }
+            priceEditText.setOnEditorActionListener { _, actionId, _ ->
+                if (priceEditText.text.isNullOrEmpty().not() && actionId == EditorInfo.IME_ACTION_DONE) {
+                    priceEditText.clearFocus()
+                    payButton.requestFocus()
+                    payButton.performAccessibilityAction(AccessibilityNodeInfo.ACTION_ACCESSIBILITY_FOCUS, null)
+                    payButton.sendAccessibilityEvent(AccessibilityEvent.TYPE_VIEW_SELECTED)
+                }
+                false
             }
             priceEditText.setOnTouchListener { view, event ->
                 when (event?.action) {

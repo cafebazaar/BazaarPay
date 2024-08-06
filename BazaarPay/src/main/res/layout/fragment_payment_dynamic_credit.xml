@@ -133,7 +133,7 @@
                     style="@style/Bazaar.Text.Body1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:imeOptions="actionNext"
+                    android:imeOptions="actionDone"
                     android:importantForAutofill="no"
                     android:inputType="number"
                     android:longClickable="false"

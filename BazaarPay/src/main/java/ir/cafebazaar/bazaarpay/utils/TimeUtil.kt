@@ -1,7 +1,5 @@
 package ir.cafebazaar.bazaarpay.utils
 
-import ir.cafebazaar.bazaarpay.ServiceLocator
-import java.util.*
 import kotlin.time.Duration
 import kotlin.time.DurationUnit
 import kotlin.time.toDuration
@@ -15,7 +13,6 @@ private const val ONE_MINUTE_IN_SECONDS = 60
 private const val TEN_SECONDS = 10
 
 fun Second.secondsToStringTime(): String {
-
     return toDuration(DurationUnit.SECONDS).toStringTime()
 }
 
