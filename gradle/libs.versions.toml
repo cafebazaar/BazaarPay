@@ -1,6 +1,6 @@
 [versions]
-androidCompileSdk = "31"
-androidTargetSdk = "31"
+androidCompileSdk = "34"
+androidTargetSdk = "34"
 androidMinSdk = "17"
 androidPlugin = "7.1.3"
 androidxLifecycle = "2.5.0"

@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
+import android.os.Build
 import android.os.Bundle
 import android.text.TextWatcher
 import android.view.LayoutInflater
@@ -165,7 +166,19 @@ internal class VerifyOtpFragment : Fragment() {
                 .getClient(requireActivity())
                 .startSmsUserConsent(SMS_NUMBER)
             IntentFilter(SmsRetriever.SMS_RETRIEVED_ACTION).also { intentFilter ->
-                requireActivity().registerReceiver(SmsPermissionReceiver(), intentFilter)
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                    requireActivity().registerReceiver(
+                        SmsPermissionReceiver(),
+                        intentFilter,
+                        Context.RECEIVER_EXPORTED,
+                    )
+                } else {
+                    @Suppress("UnspecifiedRegisterReceiverFlag")
+                    requireActivity().registerReceiver(
+                        SmsPermissionReceiver(),
+                        intentFilter,
+                    )
+                }
             }
         }
     }
