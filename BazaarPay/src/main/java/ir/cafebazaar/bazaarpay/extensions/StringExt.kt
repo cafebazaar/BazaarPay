@@ -5,6 +5,7 @@ import android.os.Build
 import android.text.Html
 import android.text.Spanned
 import ir.cafebazaar.bazaarpay.R
+import ir.cafebazaar.bazaarpay.ServiceLocator
 import java.math.BigDecimal
 import java.util.Locale
 import java.util.regex.Pattern
@@ -56,7 +57,7 @@ fun String.persianDigitsIfPersian(locale: Locale): String {
     val lang = locale.language
     val country = locale.country
     return if ("fa" == lang && "TJ" != country) {
-        persianDigits()
+        persianDigits().fixAccessibility()
     } else {
         this
     }
@@ -73,7 +74,7 @@ private fun String.persianDigits(): String {
         char = toCharArray()[index]
         when (char) {
             in '0'..'9' -> result += (DIGIT_DIFF.code + char.code).toChar().toString()
-            '٬' -> result += ',' // for accessibility
+            ',' -> result += '٬'
             else -> result += char
         }
         index++
@@ -87,6 +88,16 @@ fun String.digits(): Long {
         0
     } else {
         numericValue.toLong()
+    }
+}
+
+fun String.fixAccessibility(
+    isAccessibilityEnabled: Boolean = ServiceLocator.isAccessibilityEnable(),
+): String {
+    return if (isAccessibilityEnabled) {
+        replace('٬', ',')
+    } else {
+        this
     }
 }
 

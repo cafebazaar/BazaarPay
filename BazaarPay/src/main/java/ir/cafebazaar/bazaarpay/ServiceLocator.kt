@@ -327,6 +327,10 @@ internal object ServiceLocator {
         return isAutoLoginEnable && isLoggedIn().not()
     }
 
+    internal fun isAccessibilityEnable(): Boolean {
+        return getOrNull<Boolean>(IS_ACCESSIBILITY_ENABLE) ?: false
+    }
+
     private const val BASE_URL: String = "https://api.bazaar-pay.ir/"
 
     internal const val CHECKOUT_TOKEN: String = "checkout_token"
@@ -338,7 +342,7 @@ internal object ServiceLocator {
     internal const val LANGUAGE: String = "language"
     internal const val AUTO_LOGIN_PHONE_NUMBER: String = "autoLoginPhoneNumber"
     internal const val IS_AUTO_LOGIN_ENABLE: String = "isAutoLoginEnable"
-    internal const val IS_ACCESSIBILITY_ENABLE: String = "isAccessibilityEnable"
+    private const val IS_ACCESSIBILITY_ENABLE: String = "isAccessibilityEnable"
     internal const val ACCOUNT: String = "account"
     internal const val DEVICE: String = "device"
     private const val AUTHENTICATOR: String = "authenticator"
