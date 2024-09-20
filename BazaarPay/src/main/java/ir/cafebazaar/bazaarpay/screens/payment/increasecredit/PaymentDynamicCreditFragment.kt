@@ -15,6 +15,7 @@ import androidx.activity.addCallback
 import androidx.core.view.isVisible
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.viewModels
+import androidx.navigation.NavDirections
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -123,13 +124,9 @@ internal class PaymentDynamicCreditFragment : BaseFragment(SCREEN_NAME) {
                 toastMessage(errorMessage.fixAccessibility())
             }
 
-            actionLiveData.observe(viewLifecycleOwner) {
-                handleActionState(it)
-            }
-
-            dynamicCreditLiveData.observe(viewLifecycleOwner) {
-                handleDynamicCreditState(it)
-            }
+            actionLiveData.observe(viewLifecycleOwner, ::handleActionState)
+            navigationLiveData.observe(viewLifecycleOwner, ::handleNavigation)
+            dynamicCreditLiveData.observe(viewLifecycleOwner, ::handleDynamicCreditState)
         }
     }
 
@@ -141,9 +138,15 @@ internal class PaymentDynamicCreditFragment : BaseFragment(SCREEN_NAME) {
             }
 
             ResourceState.Success -> {
-                resource.data?.let { requireContext().openUrl(it) }
+                resource.data?.let {
+                    requireContext().openUrl(it)
+                }
             }
         }
+    }
+
+    private fun handleNavigation(navDirections: NavDirections) {
+        findNavController().navigate(navDirections)
     }
 
     private fun handleDynamicCreditState(resource: Resource<DynamicCreditOption>) {
@@ -208,7 +211,8 @@ internal class PaymentDynamicCreditFragment : BaseFragment(SCREEN_NAME) {
         with(creditOptionsArgs) {
             if (description == binding.dynamicCreditPayOrEnterTitle.text) {
                 binding.dynamicCreditSubTitle.gone()
-                val padding = binding.root.resources.getDimension(R.dimen.bazaarpay_default_margin_double)
+                val padding =
+                    binding.root.resources.getDimension(R.dimen.bazaarpay_default_margin_double)
                 binding.dynamicCreditPayOrEnterTitle.setPadding(0, padding.toInt(), 0, 0)
             } else {
                 binding.dynamicCreditSubTitle.setValueIfNotNullOrEmpty(description)
@@ -278,10 +282,15 @@ internal class PaymentDynamicCreditFragment : BaseFragment(SCREEN_NAME) {
                 dynamicCreditViewModel.onTextChanged(text.toString())
             }
             priceEditText.setOnEditorActionListener { _, actionId, _ ->
-                if (priceEditText.text.isNullOrEmpty().not() && actionId == EditorInfo.IME_ACTION_DONE) {
+                if (priceEditText.text.isNullOrEmpty()
+                        .not() && actionId == EditorInfo.IME_ACTION_DONE
+                ) {
                     priceEditText.clearFocus()
                     payButton.requestFocus()
-                    payButton.performAccessibilityAction(AccessibilityNodeInfo.ACTION_ACCESSIBILITY_FOCUS, null)
+                    payButton.performAccessibilityAction(
+                        AccessibilityNodeInfo.ACTION_ACCESSIBILITY_FOCUS,
+                        null
+                    )
                     payButton.sendAccessibilityEvent(AccessibilityEvent.TYPE_VIEW_SELECTED)
                 }
                 false

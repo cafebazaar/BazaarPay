@@ -19,6 +19,7 @@ class BazaarPayOptions private constructor(
     val isAutoLoginEnable: Boolean = false,
     val authToken: String? = null,
     val isAccessibilityEnable: Boolean = false,
+    val isInternalWebPageEnable: Boolean = true,
 ) {
 
     @Deprecated(
@@ -66,6 +67,7 @@ class BazaarPayOptions private constructor(
             authToken = authToken,
             isAutoLoginEnable = isAutoLoginEnable(),
             isAccessibilityEnable = isAccessibilityEnable(),
+            isInternalWebPageEnable = paymentUrlParser?.isInternalWebPageEnable() ?: true,
         )
 
         private fun isAutoLoginEnable(): Boolean {
@@ -89,6 +91,7 @@ internal class PaymentURLParser(val paymentUrl: String) {
         const val AUTO_LOGIN = "can_request_without_login"
         const val AUTO_LOGIN_PHONE_NUMBER = "phone"
         const val ACCESSIBILITY = "accessibility"
+        const val INTERNAL_WEB = "internal_web"
     }
 
     fun getCheckoutToken(): String? {
@@ -106,6 +109,8 @@ internal class PaymentURLParser(val paymentUrl: String) {
     fun isAutoLoginEnable(): Boolean = getBooleanQueryParameter(AUTO_LOGIN)
 
     fun isAccessibilityEnable(): Boolean = getBooleanQueryParameter(ACCESSIBILITY)
+
+    fun isInternalWebPageEnable(): Boolean = getBooleanQueryParameter(INTERNAL_WEB)
 
     private fun getBooleanQueryParameter(
         key: String,

@@ -50,12 +50,14 @@ internal object ServiceLocator {
         isAutoLoginEnable: Boolean = false,
         autoLoginAuthToken: String? = null,
         isAccessibilityEnable: Boolean = false,
+        isInternalWebPageEnable: Boolean = true,
     ) {
         servicesMap[getKeyOfClass<String>(CHECKOUT_TOKEN)] = checkoutToken
         servicesMap[getKeyOfClass<String?>(PHONE_NUMBER)] = phoneNumber
         servicesMap[getKeyOfClass<String>(AUTO_LOGIN_PHONE_NUMBER)] = autoLoginPhoneNumber
         servicesMap[getKeyOfClass<Boolean>(IS_AUTO_LOGIN_ENABLE)] = isAutoLoginEnable
         servicesMap[getKeyOfClass<Boolean>(IS_ACCESSIBILITY_ENABLE)] = isAccessibilityEnable
+        servicesMap[getKeyOfClass<Boolean>(IS_INTERNAL_WEB_PAGE_ENABLED)] = isInternalWebPageEnable
         Analytics.setCheckOutToken(checkoutToken)
         Analytics.setAutoLoginState(isAutoLoginEnable || autoLoginAuthToken.isNullOrEmpty().not())
         initializeShareConfigs(autoLoginAuthToken)
@@ -331,6 +333,10 @@ internal object ServiceLocator {
         return getOrNull<Boolean>(IS_ACCESSIBILITY_ENABLE) ?: false
     }
 
+    internal fun isInternalWebPageEnabled(): Boolean {
+        return getOrNull<Boolean>(IS_INTERNAL_WEB_PAGE_ENABLED) ?: false
+    }
+
     private const val BASE_URL: String = "https://api.bazaar-pay.ir/"
 
     internal const val CHECKOUT_TOKEN: String = "checkout_token"
@@ -343,6 +349,7 @@ internal object ServiceLocator {
     internal const val AUTO_LOGIN_PHONE_NUMBER: String = "autoLoginPhoneNumber"
     internal const val IS_AUTO_LOGIN_ENABLE: String = "isAutoLoginEnable"
     private const val IS_ACCESSIBILITY_ENABLE: String = "isAccessibilityEnable"
+    private const val IS_INTERNAL_WEB_PAGE_ENABLED: String = "isInternalWebPageEnabled"
     internal const val ACCOUNT: String = "account"
     internal const val DEVICE: String = "device"
     private const val AUTHENTICATOR: String = "authenticator"

@@ -18,6 +18,10 @@
         app:destination="@id/paymentThankYouPageFragment" />
 
     <action
+        android:id="@+id/open_webPageFragment"
+        app:destination="@id/webPageFragment" />
+
+    <action
         android:id="@+id/open_payment_methods"
         app:destination="@id/paymentMethodsFragment" />
 
@@ -122,6 +126,15 @@
             android:defaultValue="@null"
             app:argType="string"
             app:nullable="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/webPageFragment"
+        android:name="ir.cafebazaar.bazaarpay.screens.payment.webpage.WebPageFragment"
+        android:label="WebPageFragment">
+
+        <argument
+            android:name="url"
+            app:argType="string" />
     </fragment>
     <fragment
         android:id="@+id/directDebitBankListFragment"

@@ -17,6 +17,7 @@ fun initSDKForAPICall(
     isAutoLoginEnable: Boolean = false,
     authToken: String? = null,
     isAccessibilityEnable: Boolean = false,
+    isInternalWebPageEnable: Boolean = true,
 ) {
     ServiceLocator.initializeConfigsForNormal(
         checkoutToken = checkoutToken,
@@ -24,6 +25,7 @@ fun initSDKForAPICall(
         isAutoLoginEnable = isAutoLoginEnable,
         autoLoginAuthToken = authToken,
         isAccessibilityEnable = isAccessibilityEnable,
+        isInternalWebPageEnable = isInternalWebPageEnable,
     )
     ServiceLocator.initializeDependencies(context.applicationContext)
 }
@@ -42,6 +44,7 @@ suspend fun commit(
         autoLoginPhoneNumber = paymentURLParser.getAutoLoginPhoneNumber(),
         isAutoLoginEnable = paymentURLParser.isAutoLoginEnable(),
         isAccessibilityEnable = paymentURLParser.isAccessibilityEnable(),
+        isInternalWebPageEnable = paymentURLParser.isInternalWebPageEnable(),
     )
     val payRepository: PaymentRepository = ServiceLocator.get()
     payRepository.commit(checkoutToken).fold(
@@ -66,6 +69,7 @@ suspend fun trace(
         autoLoginPhoneNumber = paymentURLParser.getAutoLoginPhoneNumber(),
         isAutoLoginEnable = paymentURLParser.isAutoLoginEnable(),
         isAccessibilityEnable = paymentURLParser.isAccessibilityEnable(),
+        isInternalWebPageEnable = paymentURLParser.isInternalWebPageEnable(),
     )
     val payRepository: PaymentRepository = ServiceLocator.get()
     payRepository.trace(checkoutToken).fold(

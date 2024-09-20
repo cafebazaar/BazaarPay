@@ -108,6 +108,12 @@ internal class PaymentMethodsViewModel : ViewModel() {
                     .openPaymentThankYouPageFragment(
                         isSuccess = true
                     )
+        } else if (ServiceLocator.isInternalWebPageEnabled()) {
+            _navigationLiveData.value =
+                PaymentMethodsFragmentDirections
+                    .openWebPageFragment(
+                        url = payResult.redirectUrl,
+                    )
         } else {
             _deepLinkLiveData.value = payResult.redirectUrl
         }

@@ -245,6 +245,7 @@ class BazaarPayActivity : AppCompatActivity(), FinishCallbacks {
                         autoLoginPhoneNumber = autoLoginPhoneNumber,
                         autoLoginAuthToken = authToken,
                         isAccessibilityEnable = isAccessibilityEnable,
+                        isInternalWebPageEnable = isInternalWebPageEnable,
                     )
                 }
             }

@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.navigation.NavDirections
 import ir.cafebazaar.bazaarpay.R
 import ir.cafebazaar.bazaarpay.ServiceLocator
 import ir.cafebazaar.bazaarpay.data.bazaar.models.ErrorModel
@@ -39,6 +40,9 @@ internal class DynamicCreditViewModel : ViewModel() {
 
     private val _actionLiveData = MutableLiveData<Resource<String>>()
     val actionLiveData: LiveData<Resource<String>> = _actionLiveData
+
+    private val _navigationLiveData = SingleLiveEvent<NavDirections>()
+    val navigationLiveData: LiveData<NavDirections> = _navigationLiveData
 
     private val _errorLiveData = SingleLiveEvent<Pair<Int, Long?>>()
     val errorLiveData: LiveData<Pair<Int, Long?>> = _errorLiveData
@@ -233,7 +237,15 @@ internal class DynamicCreditViewModel : ViewModel() {
     }
 
     private fun onIncreaseBalanceSuccess(result: PayResult) {
-        _actionLiveData.value = Resource.loaded(result.redirectUrl)
+        if (ServiceLocator.isInternalWebPageEnabled()) {
+            _actionLiveData.value = Resource.loaded()
+            _navigationLiveData.value = PaymentDynamicCreditFragmentDirections
+                .openWebPageFragment(
+                    url = result.redirectUrl,
+                )
+        } else {
+            _actionLiveData.value = Resource.loaded(result.redirectUrl)
+        }
     }
 
     private fun onIncreaseBalanceFailed(error: ErrorModel) {
