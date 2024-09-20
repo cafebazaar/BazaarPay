@@ -109,10 +109,10 @@ internal class WebPageFragment : BaseFragment(SCREEN_NAME) {
 
             return try {
                 if (url.startsWith("bazaar://")) {
+                    onCloseWebPage()
                     val intent = Intent(Intent.ACTION_VIEW, url.toUri())
                     intent.`package` = context.packageName
                     context.startActivity(intent)
-                    onCloseWebPage()
                     true
                 } else {
                     false
