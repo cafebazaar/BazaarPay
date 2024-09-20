@@ -1,16 +1,24 @@
 package ir.cafebazaar.bazaarpay.screens.payment.webpage
 
+import android.annotation.TargetApi
+import android.content.Context
+import android.content.Intent
 import android.graphics.Bitmap
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.webkit.WebResourceRequest
 import android.webkit.WebView
 import android.webkit.WebViewClient
+import androidx.core.net.toUri
+import androidx.navigation.fragment.findNavController
 import ir.cafebazaar.bazaarpay.analytics.Analytics
 import ir.cafebazaar.bazaarpay.base.BaseFragment
 import ir.cafebazaar.bazaarpay.databinding.FragmentWebPageBinding
 import ir.cafebazaar.bazaarpay.utils.bindWithRTLSupport
+
 
 internal class WebPageFragment : BaseFragment(SCREEN_NAME) {
 
@@ -38,9 +46,10 @@ internal class WebPageFragment : BaseFragment(SCREEN_NAME) {
             animationListener = { fraction ->
                 binding.urlBar.fraction = fraction
             }
-            webViewClient = BazaarPayWebViewClient { url ->
-                binding.urlBar.text = url
-            }
+            webViewClient = BazaarPayWebViewClient(
+                onUrlChanged = { binding.urlBar.text = it },
+                onCloseWebPage = { findNavController().popBackStack() },
+            )
             settings.javaScriptEnabled = true
             loadUrl(args.url)
         }
@@ -53,6 +62,7 @@ internal class WebPageFragment : BaseFragment(SCREEN_NAME) {
 
     private class BazaarPayWebViewClient(
         private val onUrlChanged: (String) -> Unit,
+        private var onCloseWebPage: () -> Unit,
     ) : WebViewClient() {
 
         override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
@@ -69,6 +79,46 @@ internal class WebPageFragment : BaseFragment(SCREEN_NAME) {
             super.onPageFinished(view, url)
             url?.let {
                 Analytics.sendCloseEvent(where = "URL:$it")
+            }
+        }
+
+        @Deprecated("Deprecated in Api 24")
+        override fun shouldOverrideUrlLoading(
+            view: WebView,
+            url: String,
+        ): Boolean {
+            return overrideUrl(view.context, url)
+        }
+
+        @TargetApi(Build.VERSION_CODES.N)
+        override fun shouldOverrideUrlLoading(
+            view: WebView,
+            request: WebResourceRequest,
+        ): Boolean {
+            return overrideUrl(view.context, request.url.toString())
+        }
+
+        private fun overrideUrl(context: Context, url: String): Boolean {
+            with(url.lowercase()) {
+                if (startsWith("http://") ||
+                    startsWith("https://")
+                ) {
+                    return false
+                }
+            }
+
+            return try {
+                if (url.startsWith("bazaar://")) {
+                    val intent = Intent(Intent.ACTION_VIEW, url.toUri())
+                    intent.`package` = context.packageName
+                    context.startActivity(intent)
+                    onCloseWebPage()
+                    true
+                } else {
+                    false
+                }
+            } catch (ignored: Exception) {
+                false
             }
         }
     }
