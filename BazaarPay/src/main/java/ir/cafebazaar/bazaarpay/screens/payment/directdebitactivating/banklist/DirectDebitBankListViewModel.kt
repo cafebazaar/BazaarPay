@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.navigation.NavDirections
 import ir.cafebazaar.bazaarpay.ServiceLocator
 import ir.cafebazaar.bazaarpay.data.bazaar.models.ErrorModel
 import ir.cafebazaar.bazaarpay.extensions.fold
@@ -28,6 +29,9 @@ internal open class DirectDebitBankListViewModel : ViewModel() {
 
     private val _registerDirectDebitLiveData = SingleLiveEvent<Resource<String>>()
     val registerDirectDebitLiveData: LiveData<Resource<String>> = _registerDirectDebitLiveData
+
+    private val _navigationLiveData = SingleLiveEvent<NavDirections>()
+    val navigationLiveData: LiveData<NavDirections> = _navigationLiveData
 
     private val _notifyLiveData = SingleLiveEvent<Int>()
     val notifyLiveData: LiveData<Int> = _notifyLiveData
@@ -112,7 +116,12 @@ internal open class DirectDebitBankListViewModel : ViewModel() {
 
     private fun registerSucceed(url: ContractCreation) {
         clearSelectedBankItem()
-        _registerDirectDebitLiveData.value = Resource.loaded(data = url.url)
+        if (ServiceLocator.isInternalWebPageEnabled()) {
+            _navigationLiveData.value = DirectDebitBankListFragmentDirections
+                .openWebPageFragment(url = url.url)
+        } else {
+            _registerDirectDebitLiveData.value = Resource.loaded(data = url.url)
+        }
     }
 
     private fun clearSelectedBankItem() {

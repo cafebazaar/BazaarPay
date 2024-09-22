@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.view.animation.AnimationUtils
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
+import androidx.navigation.NavDirections
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.SimpleItemAnimator
@@ -106,6 +107,7 @@ internal class DirectDebitBankListFragment : BaseFragment(SCREEN_NAME) {
             }
             dataLiveData.observe(viewLifecycleOwner, ::handleData)
             notifyLiveData.observe(viewLifecycleOwner, ::handleNotify)
+            navigationLiveData.observe(viewLifecycleOwner, ::handleNavigation)
         }
     }
 
@@ -120,6 +122,10 @@ internal class DirectDebitBankListFragment : BaseFragment(SCREEN_NAME) {
 
     private fun openUrlWithResourceData(url: String?) {
         url?.let { requireContext().openUrl(it) }
+    }
+
+    private fun handleNavigation(navDirections: NavDirections) {
+        findNavController().navigate(navDirections)
     }
 
     override fun onDestroyView() {
