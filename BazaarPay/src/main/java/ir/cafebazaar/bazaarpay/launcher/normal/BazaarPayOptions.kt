@@ -110,7 +110,10 @@ internal class PaymentURLParser(val paymentUrl: String) {
 
     fun isAccessibilityEnable(): Boolean = getBooleanQueryParameter(ACCESSIBILITY)
 
-    fun isInternalWebPageEnable(): Boolean = getBooleanQueryParameter(INTERNAL_WEB)
+    fun isInternalWebPageEnable(): Boolean = getBooleanQueryParameter(
+        key = INTERNAL_WEB,
+        defaultValue = true,
+    )
 
     private fun getBooleanQueryParameter(
         key: String,
