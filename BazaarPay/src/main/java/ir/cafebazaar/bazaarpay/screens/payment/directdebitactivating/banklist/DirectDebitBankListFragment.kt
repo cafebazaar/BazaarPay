@@ -101,7 +101,9 @@ internal class DirectDebitBankListFragment : BaseFragment(SCREEN_NAME) {
                     }
 
                     ResourceState.Success -> {
-                        openUrlWithResourceData(resource.data)
+                        resource.data?.let { url ->
+                            openUrlWithResourceData(url)
+                        }
                     }
                 }
             }

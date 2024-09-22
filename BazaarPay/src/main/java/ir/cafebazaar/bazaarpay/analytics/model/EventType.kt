@@ -8,5 +8,6 @@ internal enum class EventType {
     LOAD,
     CLOSE,
     VISIT,
-    CHANGE_FOCUS;
+    CHANGE_FOCUS,
+    ERROR;
 }

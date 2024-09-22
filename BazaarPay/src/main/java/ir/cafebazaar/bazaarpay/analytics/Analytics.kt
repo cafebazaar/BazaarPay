@@ -104,6 +104,15 @@ internal object Analytics {
     }
 
     @Synchronized
+    fun sendErrorEvent(
+        where: String,
+        extra: HashMap<String, Any> = hashMapOf(),
+        pageDetails: HashMap<String, Any> = hashMapOf(),
+    ) {
+        addAnalyticsEvent(EventType.ERROR, where, extra, pageDetails)
+    }
+
+    @Synchronized
     private fun addAnalyticsEvent(
         type: EventType,
         where: String,

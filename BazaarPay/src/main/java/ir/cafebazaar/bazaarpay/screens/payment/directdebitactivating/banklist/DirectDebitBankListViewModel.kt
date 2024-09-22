@@ -119,6 +119,7 @@ internal open class DirectDebitBankListViewModel : ViewModel() {
     private fun registerSucceed(url: ContractCreation) {
         clearSelectedBankItem()
         if (ServiceLocator.isInternalWebPageEnabled()) {
+            _registerDirectDebitLiveData.value = Resource.loaded()
             _navigationLiveData.value = DirectDebitBankListFragmentDirections
                 .openWebPageFragment(url = url.url)
         } else {
