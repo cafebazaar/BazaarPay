@@ -41,8 +41,10 @@ internal open class DirectDebitBankListViewModel : ViewModel() {
 
     fun loadData() {
         viewModelScope.launch {
-            bazaarPaymentRepository.getAvailableBanks()
-                .fold(::handleSuccessBankList, ::error)
+            if (dataLiveData.value?.isSuccess != true) {
+                bazaarPaymentRepository.getAvailableBanks()
+                    .fold(::handleSuccessBankList, ::error)
+            }
         }
     }
 
