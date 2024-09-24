@@ -3,14 +3,15 @@ package ir.cafebazaar.bazaarpay.analytics
 import android.util.Log
 import com.google.gson.Gson
 import ir.cafebazaar.bazaarpay.BuildConfig
+import ir.cafebazaar.bazaarpay.ServiceLocator
 import ir.cafebazaar.bazaarpay.analytics.model.ActionLog
 import ir.cafebazaar.bazaarpay.analytics.model.EventType
 import ir.cafebazaar.bazaarpay.analytics.model.PaymentFlowDetails
+import ir.cafebazaar.bazaarpay.data.config.ConfigRepository
 import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow
 import java.util.UUID
-import java.util.concurrent.TimeUnit
 import java.util.concurrent.atomic.AtomicLong
 
 internal object Analytics {
@@ -128,7 +129,7 @@ internal object Analytics {
 
         extra[IS_AUTO_LOGIN_ENABLE] = isAutoLoginEnable
 
-        val now = TimeUnit.MILLISECONDS.toSeconds(System.currentTimeMillis())
+        val now = System.currentTimeMillis()
         val gson = Gson()
         val actionDetails = hashMapOf(WHAT to what).takeIf { what != null }
         val actionDetailsJson = gson.toJson(actionDetails).takeIf { actionDetails != null }
@@ -157,10 +158,13 @@ internal object Analytics {
     }
 
     private fun checkActionLogThreshold() {
-        if (actionLogs.size >= ACTION_LOG_THRESHOLD && actionLogs.size % ACTION_LOG_THRESHOLD == 0) {
+        val configRepository = ServiceLocator.get<ConfigRepository>()
+        val threshold = configRepository.getConfig()?.actionLog?.batchSize ?: ACTION_LOG_THRESHOLD
+        val retry = configRepository.getConfig()?.actionLog?.retryCount ?: ACTION_LOG_RETRY
+        if (actionLogs.size >= threshold && actionLogs.size % threshold == 0) {
             actionLogsThreshold.tryEmit(Unit)
         }
-        if (actionLogs.size > ACTION_LOG_THRESHOLD * ACTION_LOG_RETRY) {
+        if (actionLogs.size > threshold * retry) {
             // prevent from outOfMemory in other words the ACTION_LOG_RETRY is a retry policy
             actionLogs.clear()
         }

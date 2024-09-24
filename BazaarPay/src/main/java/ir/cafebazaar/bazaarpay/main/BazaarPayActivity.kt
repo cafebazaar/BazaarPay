@@ -10,6 +10,7 @@ import android.view.animation.AnimationUtils
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
 import androidx.navigation.navOptions
 import ir.cafebazaar.bazaarpay.FinishCallbacks
@@ -17,8 +18,10 @@ import ir.cafebazaar.bazaarpay.R
 import ir.cafebazaar.bazaarpay.ServiceLocator
 import ir.cafebazaar.bazaarpay.analytics.viewmodel.AnalyticsViewModel
 import ir.cafebazaar.bazaarpay.arg.BazaarPayActivityArgs
+import ir.cafebazaar.bazaarpay.data.config.ConfigRepository
 import ir.cafebazaar.bazaarpay.databinding.ActivityBazaarPayBinding
 import ir.cafebazaar.bazaarpay.utils.bindWithRTLSupport
+import kotlinx.coroutines.launch
 import java.util.Locale
 
 class BazaarPayActivity : AppCompatActivity(), FinishCallbacks {
@@ -46,6 +49,8 @@ class BazaarPayActivity : AppCompatActivity(), FinishCallbacks {
         analyticsViewModel.listenThreshold()
 
         registerObservers()
+
+        fetchConfig()
     }
 
     private fun registerObservers() {
@@ -111,7 +116,8 @@ class BazaarPayActivity : AppCompatActivity(), FinishCallbacks {
     }
 
     private fun navigateToThankYouPageIfIsNotShowingNow() {
-        val currentFragment = findNavController(R.id.nav_host_fragment_bazaar_pay).currentDestination?.id
+        val currentFragment =
+            findNavController(R.id.nav_host_fragment_bazaar_pay).currentDestination?.id
         if (currentFragment != R.id.paymentThankYouPageFragment) {
             findNavController(R.id.nav_host_fragment_bazaar_pay).navigate(
                 R.id.open_paymentThankYouPageFragment
@@ -234,7 +240,8 @@ class BazaarPayActivity : AppCompatActivity(), FinishCallbacks {
     }
 
     private fun initServiceLocator(savedInstanceState: Bundle?) {
-        val restoredArgs = savedInstanceState?.get(BAZAARPAY_ACTIVITY_ARGS) as? BazaarPayActivityArgs
+        val restoredArgs =
+            savedInstanceState?.get(BAZAARPAY_ACTIVITY_ARGS) as? BazaarPayActivityArgs
         when (restoredArgs) {
             is BazaarPayActivityArgs.Normal -> {
                 with(restoredArgs) {
@@ -297,6 +304,13 @@ class BazaarPayActivity : AppCompatActivity(), FinishCallbacks {
                 intent.dataString?.lowercase()?.contains("in_progress") == true
             )
         ) == true
+    }
+
+    private fun fetchConfig() {
+        lifecycleScope.launch {
+            val configRepository = ServiceLocator.get<ConfigRepository>()
+            configRepository.fetchConfig()
+        }
     }
 
     companion object {

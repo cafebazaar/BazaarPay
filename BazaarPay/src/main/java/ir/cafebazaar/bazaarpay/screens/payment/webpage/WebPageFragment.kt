@@ -13,22 +13,24 @@ import android.view.ViewGroup
 import android.webkit.SslErrorHandler
 import android.webkit.WebResourceError
 import android.webkit.WebResourceRequest
+import android.webkit.WebResourceResponse
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import androidx.annotation.RequiresApi
 import androidx.core.net.toUri
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import ir.cafebazaar.bazaarpay.analytics.Analytics
 import ir.cafebazaar.bazaarpay.base.BaseFragment
 import ir.cafebazaar.bazaarpay.databinding.FragmentWebPageBinding
 import ir.cafebazaar.bazaarpay.utils.bindWithRTLSupport
-
 
 internal class WebPageFragment : BaseFragment(SCREEN_NAME) {
 
     private val args: WebPageFragmentArgs by lazy(LazyThreadSafetyMode.NONE) {
         WebPageFragmentArgs.fromBundle(requireArguments())
     }
+
+    private val webPageViewModel: WebPageViewModel by viewModels()
 
     private var _binding: FragmentWebPageBinding? = null
     private val binding: FragmentWebPageBinding
@@ -51,6 +53,7 @@ internal class WebPageFragment : BaseFragment(SCREEN_NAME) {
                 binding.urlBar.fraction = fraction
             }
             webViewClient = BazaarPayWebViewClient(
+                webPageViewModel = webPageViewModel,
                 onUrlChanged = { binding.urlBar.text = it },
                 onCloseWebPage = { findNavController().popBackStack() },
             )
@@ -65,6 +68,7 @@ internal class WebPageFragment : BaseFragment(SCREEN_NAME) {
     }
 
     private class BazaarPayWebViewClient(
+        private val webPageViewModel: WebPageViewModel,
         private val onUrlChanged: (String) -> Unit,
         private var onCloseWebPage: () -> Unit,
     ) : WebViewClient() {
@@ -75,20 +79,14 @@ internal class WebPageFragment : BaseFragment(SCREEN_NAME) {
                 onUrlChanged.invoke(webViewUrl)
             }
             url?.let {
-                Analytics.sendLoadEvent(
-                    where = "URL:$it",
-                    extra = hashMapOf("page_finished" to false),
-                )
+                webPageViewModel.onPageStarted(url)
             }
         }
 
         override fun onPageFinished(view: WebView?, url: String?) {
             super.onPageFinished(view, url)
             url?.let {
-                Analytics.sendLoadEvent(
-                    where = "URL:$it",
-                    extra = hashMapOf("page_finished" to true),
-                )
+                webPageViewModel.onPageFinished(url)
             }
         }
 
@@ -105,10 +103,9 @@ internal class WebPageFragment : BaseFragment(SCREEN_NAME) {
             failingUrl: String?,
         ) {
             failingUrl?.let {
-                sendErrorLog(
+                webPageViewModel.onError(
                     failingUrl = failingUrl,
                     errorCode = errorCode,
-                    errorType = ERROR_TYPE_RESOURCE,
                     description = description,
                 )
             }
@@ -123,10 +120,9 @@ internal class WebPageFragment : BaseFragment(SCREEN_NAME) {
             if (request.isForMainFrame &&
                 Build.VERSION.SDK_INT >= Build.VERSION_CODES.M
             ) {
-                sendErrorLog(
+                webPageViewModel.onError(
                     failingUrl = request.url.toString(),
                     errorCode = error.errorCode,
-                    errorType = ERROR_TYPE_RESOURCE,
                     description = error.description.toString(),
                 )
             } else {
@@ -139,13 +135,27 @@ internal class WebPageFragment : BaseFragment(SCREEN_NAME) {
             handler: SslErrorHandler,
             error: SslError,
         ) {
-            sendErrorLog(
+            webPageViewModel.onSslError(
                 failingUrl = error.url,
                 errorCode = error.primaryError,
-                errorType = ERROR_TYPE_SSL,
                 description = error.certificate.toString(),
             )
             super.onReceivedSslError(view, handler, error)
+        }
+
+        override fun onReceivedHttpError(
+            view: WebView?,
+            request: WebResourceRequest,
+            errorResponse: WebResourceResponse?
+        ) {
+            super.onReceivedHttpError(view, request, errorResponse)
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                webPageViewModel.onHttpError(
+                    failingUrl = request.url.toString(),
+                    errorCode = errorResponse?.statusCode ?: -1,
+                    description = errorResponse?.reasonPhrase.orEmpty(),
+                )
+            }
         }
 
         @Deprecated("Deprecated in Api 24")
@@ -162,22 +172,6 @@ internal class WebPageFragment : BaseFragment(SCREEN_NAME) {
             request: WebResourceRequest,
         ): Boolean {
             return overrideUrl(view.context, request.url.toString())
-        }
-
-        private fun sendErrorLog(
-            failingUrl: String,
-            errorCode: Int,
-            errorType: String,
-            description: String?,
-        ) {
-            Analytics.sendErrorEvent(
-                where = "URL:$failingUrl",
-                extra = hashMapOf(
-                    "code" to errorCode,
-                    "type" to errorType,
-                    "description" to description.orEmpty(),
-                ),
-            )
         }
 
         private fun overrideUrl(context: Context, url: String): Boolean {
@@ -208,8 +202,5 @@ internal class WebPageFragment : BaseFragment(SCREEN_NAME) {
     private companion object {
 
         const val SCREEN_NAME = "WebPage"
-
-        const val ERROR_TYPE_RESOURCE = "resource"
-        const val ERROR_TYPE_SSL = "ssl"
     }
 }

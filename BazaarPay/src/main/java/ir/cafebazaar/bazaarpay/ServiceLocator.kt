@@ -16,6 +16,11 @@ import ir.cafebazaar.bazaarpay.data.bazaar.account.UserInfoService
 import ir.cafebazaar.bazaarpay.data.bazaar.payment.BazaarPaymentRemoteDataSource
 import ir.cafebazaar.bazaarpay.data.bazaar.payment.BazaarPaymentRepository
 import ir.cafebazaar.bazaarpay.data.bazaar.payment.api.BazaarPaymentService
+import ir.cafebazaar.bazaarpay.data.config.ConfigLocalDataSource
+import ir.cafebazaar.bazaarpay.data.config.ConfigRemoteDataSource
+import ir.cafebazaar.bazaarpay.data.config.ConfigRepository
+import ir.cafebazaar.bazaarpay.data.config.ConfigSharedDataSource
+import ir.cafebazaar.bazaarpay.data.config.api.ConfigService
 import ir.cafebazaar.bazaarpay.data.device.DeviceInterceptor
 import ir.cafebazaar.bazaarpay.data.device.DeviceLocalDataSource
 import ir.cafebazaar.bazaarpay.data.device.DeviceRepository
@@ -130,6 +135,9 @@ internal object ServiceLocator {
         //analytics
         initAnalyticsRemoteDataSource()
         initAnalyticsRepository()
+
+        //config
+        initConfig()
     }
 
     fun clear() {
@@ -142,6 +150,13 @@ internal object ServiceLocator {
             Dispatchers.IO,
             Dispatchers.Default
         )
+    }
+
+    private fun initConfig() {
+        servicesMap[getKeyOfClass<SharedDataSource>(CONFIG)] = ConfigSharedDataSource()
+        servicesMap[getKeyOfClass<ConfigLocalDataSource>()] = ConfigLocalDataSource()
+        servicesMap[getKeyOfClass<ConfigRemoteDataSource>()] = ConfigRemoteDataSource()
+        servicesMap[getKeyOfClass<ConfigRepository>()] = ConfigRepository()
     }
 
     private fun initAccountSharedDataSource() {
@@ -212,7 +227,8 @@ internal object ServiceLocator {
     }
 
     private fun initBazaarRemoteDataSource() {
-        servicesMap[getKeyOfClass<BazaarPaymentRemoteDataSource>()] = BazaarPaymentRemoteDataSource()
+        servicesMap[getKeyOfClass<BazaarPaymentRemoteDataSource>()] =
+            BazaarPaymentRemoteDataSource()
     }
 
     private fun initBazaarRepository() {
@@ -310,6 +326,9 @@ internal object ServiceLocator {
 
         servicesMap[getKeyOfClass<UserInfoService>()] =
             retrofit.create(UserInfoService::class.java)
+
+        servicesMap[getKeyOfClass<ConfigService>()] =
+            retrofit.create(ConfigService::class.java)
     }
 
     private fun initDeviceSharedDataSource() {
@@ -350,6 +369,7 @@ internal object ServiceLocator {
     internal const val IS_AUTO_LOGIN_ENABLE: String = "isAutoLoginEnable"
     private const val IS_ACCESSIBILITY_ENABLE: String = "isAccessibilityEnable"
     private const val IS_INTERNAL_WEB_PAGE_ENABLED: String = "isInternalWebPageEnabled"
+    internal const val CONFIG: String = "config"
     internal const val ACCOUNT: String = "account"
     internal const val DEVICE: String = "device"
     private const val AUTHENTICATOR: String = "authenticator"
