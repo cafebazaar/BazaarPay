@@ -1,5 +1,6 @@
 package ir.cafebazaar.bazaarpay.screens.payment.webpage
 
+import android.net.Uri
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import ir.cafebazaar.bazaarpay.ServiceLocator
@@ -13,19 +14,7 @@ internal class WebPageViewModel : ViewModel() {
     private val configRepository: ConfigRepository = ServiceLocator.get()
     private val globalDispatchers: GlobalDispatchers = ServiceLocator.get()
 
-    fun onPageStarted(url: String) {
-        Analytics.sendLoadEvent(
-            where = "URL:$url",
-            extra = hashMapOf("page_finished" to false),
-        )
-    }
-
-    fun onPageFinished(url: String) {
-        Analytics.sendLoadEvent(
-            where = "URL:$url",
-            extra = hashMapOf("page_finished" to true),
-        )
-    }
+    private var prevUrl: String? = null
 
     fun onError(
         failingUrl: String,
@@ -75,6 +64,40 @@ internal class WebPageViewModel : ViewModel() {
         }
     }
 
+    fun onPageStarted(url: String) {
+        closePreviousLoadedUrl(newUrl = url)
+        Analytics.sendLoadEvent(
+            where = getWhere(url),
+            extra = hashMapOf(
+                "url" to url,
+                "page_finished" to false,
+            ),
+        )
+    }
+
+    fun onDestroy() {
+        closePreviousLoadedUrl(newUrl = null)
+    }
+
+    fun onPageFinished(url: String) {
+        Analytics.sendLoadEvent(
+            where = getWhere(url),
+            extra = hashMapOf(
+                "url" to url,
+                "page_finished" to true,
+            ),
+        )
+    }
+
+    private fun closePreviousLoadedUrl(newUrl: String?) {
+        if (prevUrl != null) {
+            Analytics.sendCloseEvent(
+                where = getWhere(requireNotNull(prevUrl)),
+            )
+        }
+        prevUrl = newUrl
+    }
+
     private fun sendError(
         failingUrl: String,
         errorCode: Int,
@@ -82,13 +105,19 @@ internal class WebPageViewModel : ViewModel() {
         errorType: String,
     ) {
         Analytics.sendErrorEvent(
-            where = "URL:$failingUrl",
+            where = getWhere(failingUrl),
             extra = hashMapOf(
+                "url" to failingUrl,
                 "code" to errorCode,
                 "type" to errorType,
                 "description" to description.orEmpty(),
             ),
         )
+    }
+
+    private fun getWhere(url: String): String {
+        val uri = Uri.parse(url)
+        return "URL:" + uri.buildUpon().clearQuery().build().toString()
     }
 
     private companion object {

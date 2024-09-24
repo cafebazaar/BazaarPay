@@ -63,6 +63,7 @@ internal class WebPageFragment : BaseFragment(SCREEN_NAME) {
     }
 
     override fun onDestroyView() {
+        webPageViewModel.onDestroy()
         super.onDestroyView()
         _binding = null
     }
