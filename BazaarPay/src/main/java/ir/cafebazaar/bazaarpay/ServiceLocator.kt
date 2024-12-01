@@ -331,7 +331,7 @@ internal object ServiceLocator {
         return getOrNull<Boolean>(IS_ACCESSIBILITY_ENABLE) ?: false
     }
 
-    private const val BASE_URL: String = "https://api.bazaar-pay.ir/"
+    private const val BASE_URL: String = "https://staging.api.bazaar-pay.ir/"
 
     internal const val CHECKOUT_TOKEN: String = "checkout_token"
     internal const val PHONE_NUMBER: String = "phone_number"
