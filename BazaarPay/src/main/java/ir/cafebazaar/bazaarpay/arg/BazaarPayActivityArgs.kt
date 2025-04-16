@@ -14,6 +14,7 @@ internal sealed class BazaarPayActivityArgs : Parcelable {
         val isAutoLoginEnable: Boolean = false,
         val authToken: String? = null,
         val isAccessibilityEnable: Boolean = false,
+        val paymentMethod: String? = null,
     ) : BazaarPayActivityArgs()
 
     data class DirectPayContract(

@@ -75,6 +75,13 @@
         android:id="@+id/paymentMethodsFragment"
         android:name="ir.cafebazaar.bazaarpay.screens.payment.paymentmethods.PaymentMethodsFragment"
         android:label="PaymentMethodsFragment">
+
+        <argument
+            android:name="defaultMethod"
+            app:argType="string"
+            app:nullable="true"
+            android:defaultValue="@null" />
+
         <action
             android:id="@+id/action_paymentMethodsFragment_to_directDebitOnBoardingFragment"
             app:destination="@id/directDebitOnBoardingFragment" />
@@ -152,6 +159,11 @@
             app:argType="ir.cafebazaar.bazaarpay.screens.payment.increasecredit.DynamicCreditOptionDealerArg"
             app:nullable="true"
             android:defaultValue="@null" />
+
+        <argument
+            android:name="isClosable"
+            app:argType="boolean"
+            android:defaultValue="false" />
     </fragment>
 
     <fragment

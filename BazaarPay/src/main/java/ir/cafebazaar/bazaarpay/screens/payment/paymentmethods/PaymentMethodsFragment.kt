@@ -52,6 +52,8 @@ internal class PaymentMethodsFragment : BaseFragment(SCREEN_NAME), PaymentMethod
 
     private var savedSelectedItemPosition: Int? = null
 
+    private val args by lazy { PaymentMethodsFragmentArgs.fromBundle(requireArguments()) }
+
     override fun onAttach(context: Context) {
         finishCallbacks = context as? FinishCallbacks
             ?: throw IllegalStateException(
@@ -133,7 +135,15 @@ internal class PaymentMethodsFragment : BaseFragment(SCREEN_NAME), PaymentMethod
     }
 
     private fun loadData() {
-        viewModel.loadData()
+        val hasLoaded = requireArguments().getBoolean(KEY_DEFAULT_METHOD_LOADED, false)
+        if (hasLoaded.not()) {
+            requireArguments().putBoolean(KEY_DEFAULT_METHOD_LOADED, true)
+        }
+
+        viewModel.loadData(
+            defaultMethod = args.defaultMethod,
+            shouldLoadDefaultMethod = hasLoaded.not(),
+        )
     }
 
     private fun populatePaymentOptions(paymentMethods: PaymentMethodItems) {
@@ -143,7 +153,6 @@ internal class PaymentMethodsFragment : BaseFragment(SCREEN_NAME), PaymentMethod
     }
 
     private fun setupMerchantInfoViews(merchantInfo: MerchantInfo) {
-
         with(binding.viewMerchantInfo) {
             setMerchantIcon(merchantInfo.logoUrl)
             setMerchantName(merchantInfo.accountName)
@@ -376,6 +385,7 @@ internal class PaymentMethodsFragment : BaseFragment(SCREEN_NAME), PaymentMethod
 
         internal const val SCREEN_NAME = "PaymentMethods"
         private const val KEY_SELECTED_ITEM_POSITION = "selectedItemPos"
+        private const val KEY_DEFAULT_METHOD_LOADED = "defaultMethodLoaded"
 
         //analytics
         internal val CHANGE_ACCOUNT = "changeAccount"

@@ -5,4 +5,5 @@ import com.google.gson.annotations.SerializedName
 internal data class GetPaymentMethodsRequest(
     @SerializedName("checkout_token") val checkoutToken: String,
     @SerializedName("accessibility") val accessibility: Boolean,
+    @SerializedName("default_method") val defaultMethod: String?,
 )

@@ -112,12 +112,20 @@
             app:layout_constraintTop_toTopOf="@id/dark_mode_checkbox" />
 
         <CheckBox
+            android:id="@+id/force_increase_balance_checkbox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/label_force_increase_balance"
+            app:layout_constraintTop_toBottomOf="@id/dark_mode_checkbox"
+            app:layout_constraintStart_toStartOf="@id/dark_mode_checkbox" />
+
+        <CheckBox
             android:id="@+id/accessibility_checkbox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/label_accessibility"
             app:layout_constraintStart_toStartOf="@id/dark_mode_checkbox"
-            app:layout_constraintTop_toBottomOf="@id/commit_payment_checkbox" />
+            app:layout_constraintTop_toBottomOf="@id/force_increase_balance_checkbox" />
 
         <Button
             android:id="@+id/payment_button"
@@ -129,7 +137,7 @@
             android:text="@string/label_start_payment"
             app:layout_constraintEnd_toEndOf="@id/guideline_end"
             app:layout_constraintStart_toStartOf="@id/guideline_start"
-            app:layout_constraintTop_toBottomOf="@id/accessibility_checkbox" />
+            app:layout_constraintTop_toBottomOf="@id/force_increase_balance_checkbox" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/payment_result"

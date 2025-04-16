@@ -54,10 +54,16 @@ internal class PaymentMethodsViewModel : ViewModel() {
 
     fun getMerchantInfoStateData(): LiveData<Resource<MerchantInfo>> = merchantInfoStateData
 
-    fun loadData() {
+    fun loadData(
+        defaultMethod: String?,
+        shouldLoadDefaultMethod: Boolean,
+    ) {
         paymentMethodsStateData.value = Resource.loading()
         getMerchantInfo()
-        getPaymentMethods()
+        getPaymentMethods(
+            defaultMethod = defaultMethod,
+            shouldLoadDefaultMethod = shouldLoadDefaultMethod,
+        )
         getAccountData()
     }
 
@@ -68,10 +74,20 @@ internal class PaymentMethodsViewModel : ViewModel() {
         }
     }
 
-    private fun getPaymentMethods() {
+    private fun getPaymentMethods(
+        defaultMethod: String?,
+        shouldLoadDefaultMethod: Boolean,
+    ) {
         viewModelScope.launch {
-            paymentRepository.getPaymentMethods().fold(
-                ::handlePaymentMethodsSuccess,
+            paymentRepository.getPaymentMethods(
+                defaultPaymentMethod = defaultMethod,
+            ).fold(
+                {
+                    handlePaymentMethodsSuccess(
+                        paymentMethods = it,
+                        defaultMethod = defaultMethod.takeIf { shouldLoadDefaultMethod },
+                    )
+                },
                 ::handlePaymentMethodsFailure
             )
         }
@@ -91,9 +107,20 @@ internal class PaymentMethodsViewModel : ViewModel() {
             Resource(PaymentFlowState.MerchantInfo, merchantInfo)
     }
 
-    private fun handlePaymentMethodsSuccess(paymentMethods: PaymentMethodsInfo) {
+    private fun handlePaymentMethodsSuccess(
+        paymentMethods: PaymentMethodsInfo,
+        defaultMethod: String?,
+    ) {
         paymentMethodsStateData.value =
             Resource(PaymentFlowState.PaymentMethodsInfo, paymentMethods)
+
+        if (defaultMethod != null) {
+            payWithMethodType(
+                methodType = PaymentMethodsType.getPaymentMethodsType(defaultMethod),
+                methodTypeString = null,
+                fromDefaultMethod = true,
+            )
+        }
     }
 
     private fun handlePaymentMethodsFailure(errorModel: ErrorModel) {
@@ -177,9 +204,22 @@ internal class PaymentMethodsViewModel : ViewModel() {
                 PAYMENT_METHODES to getMethodeTypes()
             )
         )
-        when (selectedOption.methodType) {
+        payWithMethodType(
+            methodType = selectedOption.methodType,
+            methodTypeString = selectedOption.methodTypeString,
+        )
+    }
+
+    private fun payWithMethodType(
+        methodType: PaymentMethodsType?,
+        methodTypeString: String?,
+        fromDefaultMethod: Boolean = false,
+    ) {
+        when (methodType) {
             PaymentMethodsType.INCREASE_BALANCE -> {
-                openIncreaseBalancePage()
+                openIncreaseBalancePage(
+                    fromDefaultMethod = fromDefaultMethod,
+                )
             }
 
             PaymentMethodsType.DIRECT_DEBIT_ACTIVATION -> {
@@ -191,7 +231,9 @@ internal class PaymentMethodsViewModel : ViewModel() {
             }
 
             else -> {
-                pay(selectedOption.methodTypeString)
+                if (methodTypeString != null) {
+                    pay(methodTypeString)
+                }
             }
         }
     }
@@ -206,7 +248,9 @@ internal class PaymentMethodsViewModel : ViewModel() {
         }
     }
 
-    private fun openIncreaseBalancePage() {
+    private fun openIncreaseBalancePage(
+        fromDefaultMethod: Boolean,
+    ) {
         paymentMethodsStateData.value?.data?.let { paymentMethodsStateData ->
             paymentMethodsStateData.paymentMethods.firstOrNull {
                 it.methodType == PaymentMethodsType.INCREASE_BALANCE
@@ -223,8 +267,9 @@ internal class PaymentMethodsViewModel : ViewModel() {
                 if (dynamicCreditOption != null) {
                     val nav = PaymentMethodsFragmentDirections
                         .actionPaymentMethodsFragmentToPaymentDynamicCreditFragment(
-                            dynamicCreditOption,
-                            dynamicCreditOptionDealerArg
+                            creditOptions = dynamicCreditOption,
+                            dealer = dynamicCreditOptionDealerArg,
+                            isClosable = fromDefaultMethod,
                         )
                     _navigationLiveData.value = nav
                 }
