@@ -17,8 +17,12 @@ internal class PaymentRepository {
 
     private val paymentRemoteDataSource: PaymentRemoteDataSource = ServiceLocator.get()
 
-    suspend fun getPaymentMethods(): Either<PaymentMethodsInfo> {
-        return paymentRemoteDataSource.getPaymentMethods().doOnSuccess {
+    suspend fun getPaymentMethods(
+        defaultPaymentMethod: String? = null,
+    ): Either<PaymentMethodsInfo> {
+        return paymentRemoteDataSource.getPaymentMethods(
+            defaultPaymentMethod = defaultPaymentMethod,
+        ).doOnSuccess {
             Analytics.setAmount(it.amount.toString())
         }
     }

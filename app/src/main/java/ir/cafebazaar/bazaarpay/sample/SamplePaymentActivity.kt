@@ -10,6 +10,7 @@ import androidx.lifecycle.lifecycleScope
 import ir.cafebazaar.bazaarpay.commit
 import ir.cafebazaar.bazaarpay.extensions.setSafeOnClickListener
 import ir.cafebazaar.bazaarpay.launcher.normal.BazaarPayOptions
+import ir.cafebazaar.bazaarpay.launcher.normal.PaymentMethod
 import ir.cafebazaar.bazaarpay.launcher.normal.StartBazaarPay
 import ir.cafebazaar.bazaarpay.sample.balance.BalanceSampleActivity
 import ir.cafebazaar.bazaarpay.sample.databinding.ActivityPaymentBinding
@@ -74,10 +75,15 @@ class SamplePaymentActivity : AppCompatActivity() {
     }
 
     private fun startPayment() {
+        val paymentMethod = if (binding.forceIncreaseBalanceCheckbox.isChecked) {
+            PaymentMethod.INCREASE_BALANCE
+        } else null
+
         val options = BazaarPayOptions
             .paymentUrl(paymentURL = paymentURL)
             .phoneNumber(phoneNumber = binding.phoneNumberInput.text.toString())
             .authToken(authToken = binding.tokenInput.text.toString())
+            .paymentMethod(paymentMethod = paymentMethod)
             .build()
         bazaarPayLauncher.launch(options)
     }

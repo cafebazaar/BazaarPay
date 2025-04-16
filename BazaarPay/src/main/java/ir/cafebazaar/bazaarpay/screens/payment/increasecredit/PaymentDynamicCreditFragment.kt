@@ -32,6 +32,7 @@ import ir.cafebazaar.bazaarpay.extensions.openUrl
 import ir.cafebazaar.bazaarpay.extensions.setSafeOnClickListener
 import ir.cafebazaar.bazaarpay.extensions.setValueIfNotNullOrEmpty
 import ir.cafebazaar.bazaarpay.extensions.toastMessage
+import ir.cafebazaar.bazaarpay.extensions.visibility
 import ir.cafebazaar.bazaarpay.extensions.visible
 import ir.cafebazaar.bazaarpay.main.BazaarPayActivity
 import ir.cafebazaar.bazaarpay.models.Resource
@@ -240,9 +241,10 @@ internal class PaymentDynamicCreditFragment : BaseFragment(SCREEN_NAME) {
     private fun setViewListeners() {
         with(binding) {
 
-            dynamicCreditBack.setSafeOnClickListener {
-                handleBackPress()
-            }
+            dynamicCreditClose.visibility(visible = args.isClosable)
+            dynamicCreditClose.setSafeOnClickListener { handleBackPress() }
+            dynamicCreditBack.visibility(visible = args.isClosable.not())
+            dynamicCreditBack.setSafeOnClickListener { handleBackPress() }
 
             payButton.setSafeOnClickListener {
                 val type = if (activityArgs is BazaarPayActivityArgs.IncreaseBalance) {
@@ -287,7 +289,7 @@ internal class PaymentDynamicCreditFragment : BaseFragment(SCREEN_NAME) {
     private fun handleBackPress() {
         hideKeyboard()
         dynamicCreditViewModel.onBackClicked()
-        if (activityArgs is BazaarPayActivityArgs.IncreaseBalance) {
+        if (args.isClosable || activityArgs is BazaarPayActivityArgs.IncreaseBalance) {
             finishCallbacks?.onCanceled()
         } else {
             findNavController().popBackStack()
