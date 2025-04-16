@@ -18,6 +18,7 @@ class BazaarPayOptions private constructor(
     val autoLoginPhoneNumber: String? = null,
     val isAutoLoginEnable: Boolean = false,
     val authToken: String? = null,
+    val paymentMethod: PaymentMethod? = null,
 ) {
 
     @Deprecated(
@@ -35,6 +36,7 @@ class BazaarPayOptions private constructor(
         private var checkoutToken: String = ""
         private var phoneNumber: String? = null
         private var authToken: String? = null
+        private var paymentMethod: PaymentMethod? = null
         private var paymentUrlParser: PaymentURLParser? = null
 
         @Deprecated(
@@ -53,12 +55,17 @@ class BazaarPayOptions private constructor(
             this.authToken = authToken
         }
 
+        fun paymentMethod(paymentMethod: PaymentMethod?) = apply {
+            this.paymentMethod = paymentMethod
+        }
+
         fun build() = BazaarPayOptions(
             checkoutToken = paymentUrlParser?.getCheckoutToken() ?: checkoutToken,
             phoneNumber = phoneNumber,
             autoLoginPhoneNumber = paymentUrlParser?.getAutoLoginPhoneNumber(),
             authToken = authToken,
-            isAutoLoginEnable = isAutoLoginEnable()
+            isAutoLoginEnable = isAutoLoginEnable(),
+            paymentMethod = paymentMethod,
         )
 
         private fun isAutoLoginEnable(): Boolean {
