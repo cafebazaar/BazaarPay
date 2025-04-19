@@ -19,6 +19,7 @@ class BazaarPayOptions private constructor(
     val isAutoLoginEnable: Boolean = false,
     val authToken: String? = null,
     val isAccessibilityEnable: Boolean = false,
+    val paymentMethod: PaymentMethod? = null,
 ) {
 
     @Deprecated(
@@ -36,6 +37,7 @@ class BazaarPayOptions private constructor(
         private var checkoutToken: String = ""
         private var phoneNumber: String? = null
         private var authToken: String? = null
+        private var paymentMethod: PaymentMethod? = null
         private var paymentUrlParser: PaymentURLParser? = null
         private var accessibility: Boolean = false
 
@@ -59,6 +61,10 @@ class BazaarPayOptions private constructor(
             Builder.accessibility = accessibility
         }
 
+        fun paymentMethod(paymentMethod: PaymentMethod?) = apply {
+            this.paymentMethod = paymentMethod
+        }
+
         fun build() = BazaarPayOptions(
             checkoutToken = paymentUrlParser?.getCheckoutToken() ?: checkoutToken,
             phoneNumber = phoneNumber,
@@ -66,6 +72,7 @@ class BazaarPayOptions private constructor(
             authToken = authToken,
             isAutoLoginEnable = isAutoLoginEnable(),
             isAccessibilityEnable = isAccessibilityEnable(),
+            paymentMethod = paymentMethod,
         )
 
         private fun isAutoLoginEnable(): Boolean {

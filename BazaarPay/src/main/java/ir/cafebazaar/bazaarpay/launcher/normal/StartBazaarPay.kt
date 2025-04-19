@@ -48,6 +48,7 @@ class StartBazaarPay : ActivityResultContract<BazaarPayOptions, Boolean>() {
             isAutoLoginEnable = input.isAutoLoginEnable,
             authToken = input.authToken,
             isAccessibilityEnable = input.isAccessibilityEnable,
+            paymentMethod = input.paymentMethod?.value,
         )
         return Intent(context, BazaarPayActivity::class.java).apply {
             putExtra(BazaarPayActivity.BAZAARPAY_ACTIVITY_ARGS, bazaarPayActivityArgs)

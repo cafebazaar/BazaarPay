@@ -56,7 +56,9 @@ internal class StartPaymentFragment : BaseFragment(PAGE_NAME) {
     private fun getNavDirectionBasedOnArguments(): NavDirections {
         return when (val bazaarPayArgs = args) {
             is BazaarPayActivityArgs.Normal -> {
-                StartPaymentFragmentDirections.actionStartPaymentFragmentToPaymentMethodsFragment()
+                StartPaymentFragmentDirections.actionStartPaymentFragmentToPaymentMethodsFragment(
+                    defaultMethod = bazaarPayArgs.paymentMethod,
+                )
             }
 
             is BazaarPayActivityArgs.DirectPayContract -> {

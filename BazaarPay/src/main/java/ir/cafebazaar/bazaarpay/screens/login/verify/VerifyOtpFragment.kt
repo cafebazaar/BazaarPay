@@ -315,7 +315,9 @@ internal class VerifyOtpFragment : Fragment() {
     private fun getNavDirectionBasedOnArguments(): NavDirections {
         return when (val bazaarPayArgs = activityArgs) {
             is BazaarPayActivityArgs.Normal -> {
-                VerifyOtpFragmentDirections.actionVerifyOtpFragmentToPaymentMethodsFragment()
+                VerifyOtpFragmentDirections.actionVerifyOtpFragmentToPaymentMethodsFragment(
+                    defaultMethod = bazaarPayArgs.paymentMethod,
+                )
             }
 
             is BazaarPayActivityArgs.DirectPayContract -> {
