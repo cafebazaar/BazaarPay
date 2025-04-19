@@ -34,6 +34,16 @@
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/ic_round_arrow_back_icon_secondary_24dp_old" />
 
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/dynamicCreditClose"
+            style="@style/Bazaar.Image.Toolbar"
+            android:layout_marginEnd="@dimen/bazaarpay_default_margin_double"
+            android:visibility="gone"
+            app:layout_constraintBottom_toTopOf="@id/dynamicCreditTitleDivider"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_close_icon_secondary_24dp" />
+
         <View
             android:id="@+id/dynamicCreditTitleDivider"
             style="@style/Bazaar.HorizontalDivider"

@@ -6,6 +6,7 @@
     <string name="label_commit_payment">تایید پرداخت</string>
     <string name="label_dark_mode">حالت تاریک</string>
     <string name="label_description">پیام(اختیاری)</string>
+    <string name="label_force_increase_balance">متد افزایش موجودی</string>
     <string name="label_english">انگلیسی</string>
     <string name="label_open_payment_fragment">مشاهده نمونه پرداخت در فرگمنت</string>
     <string name="label_open_init_checkout">ایجاد توکن پرداخت</string>

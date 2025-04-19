@@ -13,6 +13,7 @@ internal sealed class BazaarPayActivityArgs : Parcelable {
         val autoLoginPhoneNumber: String? = null,
         val isAutoLoginEnable: Boolean = false,
         val authToken: String? = null,
+        val paymentMethod: String? = null,
     ) : BazaarPayActivityArgs()
 
     data class DirectPayContract(
