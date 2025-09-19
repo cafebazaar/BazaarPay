@@ -11,6 +11,7 @@ final VERSION_NAME = "5.3.5"
 final VERSION_CODE = 27
 
 android {
+    namespace = "ir.cafebazaar.bazaarpay"
     compileSdk libs.versions.androidCompileSdk.get() as int
 
     defaultConfig {
