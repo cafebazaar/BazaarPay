@@ -41,6 +41,7 @@ import ir.cafebazaar.bazaarpay.extensions.visibility
 import ir.cafebazaar.bazaarpay.extensions.visible
 import ir.cafebazaar.bazaarpay.models.Resource
 import ir.cafebazaar.bazaarpay.models.ResourceState
+import ir.cafebazaar.bazaarpay.utils.Logger
 import ir.cafebazaar.bazaarpay.utils.bindWithRTLSupport
 import ir.cafebazaar.bazaarpay.utils.getErrorViewBasedOnErrorModel
 
@@ -144,6 +145,8 @@ internal class PaymentDynamicCreditFragment : BaseFragment(SCREEN_NAME) {
             ResourceState.Success -> {
                 resource.data?.let { requireContext().openUrl(it) }
             }
+
+            else -> Logger.d("Not Implemented! (state=${resource.resourceState})")
         }
     }
 

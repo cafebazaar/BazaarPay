@@ -28,6 +28,7 @@ import ir.cafebazaar.bazaarpay.extensions.visible
 import ir.cafebazaar.bazaarpay.models.Resource
 import ir.cafebazaar.bazaarpay.models.ResourceState
 import ir.cafebazaar.bazaarpay.screens.logout.LogoutFragmentDirections
+import ir.cafebazaar.bazaarpay.utils.Logger
 import ir.cafebazaar.bazaarpay.utils.bindWithRTLSupport
 import ir.cafebazaar.bazaarpay.utils.getErrorViewBasedOnErrorModel
 import ir.cafebazaar.bazaarpay.utils.imageloader.BazaarPayImageLoader
@@ -135,6 +136,8 @@ internal class DirectPayContractFragment : BaseFragment(where = DIRECT_PAY_CONTR
                 Toast.makeText(requireContext(), response.failure?.message, Toast.LENGTH_SHORT)
                     .show()
             }
+
+            else -> Logger.d("Not Implemented! (state=${response.resourceState})")
         }
     }
 
@@ -165,6 +168,8 @@ internal class DirectPayContractFragment : BaseFragment(where = DIRECT_PAY_CONTR
                         loading.gone()
                     }
                 }
+
+                else -> Logger.d("Not Implemented! (state=${resource.resourceState})")
             }
         }
     }

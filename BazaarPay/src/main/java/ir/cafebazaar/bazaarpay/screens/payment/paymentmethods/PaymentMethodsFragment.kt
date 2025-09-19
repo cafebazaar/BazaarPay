@@ -35,6 +35,7 @@ import ir.cafebazaar.bazaarpay.models.Resource
 import ir.cafebazaar.bazaarpay.models.ResourceState
 import ir.cafebazaar.bazaarpay.screens.logout.LogoutFragmentDirections
 import ir.cafebazaar.bazaarpay.screens.payment.paymentmethods.PaymentMethodsAdapter.Companion.DEFAULT_SELECTED_OPTION
+import ir.cafebazaar.bazaarpay.utils.Logger
 import ir.cafebazaar.bazaarpay.utils.bindWithRTLSupport
 import ir.cafebazaar.bazaarpay.utils.getErrorViewBasedOnErrorModel
 import java.util.Locale
@@ -257,6 +258,8 @@ internal class PaymentMethodsFragment : BaseFragment(SCREEN_NAME), PaymentMethod
                 PaymentFlowState.MerchantInfo -> {
                     setupMerchantInfoViews(resource.data as MerchantInfo)
                 }
+
+                else -> Logger.d("Not Implemented! (state=${resource.resourceState})")
             }
         }
     }
@@ -293,6 +296,8 @@ internal class PaymentMethodsFragment : BaseFragment(SCREEN_NAME), PaymentMethod
                 ResourceState.Error -> {
                     toastMessage(requireContext().getReadableErrorMessage(it.failure))
                 }
+
+                else -> Logger.d("Not Implemented! (state=${resource.resourceState})")
             }
         }
     }

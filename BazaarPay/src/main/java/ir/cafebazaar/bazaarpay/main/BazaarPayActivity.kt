@@ -18,6 +18,7 @@ import ir.cafebazaar.bazaarpay.ServiceLocator
 import ir.cafebazaar.bazaarpay.analytics.viewmodel.AnalyticsViewModel
 import ir.cafebazaar.bazaarpay.arg.BazaarPayActivityArgs
 import ir.cafebazaar.bazaarpay.databinding.ActivityBazaarPayBinding
+import ir.cafebazaar.bazaarpay.utils.Logger
 import ir.cafebazaar.bazaarpay.utils.bindWithRTLSupport
 import java.util.Locale
 
@@ -146,6 +147,7 @@ class BazaarPayActivity : AppCompatActivity(), FinishCallbacks {
                 }
             }
 
+            else -> Logger.d("Not Implemented! (args=${args})")
         }
     }
 
@@ -259,6 +261,8 @@ class BazaarPayActivity : AppCompatActivity(), FinishCallbacks {
                     )
                 }
             }
+
+            else -> Logger.d("Not Handled! (arge=$restoredArgs)")
         }
 
         ServiceLocator.initializeDependencies(context = applicationContext)

@@ -21,6 +21,7 @@ import ir.cafebazaar.bazaarpay.extensions.visible
 import ir.cafebazaar.bazaarpay.models.PaymentFlowState
 import ir.cafebazaar.bazaarpay.models.Resource
 import ir.cafebazaar.bazaarpay.models.ResourceState
+import ir.cafebazaar.bazaarpay.utils.Logger
 import ir.cafebazaar.bazaarpay.utils.bindWithRTLSupport
 import ir.cafebazaar.bazaarpay.utils.getErrorViewBasedOnErrorModel
 import ir.cafebazaar.bazaarpay.utils.imageloader.BazaarPayImageLoader
@@ -110,6 +111,8 @@ internal class DirectDebitOnBoardingFragment : BaseFragment(SCREEN_NAME) {
                         loading.gone()
                     }
                 }
+
+                else -> Logger.d("Not Implemented! (state=${resource.resourceState})")
             }
         }
     }

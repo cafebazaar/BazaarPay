@@ -19,6 +19,7 @@ import ir.cafebazaar.bazaarpay.extensions.setSafeOnClickListener
 import ir.cafebazaar.bazaarpay.extensions.visible
 import ir.cafebazaar.bazaarpay.models.Resource
 import ir.cafebazaar.bazaarpay.models.ResourceState
+import ir.cafebazaar.bazaarpay.utils.Logger
 import ir.cafebazaar.bazaarpay.utils.bindWithRTLSupport
 import java.util.Locale
 
@@ -77,6 +78,7 @@ internal class PaymentThankYouPageFragment : BaseFragment(SCREEN_NAME) {
             }
 
             ResourceState.Error -> showError(resource.failure)
+            else -> Logger.d("Not Implemented! (state=${resource.resourceState})")
         }
     }
 
