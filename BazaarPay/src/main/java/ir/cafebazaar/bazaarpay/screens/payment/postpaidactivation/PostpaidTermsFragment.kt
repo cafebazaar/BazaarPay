@@ -5,10 +5,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.addCallback
+import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import ir.cafebazaar.bazaarpay.base.BaseFragment
 import ir.cafebazaar.bazaarpay.databinding.FragmentPostpaidTermsBinding
+import ir.cafebazaar.bazaarpay.extensions.applyWindowInsetsWithoutTop
 import ir.cafebazaar.bazaarpay.extensions.getReadableErrorMessage
 import ir.cafebazaar.bazaarpay.extensions.setSafeOnClickListener
 import ir.cafebazaar.bazaarpay.extensions.toastMessage
@@ -27,7 +29,13 @@ internal class PostpaidTermsFragment : BaseFragment(SCREEN_NAME) {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = inflater.bindWithRTLSupport(FragmentPostpaidTermsBinding::inflate, container)
+        _binding =
+            inflater.bindWithRTLSupport(FragmentPostpaidTermsBinding::inflate, container).apply {
+                contentContainer.applyWindowInsetsWithoutTop(
+                    WindowInsetsCompat.Type.systemBars() or
+                            WindowInsetsCompat.Type.displayCutout()
+                )
+            }
         return binding.root
     }
 
