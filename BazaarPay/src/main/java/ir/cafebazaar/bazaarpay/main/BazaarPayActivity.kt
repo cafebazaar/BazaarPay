@@ -20,6 +20,7 @@ import ir.cafebazaar.bazaarpay.arg.BazaarPayActivityArgs
 import ir.cafebazaar.bazaarpay.databinding.ActivityBazaarPayBinding
 import ir.cafebazaar.bazaarpay.utils.Logger
 import ir.cafebazaar.bazaarpay.utils.bindWithRTLSupport
+import ir.cafebazaar.bazaarpay.utils.enableEdgeToEdge
 import java.util.Locale
 
 class BazaarPayActivity : AppCompatActivity(), FinishCallbacks {
@@ -32,6 +33,7 @@ class BazaarPayActivity : AppCompatActivity(), FinishCallbacks {
     private val mainViewModel: BazaarPayViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        enableEdgeToEdge()
         initNightMode()
         initServiceLocator(savedInstanceState)
         super.onCreate(savedInstanceState)
