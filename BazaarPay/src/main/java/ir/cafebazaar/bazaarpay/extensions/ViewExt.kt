@@ -1,13 +1,10 @@
 package ir.cafebazaar.bazaarpay.extensions
 
-import android.graphics.drawable.ColorDrawable
 import android.view.View
 import android.widget.EditText
-import android.widget.PopupWindow
-import android.widget.RelativeLayout
 import android.widget.TextView
-import androidx.core.content.ContextCompat
-import ir.cafebazaar.bazaarpay.R
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 
 fun View.visible() {
     visibility = View.VISIBLE
@@ -61,5 +58,37 @@ fun TextView.setValueIfNotNullOrEmpty(message: String?) {
     } else {
         visible()
         text = message
+    }
+}
+
+internal fun View.applyWindowInsets(
+    @WindowInsetsCompat.Type.InsetsType typeMask: Int
+) {
+    ViewCompat.setOnApplyWindowInsetsListener(this) { view, insets ->
+        val innerPadding =
+            insets.getInsets(typeMask)
+        view.setPadding(
+            innerPadding.left,
+            innerPadding.top,
+            innerPadding.right,
+            innerPadding.bottom
+        )
+        insets
+    }
+}
+
+internal fun View.applyWindowInsetsWithoutTop(
+    @WindowInsetsCompat.Type.InsetsType typeMask: Int
+) {
+    ViewCompat.setOnApplyWindowInsetsListener(this) { view, insets ->
+        val innerPadding =
+            insets.getInsets(typeMask)
+        view.setPadding(
+            innerPadding.left,
+            0,
+            innerPadding.right,
+            innerPadding.bottom
+        )
+        insets
     }
 }
