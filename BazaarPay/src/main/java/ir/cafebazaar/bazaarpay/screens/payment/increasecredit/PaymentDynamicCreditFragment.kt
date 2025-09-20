@@ -12,13 +12,13 @@ import android.view.accessibility.AccessibilityEvent
 import android.view.accessibility.AccessibilityNodeInfo
 import android.view.inputmethod.EditorInfo
 import androidx.activity.addCallback
+import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.isVisible
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import ir.cafebazaar.bazaarpay.main.BazaarPayActivity
 import ir.cafebazaar.bazaarpay.FinishCallbacks
 import ir.cafebazaar.bazaarpay.R
 import ir.cafebazaar.bazaarpay.arg.BazaarPayActivityArgs
@@ -27,10 +27,13 @@ import ir.cafebazaar.bazaarpay.data.bazaar.models.ErrorModel
 import ir.cafebazaar.bazaarpay.data.payment.models.getpaymentmethods.DynamicCreditOption
 import ir.cafebazaar.bazaarpay.data.payment.models.getpaymentmethods.Option
 import ir.cafebazaar.bazaarpay.databinding.FragmentPaymentDynamicCreditBinding
+import ir.cafebazaar.bazaarpay.extensions.applyWindowInsets
+import ir.cafebazaar.bazaarpay.extensions.applyWindowInsetsWithoutTop
 import ir.cafebazaar.bazaarpay.extensions.fixAccessibility
 import ir.cafebazaar.bazaarpay.extensions.getReadableErrorMessage
 import ir.cafebazaar.bazaarpay.extensions.gone
 import ir.cafebazaar.bazaarpay.extensions.hideKeyboard
+import ir.cafebazaar.bazaarpay.extensions.isLandscape
 import ir.cafebazaar.bazaarpay.extensions.moveCursorToEnd
 import ir.cafebazaar.bazaarpay.extensions.navigateSafe
 import ir.cafebazaar.bazaarpay.extensions.openUrl
@@ -39,6 +42,7 @@ import ir.cafebazaar.bazaarpay.extensions.setValueIfNotNullOrEmpty
 import ir.cafebazaar.bazaarpay.extensions.toastMessage
 import ir.cafebazaar.bazaarpay.extensions.visibility
 import ir.cafebazaar.bazaarpay.extensions.visible
+import ir.cafebazaar.bazaarpay.main.BazaarPayActivity
 import ir.cafebazaar.bazaarpay.models.Resource
 import ir.cafebazaar.bazaarpay.models.ResourceState
 import ir.cafebazaar.bazaarpay.utils.Logger
@@ -83,7 +87,9 @@ internal class PaymentDynamicCreditFragment : BaseFragment(SCREEN_NAME) {
         _binding = inflater.bindWithRTLSupport(
             FragmentPaymentDynamicCreditBinding::inflate,
             container
-        )
+        ).apply {
+            applyWindowInsets()
+        }
         return binding.root
     }
 
@@ -212,7 +218,8 @@ internal class PaymentDynamicCreditFragment : BaseFragment(SCREEN_NAME) {
         with(creditOptionsArgs) {
             if (description == binding.dynamicCreditPayOrEnterTitle.text) {
                 binding.dynamicCreditSubTitle.gone()
-                val padding = binding.root.resources.getDimension(R.dimen.bazaarpay_default_margin_double)
+                val padding =
+                    binding.root.resources.getDimension(R.dimen.bazaarpay_default_margin_double)
                 binding.dynamicCreditPayOrEnterTitle.setPadding(0, padding.toInt(), 0, 0)
             } else {
                 binding.dynamicCreditSubTitle.setValueIfNotNullOrEmpty(description)
@@ -283,10 +290,15 @@ internal class PaymentDynamicCreditFragment : BaseFragment(SCREEN_NAME) {
                 dynamicCreditViewModel.onTextChanged(text.toString())
             }
             priceEditText.setOnEditorActionListener { _, actionId, _ ->
-                if (priceEditText.text.isNullOrEmpty().not() && actionId == EditorInfo.IME_ACTION_DONE) {
+                if (priceEditText.text.isNullOrEmpty()
+                        .not() && actionId == EditorInfo.IME_ACTION_DONE
+                ) {
                     priceEditText.clearFocus()
                     payButton.requestFocus()
-                    payButton.performAccessibilityAction(AccessibilityNodeInfo.ACTION_ACCESSIBILITY_FOCUS, null)
+                    payButton.performAccessibilityAction(
+                        AccessibilityNodeInfo.ACTION_ACCESSIBILITY_FOCUS,
+                        null
+                    )
                     payButton.sendAccessibilityEvent(AccessibilityEvent.TYPE_VIEW_SELECTED)
                 }
                 false
@@ -354,6 +366,29 @@ internal class PaymentDynamicCreditFragment : BaseFragment(SCREEN_NAME) {
 
     private fun hideErrorView() {
         binding.errorView.gone()
+    }
+
+    private fun FragmentPaymentDynamicCreditBinding.applyWindowInsets() {
+        if (requireContext().isLandscape) {
+            requireNotNull(landscapeRootConstraint).applyWindowInsets(
+                WindowInsetsCompat.Type.statusBars() or
+                        WindowInsetsCompat.Type.displayCutout() or
+                        WindowInsetsCompat.Type.navigationBars()
+            )
+        } else {
+            creditScrollView.applyWindowInsetsWithoutTop(
+                WindowInsetsCompat.Type.navigationBars() or
+                        WindowInsetsCompat.Type.displayCutout()
+            )
+        }
+        errorView.applyWindowInsetsWithoutTop(
+            WindowInsetsCompat.Type.navigationBars() or
+                    WindowInsetsCompat.Type.displayCutout()
+        )
+        loadingContainer.applyWindowInsetsWithoutTop(
+            WindowInsetsCompat.Type.navigationBars() or
+                    WindowInsetsCompat.Type.displayCutout()
+        )
     }
 
     override fun onDetach() {

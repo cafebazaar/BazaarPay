@@ -8,6 +8,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
+        android:id="@+id/landscape_root_constraint"
         android:layout_height="match_parent"
         android:layout_gravity="bottom"
         android:background="@drawable/shape_round_top_only">
