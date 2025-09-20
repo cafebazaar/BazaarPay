@@ -4,11 +4,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.viewModels
 import androidx.navigation.NavDirections
 import androidx.navigation.fragment.findNavController
 import ir.cafebazaar.bazaarpay.base.BaseFragment
 import ir.cafebazaar.bazaarpay.databinding.FragmentLogoutBinding
+import ir.cafebazaar.bazaarpay.extensions.applyWindowInsetsWithoutTop
 import ir.cafebazaar.bazaarpay.extensions.setSafeOnClickListener
 import ir.cafebazaar.bazaarpay.utils.bindWithRTLSupport
 
@@ -25,7 +27,12 @@ internal class LogoutFragment : BaseFragment(SCREEN_NAME) {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = inflater.bindWithRTLSupport(FragmentLogoutBinding::inflate, container)
+        _binding = inflater.bindWithRTLSupport(FragmentLogoutBinding::inflate, container).apply {
+            contentContainer.applyWindowInsetsWithoutTop(
+                WindowInsetsCompat.Type.systemBars() or
+                        WindowInsetsCompat.Type.displayCutout()
+            )
+        }
 
         return binding.root
     }
