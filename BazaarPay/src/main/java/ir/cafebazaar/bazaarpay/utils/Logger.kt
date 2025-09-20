@@ -1,7 +1,9 @@
 package ir.cafebazaar.bazaarpay.utils
 
+import android.util.Log
+
 object Logger {
     fun d(message: String) {
-        println("BazaarPayLog: d -> $message")
+        Log.d("BazaarPay", message)
     }
 }
