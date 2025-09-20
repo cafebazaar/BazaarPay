@@ -3,10 +3,14 @@ package ir.cafebazaar.bazaarpay.sample
 import android.graphics.Color
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.lifecycleScope
 import ir.cafebazaar.bazaarpay.extensions.setSafeOnClickListener
 import ir.cafebazaar.bazaarpay.initCheckout
 import ir.cafebazaar.bazaarpay.sample.databinding.ActivitySampleInitCheckoutBinding
+import ir.cafebazaar.bazaarpay.sample.utils.extensions.applyWindowInsets
+import ir.cafebazaar.bazaarpay.sample.utils.extensions.applyWindowInsetsWithoutTop
+import ir.cafebazaar.bazaarpay.sample.utils.extensions.enableEdgeToEdge
 import kotlinx.coroutines.launch
 
 class SampleInitCheckoutActivity : AppCompatActivity() {
@@ -14,8 +18,15 @@ class SampleInitCheckoutActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySampleInitCheckoutBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        enableEdgeToEdge()
         super.onCreate(savedInstanceState)
         binding = ActivitySampleInitCheckoutBinding.inflate(layoutInflater)
+        binding.appBar.applyWindowInsets(WindowInsetsCompat.Type.statusBars())
+        binding.rootConstraint.applyWindowInsetsWithoutTop(
+            WindowInsetsCompat.Type.navigationBars() or
+                    WindowInsetsCompat.Type.displayCutout()
+        )
+
         setContentView(binding.root)
         registerClickListeners(binding)
     }
