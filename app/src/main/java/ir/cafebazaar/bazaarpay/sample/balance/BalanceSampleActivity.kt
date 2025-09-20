@@ -3,6 +3,7 @@ package ir.cafebazaar.bazaarpay.sample.balance
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
 import ir.cafebazaar.bazaarpay.getBazaarPayBalance
@@ -12,6 +13,8 @@ import ir.cafebazaar.bazaarpay.launcher.login.BazaarPayLoginOptions
 import ir.cafebazaar.bazaarpay.launcher.login.StartLogin
 import ir.cafebazaar.bazaarpay.sample.R
 import ir.cafebazaar.bazaarpay.sample.databinding.ActivityBalanceSampleBinding
+import ir.cafebazaar.bazaarpay.sample.utils.extensions.applyWindowInsets
+import ir.cafebazaar.bazaarpay.sample.utils.extensions.enableEdgeToEdge
 import kotlinx.coroutines.launch
 
 class BalanceSampleActivity : AppCompatActivity() {
@@ -40,8 +43,13 @@ class BalanceSampleActivity : AppCompatActivity() {
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        enableEdgeToEdge()
         super.onCreate(savedInstanceState)
         binding = ActivityBalanceSampleBinding.inflate(layoutInflater)
+        binding.rootConstraint.applyWindowInsets(
+            WindowInsetsCompat.Type.systemBars() or
+                    WindowInsetsCompat.Type.displayCutout()
+        )
         setContentView(binding.root)
         loadUserBalance()
         binding.needLoginButton.setOnClickListener { startLogin() }
