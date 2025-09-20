@@ -6,12 +6,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.addCallback
+import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.viewModels
 import ir.cafebazaar.bazaarpay.FinishCallbacks
 import ir.cafebazaar.bazaarpay.R
 import ir.cafebazaar.bazaarpay.base.BaseFragment
 import ir.cafebazaar.bazaarpay.data.bazaar.models.ErrorModel
 import ir.cafebazaar.bazaarpay.databinding.FragmentThankYouPageBinding
+import ir.cafebazaar.bazaarpay.extensions.applyWindowInsetsWithoutTop
 import ir.cafebazaar.bazaarpay.extensions.getReadableErrorMessage
 import ir.cafebazaar.bazaarpay.extensions.gone
 import ir.cafebazaar.bazaarpay.extensions.persianDigitsIfPersian
@@ -48,7 +50,13 @@ internal class PaymentThankYouPageFragment : BaseFragment(SCREEN_NAME) {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = inflater.bindWithRTLSupport(FragmentThankYouPageBinding::inflate, container)
+        _binding =
+            inflater.bindWithRTLSupport(FragmentThankYouPageBinding::inflate, container).apply {
+                contentContainer.applyWindowInsetsWithoutTop(
+                    WindowInsetsCompat.Type.systemBars() or
+                            WindowInsetsCompat.Type.displayCutout()
+                )
+            }
 
         return binding.root
     }
@@ -94,7 +102,8 @@ internal class PaymentThankYouPageFragment : BaseFragment(SCREEN_NAME) {
                 model.messageTextModel.argMessage ?: getString(
                     model.messageTextModel.defaultMessageId
                 )
-            waitingProgressBar.progress = model.paymentProgressBarModel.successMessageCountDown.toInt()
+            waitingProgressBar.progress =
+                model.paymentProgressBarModel.successMessageCountDown.toInt()
             secondsTextView.text = context?.resources?.getQuantityString(
                 R.plurals.bazaarpay_seconds,
                 model.paymentProgressBarModel.seconds,
