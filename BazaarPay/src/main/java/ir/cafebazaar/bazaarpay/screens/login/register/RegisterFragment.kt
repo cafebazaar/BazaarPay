@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.widget.ArrayAdapter
 import androidx.activity.addCallback
+import androidx.core.view.WindowInsetsCompat
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -21,6 +22,7 @@ import ir.cafebazaar.bazaarpay.base.BaseFragment
 import ir.cafebazaar.bazaarpay.data.bazaar.account.models.getotptoken.WaitingTimeWithEnableCall
 import ir.cafebazaar.bazaarpay.data.bazaar.models.InvalidPhoneNumberException
 import ir.cafebazaar.bazaarpay.databinding.FragmentRegisterBinding
+import ir.cafebazaar.bazaarpay.extensions.applyWindowInsetsWithoutTop
 import ir.cafebazaar.bazaarpay.extensions.fromHtml
 import ir.cafebazaar.bazaarpay.extensions.getReadableErrorMessage
 import ir.cafebazaar.bazaarpay.extensions.gone
@@ -51,7 +53,12 @@ internal class RegisterFragment : BaseFragment(SCREEN_NAME) {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = inflater.bindWithRTLSupport(FragmentRegisterBinding::inflate, container)
+        _binding = inflater.bindWithRTLSupport(FragmentRegisterBinding::inflate, container).apply {
+            rootConstraint.applyWindowInsetsWithoutTop(
+                WindowInsetsCompat.Type.systemBars() or
+                        WindowInsetsCompat.Type.displayCutout()
+            )
+        }
         return binding.root
     }
 
