@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.addCallback
+import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.children
 import androidx.fragment.app.viewModels
 import androidx.navigation.NavDirections
@@ -22,6 +23,7 @@ import ir.cafebazaar.bazaarpay.data.payment.models.getpaymentmethods.PaymentMeth
 import ir.cafebazaar.bazaarpay.data.payment.models.merchantinfo.MerchantInfo
 import ir.cafebazaar.bazaarpay.data.payment.models.pay.PayResult
 import ir.cafebazaar.bazaarpay.databinding.FragmentPaymentOptionsBinding
+import ir.cafebazaar.bazaarpay.extensions.applyWindowInsetsWithoutTop
 import ir.cafebazaar.bazaarpay.extensions.getReadableErrorMessage
 import ir.cafebazaar.bazaarpay.extensions.gone
 import ir.cafebazaar.bazaarpay.extensions.navigateSafe
@@ -68,7 +70,10 @@ internal class PaymentMethodsFragment : BaseFragment(SCREEN_NAME), PaymentMethod
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = inflater.bindWithRTLSupport(FragmentPaymentOptionsBinding::inflate, container)
+        _binding =
+            inflater.bindWithRTLSupport(FragmentPaymentOptionsBinding::inflate, container).apply {
+                applyWindowInsets()
+            }
         return binding.root
     }
 
@@ -384,6 +389,21 @@ internal class PaymentMethodsFragment : BaseFragment(SCREEN_NAME), PaymentMethod
 
     private fun hideErrorView() {
         binding.errorView.gone()
+    }
+
+    private fun FragmentPaymentOptionsBinding.applyWindowInsets() {
+        contentContainer.applyWindowInsetsWithoutTop(
+            WindowInsetsCompat.Type.systemBars() or
+                    WindowInsetsCompat.Type.displayCutout()
+        )
+        errorView.applyWindowInsetsWithoutTop(
+            WindowInsetsCompat.Type.systemBars() or
+                    WindowInsetsCompat.Type.displayCutout()
+        )
+        loadingContainer.applyWindowInsetsWithoutTop(
+            WindowInsetsCompat.Type.systemBars() or
+                    WindowInsetsCompat.Type.displayCutout()
+        )
     }
 
     companion object {
