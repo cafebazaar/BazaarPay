@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
+import androidx.core.view.WindowInsetsCompat
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.viewModels
 import androidx.navigation.NavDirections
@@ -14,6 +15,8 @@ import ir.cafebazaar.bazaarpay.R
 import ir.cafebazaar.bazaarpay.base.BaseFragment
 import ir.cafebazaar.bazaarpay.databinding.FragmentNationalIdBinding
 import ir.cafebazaar.bazaarpay.extensions.NATIONAL_ID_LENGTH
+import ir.cafebazaar.bazaarpay.extensions.applyWindowInsets
+import ir.cafebazaar.bazaarpay.extensions.applyWindowInsetsWithoutTop
 import ir.cafebazaar.bazaarpay.extensions.hideKeyboard
 import ir.cafebazaar.bazaarpay.extensions.setSafeOnClickListener
 import ir.cafebazaar.bazaarpay.utils.bindWithRTLSupport
@@ -34,7 +37,16 @@ internal class DirectDebitNationalIdFragment : BaseFragment(SCREEN_NAME) {
         savedInstanceState: Bundle?
     ): View {
         requireActivity().window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN)
-        _binding = inflater.bindWithRTLSupport(FragmentNationalIdBinding::inflate, container)
+        _binding =
+            inflater.bindWithRTLSupport(FragmentNationalIdBinding::inflate, container).apply {
+                rootConstraint.applyWindowInsetsWithoutTop(
+                    WindowInsetsCompat.Type.systemBars() or
+                            WindowInsetsCompat.Type.displayCutout()
+                )
+                appBarLayout.applyWindowInsets(
+                    WindowInsetsCompat.Type.statusBars()
+                )
+            }
         return binding.root
     }
 
