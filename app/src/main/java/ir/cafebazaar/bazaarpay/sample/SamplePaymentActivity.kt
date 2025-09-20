@@ -6,6 +6,7 @@ import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.ContextCompat
+import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.lifecycleScope
 import ir.cafebazaar.bazaarpay.commit
 import ir.cafebazaar.bazaarpay.extensions.setSafeOnClickListener
@@ -14,6 +15,9 @@ import ir.cafebazaar.bazaarpay.launcher.normal.PaymentMethod
 import ir.cafebazaar.bazaarpay.launcher.normal.StartBazaarPay
 import ir.cafebazaar.bazaarpay.sample.balance.BalanceSampleActivity
 import ir.cafebazaar.bazaarpay.sample.databinding.ActivityPaymentBinding
+import ir.cafebazaar.bazaarpay.sample.utils.extensions.applyWindowInsets
+import ir.cafebazaar.bazaarpay.sample.utils.extensions.applyWindowInsetsWithoutTop
+import ir.cafebazaar.bazaarpay.sample.utils.extensions.enableEdgeToEdge
 import ir.cafebazaar.bazaarpay.trace
 import kotlinx.coroutines.launch
 import ir.cafebazaar.bazaarpay.R as BazaarPayR
@@ -24,9 +28,16 @@ class SamplePaymentActivity : AppCompatActivity() {
     private var paymentURL: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        enableEdgeToEdge()
         super.onCreate(savedInstanceState)
         binding = ActivityPaymentBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        binding.appBar.applyWindowInsets(WindowInsetsCompat.Type.statusBars())
+        binding.constraintRoot.applyWindowInsetsWithoutTop(
+            WindowInsetsCompat.Type.navigationBars() or
+                    WindowInsetsCompat.Type.displayCutout()
+        )
+
         registerClickListeners(binding)
 
         savedInstanceState?.let {
