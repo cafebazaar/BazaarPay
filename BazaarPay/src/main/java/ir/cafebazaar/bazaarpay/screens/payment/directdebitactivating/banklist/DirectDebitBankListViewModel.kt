@@ -46,6 +46,7 @@ internal open class DirectDebitBankListViewModel : ViewModel() {
         val items = prepareRowItems(
             response.banks
         )
+        data.clear()
         data.addAll(items)
         _dataLiveData.value = Resource.loaded(data)
     }
