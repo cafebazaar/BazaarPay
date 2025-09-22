@@ -10,6 +10,9 @@ import android.view.animation.AnimationUtils
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.updatePadding
 import androidx.navigation.findNavController
 import androidx.navigation.navOptions
 import ir.cafebazaar.bazaarpay.FinishCallbacks
@@ -39,6 +42,8 @@ class BazaarPayActivity : AppCompatActivity(), FinishCallbacks {
         super.onCreate(savedInstanceState)
         binding = layoutInflater.bindWithRTLSupport(ActivityBazaarPayBinding::inflate)
         setContentView(binding.root)
+
+        updateKeyboardInsets()
 
         args = intent.getParcelableExtra(BAZAARPAY_ACTIVITY_ARGS)
 
@@ -119,6 +124,18 @@ class BazaarPayActivity : AppCompatActivity(), FinishCallbacks {
             findNavController(R.id.nav_host_fragment_bazaar_pay).navigate(
                 R.id.open_paymentThankYouPageFragment
             )
+        }
+    }
+
+    private fun updateKeyboardInsets() {
+        ViewCompat.setOnApplyWindowInsetsListener(binding.root) { v, insets ->
+            if (insets.isVisible(WindowInsetsCompat.Type.ime())) {
+                val ime = insets.getInsets(WindowInsetsCompat.Type.ime())
+                v.updatePadding(bottom = ime.bottom)
+            } else {
+                v.updatePadding(bottom = 0)
+            }
+            insets
         }
     }
 
