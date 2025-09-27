@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintRoot"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".SamplePaymentActivity">
@@ -27,6 +27,7 @@
 
         <com.google.android.material.appbar.AppBarLayout
             android:id="@+id/app_bar"
+            style="@style/Widget.MaterialComponents.Toolbar.Primary"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintEnd_toEndOf="parent"
@@ -34,6 +35,7 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <com.google.android.material.appbar.MaterialToolbar
+                android:id="@+id/toolbar"
                 style="@style/Widget.MaterialComponents.Toolbar.Primary"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
@@ -116,8 +118,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/label_force_increase_balance"
-            app:layout_constraintTop_toBottomOf="@id/dark_mode_checkbox"
-            app:layout_constraintStart_toStartOf="@id/dark_mode_checkbox" />
+            app:layout_constraintStart_toStartOf="@id/dark_mode_checkbox"
+            app:layout_constraintTop_toBottomOf="@id/dark_mode_checkbox" />
 
         <CheckBox
             android:id="@+id/accessibility_checkbox"

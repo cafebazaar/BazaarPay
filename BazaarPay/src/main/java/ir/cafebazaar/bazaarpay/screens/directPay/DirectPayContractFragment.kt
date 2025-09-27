@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.addCallback
+import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -20,6 +21,7 @@ import ir.cafebazaar.bazaarpay.data.bazaar.models.ErrorModel
 import ir.cafebazaar.bazaarpay.data.directPay.model.DirectPayContractAction
 import ir.cafebazaar.bazaarpay.data.directPay.model.DirectPayContractResponse
 import ir.cafebazaar.bazaarpay.databinding.FragmentDirectPayContractBinding
+import ir.cafebazaar.bazaarpay.extensions.applyWindowInsets
 import ir.cafebazaar.bazaarpay.extensions.gone
 import ir.cafebazaar.bazaarpay.extensions.navigateSafe
 import ir.cafebazaar.bazaarpay.extensions.persianDigitsIfPersian
@@ -28,6 +30,7 @@ import ir.cafebazaar.bazaarpay.extensions.visible
 import ir.cafebazaar.bazaarpay.models.Resource
 import ir.cafebazaar.bazaarpay.models.ResourceState
 import ir.cafebazaar.bazaarpay.screens.logout.LogoutFragmentDirections
+import ir.cafebazaar.bazaarpay.utils.Logger
 import ir.cafebazaar.bazaarpay.utils.bindWithRTLSupport
 import ir.cafebazaar.bazaarpay.utils.getErrorViewBasedOnErrorModel
 import ir.cafebazaar.bazaarpay.utils.imageloader.BazaarPayImageLoader
@@ -62,6 +65,12 @@ internal class DirectPayContractFragment : BaseFragment(where = DIRECT_PAY_CONTR
         savedInstanceState: Bundle?
     ): View {
         _binding = inflater.bindWithRTLSupport(FragmentDirectPayContractBinding::inflate, container)
+            .apply {
+                rootConstraint.applyWindowInsets(
+                    WindowInsetsCompat.Type.systemBars() or
+                            WindowInsetsCompat.Type.displayCutout()
+                )
+            }
 
         return binding.root
     }
@@ -135,6 +144,8 @@ internal class DirectPayContractFragment : BaseFragment(where = DIRECT_PAY_CONTR
                 Toast.makeText(requireContext(), response.failure?.message, Toast.LENGTH_SHORT)
                     .show()
             }
+
+            else -> Logger.d("Not Implemented! (state=${response.resourceState})")
         }
     }
 
@@ -165,6 +176,8 @@ internal class DirectPayContractFragment : BaseFragment(where = DIRECT_PAY_CONTR
                         loading.gone()
                     }
                 }
+
+                else -> Logger.d("Not Implemented! (state=${resource.resourceState})")
             }
         }
     }

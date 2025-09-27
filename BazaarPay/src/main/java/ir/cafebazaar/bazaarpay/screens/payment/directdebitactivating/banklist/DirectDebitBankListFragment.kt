@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
+import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -15,6 +16,8 @@ import ir.cafebazaar.bazaarpay.R
 import ir.cafebazaar.bazaarpay.base.BaseFragment
 import ir.cafebazaar.bazaarpay.data.bazaar.models.ErrorModel
 import ir.cafebazaar.bazaarpay.databinding.FragmentDirectDebitBankListBinding
+import ir.cafebazaar.bazaarpay.extensions.applyWindowInsets
+import ir.cafebazaar.bazaarpay.extensions.applyWindowInsetsWithoutTop
 import ir.cafebazaar.bazaarpay.extensions.getReadableErrorMessage
 import ir.cafebazaar.bazaarpay.extensions.gone
 import ir.cafebazaar.bazaarpay.extensions.navigateSafe
@@ -23,6 +26,7 @@ import ir.cafebazaar.bazaarpay.extensions.setSafeOnClickListener
 import ir.cafebazaar.bazaarpay.extensions.visible
 import ir.cafebazaar.bazaarpay.models.Resource
 import ir.cafebazaar.bazaarpay.models.ResourceState
+import ir.cafebazaar.bazaarpay.utils.Logger
 import ir.cafebazaar.bazaarpay.utils.bindWithRTLSupport
 import ir.cafebazaar.bazaarpay.utils.getErrorViewBasedOnErrorModel
 
@@ -44,7 +48,13 @@ internal class DirectDebitBankListFragment : BaseFragment(SCREEN_NAME) {
         _binding = inflater.bindWithRTLSupport(
             FragmentDirectDebitBankListBinding::inflate,
             container
-        )
+        ).apply {
+            appBarLayout.applyWindowInsets(WindowInsetsCompat.Type.statusBars())
+            recyclerCoordinator.applyWindowInsetsWithoutTop(
+                WindowInsetsCompat.Type.systemBars() or
+                        WindowInsetsCompat.Type.displayCutout()
+            )
+        }
         return binding.root
     }
 
@@ -102,6 +112,8 @@ internal class DirectDebitBankListFragment : BaseFragment(SCREEN_NAME) {
                     ResourceState.Success -> {
                         openUrlWithResourceData(resource.data)
                     }
+
+                    else -> Logger.d("Not Implemented! (state=${resource.resourceState})")
                 }
             }
             dataLiveData.observe(viewLifecycleOwner, ::handleData)

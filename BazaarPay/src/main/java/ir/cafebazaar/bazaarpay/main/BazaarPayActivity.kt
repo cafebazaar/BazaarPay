@@ -10,6 +10,9 @@ import android.view.animation.AnimationUtils
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.updatePadding
 import androidx.navigation.findNavController
 import androidx.navigation.navOptions
 import ir.cafebazaar.bazaarpay.FinishCallbacks
@@ -18,7 +21,9 @@ import ir.cafebazaar.bazaarpay.ServiceLocator
 import ir.cafebazaar.bazaarpay.analytics.viewmodel.AnalyticsViewModel
 import ir.cafebazaar.bazaarpay.arg.BazaarPayActivityArgs
 import ir.cafebazaar.bazaarpay.databinding.ActivityBazaarPayBinding
+import ir.cafebazaar.bazaarpay.utils.Logger
 import ir.cafebazaar.bazaarpay.utils.bindWithRTLSupport
+import ir.cafebazaar.bazaarpay.utils.enableEdgeToEdge
 import java.util.Locale
 
 class BazaarPayActivity : AppCompatActivity(), FinishCallbacks {
@@ -31,11 +36,14 @@ class BazaarPayActivity : AppCompatActivity(), FinishCallbacks {
     private val mainViewModel: BazaarPayViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        enableEdgeToEdge()
         initNightMode()
         initServiceLocator(savedInstanceState)
         super.onCreate(savedInstanceState)
         binding = layoutInflater.bindWithRTLSupport(ActivityBazaarPayBinding::inflate)
         setContentView(binding.root)
+
+        updateKeyboardInsets()
 
         args = intent.getParcelableExtra(BAZAARPAY_ACTIVITY_ARGS)
 
@@ -119,6 +127,18 @@ class BazaarPayActivity : AppCompatActivity(), FinishCallbacks {
         }
     }
 
+    private fun updateKeyboardInsets() {
+        ViewCompat.setOnApplyWindowInsetsListener(binding.root) { v, insets ->
+            if (insets.isVisible(WindowInsetsCompat.Type.ime())) {
+                val ime = insets.getInsets(WindowInsetsCompat.Type.ime())
+                v.updatePadding(bottom = ime.bottom)
+            } else {
+                v.updatePadding(bottom = 0)
+            }
+            insets
+        }
+    }
+
     private inline fun validateArguments(
         args: BazaarPayActivityArgs?,
         onInvalidInputs: () -> Unit
@@ -146,6 +166,7 @@ class BazaarPayActivity : AppCompatActivity(), FinishCallbacks {
                 }
             }
 
+            else -> Logger.d("Not Implemented! (args=${args})")
         }
     }
 
@@ -259,6 +280,8 @@ class BazaarPayActivity : AppCompatActivity(), FinishCallbacks {
                     )
                 }
             }
+
+            else -> Logger.d("Not Handled! (arge=$restoredArgs)")
         }
 
         ServiceLocator.initializeDependencies(context = applicationContext)

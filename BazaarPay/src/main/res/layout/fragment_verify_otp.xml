@@ -5,6 +5,7 @@
     style="@style/Bazaar.BottomSheet.Round"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:id="@+id/root_constraint"
     android:layout_gravity="bottom" >
 
     <androidx.appcompat.widget.AppCompatTextView
@@ -15,7 +16,7 @@
         android:layout_margin="@dimen/bazaarpay_default_margin_double"
         android:text="@string/bazaarpay_enter_bazaar_pay"
         android:textColor="@color/bazaarpay_grey_90"
-        app:layout_constraintBottom_toTopOf="@id/logoDivider"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"/>
 
@@ -34,6 +35,7 @@
         style="@style/Bazaar.HorizontalDivider"
         android:layout_width="0dp"
         android:layout_margin="@dimen/bazaarpay_default_margin_double_half"
+        app:layout_constraintTop_toBottomOf="@id/bazaarLogo"
         app:layout_constraintBottom_toTopOf="@id/editPhoneContainer"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

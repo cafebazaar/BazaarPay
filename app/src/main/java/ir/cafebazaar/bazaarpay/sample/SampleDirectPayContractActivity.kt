@@ -4,9 +4,12 @@ import android.os.Bundle
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.core.view.WindowInsetsCompat
 import ir.cafebazaar.bazaarpay.launcher.directPay.DirectPayContractOptions
 import ir.cafebazaar.bazaarpay.launcher.directPay.StartDirectPayFinalizeContract
 import ir.cafebazaar.bazaarpay.sample.databinding.ActivitySampleDirectPayContractActivityBinding
+import ir.cafebazaar.bazaarpay.sample.utils.extensions.applyWindowInsets
+import ir.cafebazaar.bazaarpay.sample.utils.extensions.enableEdgeToEdge
 
 class SampleDirectPayContractActivity : AppCompatActivity() {
 
@@ -38,8 +41,13 @@ class SampleDirectPayContractActivity : AppCompatActivity() {
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        enableEdgeToEdge()
         super.onCreate(savedInstanceState)
         binding = ActivitySampleDirectPayContractActivityBinding.inflate(layoutInflater)
+        binding.rootConstraint.applyWindowInsets(
+            WindowInsetsCompat.Type.systemBars() or
+                    WindowInsetsCompat.Type.displayCutout()
+        )
         setContentView(binding.root)
         registerClickListeners(binding)
     }

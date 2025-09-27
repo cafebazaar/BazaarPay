@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.addCallback
+import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.children
 import androidx.fragment.app.viewModels
 import androidx.navigation.NavDirections
@@ -22,6 +23,7 @@ import ir.cafebazaar.bazaarpay.data.payment.models.getpaymentmethods.PaymentMeth
 import ir.cafebazaar.bazaarpay.data.payment.models.merchantinfo.MerchantInfo
 import ir.cafebazaar.bazaarpay.data.payment.models.pay.PayResult
 import ir.cafebazaar.bazaarpay.databinding.FragmentPaymentOptionsBinding
+import ir.cafebazaar.bazaarpay.extensions.applyWindowInsetsWithoutTop
 import ir.cafebazaar.bazaarpay.extensions.getReadableErrorMessage
 import ir.cafebazaar.bazaarpay.extensions.gone
 import ir.cafebazaar.bazaarpay.extensions.navigateSafe
@@ -35,6 +37,7 @@ import ir.cafebazaar.bazaarpay.models.Resource
 import ir.cafebazaar.bazaarpay.models.ResourceState
 import ir.cafebazaar.bazaarpay.screens.logout.LogoutFragmentDirections
 import ir.cafebazaar.bazaarpay.screens.payment.paymentmethods.PaymentMethodsAdapter.Companion.DEFAULT_SELECTED_OPTION
+import ir.cafebazaar.bazaarpay.utils.Logger
 import ir.cafebazaar.bazaarpay.utils.bindWithRTLSupport
 import ir.cafebazaar.bazaarpay.utils.getErrorViewBasedOnErrorModel
 import java.util.Locale
@@ -67,7 +70,10 @@ internal class PaymentMethodsFragment : BaseFragment(SCREEN_NAME), PaymentMethod
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = inflater.bindWithRTLSupport(FragmentPaymentOptionsBinding::inflate, container)
+        _binding =
+            inflater.bindWithRTLSupport(FragmentPaymentOptionsBinding::inflate, container).apply {
+                applyWindowInsets()
+            }
         return binding.root
     }
 
@@ -257,6 +263,8 @@ internal class PaymentMethodsFragment : BaseFragment(SCREEN_NAME), PaymentMethod
                 PaymentFlowState.MerchantInfo -> {
                     setupMerchantInfoViews(resource.data as MerchantInfo)
                 }
+
+                else -> Logger.d("Not Implemented! (state=${resource.resourceState})")
             }
         }
     }
@@ -293,6 +301,8 @@ internal class PaymentMethodsFragment : BaseFragment(SCREEN_NAME), PaymentMethod
                 ResourceState.Error -> {
                     toastMessage(requireContext().getReadableErrorMessage(it.failure))
                 }
+
+                else -> Logger.d("Not Implemented! (state=${resource.resourceState})")
             }
         }
     }
@@ -379,6 +389,21 @@ internal class PaymentMethodsFragment : BaseFragment(SCREEN_NAME), PaymentMethod
 
     private fun hideErrorView() {
         binding.errorView.gone()
+    }
+
+    private fun FragmentPaymentOptionsBinding.applyWindowInsets() {
+        contentContainer.applyWindowInsetsWithoutTop(
+            WindowInsetsCompat.Type.systemBars() or
+                    WindowInsetsCompat.Type.displayCutout()
+        )
+        errorView.applyWindowInsetsWithoutTop(
+            WindowInsetsCompat.Type.systemBars() or
+                    WindowInsetsCompat.Type.displayCutout()
+        )
+        loadingContainer.applyWindowInsetsWithoutTop(
+            WindowInsetsCompat.Type.systemBars() or
+                    WindowInsetsCompat.Type.displayCutout()
+        )
     }
 
     companion object {

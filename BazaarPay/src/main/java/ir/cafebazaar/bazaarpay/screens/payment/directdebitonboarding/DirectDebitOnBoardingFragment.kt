@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.viewModels
 import androidx.navigation.NavDirections
 import androidx.navigation.fragment.findNavController
@@ -14,6 +15,8 @@ import ir.cafebazaar.bazaarpay.data.bazaar.models.ErrorModel
 import ir.cafebazaar.bazaarpay.data.bazaar.payment.models.directdebit.onboarding.DirectDebitOnBoardingDetails
 import ir.cafebazaar.bazaarpay.data.bazaar.payment.models.directdebit.onboarding.DirectDebitOnBoardingHeader
 import ir.cafebazaar.bazaarpay.databinding.FragmentDirectDebitOnBoardingBinding
+import ir.cafebazaar.bazaarpay.extensions.applyWindowInsets
+import ir.cafebazaar.bazaarpay.extensions.applyWindowInsetsWithoutTop
 import ir.cafebazaar.bazaarpay.extensions.gone
 import ir.cafebazaar.bazaarpay.extensions.navigateSafe
 import ir.cafebazaar.bazaarpay.extensions.setSafeOnClickListener
@@ -21,6 +24,7 @@ import ir.cafebazaar.bazaarpay.extensions.visible
 import ir.cafebazaar.bazaarpay.models.PaymentFlowState
 import ir.cafebazaar.bazaarpay.models.Resource
 import ir.cafebazaar.bazaarpay.models.ResourceState
+import ir.cafebazaar.bazaarpay.utils.Logger
 import ir.cafebazaar.bazaarpay.utils.bindWithRTLSupport
 import ir.cafebazaar.bazaarpay.utils.getErrorViewBasedOnErrorModel
 import ir.cafebazaar.bazaarpay.utils.imageloader.BazaarPayImageLoader
@@ -43,7 +47,12 @@ internal class DirectDebitOnBoardingFragment : BaseFragment(SCREEN_NAME) {
         _binding = inflater.bindWithRTLSupport(
             FragmentDirectDebitOnBoardingBinding::inflate,
             container
-        )
+        ).apply {
+            rootConstraint.applyWindowInsets(
+                WindowInsetsCompat.Type.systemBars() or
+                        WindowInsetsCompat.Type.displayCutout()
+            )
+        }
         return binding.root
     }
 
@@ -110,6 +119,8 @@ internal class DirectDebitOnBoardingFragment : BaseFragment(SCREEN_NAME) {
                         loading.gone()
                     }
                 }
+
+                else -> Logger.d("Not Implemented! (state=${resource.resourceState})")
             }
         }
     }

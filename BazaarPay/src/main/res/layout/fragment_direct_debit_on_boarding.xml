@@ -5,6 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/root_constraint"
     android:background="@color/bazaarpay_surface_color_0">
 
     <ir.cafebazaar.bazaarpay.widget.RTLImageView

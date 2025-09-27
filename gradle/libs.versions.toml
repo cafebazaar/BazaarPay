@@ -2,11 +2,11 @@
 androidCompileSdk = "34"
 androidTargetSdk = "34"
 androidMinSdk = "17"
-androidPlugin = "7.1.3"
+androidPlugin = "8.6.0"
 androidxLifecycle = "2.5.0"
 androidxNavigation = "2.5.0"
 glide = "4.15.1"
-kotlin = "1.6.21"
+kotlin = "1.8.20"
 retrofit = "2.9.0"
 
 [libraries]
