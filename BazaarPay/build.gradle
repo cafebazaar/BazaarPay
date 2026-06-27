@@ -7,8 +7,8 @@ plugins {
     id 'maven-publish'
 }
 
-final VERSION_NAME = "5.3.7"
-final VERSION_CODE = 29
+final VERSION_NAME = "5.3.71"
+final VERSION_CODE = 30
 
 android {
     namespace = "ir.cafebazaar.bazaarpay"
@@ -46,11 +46,6 @@ android {
         dataBinding true
         buildConfig true
     }
-    publishing {
-        singleVariant('release') {
-            withSourcesJar()
-        }
-    }
 }
 
 dependencies {
@@ -81,6 +76,10 @@ dependencies {
     implementation(libs.loggingInterceptor) {
         exclude group: 'org.json', module: 'json'
     }
+}
+
+tasks.withType(GenerateModuleMetadata) {
+    enabled = false
 }
 
 publishing {
