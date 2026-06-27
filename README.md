@@ -60,7 +60,7 @@ file:
 
 ```kotlin
 dependencies {
-    implementation("com.github.cafebazaar:bazaarpay:5.3.71")
+    implementation("com.github.cafebazaar:bazaarpay:5.3.8")
 }
 ```
 
@@ -71,7 +71,7 @@ dependencies {
 
 ```groovy
 dependencies {
-    implementation 'com.github.cafebazaar:bazaarpay:5.3.71'
+    implementation 'com.github.cafebazaar:bazaarpay:5.3.8'
 }
 ```
 

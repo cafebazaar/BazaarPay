@@ -7,7 +7,7 @@ plugins {
     id 'maven-publish'
 }
 
-final VERSION_NAME = "5.3.71"
+final VERSION_NAME = "5.3.8"
 final VERSION_CODE = 30
 
 android {
