@@ -7,8 +7,8 @@ plugins {
     id 'maven-publish'
 }
 
-final VERSION_NAME = "5.3.6"
-final VERSION_CODE = 28
+final VERSION_NAME = "5.3.7"
+final VERSION_CODE = 29
 
 android {
     namespace = "ir.cafebazaar.bazaarpay"
@@ -45,6 +45,11 @@ android {
         viewBinding true
         dataBinding true
         buildConfig true
+    }
+    publishing {
+        singleVariant('release') {
+            withSourcesJar()
+        }
     }
 }
 
