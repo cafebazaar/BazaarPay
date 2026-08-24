@@ -19,8 +19,10 @@ internal class TokenInterceptor : Interceptor {
         }
 
         val requestBuilder = originalRequest.newBuilder().apply {
-            if (accessToken.isNotEmpty()) {
-                header(AUTH_TOKEN_KEY, "Bearer $accessToken")
+            runCatching {
+                if (accessToken.isNotEmpty()) {
+                    header(AUTH_TOKEN_KEY, "Bearer $accessToken")
+                }
             }
         }.method(originalRequest.method, originalRequest.body)
 

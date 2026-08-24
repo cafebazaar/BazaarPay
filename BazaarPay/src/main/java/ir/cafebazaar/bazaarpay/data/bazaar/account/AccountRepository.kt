@@ -4,8 +4,6 @@ import android.content.Intent
 import ir.cafebazaar.bazaarpay.ServiceLocator
 import ir.cafebazaar.bazaarpay.ServiceLocator.AUTO_LOGIN_PHONE_NUMBER
 import ir.cafebazaar.bazaarpay.ServiceLocator.IS_AUTO_LOGIN_ENABLE
-import ir.cafebazaar.bazaarpay.ServiceLocator.getKeyOfClass
-import ir.cafebazaar.bazaarpay.ServiceLocator.servicesMap
 import ir.cafebazaar.bazaarpay.data.bazaar.account.models.getotptoken.WaitingTimeWithEnableCall
 import ir.cafebazaar.bazaarpay.data.bazaar.account.models.getotptokenbycall.WaitingTime
 import ir.cafebazaar.bazaarpay.data.bazaar.account.models.verifyotptoken.LoginResponse
@@ -67,13 +65,15 @@ internal class AccountRepository {
     }
 
     suspend fun getPhone(): String {
-        return accountLocalDataSource.loginPhone.ifEmpty {
-            if (isNewAutoLoginEnable()) {
+        return when {
+            isNewAutoLoginEnable() -> {
                 accountRemoteDataSource.getUserInfo().getOrNull()?.phoneNumber.orEmpty()
-            } else {
+            }
+            isOldAutoLoginEnable() -> {
                 ServiceLocator.get<String?>(AUTO_LOGIN_PHONE_NUMBER).orEmpty()
             }
-        }
+            else -> accountLocalDataSource.loginPhone
+        }.ifEmpty { "-" }
     }
 
     suspend fun getOtpToken(phoneNumber: String):
@@ -90,6 +90,7 @@ internal class AccountRepository {
             saveRefreshToken(response.refreshToken)
             saveAccessToken(response.accessToken)
             savePhone(phoneNumber)
+            ServiceLocator.cancelAutoLogin()
         }
     }
 
@@ -110,8 +111,12 @@ internal class AccountRepository {
     }
 
     fun getAccessToken(): String {
-        return accountLocalDataSource.accessToken.ifEmpty {
-            ServiceLocator.getOrNull<String>(ServiceLocator.AUTO_LOGIN_TOKEN).orEmpty()
+        return when {
+            isNewAutoLoginEnable() -> ServiceLocator.getOrNull<String>(
+                ServiceLocator.AUTO_LOGIN_TOKEN
+            ).orEmpty()
+            isOldAutoLoginEnable() -> ""
+            else -> accountLocalDataSource.accessToken
         }
     }
 
@@ -135,8 +140,7 @@ internal class AccountRepository {
         accountLocalDataSource.removeAccessToken()
         accountLocalDataSource.removeRefreshToken()
         accountLocalDataSource.removePhoneNumber()
-        servicesMap[getKeyOfClass<String>(AUTO_LOGIN_PHONE_NUMBER)] = null
-        servicesMap[getKeyOfClass<Boolean>(IS_AUTO_LOGIN_ENABLE)] = false
+        ServiceLocator.cancelAutoLogin()
     }
 
     private companion object {

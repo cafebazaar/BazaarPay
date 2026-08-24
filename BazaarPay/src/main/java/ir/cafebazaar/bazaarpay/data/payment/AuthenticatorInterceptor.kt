@@ -53,7 +53,11 @@ internal class AuthenticatorInterceptor: Authenticator {
     }
 
     private fun Request.Builder.addAuthToken(authToken: String?): Request.Builder {
-        return header(AUTH_TOKEN_KEY, "Bearer $authToken")
+        return if (authToken.isNullOrEmpty().not()) {
+            header(AUTH_TOKEN_KEY, "Bearer $authToken")
+        } else {
+            this
+        }
     }
 
     companion object {

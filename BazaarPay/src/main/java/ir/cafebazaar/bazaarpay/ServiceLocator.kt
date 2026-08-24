@@ -134,6 +134,12 @@ internal object ServiceLocator {
         servicesMap.clear()
     }
 
+    fun cancelAutoLogin() {
+        servicesMap[getKeyOfClass<String>(AUTO_LOGIN_PHONE_NUMBER)] = null
+        servicesMap[getKeyOfClass<Boolean>(IS_AUTO_LOGIN_ENABLE)] = false
+        servicesMap[getKeyOfClass<String>(AUTO_LOGIN_TOKEN)] = ""
+    }
+
     private fun initGlobalDispatchers() {
         servicesMap[getKeyOfClass<GlobalDispatchers>()] = GlobalDispatchers(
             Dispatchers.Main,
@@ -287,8 +293,8 @@ internal object ServiceLocator {
         val okHttpClient = provideOkHttpClient(
             interceptors = listOf(get(TOKEN)),
             authenticator = get<Authenticator?>(AUTHENTICATOR).takeIf {
-                isUserLogOutAndAutoLoginEnable().not()
-            }
+                shouldUseLocalAuthenticator()
+            },
         )
         val retrofit = provideRetrofit(
             okHttp = okHttpClient,
@@ -315,7 +321,7 @@ internal object ServiceLocator {
             DeviceSharedDataSource()
     }
 
-    private fun isUserLogOutAndAutoLoginEnable(): Boolean {
+    private fun shouldUseLocalAuthenticator(): Boolean {
         val accountLocalDataSource: AccountLocalDataSource = get()
         val isOldAutoLoginEnable = getOrNull<Boolean>(IS_AUTO_LOGIN_ENABLE) ?: false
         val isNewAutoLoginEnable = getOrNull<String>(AUTO_LOGIN_TOKEN).isNullOrEmpty().not()
@@ -324,7 +330,7 @@ internal object ServiceLocator {
         fun isLoggedIn(): Boolean {
             return accountLocalDataSource.accessToken.isNotEmpty()
         }
-        return isAutoLoginEnable && isLoggedIn().not()
+        return isAutoLoginEnable.not() && isLoggedIn()
     }
 
     internal fun isAccessibilityEnable(): Boolean {

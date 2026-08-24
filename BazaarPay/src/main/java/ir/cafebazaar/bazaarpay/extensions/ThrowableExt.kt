@@ -37,6 +37,10 @@ private fun createHttpError(
     throwable: HttpException
 ): ErrorModel {
     val response = throwable.response()
+    if (response?.code() == ErrorCode.LOGIN_IS_REQUIRED.value) {
+        return ErrorModel.LoginIsRequired
+    }
+
     return if (response?.errorBody() == null) {
         ErrorModel.Server(
             MESSAGE_SERVER_ERROR,
